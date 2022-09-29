@@ -1,0 +1,65 @@
+12:04:12  [main] 	Initialisere Control Panel
+12:04:12  [main] 	Windows Version:  Home  64-bit
+12:04:12  [main] 	XAMPP Version: 8.1.6
+12:04:12  [main] 	Control Panel Version: 3.3.0  [ Compiled: Apr 6th 2021 ]
+12:04:12  [main] 	Dein Benutzerprofil besitzt keine Administratorenrechte! Das reicht aus für die meisten
+12:04:12  [main] 	Anwendungsfunktionen, aber wann immer du etwas mit Windows-Diensten tun möchtest,
+12:04:12  [main] 	wird eine Sicherheitsabfrage erscheinen oder etwas wird garnicht erst funktionieren!
+12:04:12  [main] 	Also denke daran diese Anwendung mit Administratorrechten zu starten!
+12:04:12  [main] 	XAMPP Installationsverzeichnis: "c:\users\sherwoodman\desktop\programmieren\webprojekt\webaplikation\xampp\"
+12:04:12  [main] 	Voraussetzungen werden geprüft
+12:04:15  [main] 	Alle Voraussetzungen sind erfüllt
+12:04:15  [main] 	Initialisiere Module
+12:04:15  [Apache] 	XAMPP Apache ist bereits gestartet auf Port 80
+12:04:15  [Apache] 	XAMPP Apache ist bereits gestartet auf Port 443
+12:04:15  [mysql] 	XAMPP MySQL ist bereits gestartet auf Port 3306
+12:04:15  [main] 	Starte Check-Timer
+12:04:15  [main] 	Control Panel bereit
+12:04:28  [main] 	Führe aus: "c:\users\sherwoodman\desktop\programmieren\webprojekt\webaplikation\xampp\mysql\data"
+13:32:34  [mysql] 	Versuche MySQL zu beenden...
+13:32:34  [mysql] 	Statusänderung erkannt: gestoppt
+13:32:36  [mysql] 	Versuche MySQL zu starten...
+13:32:36  [mysql] 	Statusänderung erkannt: gestartet
+13:32:36  [mysql] 	Statusänderung erkannt: gestoppt
+13:32:36  [mysql] 	Fehler: MySQL wurde unerwartet beendet
+13:32:37  [mysql] 	Ursache könnte ein geblockter Port, fehlende Abhängigkeiten,
+13:32:37  [mysql] 	fehlende Berechtigungen, ein Absturz oder ein Abbruch einer anderen Methode sein.
+13:32:37  [mysql] 	Drücke den Logs Button um error logs zu sehen und prüfe
+13:32:37  [mysql] 	im Windows Event Viewer für weitere Hinweise
+13:32:37  [mysql] 	Wenn du weitere Hilfe benötigst, kopiere den kompletten Inhalt des Log Fensters
+13:32:37  [mysql] 	und füge ihn als Ergänzung in einem neuen Forum Eintrag hinzu.
+13:32:43  [mysql] 	Versuche MySQL zu starten...
+13:32:43  [mysql] 	Statusänderung erkannt: gestartet
+13:32:44  [mysql] 	Statusänderung erkannt: gestoppt
+13:32:44  [mysql] 	Fehler: MySQL wurde unerwartet beendet
+13:32:44  [mysql] 	Ursache könnte ein geblockter Port, fehlende Abhängigkeiten,
+13:32:44  [mysql] 	fehlende Berechtigungen, ein Absturz oder ein Abbruch einer anderen Methode sein.
+13:32:44  [mysql] 	Drücke den Logs Button um error logs zu sehen und prüfe
+13:32:44  [mysql] 	im Windows Event Viewer für weitere Hinweise
+13:32:44  [mysql] 	Wenn du weitere Hilfe benötigst, kopiere den kompletten Inhalt des Log Fensters
+13:32:44  [mysql] 	und füge ihn als Ergänzung in einem neuen Forum Eintrag hinzu.
+13:32:55  [main] 	Deinitialisiere Module
+13:32:55  [main] 	Deinitialisiere Control Panel
+
+13:34:55  [main] 	Initialisere Control Panel
+13:34:55  [main] 	Windows Version:  Home  64-bit
+13:34:55  [main] 	XAMPP Version: 8.1.6
+13:34:55  [main] 	Control Panel Version: 3.3.0  [ Compiled: Apr 6th 2021 ]
+13:34:55  [main] 	Dein Benutzerprofil besitzt keine Administratorenrechte! Das reicht aus für die meisten
+13:34:55  [main] 	Anwendungsfunktionen, aber wann immer du etwas mit Windows-Diensten tun möchtest,
+13:34:55  [main] 	wird eine Sicherheitsabfrage erscheinen oder etwas wird garnicht erst funktionieren!
+13:34:55  [main] 	Also denke daran diese Anwendung mit Administratorrechten zu starten!
+13:34:55  [main] 	XAMPP Installationsverzeichnis: "c:\users\sherwoodman\desktop\programmieren\webprojekt\webaplikation\xampp\"
+13:34:55  [main] 	Voraussetzungen werden geprüft
+13:34:55  [main] 	Alle Voraussetzungen sind erfüllt
+13:34:55  [main] 	Initialisiere Module
+13:34:55  [Apache] 	XAMPP Apache ist bereits gestartet auf Port 80
+13:34:55  [Apache] 	XAMPP Apache ist bereits gestartet auf Port 443
+13:34:55  [main] 	Starte Check-Timer
+13:34:55  [main] 	Control Panel bereit
+13:34:57  [Apache] 	stoppe Modul Apache (PID: 13224)
+13:34:57  [Apache] 	stoppe Modul Apache (PID: 12464)
+13:34:58  [Apache] 	Statusänderung erkannt: gestoppt
+13:35:01  [main] 	Deinitialisiere Module
+13:35:01  [main] 	Deinitialisiere Control Panel
+
