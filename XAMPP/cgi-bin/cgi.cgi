@@ -1,4 +1,4 @@
-#!"C:\Users\SherwoodMan\Desktop\Programmieren\Webprojekt\WebAplikation\XAMPP\perl\bin\perl.exe"
+#!"D:\SherwoodMan\Uni\3.Semester\Softwareprojekt I\WebAplikation\XAMPP\perl\bin\perl.exe"
 
 print "Content-Type: text/html\n\n";
 

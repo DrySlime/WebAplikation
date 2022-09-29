@@ -12,5 +12,5 @@ rem @version    CVS: $Id: pciconf.bat,v 1.1 2008/11/29 18:18:55 farell Exp $
 rem @link       http://pear.php.net/package/PHP_CompatInfo
 rem @since      File available since Release 1.9.0b1
 
-set XAMPPPHPDIR=C:\Users\SherwoodMan\Desktop\Programmieren\Webprojekt\WebAplikation\XAMPP\php
+set XAMPPPHPDIR=D:\SherwoodMan\Uni\3.Semester\Softwareprojekt I\WebAplikation\XAMPP\php
 "%XAMPPPHPDIR%\.\php.exe" -f "%XAMPPPHPDIR%\pciconf" -- %*

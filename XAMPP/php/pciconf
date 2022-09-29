@@ -1,4 +1,4 @@
-#!C:\Users\SherwoodMan\Desktop\Programmieren\Webprojekt\WebAplikation\XAMPP\php\.\php.exe
+#!D:\SherwoodMan\Uni\3.Semester\Softwareprojekt I\WebAplikation\XAMPP\php\.\php.exe
 <?php
 /**
  * The Predefined Classes/Constants array script generator.
@@ -98,7 +98,7 @@ if ($args->isDefined('v')) {
 if ($args->isDefined('o')) {
     $o = $args->getValue('o');
     if (strpos($o, '@'.'php_dir@')) {
-        $o = str_replace('@'.'php_dir@', 'C:\Users\SherwoodMan\Desktop\Programmieren\Webprojekt\WebAplikation\XAMPP\php\pear', $o);
+        $o = str_replace('@'.'php_dir@', 'D:\SherwoodMan\Uni\3.Semester\Softwareprojekt I\WebAplikation\XAMPP\php\pear', $o);
     }
     if (is_dir($o) && (is_writable($o))) {
         /* Directory where to write
@@ -113,7 +113,7 @@ if ($args->isDefined('o')) {
         exit(1);
     }
 } else {
-    $target_directory = 'C:\Users\SherwoodMan\Desktop\Programmieren\Webprojekt\WebAplikation\XAMPP\php\pear' . $ds . 'PHP' .$ds . 'CompatInfo' . $ds;
+    $target_directory = 'D:\SherwoodMan\Uni\3.Semester\Softwareprojekt I\WebAplikation\XAMPP\php\pear' . $ds . 'PHP' .$ds . 'CompatInfo' . $ds;
 }
 
 // enable
