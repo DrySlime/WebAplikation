@@ -63,3 +63,30 @@
 13:35:01  [main] 	Deinitialisiere Module
 13:35:01  [main] 	Deinitialisiere Control Panel
 
+05:30:39  [main] 	Initialisere Control Panel
+05:30:39  [main] 	Windows Version:  Enterprise  64-bit
+05:30:39  [main] 	XAMPP Version: 8.1.6
+05:30:39  [main] 	Control Panel Version: 3.3.0  [ Compiled: Apr 6th 2021 ]
+05:30:39  [main] 	Dein Benutzerprofil besitzt keine Administratorenrechte! Das reicht aus für die meisten
+05:30:39  [main] 	Anwendungsfunktionen, aber wann immer du etwas mit Windows-Diensten tun möchtest,
+05:30:39  [main] 	wird eine Sicherheitsabfrage erscheinen oder etwas wird garnicht erst funktionieren!
+05:30:39  [main] 	Also denke daran diese Anwendung mit Administratorrechten zu starten!
+05:30:39  [main] 	XAMPP Installationsverzeichnis: "d:\sherwoodman\uni\3.semester\softwareprojekt i\webaplikation\xampp\"
+05:30:39  [main] 	ACHTUNG: Der XAMPP Installationspfad enthält Leerzeichen. Dies könnte die Funktionalität von Programmen/Scripten beeinflussen
+05:30:39  [main] 	Voraussetzungen werden geprüft
+05:30:40  [main] 	Alle Voraussetzungen sind erfüllt
+05:30:40  [main] 	Initialisiere Module
+05:30:40  [main] 	Starte Check-Timer
+05:30:40  [main] 	Control Panel bereit
+05:30:45  [Apache] 	Versuche Apache zu starten...
+05:30:46  [Apache] 	Statusänderung erkannt: gestartet
+05:30:47  [mysql] 	Versuche MySQL zu starten...
+05:30:47  [mysql] 	Statusänderung erkannt: gestartet
+06:22:18  [mysql] 	Versuche MySQL zu beenden...
+06:22:19  [mysql] 	Statusänderung erkannt: gestoppt
+06:22:19  [Apache] 	stoppe Modul Apache (PID: 27840)
+06:22:19  [Apache] 	stoppe Modul Apache (PID: 908)
+06:22:19  [Apache] 	Statusänderung erkannt: gestoppt
+06:49:35  [main] 	Deinitialisiere Module
+06:49:35  [main] 	Deinitialisiere Control Panel
+
