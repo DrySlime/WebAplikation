@@ -1,7 +1,5 @@
 <?php
     session_start();
-
-
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +19,7 @@
                 <?php
                     if (isset($_SESSION["useruid"])){
                         echo "<li><a href='profile.php'>Profile</a></li>";
-                        echo "<li><a href='includes/logout_include.php'>Login</a></li>";
+                        echo "<li><a href='includes/logout_include.php'>Log-Out</a></li>";
                     }else{
                         echo '<li><a href="signup.php">Sign Up</a></li>';
                         echo '<li><a href="login.php">Login</a></li>';

@@ -15,7 +15,6 @@ if (isset($_POST["login_button"])) {
     }
 
     loginUser($conn, $password, $username);
-    header("location: ../index.php");
 } else {
     header("location: ../login.php");
     exit();
