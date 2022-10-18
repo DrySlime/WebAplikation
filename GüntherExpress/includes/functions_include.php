@@ -106,3 +106,11 @@ function loginUser($conn,$password,$username){
         exit();
     }
 }
+
+//URl-Parameter werden ausgelesen
+function getURLParameter(){
+    $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+    $url_components = parse_url($url);
+    parse_str($url_components['query'], $params);
+    return $params;
+}
