@@ -1,6 +1,3 @@
-
-
-
 function check_form() {
      
     var fn = document.getElementById("firstname").value; 
