@@ -7,8 +7,12 @@ require_once 'includes/functions_include.php';
 <?php
         //ID des Produkts wird aus der URL extrahiert
         $productID = getURLParameter()['pid'];
-      
         $productData = getProductData($conn, $productID);
+        
+        if(is_null($productData)){
+                echo "<p>Dieses Produkt existiert leider nicht!</p>";
+                exit();
+        }
 
         //Produktdaten werden zur anzeige gespeichert
         $aName = $productData["Name"];
