@@ -11,7 +11,7 @@ include_once 'header.php';
 ?>
 <div id="logo">
     <a href="#" >
-       <img src="Logo.png" alt="Günther Express" width="400">
+       <img src="img/Logo.png" alt="Günther Express" width="400">
     </a>
 </div>
     
