@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    function onSubmit(token) {
+      alert('thanks ' + document.getElementById('inEmail').value);
+    }
+
+    function validate(event) {
+      event.preventDefault();
+      if (!document.getElementById('inEmail').value) {
+        alert("You must add text to the required field");
+      } else {
+        grecaptcha.execute();
+      }
+    }
+
+    function onload() {
+      var element = document.getElementById('submit');
+      element.onclick = validate;
+    }
+  </script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <title>Login | Günther Express</title>
+</head>
+<body>
+    <!--
+         TODO 
+        - Responsive Design
+        - Logo png machen
+        - href mit Main-Page-Link verbinden
+    -->
+    <div id="logo">
+        <a href="#" >
+            <img src="Logo.png" alt="Günther Express" width="400">
+        </a>
+    </div>
+    <div id="log_in_form">
+        <form action="login.php" method="post">
+            E-mail: <input type="text" name="email" id="inEmail" required><br>
+            Passwort: <input type="password" name="password" id="pw" required><br>
+			<div id="recaptcha" class="g-recaptcha"
+				data-sitekey="6Le4uYwiAAAAAMMmF6x_tZnrXtVenZngSYOalfKB"
+				data-callback="onSubmit"
+				data-size="invisible"></div>
+			<button id="submit">submit</button>
+            <!-- createAccount.html und resetPassword erstellen -->
+            <a href="createAccount.html">Noch nicht registriert?</a><br>
+            <a href="resetpassword.html">Passwort vergessen?</a>
+    </div>
+
+    
+</body>
+</html>
