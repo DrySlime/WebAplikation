@@ -4,15 +4,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <script>
-        function captchaSubmit(data) {
-            document.getElementById("log_in_form").submit();
-        }
-    </script>
-    <style>
-        .grecaptcha-badge {display: none;}
-    </style>
+  <script>
+    function onSubmit(token) {
+      alert('thanks ' + document.getElementById('inEmail').value);
+    }
+
+    function validate(event) {
+      event.preventDefault();
+      if (!document.getElementById('inEmail').value) {
+        alert("You must add text to the required field");
+      } else {
+        grecaptcha.execute();
+      }
+    }
+
+    function onload() {
+      var element = document.getElementById('submit');
+      element.onclick = validate;
+    }
+  </script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <title>Login | Günther Express</title>
 </head>
 <body>
@@ -28,11 +39,14 @@
         </a>
     </div>
     <div id="log_in_form">
-        <form action="login_test.php" method="post">
-            E-mail: <input type="text" name="email"><br>
-            Passwort: <input type="password" name="password"><br>
-            <button class="g-recaptcha" data-sitekey="" data-callback="captchaSubmit" data-badge="inline">Submit</button>
-
+        <form action="login.php" method="post">
+            E-mail: <input type="text" name="email" id="inEmail" required><br>
+            Passwort: <input type="password" name="password" id="pw" required><br>
+			<div id="recaptcha" class="g-recaptcha"
+				data-sitekey="6Le4uYwiAAAAAMMmF6x_tZnrXtVenZngSYOalfKB"
+				data-callback="onSubmit"
+				data-size="invisible"></div>
+			<button id="submit">submit</button>
             <!-- createAccount.html und resetPassword erstellen -->
             <a href="createAccount.html">Noch nicht registriert?</a><br>
             <a href="resetpassword.html">Passwort vergessen?</a>
