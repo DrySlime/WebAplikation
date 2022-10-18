@@ -1,6 +1,6 @@
 <?php
 function emptyInputSignup($email,$password,$passwordRepeat,$firstname,$lastname,$username){
-    $result;
+    $result = false;
     if(empty($email) || empty($password) || empty($passwordRepeat) || empty($firstname) || empty($lastname) || empty($username)){
         $result=true;
     }else{
@@ -58,7 +58,7 @@ function uidExists($conn, $username,$email){
 
 }
 function emptyInputLogin($password,$username){
-    $result;
+    $result = false;
     if( empty($password) || empty($username)){
         $result=true;
     }else{
