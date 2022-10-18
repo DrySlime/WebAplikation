@@ -10,7 +10,7 @@ include_once 'header.php';
 
         <div class="recaptcha-holder"></div>
 
-        <button type="submit" name="login_button" onclick="return check_form()">Log In</button><br>
+        <button type="submit" name="login_button" >Log In</button><br>
     </form>
 
 </section>
