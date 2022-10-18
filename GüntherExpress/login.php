@@ -3,10 +3,10 @@ include_once 'header.php';
 ?>
 
     <section>
-        <h2>Sign up</h2>
+        <h2>Log-In</h2>
         <form action="includes/login_include.php" method="post">
-            <input type="text" name="username" id="email/username" placeholder="E-mail/Benutzername"><br>
-            <input type="password" name="password" id="password" placeholder="Passwort"><br>
+            <input type="text" name="username" id="email/username" placeholder="E-mail/Benutzername" required><br>
+            <input type="password" name="password" id="password" placeholder="Passwort" required><br>
             <button type="submit" name="login_button" onclick="return check_form()">Log In</button><br>
         </form>
 

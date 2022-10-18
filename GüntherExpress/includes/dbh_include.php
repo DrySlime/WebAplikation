@@ -6,7 +6,7 @@ $dbName = "marktplatz2";
 
 $conn = mysqli_connect($serverName,$dbUsername,$dbPassword,$dbName);
     if(!$conn){
-        die('Connection failed :'.mysgli_connect_error());
+        die('Connection failed :'.mysqli_connect_error());
         
     }
     
