@@ -13,9 +13,10 @@
 <body>
     <nav>
         <div class="Wrapper">
-            <a href="index.php">Back home</a>
+            <a href="index.php"><img src="img/Logo.png" alt="Günther Express" width="400"></a>
             <ul>
                 <li><a href="index.php">Home</a></li>
+                <li><a href='category.php'>Kategorie</a></li>
                 <?php
                     if (isset($_SESSION["useruid"])){
                         echo "<li><a href='profile.php'>Profile</a></li>";
@@ -25,6 +26,7 @@
                         echo '<li><a href="login.php">Login</a></li>';
                     }
                 ?>
+                <li><input type="text" name="searchbar" id="searchbar" placeholder="Warensuche..." ></li>
                 
             </ul>
         </div>
