@@ -9,11 +9,7 @@ include_once 'header.php';
         
     }
 ?>
-<div id="logo">
-    <a href="#" >
-       <img src="img/Logo.png" alt="Günther Express" width="400">
-    </a>
-</div>
+
     
 
 <?php

@@ -34,7 +34,7 @@ include_once 'footer.php';
 
 <script type="text/javascript">
     var renderGoogleInvisibleRecaptcha = function() {
-        var form = document.getElementById("login_form");
+        var form = document.forms[i];
         var holder = form.querySelector('.recaptcha-holder');
         if (null === holder) {
             continue;
