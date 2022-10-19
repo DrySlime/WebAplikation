@@ -34,7 +34,7 @@ function passwordMatch($password,$passwordRepeat){
     return $result;
 }
 function uidExists($conn, $username,$email){
-    $sql = "SELECT * FROM users WHERE usersUid = ? OR usersEmail = ?;";
+    $sql = "SELECT * FROM site_user WHERE user_uid = ? OR email = ?;";
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt,$sql)){
@@ -67,7 +67,7 @@ function emptyInputLogin($password,$username){
     return $result;
 }
 function createUser($conn,$email,$password,$firstname,$lastname,$username){
-    $sql = "INSERT INTO users (usersFirstname, usersLastname, usersUid, usersEmail, usersPassword) VALUES (?,?,?,?,?);";
+    $sql = "INSERT INTO site_user (firstname, lastname, user_uid, email, user_password) VALUES (?,?,?,?,?);";
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt,$sql)){
@@ -93,15 +93,15 @@ function loginUser($conn,$password,$username){
         exit();
     }
 
-    $pwdHashed = $uidExists["usersPassword"];
+    $pwdHashed = $uidExists["user_password"];
     $checkPwd = password_verify($password,$pwdHashed);
     if($checkPwd === false){
         header("location: ../login.php?error=wronginput");
         exit();
     }else if($checkPwd=== true){
         session_start();
-        $_SESSION["userid"]=$uidExists["usersId"];
-        $_SESSION["useruid"]=$uidExists["usersUid"];
+        $_SESSION["userid"]=$uidExists["id"];
+        $_SESSION["useruid"]=$uidExists["user_uid"];
         header("location: ../index.php?");
         exit();
     }

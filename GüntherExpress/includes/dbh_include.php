@@ -2,7 +2,7 @@
 $serverName = "localhost";
 $dbUsername = "root";
 $dbPassword = "";
-$dbName = "marktplatz2";
+$dbName = "marktplatz";
 
 $conn = mysqli_connect($serverName,$dbUsername,$dbPassword,$dbName);
     if(!$conn){
