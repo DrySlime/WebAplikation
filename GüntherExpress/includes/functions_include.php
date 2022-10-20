@@ -107,6 +107,56 @@ function loginUser($conn,$password,$username){
     }
 }
 
+
+function get___FromCatergory($conn,$whatYouNeed,$category){
+
+    //Get all Data from a catagory
+    //Hier nen Beispiel, du suchst die Bilder von der kategorie Schuhe
+    //get___FromCatergory($conn,"product_image","Schuhe")
+
+    $product_id= "SELECT id FROM product_category WHERE category_name = ?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$product_id)){
+        header("location: ../index.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt,"s", $category);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    if($row = mysqli_fetch_assoc($resultData)){
+        $product_id=$row["id"];
+    }else{
+        $result = false;
+        return $result;
+    }
+
+    $sql = "SELECT * FROM product WHERE product_category_id = ?;";
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../index.php?error=stmtfailed");
+        exit();
+    }
+    
+    mysqli_stmt_bind_param($stmt,"s",$product_id);
+    mysqli_stmt_execute($stmt);
+    
+    $resultData = mysqli_stmt_get_result($stmt);
+    
+    $itemName[]=array();
+    if(mysqli_num_rows($resultData)>0){
+        while($row =mysqli_fetch_assoc($resultData)){
+            $itemName[]=$row[$whatYouNeed];
+        }
+        return $itemName;
+    }else{
+        $result = false;
+        return $result;
+    }
+    mysqli_stmt_close($stmt);
+}
+
 //URl-Parameter werden ausgelesen
 function getURLParameter(){
     $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
@@ -127,4 +177,24 @@ function getProductData($conn, $productID){
 
     $resultData = mysqli_stmt_get_result($stmt);
     return mysqli_fetch_assoc($resultData);
+}
+function showExamples($conn,$amount,$category){
+    
+    $itemName = get___FromCatergory($conn,"product_name",$category);
+    $itemImage = get___FromCatergory($conn,"product_image",$category);
+    $itemQty = get___FromCatergory($conn,"qty_in_stock",$category);
+    $itemPrice = get___FromCatergory($conn,"price",$category);
+    $itemDescription = get___FromCatergory($conn,"description",$category);
+
+
+    echo '<ul>';
+    for($i=1;$i<=$amount;$i++){
+        echo '<li>Produktname:'.$itemName[$i].'<br>
+        <img src='.$itemImage[$i].'><br>
+        Stückzahl noch vorhanden:' .$itemQty[$i].'<br>
+        Preis:' .$itemPrice[$i].'<br>
+        Produktbeschreibung:' .$itemDescription[$i].'<br>';
+    }
+    echo '</ul>';
+
 }
