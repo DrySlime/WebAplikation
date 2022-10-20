@@ -102,7 +102,7 @@ ul {
     margin: auto;
     max-width: 75%;
     justify-content: center;
-    margin-bottom: 1.30em;
+    margin-bottom: 1.30vw;
 }
 
 .footer_copyright {
@@ -112,6 +112,7 @@ ul {
     text-align: center;
     font-size: 0.875rem;
     font-weight: 300;
+    padding-bottom: 1.30vw;
 }
 
 .footer_copyright p {
