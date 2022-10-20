@@ -29,6 +29,28 @@ showExamples($conn, 2, "Schuhe");
 // }
 
 ?>
+<?php
+    require_once 'includes/dbh_include.php';
+    require_once 'includes/functions_include.php';
+    
+    
+    
+
+    showExamples($conn,2,"Schuhe");
+    
+
+
+
+    // for($i=1;$i<count($itemNames); $i++){
+    //     try{
+    //         @print $itemNames[$i];
+    //     }catch(Exception $e){
+
+    //     }
+        
+    // }
+
+?>
 
     
 
