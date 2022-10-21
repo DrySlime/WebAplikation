@@ -1,5 +1,7 @@
 <?php
-include_once 'header.php';
+    include_once 'header.php';
+    require_once 'includes/dbh_include.php';
+    require_once 'includes/functions_include.php';
 ?>
 <?php
     if (isset($_SESSION["useruid"])){
@@ -9,17 +11,12 @@ include_once 'header.php';
         
     }
 ?>
+
 <?php
-    require_once 'includes/dbh_include.php';
-    require_once 'includes/functions_include.php';
+    //showCategoryList($conn);
+    //showExamples($conn,2,"Schuhe");
     
-    
-    
-
-    showExamples($conn,2,"Schuhe");
-    
-
-
+    randomCategory($conn,2);
 
     // for($i=1;$i<count($itemNames); $i++){
     //     try{
