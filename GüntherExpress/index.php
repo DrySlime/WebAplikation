@@ -16,19 +16,6 @@ require_once 'includes/functions_include.php';
 
 
 
-showExamples($conn, 2, "Schuhe");
-
-
-
-
-// for($i=1;$i<count($itemNames); $i++){
-//     try{
-//         @print $itemNames[$i];
-//     }catch(Exception $e){
-
-//     }
-
-// }
 
 ?>
 
@@ -36,7 +23,7 @@ showExamples($conn, 2, "Schuhe");
     //showCategoryList($conn);
     //showExamples($conn,2,"Schuhe");
     
-    randomCategory($conn,2);
+    showRandomCategory($conn,4);
 
     // for($i=1;$i<count($itemNames); $i++){
     //     try{

@@ -248,7 +248,7 @@ function showExamples($conn,$amount,$category){
     echo '</ul></div>';
 
 }
-function randomCategory($conn,$amount){
+function showRandomCategory($conn,$amount){
     //gibt zufällige Kategorien und dessen Produkte in HTML gerechter Sprache wieder
 
 
@@ -277,21 +277,15 @@ function randomCategory($conn,$amount){
     
     
     $i=0;
-    $unique[]=array();
-    unset($unique[0]);
-    while($i<$amount){
-        $id=rand(1,$maxAmount);
-        if(!in_array($id,$unique)){
-            $unique[]=$id+parentCategoryAmount($conn,1);
-            
-            $i++;
-        }else{
+    $uniqueTMP[]=array();
+    unset($uniqueTMP[0]);
 
-        }
-        
+    $uniqueTMP=range(1,$maxAmount);
+    shuffle($uniqueTMP);
+
+    foreach($uniqueTMP as $var){
+        $unique[]=$var+parentCategoryAmount($conn,1);
     }
-
-    $unique=array_unique($unique);
 
     foreach($unique as $var){
         
