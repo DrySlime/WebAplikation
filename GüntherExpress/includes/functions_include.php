@@ -227,6 +227,7 @@ function showExamples($conn,$amount,$category){
     //Gibt viele Attribute aus der Datenbank in einer ...
     //html gerechten sprache wieder zurück.
     
+    $itemId = get___FromCatergory($conn,"id",$amount,$category);
     $itemName = get___FromCatergory($conn,"product_name",$amount,$category);
     $itemImage = get___FromCatergory($conn,"product_image",$amount,$category);
     $itemQty = get___FromCatergory($conn,"qty_in_stock",$amount,$category);
@@ -238,9 +239,13 @@ function showExamples($conn,$amount,$category){
     }
 
     echo '<div class="'.$category.'_category"><ul>';
+    
     for($i=1;$i<=$amount;$i++){
         echo '<li>Produktname:'.$itemName[$i].'<br>
-            <img src='.$itemImage[$i].'><br>
+            <a href="product.php?='.$itemId[$i].'">
+            <div class=image_'.$itemId[$i].'>
+            <img src='.$itemImage[$i].' alt="'.$itemName[$i].'.png"><br>
+            </div></a>
             Stückzahl noch vorhanden:' .$itemQty[$i].'<br>
             Preis:' .$itemPrice[$i].'<br>
             Produktbeschreibung:' .$itemDescription[$i].'<br>';
