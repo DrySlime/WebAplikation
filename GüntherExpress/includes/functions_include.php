@@ -255,7 +255,7 @@ function showExamples($conn,$amount,$category){
    
 
 }
-function showRandomCategory($conn,$amount){
+function showRandomCategory($conn,$amount,$productAmount){
     //gibt x=$amount zufällige Kategorien und dessen Produkte in HTML gerechter Sprache wieder
     
 
@@ -310,7 +310,7 @@ function showRandomCategory($conn,$amount){
         $row=mysqli_fetch_assoc($resultData);
         echo '<div class="category_item_line"><ul>';
         echo '<div class="header_name category_info"><h1>'.$row["category_name"].'</h1></div>';
-        showExamples($conn,3,$row["category_name"]);
+        showExamples($conn,$productAmount,$row["category_name"]);
         echo '</ul></div>';
     }
     
