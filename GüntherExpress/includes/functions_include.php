@@ -109,7 +109,7 @@ function loginUser($conn,$password,$username){
 }
 
 
-function get___FromCatergory($conn,$whatYouNeed,$amount,$category){
+function get___FromCatergory($conn,$whatYouNeed,$amount,$category,$shuffle){
 
     //Get all Data from a catagory
     //Hier nen Beispiel, du suchst die Bilder von der kategorie Schuhe
@@ -133,19 +133,30 @@ function get___FromCatergory($conn,$whatYouNeed,$amount,$category){
         return $result;
     }
 
-    $sql = "SELECT * FROM product WHERE product_category_id = ?;";
+    if($shuffle){
+    $sql = "SELECT * FROM product WHERE product_category_id = ? ORDER BY rand() LIMIT ?;";
 
     if(!mysqli_stmt_prepare($stmt,$sql)){
         header("location: ../index.php?error=stmtfailed");
         exit();
     }
     
-    mysqli_stmt_bind_param($stmt,"s",$product_id);
+    mysqli_stmt_bind_param($stmt,"ss",$product_id,$amount);
+    }else{
+        $sql = "SELECT * FROM product WHERE product_category_id = ? LIMIT ?;";
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../index.php?error=stmtfailed");
+        exit();
+    }
+    
+    mysqli_stmt_bind_param($stmt,"ss",$product_id,$amount);
+    }
     mysqli_stmt_execute($stmt);
     
     $resultData = mysqli_stmt_get_result($stmt);
     
-    $itemAttribute[]=array();
+    
 
     //Error handling: falls man mehr produkte ausgegeben haben will als existieren
     if($amount>mysqli_num_rows($resultData)){
@@ -154,7 +165,7 @@ function get___FromCatergory($conn,$whatYouNeed,$amount,$category){
 
     if(mysqli_num_rows($resultData)>0){
         
-        for($i=1;$i<$amount+1;$i++){
+        for($i=0;$i<$amount;$i++){
             $row =mysqli_fetch_assoc($resultData);
             $itemAttribute[]=$row[$whatYouNeed];
         }
@@ -222,34 +233,60 @@ function getProductData($conn, $productID){
     $resultData = mysqli_stmt_get_result($stmt);
     return mysqli_fetch_assoc($resultData);
 }
+function testFunction($conn,$amount,$category,$shuffle){
+    $itemId = get___FromCatergory($conn,"id",$amount,$category,$shuffle);
+    $itemName = get___FromCatergory($conn,"product_name",$amount,$category,$shuffle);
+    $itemImage = get___FromCatergory($conn,"product_image",$amount,$category,$shuffle);
+    $itemQty = get___FromCatergory($conn,"qty_in_stock",$amount,$category,$shuffle);
+    $itemPrice = get___FromCatergory($conn,"price",$amount,$category,$shuffle);
+    $itemDescription = get___FromCatergory($conn,"description",$amount,$category,$shuffle);
+
+    for($i=0;$i<count($itemId);$i++){
+        $item[]=$itemId[$i];
+        $item[]=$itemName[$i];
+        $item[]=$itemImage[$i];
+        $item[]=$itemQty[$i];
+        $item[]=$itemPrice[$i];
+        $item[]=$itemDescription[$i];
+        $itemArr[]=$item;
+        unset($item);
+    }
+    if($shuffle){
+        shuffle($itemArr);
+    }
+    return $itemArr;
+
+}
 function showExamples($conn,$amount,$category){
 
     //Gibt $amount viele Attribute aus der Datenbank in einer
     //html gerechten sprache wieder zurück.
     
-    $itemId = get___FromCatergory($conn,"id",$amount,$category);
-    $itemName = get___FromCatergory($conn,"product_name",$amount,$category);
-    $itemImage = get___FromCatergory($conn,"product_image",$amount,$category);
-    $itemQty = get___FromCatergory($conn,"qty_in_stock",$amount,$category);
-    $itemPrice = get___FromCatergory($conn,"price",$amount,$category);
-    $itemDescription = get___FromCatergory($conn,"description",$amount,$category);
+    // $itemId = get___FromCatergory($conn,"id",$amount,$category);
+    // $itemName = get___FromCatergory($conn,"product_name",$amount,$category);
+    // $itemImage = get___FromCatergory($conn,"product_image",$amount,$category);
+    // $itemQty = get___FromCatergory($conn,"qty_in_stock",$amount,$category);
+    // $itemPrice = get___FromCatergory($conn,"price",$amount,$category);
+    // $itemDescription = get___FromCatergory($conn,"description",$amount,$category);
+    
+    $item=testFunction($conn,$amount,$category,true);
 
-    if($amount>count($itemName)-1){
-        $amount=count($itemName)-1;
+    if($amount>count($item)){
+        $amount=count($item);
     }
 
     
     
-    for($i=1;$i<=$amount;$i++){
+    for($i=0;$i<count($item);$i++){
         echo '<div class="product_category">
-            <li><div class="product_name product_info">Produktname:'.$itemName[$i].'</div>
-            <a href="product.php?='.$itemId[$i].'">
+            <li><div class="product_name product_info">Produktname:'.$item[$i][1].'</div>
+            <a href="product.php?='.$item[$i][0].'">
             <div class="product_image">
-            <img src='.$itemImage[$i].' alt="'.$itemName[$i].'.png">
+            <img src='.$item[$i][2].' alt="'.$item[$i][1].'.png">
             </div></a>
-            <div class="product_qty product_info">Stückzahl noch vorhanden:' .$itemQty[$i].'</div>
-            <div class="product_price product_info">Preis:' .$itemPrice[$i].'</div>
-            <div class="product_description product_info">Produktbeschreibung:' .$itemDescription[$i].'</div>
+            <div class="product_qty product_info">Stückzahl noch vorhanden:' .$item[$i][3].'</div>
+            <div class="product_price product_info">Preis:' .$item[$i][4].'</div>
+            <div class="product_description product_info">Produktbeschreibung:' .$item[$i][5].'</div>
             </div><br>';
     }
    
