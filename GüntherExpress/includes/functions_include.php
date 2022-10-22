@@ -224,7 +224,7 @@ function getProductData($conn, $productID){
 }
 function showExamples($conn,$amount,$category){
 
-    //Gibt viele Attribute aus der Datenbank in einer ...
+    //Gibt $amount viele Attribute aus der Datenbank in einer
     //html gerechten sprache wieder zurück.
     
     $itemId = get___FromCatergory($conn,"id",$amount,$category);
@@ -238,23 +238,26 @@ function showExamples($conn,$amount,$category){
         $amount=count($itemName)-1;
     }
 
-    echo '<div class="'.$category.'_category"><ul>';
+    
     
     for($i=1;$i<=$amount;$i++){
-        echo '<li>Produktname:'.$itemName[$i].'<br>
+        echo '<div class="product_category">
+            <li><div class="product_name product_info">Produktname:'.$itemName[$i].'</div>
             <a href="product.php?='.$itemId[$i].'">
-            <div class=image_'.$itemId[$i].'>
-            <img src='.$itemImage[$i].' alt="'.$itemName[$i].'.png"><br>
+            <div class="product_image">
+            <img src='.$itemImage[$i].' alt="'.$itemName[$i].'.png">
             </div></a>
-            Stückzahl noch vorhanden:' .$itemQty[$i].'<br>
-            Preis:' .$itemPrice[$i].'<br>
-            Produktbeschreibung:' .$itemDescription[$i].'<br>';
+            <div class="product_qty product_info">Stückzahl noch vorhanden:' .$itemQty[$i].'</div>
+            <div class="product_price product_info">Preis:' .$itemPrice[$i].'</div>
+            <div class="product_description product_info">Produktbeschreibung:' .$itemDescription[$i].'</div>
+            </div><br>';
     }
-    echo '</ul></div>';
+   
 
 }
 function showRandomCategory($conn,$amount){
-    //gibt zufällige Kategorien und dessen Produkte in HTML gerechter Sprache wieder
+    //gibt x=$amount zufällige Kategorien und dessen Produkte in HTML gerechter Sprache wieder
+    
 
 
     $sql = "SELECT * FROM product_category;";
@@ -291,7 +294,7 @@ function showRandomCategory($conn,$amount){
     foreach($uniqueTMP as $var){
         $unique[]=$var+parentCategoryAmount($conn,1);
     }
-
+    
     foreach($unique as $var){
         
         $sql = "SELECT category_name FROM product_category WHERE id = ?;";
@@ -305,14 +308,17 @@ function showRandomCategory($conn,$amount){
         mysqli_stmt_execute($stmt);
         $resultData = mysqli_stmt_get_result($stmt);
         $row=mysqli_fetch_assoc($resultData);
-        echo '<h1>'.$row["category_name"].'</h1>';
-        
+        echo '<div class="category_item_line"><ul>';
+        echo '<div class="header_name category_info"><h1>'.$row["category_name"].'</h1></div>';
         showExamples($conn,3,$row["category_name"]);
+        echo '</ul></div>';
     }
+    
     
     mysqli_stmt_close($stmt);
 }
 function parentCategoryAmount($conn,$var){
+        //returns an integer of the total parentcategories
         $bool=true;
         $count=0;
         while($bool){
