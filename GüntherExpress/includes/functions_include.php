@@ -308,7 +308,6 @@ function getAllFromCategory($conn,$amount,$category,$shuffle){
         header("location: ../index.php?error=stmtfailed");
         exit();
     }
-    var_dump($itemId);
     for($i=0;$i<count($itemId);$i++){
         mysqli_stmt_bind_param($stmt,"s",$itemId[$i]);
         mysqli_stmt_execute($stmt);
@@ -342,7 +341,7 @@ function showExamples($conn,$amount,$category){
     }
 
     for($i=0;$i<count($item);$i++){
-        echo '<div class="product_category">
+        echo '<div class="product">
             <li><div class="product_name product_info">Produktname:'.$item[$i][1].'</div>
             <a href="product.php?='.$item[$i][0].'">
             <div class="product_image">
@@ -356,7 +355,7 @@ function showExamples($conn,$amount,$category){
    
 
 }
-function showRandomCategory($conn,$amount,$productAmount){
+function showRandomCategoryAndItems($conn,$amount,$productAmount){
     //gibt x=$amount zufällige Kategorien und dessen Produkte in HTML gerechter Sprache wieder
 
 

@@ -12,7 +12,7 @@ if (isset($_SESSION["useruid"])) {
 
 <?php
     
-    showRandomCategory($conn,$categoryAmount=4,$productAmount=1);
+    showRandomCategoryAndItems($conn,$categoryAmount=4,$productAmount=1);
 
 
 ?>
