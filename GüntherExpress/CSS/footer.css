@@ -199,3 +199,28 @@ ul {
         margin-bottom: 2.188rem;
     }
 }
+/* ---------------------------- */
+div.category_item_line {
+    background-color: rgba(22, 134, 185, 0.274);
+    overflow: auto;
+    white-space: nowrap;
+}
+  
+div.category_item_line li {
+    display: inline-block;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    padding: 14px;
+    text-decoration: none;
+}
+  
+div.category_item_line li:hover {
+    background-color: rgba(22, 134, 185, 0.274);
+}
+
+div.product_image img{
+    width: 300px;
+    height: 300px;
+    background-color: rgb(0, 0, 0);
+    object-fit: contain;
+}

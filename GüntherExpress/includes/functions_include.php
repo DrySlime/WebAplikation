@@ -321,14 +321,13 @@ function showItems($conn,$amount,$category){
     }
 
     for($i=0;$i<count($item);$i++){
-        echo '<div class="product">
-                <li><div class="product_name product_info">'.$item[$i][1].'</div>
-                <a href="product.php?id='.$item[$i][0].'">
-                <div class="product_image">
-                    <img src='.$item[$i][2].' alt="'.$item[$i][1].'.png">
-                </div></a>
-            
-            </div><br>';
+        echo '
+                
+                    <li>
+                    <a href="product.php?id='.$item[$i][0].'">
+                    <div class="product_image">
+                        <img src='.$item[$i][2].' alt="'.$item[$i][1].'.png" >
+                    </div></a>';
     }
    
 
@@ -430,7 +429,7 @@ function showChildCategoriesAndItems($conn,$parentCategory,$productAmount){
     
     foreach($categoryName as $cateName){
         echo '<h1>'.$cateName.'</h1>';
-        showItems($conn,$productAmount,$cateName);
+        showItems($conn,$productAmount,$cateName,$imageWidth);
     }
 
 } 
@@ -488,8 +487,8 @@ function showRandomCategoriesAndItems($conn,$amount,$productAmount){
         mysqli_stmt_execute($stmt);
         $resultData = mysqli_stmt_get_result($stmt);
         $row=mysqli_fetch_assoc($resultData);
-        echo '<div class="category_item_line"><ul>';
-        echo '<div class="header_name category_info"><h1>'.$row["category_name"].'</h1></div>';
+        echo '<div class="category_item_line"><h1>'.$row["category_name"].'</h1>';
+        echo '<ul>';
         showItems($conn,$productAmount,$row["category_name"]);
         echo '</ul></div>';
     }
