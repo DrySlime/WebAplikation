@@ -134,7 +134,7 @@ function get___FromCatergory($conn,$whatYouNeed,$amount,$category,$shuffle){
     }
 
     if($shuffle){
-    $sql = "SELECT * FROM product WHERE product_category_id = ? ORDER BY rand() LIMIT ?;";
+    $sql = "SELECT * FROM product WHERE product_category_id = ? LIMIT ?;";
 
     if(!mysqli_stmt_prepare($stmt,$sql)){
         header("location: ../index.php?error=stmtfailed");
@@ -233,50 +233,114 @@ function getProductData($conn, $productID){
     $resultData = mysqli_stmt_get_result($stmt);
     return mysqli_fetch_assoc($resultData);
 }
-function testFunction($conn,$amount,$category,$shuffle){
-    $itemId = get___FromCatergory($conn,"id",$amount,$category,$shuffle);
-    $itemName = get___FromCatergory($conn,"product_name",$amount,$category,$shuffle);
-    $itemImage = get___FromCatergory($conn,"product_image",$amount,$category,$shuffle);
-    $itemQty = get___FromCatergory($conn,"qty_in_stock",$amount,$category,$shuffle);
-    $itemPrice = get___FromCatergory($conn,"price",$amount,$category,$shuffle);
-    $itemDescription = get___FromCatergory($conn,"description",$amount,$category,$shuffle);
 
-    for($i=0;$i<count($itemId);$i++){
-        $item[]=$itemId[$i];
-        $item[]=$itemName[$i];
-        $item[]=$itemImage[$i];
-        $item[]=$itemQty[$i];
-        $item[]=$itemPrice[$i];
-        $item[]=$itemDescription[$i];
-        $itemArr[]=$item;
-        unset($item);
+function getAllFromCategory($conn,$amount,$category,$shuffle){
+
+    //returns a 3d Array filled with items
+    // id=0
+    // name=1
+    // image=2
+    // qty=3
+    // price=4
+    // description=5
+    // Example: get image of the first item $itemArr[0][2];
+    $product_id= "SELECT id FROM product_category WHERE category_name = ?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$product_id)){
+        header("location: ../index.php?error=stmtfailed");
+        exit();
     }
+    mysqli_stmt_bind_param($stmt,"s", $category);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    if($row = mysqli_fetch_assoc($resultData)){
+        $product_id=$row["id"];
+    }else{
+        $result = false;
+        return $result;
+    }
+
     if($shuffle){
-        shuffle($itemArr);
-    }
-    return $itemArr;
+        $sql = "SELECT id FROM product WHERE product_category_id = ? ORDER BY rand() LIMIT ?;";
 
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            header("location: ../index.php?error=stmtfailed");
+            exit();
+        }
+    
+        mysqli_stmt_bind_param($stmt,"ss",$product_id,$amount);
+    }else{
+        $sql = "SELECT id FROM product WHERE product_category_id = ? LIMIT ?;";
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            header("location: ../index.php?error=stmtfailed");
+            exit();
+        }
+        
+        mysqli_stmt_bind_param($stmt,"ss",$product_id,$amount);
+    }
+    mysqli_stmt_execute($stmt);
+    
+    $resultData = mysqli_stmt_get_result($stmt);
+    
+    
+
+    //Error handling: falls man mehr produkte ausgegeben haben will als existieren
+    if($amount>mysqli_num_rows($resultData)){
+        $amount=mysqli_num_rows($resultData);
+    }
+
+
+    if(mysqli_num_rows($resultData)>0){
+        while($row =mysqli_fetch_assoc($resultData)){
+            $itemId[]=$row["id"];
+        }
+    }else{
+        $result = false;
+        return $result;
+    }
+
+    $sql = "SELECT * FROM product WHERE id = ?;";
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../index.php?error=stmtfailed");
+        exit();
+    }
+    var_dump($itemId);
+    for($i=0;$i<count($itemId);$i++){
+        mysqli_stmt_bind_param($stmt,"s",$itemId[$i]);
+        mysqli_stmt_execute($stmt);
+        $resultData = mysqli_stmt_get_result($stmt);
+        $row =mysqli_fetch_assoc($resultData);
+        
+        $itemAttribute[]=$row["id"];
+        $itemAttribute[]=$row["product_name"];
+        $itemAttribute[]=$row["product_image"];
+        $itemAttribute[]=$row["qty_in_stock"];
+        $itemAttribute[]=$row["price"];
+        $itemAttribute[]=$row["description"];
+        $itemArr[]=$itemAttribute;
+        unset($itemAttribute);
+    }
+    
+    mysqli_stmt_close($stmt);
+
+
+    return $itemArr;
 }
 function showExamples($conn,$amount,$category){
 
     //Gibt $amount viele Attribute aus der Datenbank in einer
     //html gerechten sprache wieder zurück.
     
-    // $itemId = get___FromCatergory($conn,"id",$amount,$category);
-    // $itemName = get___FromCatergory($conn,"product_name",$amount,$category);
-    // $itemImage = get___FromCatergory($conn,"product_image",$amount,$category);
-    // $itemQty = get___FromCatergory($conn,"qty_in_stock",$amount,$category);
-    // $itemPrice = get___FromCatergory($conn,"price",$amount,$category);
-    // $itemDescription = get___FromCatergory($conn,"description",$amount,$category);
-    
-    $item=testFunction($conn,$amount,$category,true);
+    $item=getAllFromCategory($conn,$amount,$category,true);
 
     if($amount>count($item)){
         $amount=count($item);
     }
 
-    
-    
     for($i=0;$i<count($item);$i++){
         echo '<div class="product_category">
             <li><div class="product_name product_info">Produktname:'.$item[$i][1].'</div>
@@ -294,7 +358,7 @@ function showExamples($conn,$amount,$category){
 }
 function showRandomCategory($conn,$amount,$productAmount){
     //gibt x=$amount zufällige Kategorien und dessen Produkte in HTML gerechter Sprache wieder
-    
+
 
 
     $sql = "SELECT * FROM product_category;";
