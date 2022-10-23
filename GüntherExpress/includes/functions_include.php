@@ -213,14 +213,6 @@ function showCategoryList($conn){
 
 }
 
-<<<<<<< HEAD
-    mysqli_stmt_prepare($stmt,$sql);
-    mysqli_stmt_bind_param($stmt,"s",$productID,);
-    mysqli_stmt_execute($stmt);
-
-    $resultData = mysqli_stmt_get_result($stmt);
-    return mysqli_fetch_assoc($resultData);
-}
 
 function getAllFromCategory($conn,$amount,$category,$shuffle){
 
@@ -317,8 +309,6 @@ function getAllFromCategory($conn,$amount,$category,$shuffle){
 
     return $itemArr;
 }
-=======
->>>>>>> 2f996622f124854b6ea5777f80da690394ef3971
 function showExamples($conn,$amount,$category){
 
     //Gibt $amount viele Attribute aus der Datenbank in einer
