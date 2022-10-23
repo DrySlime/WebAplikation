@@ -1,0 +1,168 @@
+body {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+img {
+    width: 100px;
+    height: 100px;
+}
+
+
+
+
+
+.container {
+
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-top: auto;
+    margin-left: initial;
+}
+
+.profile_icon {
+    padding: 20px;
+    border-color: dodgerblue;
+    border-width: 5px;
+    border-style: solid;
+    border-radius: 5px;
+    border-spacing: 100px;
+    margin: 5px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-transition: all .3s ease-out;
+    transition: all .3s ease-out;
+    will-change: transform;
+
+}
+
+.icon:hover .cover {
+    -webkit-transform: translateY(-14px) scale(1.04);
+    transform: translateY(-14px) scale(1.04);
+}
+
+
+
+.cover {
+    top: 20px;
+    transition: all 400ms ease-in-out;
+    will-change: transform;
+}
+
+.cover img {
+    transition: all 260ms ease-in-out;
+}
+
+
+
+.icon .cover::after {
+
+    content: "";
+    z-index: -50;
+    position: absolute;
+    top: 20px;
+    left: -20px;
+    display: block;
+    width: 100px;
+    height: 100px;
+    opacity: 0;
+    background-position: center;
+    background-size: 100px;
+    filter: blur(24px);
+    transition: all 260ms ease-in-out;
+    will-change: transform;
+    transform: scale(.6);
+}
+
+.icon:hover .cover::after {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.profile .cover::after {
+    background-image: url('https://img.icons8.com/material/344/admin-settings-male.png');
+}
+
+.password .cover::after {
+    background-image: url('https://img.icons8.com/material/452/user-lock.png');
+}
+
+.address .cover::after {
+    background-image: url('https://img.icons8.com/material/344/address--v2.png');
+}
+
+.cart .cover::after {
+    background-image: url('https://img.icons8.com/material/344/shopping-cart.png');
+}
+
+.icon_text {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-align: center;
+
+}
+
+.headline {
+    background-color: dodgerblue;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: left;
+    color: aliceblue;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: x-large;
+}
+
+.tags {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+
+
+.profile_info {
+    display: none;
+}
+
+.change_profile{
+    display: none;
+}
+
+
+.manage_password {
+    display: none;
+}
+
+.address_info {
+    display: none;
+}
+
+.change_address{
+    display: none;
+}
+
+.cart_info {
+    display: none;
+}
+
+.houseno_info_tag {
+    float: right;
+    width: 20%;
+}
