@@ -1,4 +1,4 @@
-
+<head><link rel="stylesheet" href="CSS/index.css"></head>
 <?php
     include_once 'header.php';
     require_once 'includes/dbh_include.php';
