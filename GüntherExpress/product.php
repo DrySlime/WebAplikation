@@ -6,7 +6,7 @@ require_once 'includes/product_include.php';
 
 <?php
         //ID des Produkts wird aus der URL extrahiert
-        $productID = getURLParameter()['pid'];
+        $productID = $_GET["id"];
         $productData = getProductData($conn, $productID);
         
         if(is_null($productData)){
@@ -15,7 +15,7 @@ require_once 'includes/product_include.php';
         }
 
         //Produktdaten werden zur anzeige gespeichert
-        $name = $productData["name"];
+        $name = $productData["product_name"];
         $description = $productData["description"];
         $price = $productData["price"];
         $image = $productData["product_image"];

@@ -322,14 +322,12 @@ function showItems($conn,$amount,$category){
 
     for($i=0;$i<count($item);$i++){
         echo '<div class="product">
-            <li><div class="product_name product_info">Produktname:'.$item[$i][1].'</div>
-            <a href="product.php?='.$item[$i][0].'">
-            <div class="product_image">
-            <img src='.$item[$i][2].' alt="'.$item[$i][1].'.png">
-            </div></a>
-            <div class="product_qty product_info">Stückzahl noch vorhanden:' .$item[$i][3].'</div>
-            <div class="product_price product_info">Preis:' .$item[$i][4].'</div>
-            <div class="product_description product_info">Produktbeschreibung:' .$item[$i][5].'</div>
+                <li><div class="product_name product_info">'.$item[$i][1].'</div>
+                <a href="product.php?id='.$item[$i][0].'">
+                <div class="product_image">
+                    <img src='.$item[$i][2].' alt="'.$item[$i][1].'.png">
+                </div></a>
+            
             </div><br>';
     }
    
@@ -467,7 +465,7 @@ function showRandomCategoriesAndItems($conn,$amount,$productAmount){
     
     $i=0;
     $uniqueTMP[]=array();
-    var_dump($uniqueTMP);
+    
     array_shift($uniqueTMP);
 
     $uniqueTMP=range(1,$maxAmount);
