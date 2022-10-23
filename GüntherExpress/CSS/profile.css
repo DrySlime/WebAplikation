@@ -32,7 +32,7 @@ img {
     margin-left: initial;
 }
 
-.profile_icon {
+.icon {
     padding: 20px;
     border-color: dodgerblue;
     border-width: 5px;
@@ -138,7 +138,7 @@ img {
 
 
 .profile_info {
-    display: none;
+    display: inline;
 }
 
 .change_profile{

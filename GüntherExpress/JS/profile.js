@@ -1,17 +1,26 @@
 function showProfile() {
-    var profile = document.getElementsByClassName('profile_icon');
+    var profile_info = document.getElementsById('profile_info');
 
-    if (profile.style.height == '') {
-        profile.style.height = '800px';
-        profile.style.borderSpacing = '1000px';
-        alert(test);
+    if (profile_info.style.display === 'none') {
+        profile_info.style.display = 'inline';
+        alert(Text);
     }
 
     else{
-        profile.style.height = '';
+        profile_info.style.display = 'none';
     }
        
 
 }
+
+function showProfileEdit() {
+    alert('help');
+    var profile_info = document.getElementsById('profile_info');
+    var change_profile = document.getElementsById('change_profile');
+    alert('help');
+    profile_info.style.display = 'none';
+    change_profile.style.display = 'inline';
+}
+
 
 
