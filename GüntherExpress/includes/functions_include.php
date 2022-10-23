@@ -309,7 +309,7 @@ function getAllFromCategory($conn,$amount,$category,$shuffle){
 
     return $itemArr;
 }
-function showExamples($conn,$amount,$category){
+function showItems($conn,$amount,$category){
 
     //Gibt $amount viele Attribute aus der Datenbank in einer
     //html gerechten sprache wieder zurück.
@@ -335,7 +335,101 @@ function showExamples($conn,$amount,$category){
    
 
 }
-function showRandomCategoryAndItems($conn,$amount,$productAmount){
+function returnParentIds($conn,$parentCategory){
+    //returns all  parent Id in an array
+    $sql = "SELECT parent_category_id FROM product_category WHERE category_name=?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../category.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$parentCategory);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    if(mysqli_num_rows($resultData)>0){
+        while($row =mysqli_fetch_assoc($resultData)){
+            $parentId[]=$row["parent_category_id"];
+        }
+    }
+    mysqli_stmt_close($stmt);
+    return $parentId;
+}
+function returnChildrenIds($conn,$parentCategory){
+    //returns all  child Ids in an array
+    $parentId=returnParentIds($conn,$parentCategory);
+    
+    $sql = "SELECT id FROM product_category WHERE parent_category_id=?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../category.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$parentId[0]);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+
+    if(mysqli_num_rows($resultData)>0){
+        while($row =mysqli_fetch_assoc($resultData)){
+            $childId[]=$row["id"];
+        }
+        unset($childId[0]);
+    }
+    for($i=1;$i<count($childId)+1;$i++){
+        if($parentCategory==convertIdToCategoryName($conn,$childId[$i])){
+            $tmp=$childId[$i];
+            unset($childId);
+            $childId[1]=$tmp;
+        }
+    }
+    mysqli_stmt_close($stmt);
+    return $childId;
+}
+function convertIdToCategoryName($conn,$id){
+    //converts an id into a categoryname
+    //returns a string
+    $sql = "SELECT category_name FROM product_category WHERE id=?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../category.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$id);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    if(mysqli_num_rows($resultData)>0){
+        $row =mysqli_fetch_assoc($resultData);
+        $categoryName=$row["category_name"];
+    }
+    mysqli_stmt_close($stmt);
+    return $categoryName;
+
+}
+function showChildCategoriesAndItems($conn,$parentCategory,$productAmount){
+    $childId=returnChildrenIds($conn,$parentCategory);
+    for($i=1;$i<count($childId)+1;$i++){
+        $categoryName[]=convertIdToCategoryName($conn,$childId[$i]);
+    }
+    
+    foreach($categoryName as $cateName){
+        echo '<h1>'.$cateName.'</h1>';
+        showItems($conn,$productAmount,$cateName);
+    }
+
+} 
+function showRandomCategoriesAndItems($conn,$amount,$productAmount){
     //gibt x=$amount zufällige Kategorien und dessen Produkte in HTML gerechter Sprache wieder
 
 
@@ -390,7 +484,7 @@ function showRandomCategoryAndItems($conn,$amount,$productAmount){
         $row=mysqli_fetch_assoc($resultData);
         echo '<div class="category_item_line"><ul>';
         echo '<div class="header_name category_info"><h1>'.$row["category_name"].'</h1></div>';
-        showExamples($conn,$productAmount,$row["category_name"]);
+        showItems($conn,$productAmount,$row["category_name"]);
         echo '</ul></div>';
     }
     
