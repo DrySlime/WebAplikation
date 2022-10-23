@@ -381,13 +381,19 @@ function returnChildrenIds($conn,$parentCategory){
         while($row =mysqli_fetch_assoc($resultData)){
             $childId[]=$row["id"];
         }
-        unset($childId[0]);
+        
+        if($childId[0]==$parentId[0]){
+        
+            array_shift($childId);
+        }
+        
     }
-    for($i=1;$i<count($childId)+1;$i++){
+    for($i=0;$i<count($childId);$i++){
+        
         if($parentCategory==convertIdToCategoryName($conn,$childId[$i])){
             $tmp=$childId[$i];
-            unset($childId);
-            $childId[1]=$tmp;
+            array_shift($childId);
+            $childId[0]=$tmp;
         }
     }
     mysqli_stmt_close($stmt);
@@ -419,7 +425,8 @@ function convertIdToCategoryName($conn,$id){
 }
 function showChildCategoriesAndItems($conn,$parentCategory,$productAmount){
     $childId=returnChildrenIds($conn,$parentCategory);
-    for($i=1;$i<count($childId)+1;$i++){
+    
+    for($i=0;$i<count($childId);$i++){
         $categoryName[]=convertIdToCategoryName($conn,$childId[$i]);
     }
     
@@ -460,7 +467,8 @@ function showRandomCategoriesAndItems($conn,$amount,$productAmount){
     
     $i=0;
     $uniqueTMP[]=array();
-    unset($uniqueTMP[0]);
+    var_dump($uniqueTMP);
+    array_shift($uniqueTMP);
 
     $uniqueTMP=range(1,$maxAmount);
     shuffle($uniqueTMP);
