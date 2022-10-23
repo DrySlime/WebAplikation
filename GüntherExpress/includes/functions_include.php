@@ -212,20 +212,8 @@ function showCategoryList($conn){
     echo '</ul></div>';
 
 }
-//URl-Parameter werden ausgelesen
-function getURLParameter(){
-    $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
-    $url_components = parse_url($url);
-    parse_str($url_components['query'], $params);
-    return $params;
-}
 
-//Produktdaten werden aus der Datenbank aufgerufen
-function getProductData($conn, $productID){
-
-    $sql = "SELECT * FROM Artikel WHERE ArtikelID = ?;";
-    $stmt = mysqli_stmt_init($conn);
-
+<<<<<<< HEAD
     mysqli_stmt_prepare($stmt,$sql);
     mysqli_stmt_bind_param($stmt,"s",$productID,);
     mysqli_stmt_execute($stmt);
@@ -329,6 +317,8 @@ function getAllFromCategory($conn,$amount,$category,$shuffle){
 
     return $itemArr;
 }
+=======
+>>>>>>> 2f996622f124854b6ea5777f80da690394ef3971
 function showExamples($conn,$amount,$category){
 
     //Gibt $amount viele Attribute aus der Datenbank in einer

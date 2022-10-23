@@ -1,7 +1,7 @@
 <?php
 include_once 'header.php';
 include_once 'includes/dbh_include.php';
-require_once 'includes/functions_include.php';
+require_once 'includes/product_include.php';
 ?>
 
 <?php
@@ -15,17 +15,35 @@ require_once 'includes/functions_include.php';
         }
 
         //Produktdaten werden zur anzeige gespeichert
-        $aName = $productData["Name"];
-        $aBeschreibung = $productData["Beschreibung"];
-        $aPreis = $productData["Preis"];
-        // Hier noch ein Bild hinzufügen
+        $name = $productData["name"];
+        $description = $productData["description"];
+        $price = $productData["price"];
+        $image = $productData["product_image"];
+        $quantaty = $productData["qty_in_stock"];
+        
 ?>
 
 
 <section>
-        <h2> <?php echo $aName ?> </h2>
-        <?php echo $aBeschreibung ?> <br>
-        <b><?php echo $aPreis ?> Euro</b>
-        <img src=""> <br>
+        <h2> <?php echo $name ?> </h2>
+        <?php echo $description ?> <br>
+        <b><?php echo $price ?> Euro</b>
+        <img src=<?php echo $image;?>> <br>
+
+        
+        <b> Menge: </b>
+        <select>
+                <?php
+                for ($i = 0; $i <= $quantaty; $i++) {
+                        echo "<option value=".$i.">".$i."</option>";
+                    }
+                ?>
+        </select>
+        <br>
         <button type="button"> In den Warenkorb </button>
+
 </section>
+
+<?php
+include_once 'footer.php';
+?>
