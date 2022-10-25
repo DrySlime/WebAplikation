@@ -105,8 +105,102 @@ function loginUser($conn,$password,$username){
         header("location: ../index.php?");
         exit();
     }
+    
 }
 
+
+function get___FromCatergory($conn,$whatYouNeed,$amount,$category){
+
+    //Get all Data from a catagory
+    //Hier nen Beispiel, du suchst die Bilder von der kategorie Schuhe
+    //get___FromCatergory($conn,"product_image","Schuhe")
+
+    $product_id= "SELECT id FROM product_category WHERE category_name = ?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$product_id)){
+        header("location: ../index.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt,"s", $category);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    if($row = mysqli_fetch_assoc($resultData)){
+        $product_id=$row["id"];
+    }else{
+        $result = false;
+        return $result;
+    }
+
+    $sql = "SELECT * FROM product WHERE product_category_id = ?;";
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../index.php?error=stmtfailed");
+        exit();
+    }
+    
+    mysqli_stmt_bind_param($stmt,"s",$product_id);
+    mysqli_stmt_execute($stmt);
+    
+    $resultData = mysqli_stmt_get_result($stmt);
+    
+    $itemAttribute[]=array();
+
+    //Error handling: falls man mehr produkte ausgegeben haben will als existieren
+    if($amount>mysqli_num_rows($resultData)){
+        $amount=mysqli_num_rows($resultData);
+    }
+
+    if(mysqli_num_rows($resultData)>0){
+        
+        for($i=1;$i<$amount+1;$i++){
+            $row =mysqli_fetch_assoc($resultData);
+            $itemAttribute[]=$row[$whatYouNeed];
+        }
+        return $itemAttribute;
+    }else{
+        $result = false;
+        return $result;
+    }
+    mysqli_stmt_close($stmt);
+}
+function getCategoryList($conn){
+
+    //Get all names from the product_category table in an array
+
+    $sql= "SELECT * FROM product_category;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../index.php?error=stmtfailed");
+        exit();
+    }
+    
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    if(mysqli_num_rows($resultData)>0){
+
+        while($row =mysqli_fetch_assoc($resultData)){
+            $array[]=$row["category_name"];
+        }
+        return $array;
+    }else{
+        $result = false;
+        return $result;
+    }
+    mysqli_stmt_close($stmt);
+}
+function showCategoryList($conn){
+    $arr = getCategoryList($conn);
+    echo '<div class="category_list"><ul>';
+    for($i=0;$i<count($arr);$i++){
+        echo '<li>'.$arr[$i].'<br>';
+    }
+    echo '</ul></div>';
+
+}
 //URl-Parameter werden ausgelesen
 function getURLParameter(){
     $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
@@ -127,4 +221,116 @@ function getProductData($conn, $productID){
 
     $resultData = mysqli_stmt_get_result($stmt);
     return mysqli_fetch_assoc($resultData);
+}
+function showExamples($conn,$amount,$category){
+
+    //Gibt viele Attribute aus der Datenbank in einer ...
+    //html gerechten sprache wieder zurück.
+    
+    $itemName = get___FromCatergory($conn,"product_name",$amount,$category);
+    $itemImage = get___FromCatergory($conn,"product_image",$amount,$category);
+    $itemQty = get___FromCatergory($conn,"qty_in_stock",$amount,$category);
+    $itemPrice = get___FromCatergory($conn,"price",$amount,$category);
+    $itemDescription = get___FromCatergory($conn,"description",$amount,$category);
+
+    if($amount>count($itemName)-1){
+        $amount=count($itemName)-1;
+    }
+
+    echo '<div class="'.$category.'_category"><ul>';
+    for($i=1;$i<=$amount;$i++){
+        echo '<li>Produktname:'.$itemName[$i].'<br>
+            <img src='.$itemImage[$i].'><br>
+            Stückzahl noch vorhanden:' .$itemQty[$i].'<br>
+            Preis:' .$itemPrice[$i].'<br>
+            Produktbeschreibung:' .$itemDescription[$i].'<br>';
+    }
+    echo '</ul></div>';
+
+}
+function showRandomCategory($conn,$amount){
+    //gibt zufällige Kategorien und dessen Produkte in HTML gerechter Sprache wieder
+
+
+    $sql = "SELECT * FROM product_category;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../index.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    if(mysqli_num_rows($resultData)>0){
+        while($row =mysqli_fetch_assoc($resultData)){
+            $array[]=$row["id"];
+        }
+        $array=array_unique($array);
+    }
+    
+    $maxAmount=count($array)-parentCategoryAmount($conn,1);
+    if($maxAmount<$amount){
+        $amount=$maxAmount;
+    }
+    
+    
+    $i=0;
+    $uniqueTMP[]=array();
+    unset($uniqueTMP[0]);
+
+    $uniqueTMP=range(1,$maxAmount);
+    shuffle($uniqueTMP);
+
+    foreach($uniqueTMP as $var){
+        $unique[]=$var+parentCategoryAmount($conn,1);
+    }
+
+    foreach($unique as $var){
+        
+        $sql = "SELECT category_name FROM product_category WHERE id = ?;";
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            header("location: ../index.php?error=stmtfailed");
+            exit();
+        }
+        mysqli_stmt_prepare($stmt,$sql);
+        mysqli_stmt_bind_param($stmt,"s",$var);
+        mysqli_stmt_execute($stmt);
+        $resultData = mysqli_stmt_get_result($stmt);
+        $row=mysqli_fetch_assoc($resultData);
+        echo '<h1>'.$row["category_name"].'</h1>';
+        
+        showExamples($conn,3,$row["category_name"]);
+    }
+    
+    mysqli_stmt_close($stmt);
+}
+function parentCategoryAmount($conn,$var){
+        $bool=true;
+        $count=0;
+        while($bool){
+            $sql = "SELECT * FROM product_category WHERE id = ? AND parent_category_id = ?;";
+            $stmt = mysqli_stmt_init($conn);
+
+            if(!mysqli_stmt_prepare($stmt,$sql)){
+                header("location: ../index.php?error=stmtfailed");
+                exit();
+            }
+
+            mysqli_stmt_bind_param($stmt,"ss",$var,$var);
+            mysqli_stmt_execute($stmt);
+
+            $resultData = mysqli_stmt_get_result($stmt);
+
+            if(mysqli_num_rows($resultData)>0){
+                $var++;
+                $count++;
+            }else{
+                $bool = false;
+            }
+        }
+        mysqli_stmt_close($stmt);
+        return $count;
 }
