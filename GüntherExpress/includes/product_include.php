@@ -1,9 +1,6 @@
 
-
-
-
-
 <?php
+
 //URl-Parameter werden ausgelesen
 function getURLParameter(){
     $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
@@ -26,7 +23,5 @@ function getProductData($conn, $productID){
     return mysqli_fetch_assoc($resultData);
 }
 
-function insert_into_shopping_card(){
-}
 
 ?>

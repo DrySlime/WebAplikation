@@ -6,7 +6,7 @@ require_once 'includes/product_include.php';
 
 <?php
         //ID des Produkts wird aus der URL extrahiert
-        $productID = $_GET["id"];
+        $productID = $_GET["pid"];
         $productData = getProductData($conn, $productID);
         
         if(is_null($productData)){
@@ -15,7 +15,7 @@ require_once 'includes/product_include.php';
         }
 
         //Produktdaten werden zur anzeige gespeichert
-        $name = $productData["product_name"];
+        $name = $productData["name"];
         $description = $productData["description"];
         $price = $productData["price"];
         $image = $productData["product_image"];
@@ -32,7 +32,7 @@ require_once 'includes/product_include.php';
 
         
         <b> Menge: </b>
-        <select>
+        <select id="selectQuantaty">
                 <?php
                 for ($i = 0; $i <= $quantaty; $i++) {
                         echo "<option value=".$i.">".$i."</option>";
@@ -40,7 +40,19 @@ require_once 'includes/product_include.php';
                 ?>
         </select>
         <br>
-        <button type="button"> In den Warenkorb </button>
+
+        <script> 
+        function getSelectValue(){
+                document.getElementById("buyQuantaty").value = document.getElementById("selectQuantaty").value; 
+        }
+        </script>
+
+        <form action="shopping_cart_submit.php" onsubmit='getSelectValue()' method="post">
+                <input type="hidden" name="pID" value=<?php echo "$productID" ?>>
+                <input type="hidden" name="quantaty" id="buyQuantaty">
+                <input type="hidden" name="userID" value="1">
+                <input type="submit" value="In den Warenkorb" name="into_shopping_cart">
+        </form>
 
 </section>
 
