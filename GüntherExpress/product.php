@@ -6,7 +6,7 @@ require_once 'includes/product_include.php';
 
 <?php
         //ID des Produkts wird aus der URL extrahiert
-        $productID = $_GET["pid"];
+        $productID = $_GET["id"];
         $productData = getProductData($conn, $productID);
         $userID = $_SESSION['useruid'];
         
