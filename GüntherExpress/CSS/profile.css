@@ -10,8 +10,8 @@ body {
 }
 
 img {
-    width: 100px;
-    height: 100px;
+    width: 6.25rem;
+    height: 6.25rem;
     display: flex;
     -webkit-box-align: center;
     -ms-flex-align: center;
@@ -21,7 +21,7 @@ img {
 
 
 .container {
-
+    user-select: none;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -37,13 +37,14 @@ img {
 }
 
 .icon {
-    padding: 20px;
+    height: 9.375rem;
+    padding: 1.25rem;
     border-color: dodgerblue;
-    border-width: 5px;
+    border-width: 0.313rem;
     border-style: solid;
-    border-radius: 5px;
-    border-spacing: 100px;
-    margin: 5px;
+    border-radius: 0.313rem;
+    border-spacing: 6.25rem;
+    margin: 0.313rem;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -61,14 +62,14 @@ img {
 }
 
 .icon:hover .cover {
-    -webkit-transform: translateY(-14px) scale(1.04);
-    transform: translateY(-14px) scale(1.04);
+    -webkit-transform: translateY(-0.875rem) scale(1.04);
+    transform: translateY(-0.875rem) scale(1.04);
 }
 
 
 
 .cover {
-    top: 20px;
+    top: 1.25rem;
     transition: all 400ms ease-in-out;
     will-change: transform;
 }
@@ -84,15 +85,15 @@ img {
     content: "";
     z-index: -50;
     position: absolute;
-    top: 20px;
-    left: -20px;
+    top: 1.25rem;
+    left: -1.25rem;
     display: block;
-    width: 100px;
-    height: 100px;
+    width: 6.25rem;
+    height: 6.25rem;
     opacity: 0;
     background-position: center;
-    background-size: 100px;
-    filter: blur(24px);
+    background-size: 6.25rem;
+    filter: blur(1.5rem);
     transition: all 260ms ease-in-out;
     will-change: transform;
     transform: scale(.6);
@@ -104,7 +105,7 @@ img {
 }
 
 .profile .cover::after {
-    background-image: url('https://img.icons8.com/material/344/admin-settings-male.png');
+background-image: url('..\\img\\icons\\profile_icon.png');
 }
 
 .password .cover::after {
@@ -127,8 +128,8 @@ img {
 
 .headline {
     background-color: dodgerblue;
-    border-radius: 10px;
-    padding: 10px;
+    border-radius: 0.625rem;
+    padding: 0.625rem;
     text-align: left;
     color: aliceblue;
     font-size: x-large;
@@ -137,11 +138,11 @@ img {
 
 
 
-#profile_info {
+.profile_info {
     display: none;
 }
 
-.change_profile{
+.change_profile {
     display: none;
 }
 
@@ -154,7 +155,7 @@ img {
     display: none;
 }
 
-.change_address{
+.change_address {
     display: none;
 }
 
@@ -167,18 +168,18 @@ img {
     width: 20%;
 }
 
-.btn{
-    margin-top: 10px;
-    border-radius: 50px;
+.btn {
+    margin-top: 0.625rem;
+    border-radius: 3.125rem;
     border-color: dodgerblue;
     background-color: dodgerblue;
-    color:aliceblue;   
+    color: aliceblue;
 }
 
-input{
-    height: 20px;
-    margin: 2px;
-    padding: 5px;
-    border-radius: 5px;
+input {
+    height: 1.25rem;
+    margin: 0.125rem;
+    padding: 0.313rem;
+    border-radius: 0.313rem;
     border-color: dodgerblue;
 }
