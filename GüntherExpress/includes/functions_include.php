@@ -201,6 +201,8 @@ function showCategoryList($conn){
     echo '</ul></div>';
 
 }
+
+
 //URl-Parameter werden ausgelesen
 function getURLParameter(){
     $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
