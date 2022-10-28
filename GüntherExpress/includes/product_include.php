@@ -23,5 +23,14 @@ function getProductData($conn, $productID){
     return mysqli_fetch_assoc($resultData);
 }
 
+function show_product($name, $description, $price, $image){
+
+    echo 
+    '<h2>'  .$name.  '</h2>
+     <div>'  .$description.  '</div> <br>
+     <div>'  .$price.  'Euro</div>
+     <img src='  .$image.'> <br>';
+
+}
 
 ?>
