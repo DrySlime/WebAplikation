@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
 <link rel="stylesheet" href="CSS/profile.css">
-<link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
 <head>
     <script type="application/javascript" src="JS\profile.js"></script>
@@ -19,33 +18,29 @@
             </div>
             <div class="profile_info">
                 <div class="headline">Deine Daten</div>
-                /<div class="tags username_tag">Nutzername:</div>
+                
+                <!-- <div class="tags username_tag">Nutzername:</div>
                 <div class="tags username_info_tag">
                     <?php 
-                    echo "#TODO $DB_USERNAME" ;
-                   ?>
-                </div>
+                    //echo "#TODO $DB_USERNAME" ;
+                    ?>
+                </div> -->
 
                 <div class="tags name_tag">Name:</div>
                 <div class="tags name_info_tag">
-                    <?php 
-                     echo "#TODO DB_NAME" ;
-                    ?>
+                #TODO <?php echo  $DB_NAME; ?>
                 </div>
 
                 <div class="tags surname_tag">Nachame:</div>
                 <div class="tags surname_info_tag">
-                    <?php 
-                    echo "#TODO $DB_SURNAME" ;
-                   ?>
+                #TODO<?php echo  $DB_SURNAME; ?>
                 </div>
 
                 <div class="tags email_tag">Email-Adresse:</div>
                 <div class="tags email_info_tag">
-                    <?php 
-                    echo "#TODO $DB_EMAIL" ;
-                   ?>
+                #TODO<?php echo  $DB_EMAIL; ?>
                 </div>
+
                 <button class="btn" name="to_edit_profile_btn" onclick="function showProfileEdit()">Profildaten
                     ändern</button>
             </div>
@@ -53,14 +48,12 @@
                 <div class="headline">Deine Daten verändern</div>
                 <form action="#TODO" method="post">
                     <div class="tags name_tag">Name:</div>
-                    <input type="text" name="name_change" class="name_change" value="echo  #TODO $DB_USERNAME"><br>
+                    <input type="text" name="name_change" class="name_change" value="#TODO <?php  echo $DB_USERNAME ?> "><br>
                     <div class="tags surname_tag">Nachame:</div>
-                    <input type="text" name="surname_change" class="surname_change" value="#TODO DB_SURNAME"><br>
+                    <input type="text" name="surname_change" class="surname_change" value="#TODO <?php echo $DB_SURNAME ?>"><br>
                     <div class="tags email_tag">Email-Adresse:</div>
-                    <input type="email" name="email_change" class="email_change" value="#TODO DB_EMAIL"
-                        required><br>
-                    <button class="btn" type="submit" name="change_profile_btn" onclick="#TODO">Profildaten
-                        ändern</button>
+                    <input type="email" name="email_change" class="email_change" value="#TODO <?php echo $DB_EMAIL ?>" required><br>
+                    <button class="btn" type="submit" name="change_profile_btn" onclick="#TODO">Profildaten abschicken</button>
                 </form>
             </div>
         </div>

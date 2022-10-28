@@ -143,7 +143,7 @@ background-image: url('..\\img\\icons\\profile_icon.png');
 }
 
 .change_profile {
-    display: none;
+    display: inline;
 }
 
 
@@ -169,8 +169,10 @@ background-image: url('..\\img\\icons\\profile_icon.png');
 }
 
 .btn {
+    font-size: 2rem;
+    padding: 0.5rem;
     margin-top: 0.625rem;
-    border-radius: 3.125rem;
+    border-radius: 2rem;
     border-color: dodgerblue;
     background-color: dodgerblue;
     color: aliceblue;
