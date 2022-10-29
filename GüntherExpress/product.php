@@ -29,7 +29,7 @@ require_once 'includes/product_include.php';
         <!-- Darstellung des Produkts -->
         <div>
                 <div>
-                <?php show_product($name, $description, $price, $image); ?>
+                <?php showProduct($name, $description, $price, $image); ?>
                 </div>
 
                 <!-- Select Tag um die Menge auszuwählen -->
@@ -52,7 +52,7 @@ require_once 'includes/product_include.php';
 
                 <!-- Formula um DAten an den Server zu schicken -->
                 
-                <form action="shopping_cart_submit.php" onsubmit='getSelectValue()' method="post">
+                <form action="shopping_cart_insert.php" onsubmit='getSelectValue()' method="post">
                         <input type="hidden" name="pID" value=<?php echo "$productID" ?>>
                         <input type="hidden" name="pName" value=<?php echo "$name" ?>>
                         <input type="hidden" name="quantaty" id="buyQuantaty">

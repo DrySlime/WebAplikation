@@ -1,5 +1,6 @@
 <?php
 include 'includes/dbh_include.php';
+include 'includes/functions_include.php';
 
 
 // Gesendete Daten
@@ -11,7 +12,7 @@ $image = $_POST['image'];
 
 
 
-$userId = getUserId($conn, $userName);
+$userId = getUserIdFromUserName($conn, $userName);
 insert_into_cart($conn, $userId, $productId, $quantaty);
 
 
@@ -29,20 +30,7 @@ function insert_into_cart($conn, $userId, $productId, $quantaty){
     mysqli_stmt_close($stmt);
 }
 
-//Username wird in UserId umgewandelt
-function getUserId($conn, $userName){
 
-    $sql = "SELECT * FROM site_user WHERE user_uid = ?;";
-    $stmt = mysqli_stmt_init($conn);
-
-    mysqli_stmt_prepare($stmt,$sql);
-    mysqli_stmt_bind_param($stmt,"s",$userName,);
-    mysqli_stmt_execute($stmt);
-
-    $resultData = mysqli_stmt_get_result($stmt);
-
-    return mysqli_fetch_assoc($resultData)["id"];
-}
 
 
 
