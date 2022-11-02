@@ -42,3 +42,10 @@ function insert_into_cart($conn, $userId, $productId, $quantaty){
 <h2> <?php echo $productName ?> </h2>
 <img src=<?php echo $image;?>> <br>
 
+<form action="index.php">
+    <input type="button" value="Weiter einkaufen">
+</form>
+
+<form action="shopping_cart.php">
+    <input type="button" value="Zum Einkaufswagen">
+</form>
