@@ -473,9 +473,9 @@ function showRandomCategoriesAndItems($conn,$amount,$productAmount){
     foreach($uniqueTMP as $var){
         $unique[]=$var+parentCategoryAmount($conn,1);
     }
-    
+    $temp=0;
     foreach($unique as $var){
-        
+        $temp+=1;
         $sql = "SELECT category_name FROM product_category WHERE id = ?;";
 
         if(!mysqli_stmt_prepare($stmt,$sql)){
@@ -487,11 +487,20 @@ function showRandomCategoriesAndItems($conn,$amount,$productAmount){
         mysqli_stmt_execute($stmt);
         $resultData = mysqli_stmt_get_result($stmt);
         $row=mysqli_fetch_assoc($resultData);
-        echo '<div class="category_item_line"><h1>'.$row["category_name"].'</h1>';
+        
+        echo '<div class="item_border" id="item_border_'.$temp.'">';
+        echo '<a href="javascript:void(0);"><div class="scroll_left_button" id="scroll_left_button_'.$temp.'">
+                <div class="arrow_left"><img src="img/arrow_left.png"></div>
+            </div></a>';
+        echo '<a href="javascript:void(0);"><div class="scroll_right_button" id="scroll_right_button_'.$temp.'">
+        <div class="arrow_right"><img src="img/arrow_right.png"></div>
+        </div></a>';
+        echo '<div class="category_item_line category_item_line_'.$temp.'" id="category_item_line_'.$temp.'"><h1>'.$row["category_name"].'</h1>';
         echo '<ul>';
         showItems($conn,$productAmount,$row["category_name"]);
-        echo '</ul></div>';
+        echo '</ul></div></div>';
     }
+    $temp=0;
     
     
     mysqli_stmt_close($stmt);
