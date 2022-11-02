@@ -1,0 +1,9 @@
+nils.stawowy@stud.hshl.de
+A4.Webprojekt.HSHSL
+vN028oe7GJ9a
+
+
+Datenbank:
+marktplatz
+marktplatz.cosqj7qzoywl.eu-central-1.rds.amazonaws.com
+ihlegjihdgr

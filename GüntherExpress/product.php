@@ -8,6 +8,7 @@ require_once 'includes/product_include.php';
         //ID des Produkts wird aus der URL extrahiert
         $productID = $_GET["id"];
         $productData = getProductData($conn, $productID);
+        $userID = $_SESSION['useruid'];
         
         if(is_null($productData)){
                 echo "<p>Dieses Produkt existiert leider nicht!</p>";
@@ -15,7 +16,7 @@ require_once 'includes/product_include.php';
         }
 
         //Produktdaten werden zur anzeige gespeichert
-        $name = $productData["product_name"];
+        $name = $productData["name"];
         $description = $productData["description"];
         $price = $productData["price"];
         $image = $productData["product_image"];
@@ -24,25 +25,43 @@ require_once 'includes/product_include.php';
 ?>
 
 
-<section>
-        <h2> <?php echo $name ?> </h2>
-        <?php echo $description ?> <br>
-        <b><?php echo $price ?> Euro</b>
-        <img src=<?php echo $image;?>> <br>
+<div>
+        <!-- Darstellung des Produkts -->
+        <div>
+                <div>
+                <?php showProduct($name, $description, $price, $image); ?>
+                </div>
 
-        
-        <b> Menge: </b>
-        <select>
-                <?php
-                for ($i = 0; $i <= $quantaty; $i++) {
-                        echo "<option value=".$i.">".$i."</option>";
-                    }
-                ?>
-        </select>
-        <br>
-        <button type="button"> In den Warenkorb </button>
+                <!-- Select Tag um die Menge auszuwählen -->
+                <div> Menge: </div>
+                <select id="selectQuantaty">
+                        <?php
+                        for ($i = 0; $i <= $quantaty; $i++) {
+                                echo "<option value=".$i.">".$i."</option>";
+                        }
+                        ?>
+                </select>
+                <br>
 
-</section>
+                <!-- Ausgewählte Menge wird im Ruckgabeformula gespeichert -->
+                <script> 
+                function getSelectValue(){
+                        document.getElementById("buyQuantaty").value = document.getElementById("selectQuantaty").value; 
+                }
+                </script>
+
+                <!-- Formula um DAten an den Server zu schicken -->
+                
+                <form action="shopping_cart_insert.php" onsubmit='getSelectValue()' method="post">
+                        <input type="hidden" name="pID" value=<?php echo "$productID" ?>>
+                        <input type="hidden" name="pName" value=<?php echo "$name" ?>>
+                        <input type="hidden" name="quantaty" id="buyQuantaty">
+                        <input type="hidden" name="userID" value=<?php echo "$userID" ?>>
+                        <input type="hidden" name="image" value=<?php echo "$image" ?>>
+                        <input type="submit" value="In den Warenkorb" name="into_shopping_cart">
+                </form>       
+        </div>
+</div>
 
 <?php
 include_once 'footer.php';
