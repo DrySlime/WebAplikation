@@ -16,7 +16,7 @@ require_once 'includes/product_include.php';
         }
 
         //Produktdaten werden zur anzeige gespeichert
-        $name = $productData["name"];
+        $name = $productData["product_name"];
         $description = $productData["description"];
         $price = $productData["price"];
         $image = $productData["product_image"];
@@ -29,7 +29,7 @@ require_once 'includes/product_include.php';
         <!-- Darstellung des Produkts -->
         <div>
                 <div>
-                <?php showProduct($name, $description, $price, $image); ?>
+                <?php showProduct($conn, $productID); ?>
                 </div>
 
                 <!-- Select Tag um die Menge auszuwählen -->

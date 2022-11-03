@@ -20,7 +20,7 @@ function showProduct($conn, $productID){
 
     $productData = getProductData($conn, $productID);
 
-    $name = $productData["name"];
+    $name = $productData["product_name"];
     $description = $productData["description"];
     $price = $productData["price"];
     $image = $productData["product_image"];
