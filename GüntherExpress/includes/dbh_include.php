@@ -1,7 +1,7 @@
 <?php
-$serverName = "marktplatz.cosqj7qzoywl.eu-central-1.rds.amazonaws.com";
-$dbUsername = "admin";
-$dbPassword = "ihlegjihdgr";
+$serverName = "localhost";
+$dbUsername = "root";
+$dbPassword = "";
 $dbName = "marktplatz";
 
 $conn = mysqli_connect($serverName,$dbUsername,$dbPassword,$dbName);

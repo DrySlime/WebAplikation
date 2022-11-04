@@ -135,4 +135,19 @@ $(document).ready(function(){
     sliderLogic(2);
 });
 
+// Get the input field
+var input = document.getElementById("searchbar");
 
+// Execute a function when the user presses a key on the keyboard
+input.addEventListener("keypress", function(event) {
+  // If the user presses the "Enter" key on the keyboard
+  if (event.key === "Enter") {
+    var seachValue =document.getElementById("searchbar").value;
+    // Cancel the default action, if needed
+    event.preventDefault();
+    // Trigger the button element with a click
+    document.getElementById("seachbarConfirmID").click();
+    console.log(seachValue);
+  }
+});
+// <?php 

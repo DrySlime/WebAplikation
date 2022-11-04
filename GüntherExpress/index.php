@@ -21,6 +21,10 @@ if (isset($_SESSION["useruid"])) {
 
 
 ?>
+<?php
+$test[]=searchbar("abc",$conn);
+var_dump($test);
+?>
 
 
     
