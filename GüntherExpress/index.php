@@ -13,9 +13,10 @@ if (isset($_SESSION["useruid"])) {
 <?php
     
     showRandomCategoriesAndItems($conn,$categoryAmount=4,$productAmount=2);
-
+    
 
 ?>
+
 
     
 

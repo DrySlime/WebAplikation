@@ -34,7 +34,7 @@ require_once 'includes/product_include.php';
 
                 <!-- Select Tag um die Menge auszuwählen -->
                 <div> Menge: </div>
-                <select id="selectQuantaty">
+                <select id="selectQuantaty" onchange="checkValue(this)">
                         <?php
                         for ($i = 0; $i <= $quantaty; $i++) {
                                 echo "<option value=".$i.">".$i."</option>";
@@ -44,11 +44,7 @@ require_once 'includes/product_include.php';
                 <br>
 
                 <!-- Ausgewählte Menge wird im Ruckgabeformula gespeichert -->
-                <script> 
-                function getSelectValue(){
-                        document.getElementById("buyQuantaty").value = document.getElementById("selectQuantaty").value; 
-                }
-                </script>
+                
 
                 <!-- Formula um DAten an den Server zu schicken -->
                 
@@ -58,10 +54,24 @@ require_once 'includes/product_include.php';
                         <input type="hidden" name="quantaty" id="buyQuantaty">
                         <input type="hidden" name="userID" value=<?php echo "$userID" ?>>
                         <input type="hidden" name="image" value=<?php echo "$image" ?>>
-                        <input type="submit" value="In den Warenkorb" name="into_shopping_cart">
+                        <input type="submit" value="In den Warenkorb" name="into_shopping_cart" id="into_shopping_cart">
                 </form>       
         </div>
 </div>
+
+<script> 
+        function getSelectValue(){
+                document.getElementById("buyQuantaty").value = document.getElementById("selectQuantaty").value; 
+        }
+
+        function checkValue(object){
+                if(object.value == 0){
+                        document.getElementById("into_shopping_cart").disabled = true ;
+                }else{
+                        document.getElementById("into_shopping_cart").disabled = false ;
+                }    
+        }
+</script>
 
 <?php
 include_once 'footer.php';

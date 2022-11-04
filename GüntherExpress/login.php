@@ -7,11 +7,11 @@ include_once 'header.php';
         <form action="includes/login_include.php" method="post">
             
             <input type="text" name="username" id="email/username" placeholder="E-mail/Benutzername" required><br>
-            <input type="password" name="password" id="password" placeholder="Passwort" required><br>
-            <button type="submit" name="login_button" onclick="return check_form()">Log In</button><br>
+                 <input type="password" name="password" id="password" placeholder="Passwort" required><br>
+                <button type="submit" name="login_button" onclick="return check_form()">Log In</button><br>
         </form>
 
-    </section>
+    </section> 
     <?php
         $errorMSG;
         if(isset($_GET["error"])){
