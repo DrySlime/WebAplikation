@@ -73,10 +73,32 @@ if (isset($_POST['change_address_btn']) {
     $housenoChange = $_POST['houseno_change'];
     $cityChange = $_POST['city_change'];
     $postalCodeChange = $_POST['postal_code_change'];
-    $addressID = #TODO
+    $addressID = $_POST['address_ID'];
 
+    if (invalidUserAddress($conn,$addressID)!==false) {
+        header("location: ../profile.php?error= invalidaddress");
+            exit();
+    }
     else{
-        changeAddress();
+        changeAddress($conn,$addressID,$streetChange,$housenoChange,$cityChange,$postalCodeChange);
+        exit();
+    }
+
+}
+else{
+    header("location: ../profile.php");
+    exit();
+}
+
+if (isset($_POST['change_address_action']) {
+    $changeAddressID = $_POST['address_ID'];
+
+    if (invalidUserAddress($conn,$addressID)!==false) {
+        header("location: ../profile.php?error= invalidaddress");
+            exit();
+    }
+    else{
+        $_SESSION['change_address_id'] = 
         exit();
     }
 

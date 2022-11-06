@@ -5,6 +5,7 @@
 
 <head>
     <script type="application/javascript" src="JS\profile.js"></script>
+    <?php require_once  __DIR__ . '\\includes\\functions_include.php'; ?>
 </head>
 
 
@@ -17,26 +18,29 @@
                 <div class="icon_text profile_text">Profil</div>
             </div>
             <div class="profile_info">
+                <?php
+                    $resultProfile = getProfileData($conn);
+                ?>
                 <div class="headline">Deine Daten</div>
                 
                 <div class="tags username_tag">Nutzername:</div>
                 <div class="tags username_info_tag">
-                #TODO<?php echo " $DB_USERNAME" ; ?>
+                    <?php echo $result['username']; ?>
                 </div>
 
                 <div class="tags name_tag">Name:</div>
                 <div class="tags name_info_tag">
-                #TODO <?php echo  $DB_NAME; ?>
+                    <?php echo $result['firstname']; ?>
                 </div>
 
                 <div class="tags surname_tag">Nachame:</div>
                 <div class="tags surname_info_tag">
-                #TODO<?php echo  $DB_SURNAME; ?>
+                    <?php echo $result['lastname']; ?>
                 </div>
 
                 <div class="tags email_tag">Email-Adresse:</div>
                 <div class="tags email_info_tag">
-                #TODO<?php echo  $DB_EMAIL; ?>
+                    <?php echo $result['email']; ?>
                 </div>
 
                 <button class="btn" name="to_edit_profile_btn" onclick="function showProfileEdit()">Profildaten
@@ -46,13 +50,13 @@
                 <div class="headline">Deine Daten verändern</div>
                 <form action="profile_include.php" method="post">
                 <div class="tags name_tag">Name:</div>
-                    <input type="text" name="username_change" class="username_change" value="#TODO <?php  echo $DB_USERNAME ?> "><br>
+                    <input type="text" name="username_change" class="username_change" value=" <?php echo $result['username']; ?> "><br>
                     <div class="tags name_tag">Name:</div>
-                    <input type="text" name="name_change" class="name_change" value="#TODO <?php  echo $DB_NAME ?> "><br>
+                    <input type="text" name="name_change" class="name_change" value="<?php echo $result['firstname']; ?> "><br>
                     <div class="tags surname_tag">Nachame:</div>
-                    <input type="text" name="surname_change" class="surname_change" value="#TODO <?php echo $DB_SURNAME ?>"><br>
+                    <input type="text" name="surname_change" class="surname_change" value="<?php echo $result['lastname']; ?>"><br>
                     <div class="tags email_tag">Email-Adresse:</div>
-                    <input type="email" name="email_change" class="email_change" value="#TODO <?php echo $DB_EMAIL ?>" required><br>
+                    <input type="email" name="email_change" class="email_change" value="<?php echo $result['email']; ?>" required><br>
                     <button class="btn" type="submit" name="change_profile_btn" >Profildaten abschicken</button>
                 </form>
             </div>
@@ -71,11 +75,11 @@
                         required><br>
                     <input type="password" name="password_repeat" class="password_repeat"
                         placeholder="Passwort wiederholen" required><br>
-                    <button class="btn" type="submit" name="change_password_btn" onclick="#TODO">Passwort
+                    <button class="btn" type="submit" name="change_password_btn" >Passwort
                         ändern</button>
                 </form>
 
-                <div>Passwort vergessen #TODO</div>
+                <div>#TODO Passwort vergessen </div>
             </div>
         </div>
         <div class="icon ">
@@ -85,27 +89,41 @@
             </div>
             <div class="address_info">
                 <div class="headline">Deine Adresse(n)</div>
-                #TODO
-                <div class="tags address_tag">Adresse:</div>
-                <div class="tags street_info_tag">#TODO DB_STREET</div>
-                <div class="tags houseno_info_tag">#TODO DB_HOUSENO</div>
-                <div class="tags city_tag">Stadt:</div>
-                <div class="tags city_info_tag">#TODO DB_CITY</div>
-                <div class="tags postal_code_tag">PLZ:</div>
-                <div class="tags postal_code_info_tag">#TODO DB_POSTAL_CODE</div>
+                <?php
+                    $resultAddress = getAllUserAddressData($conn);
+                    while($rows=$result->fetch_assoc()){
+                ?>
+                <form action="profile_include.php" method="post" name>
+                <div class="address_block" id = "<?php echo $rows['id'];?>" name = "addressID" value="<?php echo $rows['id'];?>">
+                        <div class="tags address_tag">Adresse:</div>
+                        <div class="tags street_info_tag"><?php echo $rows['address_line1'];?></div>
+                        <div class="tags houseno_info_tag"><?php echo $rows['street_number'];?></div>
+                        <div class="tags city_tag">Stadt:</div>
+                        <div class="tags city_info_tag"><?php echo $rows['city'];?></div>
+                        <div class="tags postal_code_tag">PLZ:</div>
+                        <div class="tags postal_code_info_tag"><?php echo $rows['postal_code'];?></div>
+                        <div class="btn" type="submit" name="change_address_action">Diese Addresse ändern</div>
+                    
+                    </div>
+                </form>
+                <?php } ?>
             </div>
             <div class="change_address">
                 <div class="headline">Adresse ändern</div>
-                <form>
+
+                <form action="profile_include.php" method="post">
+                    <?php 
+                        $resultChangeAddress = getAddressDataByID($conn)
+                    ?>
                     <div class="tags address_tag">Adresse:</div>
-                    <input type="text" name="street_change" class="street_info_tag" value="#TODO DB_STREET">
-                    <input type="text" name="houseno_change" class="houseno_info_tag" value="#TODO DB_HOUSENO"><br>
+                    <input type="text" name="street_change" class="street_info_tag" value="<?php echo $rows['address_line1'];?>">
+                    <input type="text" name="houseno_change" class="houseno_info_tag" value="<?php echo $rows['street_number'];?>"><br>
                     <div class="tags city_tag">Stadt:</div>
-                    <input type="text" name="city_change" class="city_change" value="#TODO DB_CITY"><br>
+                    <input type="text" name="city_change" class="city_change" value="<?php echo $rows['city'];?>"><br>
                     <div class="tags postal_code_tag">PLZ:</div>
                     <input type="text" name="postal_code_change" class="postal_code_change"
-                        value="#TODO DB_POSTAL_CODE"><br>
-                    <button class="btn" type="submit" name="change_address_btn" onclick="#TODO">Adresse ändern</button>
+                        value="<?php echo $rows['postal_code'];?>"><br>
+                    <button class="btn" type="submit" name="change_address_btn" >Adresse ändern</button>
                 </form>
             </div>
         </div>
@@ -148,6 +166,9 @@
                 echo "<p>$errorMSG</p>";
             }else  if($_GET["error"]=="wronginput"){
                 $errorMSG = "Altes Passwort stimmt nicht!";
+                echo "<p>$errorMSG</p>";
+            }else  if($_GET["error"]=="invalidaddress"){
+                $errorMSG = "Falsche Address ID verwendet";
                 echo "<p>$errorMSG</p>";
             }
         }
