@@ -10,3 +10,7 @@ function showProfile() {
     }
     alert(showProfile);
 }
+
+function showProfileEdit() {
+    alert('hier';)
+}

@@ -139,11 +139,11 @@ background-image: url('..\\img\\icons\\profile_icon.png');
 
 
 .profile_info {
-    display: none;
+    display: inline;
 }
 
 .change_profile {
-    display: inline;
+    display: none;
 }
 
 

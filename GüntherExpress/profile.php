@@ -19,12 +19,10 @@
             <div class="profile_info">
                 <div class="headline">Deine Daten</div>
                 
-                <!-- <div class="tags username_tag">Nutzername:</div>
+                <div class="tags username_tag">Nutzername:</div>
                 <div class="tags username_info_tag">
-                    <?php 
-                    //echo "#TODO $DB_USERNAME" ;
-                    ?>
-                </div> -->
+                #TODO<?php echo " $DB_USERNAME" ; ?>
+                </div>
 
                 <div class="tags name_tag">Name:</div>
                 <div class="tags name_info_tag">
@@ -46,14 +44,16 @@
             </div>
             <div class="change_profile">
                 <div class="headline">Deine Daten verändern</div>
-                <form action="#TODO" method="post">
+                <form action="profile_include.php" method="post">
+                <div class="tags name_tag">Name:</div>
+                    <input type="text" name="username_change" class="username_change" value="#TODO <?php  echo $DB_USERNAME ?> "><br>
                     <div class="tags name_tag">Name:</div>
-                    <input type="text" name="name_change" class="name_change" value="#TODO <?php  echo $DB_USERNAME ?> "><br>
+                    <input type="text" name="name_change" class="name_change" value="#TODO <?php  echo $DB_NAME ?> "><br>
                     <div class="tags surname_tag">Nachame:</div>
                     <input type="text" name="surname_change" class="surname_change" value="#TODO <?php echo $DB_SURNAME ?>"><br>
                     <div class="tags email_tag">Email-Adresse:</div>
                     <input type="email" name="email_change" class="email_change" value="#TODO <?php echo $DB_EMAIL ?>" required><br>
-                    <button class="btn" type="submit" name="change_profile_btn" onclick="#TODO">Profildaten abschicken</button>
+                    <button class="btn" type="submit" name="change_profile_btn" >Profildaten abschicken</button>
                 </form>
             </div>
         </div>
@@ -65,11 +65,11 @@
             <div class="manage_password">
                 <div class="headline">Passwort Verwalten</div>
                 <div class="change_password">Passwort ändern</div>
-                <form action="" method="post">
-                    <input type="password" name="password" class="password" placeholder="Altes Passwort" required><br>
+                <form action="includes/proflie_includes.php" method="post">
+                    <input type="password" name="password_old" class="password_old" placeholder="Altes Passwort" required><br>
                     <input type="password" name="password_new" class="password_new" placeholder="Neues Passwort"
                         required><br>
-                    <input type="password" name="password_confirm" class="password_confirm"
+                    <input type="password" name="password_repeat" class="password_repeat"
                         placeholder="Passwort wiederholen" required><br>
                     <button class="btn" type="submit" name="change_password_btn" onclick="#TODO">Passwort
                         ändern</button>
@@ -85,6 +85,7 @@
             </div>
             <div class="address_info">
                 <div class="headline">Deine Adresse(n)</div>
+                #TODO
                 <div class="tags address_tag">Adresse:</div>
                 <div class="tags street_info_tag">#TODO DB_STREET</div>
                 <div class="tags houseno_info_tag">#TODO DB_HOUSENO</div>
@@ -104,7 +105,7 @@
                     <div class="tags postal_code_tag">PLZ:</div>
                     <input type="text" name="postal_code_change" class="postal_code_change"
                         value="#TODO DB_POSTAL_CODE"><br>
-                    <button class="btn" type="submit" name="change_adress_btn" onclick="#TODO">Adresse ändern</button>
+                    <button class="btn" type="submit" name="change_address_btn" onclick="#TODO">Adresse ändern</button>
                 </form>
             </div>
         </div>
@@ -126,3 +127,28 @@
 
 
 </html>
+
+<?php
+        $errorMSG;
+        if(isset($_GET["error"])){
+            if($_GET["error"]=="emptyinput"){
+                $errorMSG = "Manche Felder sind leer!";
+                echo "<p>$errorMSG</p>";
+            }else  if($_GET["error"]=="invaliduid"){
+                $errorMSG = "Username beinhaltete nicht unterstützte Zeichen!";
+                echo "<p>$errorMSG</p>";
+            }else  if($_GET["error"]=="invalidemail"){
+                $errorMSG = "Email wird bereits verwendet";
+                echo "<p>$errorMSG</p>";
+            }else  if($_GET["error"]=="passwordsdontmatch"){
+                $errorMSG = "Passwörter stimmen nicht überein!";
+                echo "<p>$errorMSG</p>";
+            }else  if($_GET["error"]=="uidexists"){
+                $errorMSG = "Username wird bereits verwendet!";
+                echo "<p>$errorMSG</p>";
+            }else  if($_GET["error"]=="wronginput"){
+                $errorMSG = "Altes Passwort stimmt nicht!";
+                echo "<p>$errorMSG</p>";
+            }
+        }
+    ?>

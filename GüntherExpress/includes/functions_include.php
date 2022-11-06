@@ -9,6 +9,18 @@ function emptyInputSignup($email,$password,$passwordRepeat,$firstname,$lastname,
     return $result;
 }
 
+function emptyInputProfile($email,$firstname,$lastname,$username){
+    $result = false;
+    if(empty($email) || empty($firstname) || empty($lastname) || empty($username)){
+        $result=true;
+    }else{
+        $result=false;
+    }
+    return $result;
+}
+
+
+
 function invalidUid($username){
     if(!preg_match("/^[a-zA-Z0-9]*$/",$username)){
         $result=true;
@@ -108,6 +120,17 @@ function loginUser($conn,$password,$username){
     
 }
 
+function rightPassword($conn,$password){
+    $userid = $_SESSION["userid"]
+
+
+   if($checkPwd=== true){
+
+    $pwdHashed = $uidExists["user_password"];
+    $checkPwd = password_verify($password,$pwdHashed);
+    return $checkPwd;
+    }
+}
 
 function get___FromCatergory($conn,$whatYouNeed,$amount,$category){
 
@@ -336,3 +359,96 @@ function parentCategoryAmount($conn,$var){
         mysqli_stmt_close($stmt);
         return $count;
 }
+
+function changePassword($conn,$password){
+    $sql = " UPDATE site_user SET user_password = ? WHERE id = ?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../signup.php?error=stmtfailed");
+        exit();
+    }
+
+    $hashedPassword = password_hash($password,PASSWORD_DEFAULT);
+    $useruid = $_SESSION['userid'];
+
+    mysqli_stmt_bind_param($stmt,"ss",$hashedPassword,$userid);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+
+    header("location: ../profile.php?error=none");
+    exit();
+
+}
+
+function changeProfile($conn,$username, $name, $surname, $email){
+    $sql = " UPDATE site_user SET username = ?, firstname = ?, lastname = ?, email = ? WHERE id = ?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../profile.php?error=stmtfailed");
+        exit();
+    }
+
+    $useruid = $_SESSION['userid'];
+
+    mysqli_stmt_bind_param($stmt,"sssss",$username,$name,$surname,$email,$userid);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+
+    header("location: ../profile.php?error=none");
+    exit();
+
+}
+
+function changeProfile($conn,$addressID, $street, $houseno, $city, $postalCode){
+    #TODO $sql = " UPDATE site_user SET username = ?, firstname = ?, lastname = ?, email = ? WHERE id = ?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../profile.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt,"sssss",$street,$houseno,$city,$postalCode,$addressID);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+
+    header("location: ../profile.php?error=none");
+    exit();
+
+}
+
+function getProfileData($conn){
+
+    $userid = $_SESSION['userid'];
+
+    $sql = "SELECT username, firstname, lastname, email FROM site_user WHERE id = ?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$userid);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    return mysqli_fetch_assoc($resultData);
+}
+
+function getAddressData($conn){
+
+    $userid = $_SESSION['userid'];
+
+    $sql = "SELECT * FROM #TODO WHERE id = ?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$userid);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    return mysqli_fetch_assoc($resultData);
+}
+
