@@ -79,7 +79,7 @@
                         ändern</button>
                 </form>
 
-                <div>#TODO Passwort vergessen </div>
+                <!--<div>#ADD Passwort vergessen </div> Mögliches einbauen von Passwort vergessen Seite-->
             </div>
         </div>
         <div class="icon ">
@@ -124,6 +124,23 @@
                     <input type="text" name="postal_code_change" class="postal_code_change"
                         value="<?php echo $rows['postal_code'];?>"><br>
                     <button class="btn" type="submit" name="change_address_btn" >Adresse ändern</button>
+                </form>
+            </div>
+            <div class="add_address">
+                <div class="headline">Adresse hinzufügen</div>
+
+                <form action="profile_include.php" method="post">
+                    <?php 
+                        $resultChangeAddress = getAddressDataByID($conn)
+                    ?>
+                    <div class="tags address_tag">Adresse:</div>
+                    <input type="text" name="street_change" class="street_info_tag" placeholder="Staßenname">
+                    <input type="text" name="houseno_change" class="houseno_info_tag" placeholder="Hausnummer"><br>
+                    <div class="tags city_tag">Stadt:</div>
+                    <input type="text" name="city_change" class="Stadtname"><br>
+                    <div class="tags postal_code_tag">PLZ:</div>
+                    <input type="text" name="postal_code_change" class="postal_code_change" placeholder="PLZ"><br>
+                    <button class="btn" type="submit" name="add_address_btn" >Adresse hinzufügen</button>
                 </form>
             </div>
         </div>

@@ -107,6 +107,24 @@ else{
     header("location: ../profile.php");
     exit();
 }
+if (isset($_POST['add_address_btn']) {
+    $streetChange = $_POST['street_change'];
+    $housenoChange = $_POST['houseno_change'];
+    $cityChange = $_POST['city_change'];
+    $postalCodeChange = $_POST['postal_code_change'];
+    if (getAddressIDByData($conn,$streetChange,$housenoChange,$cityChange,$postalCodeChange) === null) {
+        bindAddressToUser($conn,$streetChange,$housenoChange,$cityChange,$postalCodeChange);
+    }
+    else{
+        addAddress($conn,$streetChange,$housenoChange,$cityChange,$postalCodeChange);
+        exit();
+    }
+
+}
+else{
+    header("location: ../profile.php");
+    exit();
+}
     
 
 

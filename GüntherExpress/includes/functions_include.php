@@ -437,6 +437,43 @@ function changeAddress($conn,$addressID, $street, $houseno, $city, $postalCode){
 
 }
 
+function addAddress($conn, $street, $houseno, $city, $postalCode){
+    $sql = " INSERT INTO address (street_number, address_line1, city, postal_code) VALUES (?,?,?,?);";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../profile.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt,"ssss",$houseno,$street,$city,$postalCode,$addressID);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+}
+
+function bindAddressToUser($conn, $street, $houseno, $city, $postalCode){
+    $userid = §_SESSION['userid'];
+    $addressid = getAddressIDByData($conn, $street, $houseno, $city, $postalCode);
+    $sql = "INSERT INTO user_address (user_id, address_id) VALUES (?,?);";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../profile.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt,"ss",$userid,$addressid);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+    
+
+    header("location: ../profile.php?error=none");
+    exit();
+}
+
+
 function getProfileData($conn){
 
     $userid = $_SESSION['userid'];
@@ -485,6 +522,24 @@ function getAddressDataByID($conn){
     
     return mysqli_fetch_assoc($resultData);
 }
+
+function getAddressIDByData($conn,$street, $houseno, $city, $postalCode){
+    
+
+    $sql = "SELECT * FROM address WHERE street_number = ? AND address_line1= ? AND city= ? AND postal_code = ? AND;";
+    $stmt = mysqli_stmt_init($conn);
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"ssss",$houseno, $street, $city, $postalCode);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    
+    return mysqli_fetch_assoc($resultData);
+}
+
+
 
 
 
