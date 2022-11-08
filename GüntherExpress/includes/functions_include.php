@@ -9,6 +9,18 @@ function emptyInputSignup($email,$password,$passwordRepeat,$firstname,$lastname,
     return $result;
 }
 
+function emptyInputProfile($email,$firstname,$lastname,$username){
+    $result = false;
+    if(empty($email) || empty($firstname) || empty($lastname) || empty($username)){
+        $result=true;
+    }else{
+        $result=false;
+    }
+    return $result;
+}
+
+
+
 function invalidUid($username){
     if(!preg_match("/^[a-zA-Z0-9]*$/",$username)){
         $result=true;
@@ -57,6 +69,31 @@ function uidExists($conn, $username,$email){
 
 
 }
+
+function invalidUserAddress($conn, $addressID){
+    $userid = $_SESSION['userid'];
+    $sql = "SELECT * FROM user_address WHERE user_id = ? AND address_id = ?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../profile.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt,"ss",$userid,$addressID);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    if($row = mysqli_fetch_assoc($resultData)){
+        return $row;
+    }else{
+        $result = false;
+        return $result;
+    }
+    mysqli_stmt_close($stmt);
+}
+
 function emptyInputLogin($password,$username){
     $result = false;
     if( empty($password) || empty($username)){
@@ -534,9 +571,173 @@ function getUserIdFromUserName($conn, $userName){
 
     mysqli_stmt_prepare($stmt,$sql);
     mysqli_stmt_bind_param($stmt,"s",$userName,);
+    return mysqli_fetch_assoc($resultData)["id"];
+}
+function changePassword($conn,$password){
+    $sql = " UPDATE site_user SET user_password = ? WHERE id = ?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../profile.php?error=stmtfailed");
+        exit();
+    }
+
+    $hashedPassword = password_hash($password,PASSWORD_DEFAULT);
+    $useruid = $_SESSION['userid'];
+
+    mysqli_stmt_bind_param($stmt,"ss",$hashedPassword,$userid);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+
+    header("location: ../profile.php?error=none");
+    exit();
+
+}
+
+function changeProfile($conn,$username, $name, $surname, $email){
+    $sql = " UPDATE site_user SET username = ?, firstname = ?, lastname = ?, email = ? WHERE id = ?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../profile.php?error=stmtfailed");
+        exit();
+    }
+
+    $useruid = $_SESSION['userid'];
+
+    mysqli_stmt_bind_param($stmt,"sssss",$username,$name,$surname,$email,$userid);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+
+    header("location: ../profile.php?error=none");
+    exit();
+
+}
+
+function changeAddress($conn,$addressID, $street, $houseno, $city, $postalCode){
+    $sql = " UPDATE address SET address_line1 = ?, street_number = ?, city = ?, postal_code = ? WHERE id = ?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../profile.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt,"sssss",$street,$houseno,$city,$postalCode,$addressID);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+
+    header("location: ../profile.php?error=none");
+    exit();
+
+}
+
+function addAddress($conn, $street, $houseno, $city, $postalCode){
+    $sql = " INSERT INTO address (street_number, address_line1, city, postal_code) VALUES (?,?,?,?);";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../profile.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt,"ssss",$houseno,$street,$city,$postalCode,$addressID);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+}
+
+function bindAddressToUser($conn, $street, $houseno, $city, $postalCode){
+    $userid = §_SESSION['userid'];
+    $addressid = getAddressIDByData($conn, $street, $houseno, $city, $postalCode);
+    $sql = "INSERT INTO user_address (user_id, address_id) VALUES (?,?);";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../profile.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt,"ss",$userid,$addressid);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+    
+
+    header("location: ../profile.php?error=none");
+    exit();
+}
+
+
+function getProfileData($conn){
+
+    $userid = $_SESSION['userid'];
+
+    $sql = "SELECT username, firstname, lastname, email FROM site_user WHERE id = ?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$userid);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    return mysqli_fetch_assoc($resultData);
+}
+
+function getAllUserAddressData($conn){
+
+    $userid = $_SESSION['userid'];
+
+
+    $sql = "SELECT * FROM address WHERE id = (SELECT address_id FROM user_address WHERE user_id = ?);";
+    $stmt = mysqli_stmt_init($conn);
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$userid);
     mysqli_stmt_execute($stmt);
 
     $resultData = mysqli_stmt_get_result($stmt);
 
-    return mysqli_fetch_assoc($resultData)["id"];
+    
+    return mysqli_fetch_assoc($resultData);
 }
+
+function getAddressDataByID($conn){
+    
+
+    $sql = "SELECT * FROM address WHERE id = ?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$_SESSION['change_address_id']);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    
+    return mysqli_fetch_assoc($resultData);
+}
+
+function getAddressIDByData($conn,$street, $houseno, $city, $postalCode){
+    
+
+    $sql = "SELECT * FROM address WHERE street_number = ? AND address_line1= ? AND city= ? AND postal_code = ? AND;";
+    $stmt = mysqli_stmt_init($conn);
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"ssss",$houseno, $street, $city, $postalCode);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    
+    return mysqli_fetch_assoc($resultData);
+}
+
+
+
+
+
