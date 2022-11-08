@@ -321,17 +321,42 @@ function showItems($conn,$amount,$category){
     }
 
     for($i=0;$i<count($item);$i++){
-        echo '<div class="product">
-                <li><div class="product_name product_info">'.$item[$i][1].'</div>
-                <a href="product.php?id='.$item[$i][0].'">
-                <div class="product_image">
-                    <img src='.$item[$i][2].' alt="'.$item[$i][1].'.png">
-                </div></a>
-            
-            </div><br>';
+        echo '
+                
+                    <li>
+                    <a href="product.php?id='.$item[$i][0].'">
+                    <div class="product_image">
+                        <img src='.$item[$i][2].' alt="'.$item[$i][1].'.png" >
+                    </div></a>';
     }
    
 
+}
+
+function searchbar($searchInput,$conn){
+    #returns an array filled with ids of products inwhich the product name is like $searchbarInput
+
+    $searchInput = "%".$searchInput."%";
+    $sql = "SELECT id FROM product WHERE product_name LIKE ?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../category.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$searchInput);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    if(mysqli_num_rows($resultData)>0){
+        while($row =mysqli_fetch_assoc($resultData)){
+            $productIds[]=$row["id"];
+        }
+    }else{$productIds=null;}
+    mysqli_stmt_close($stmt);
+    return $productIds;
 }
 function returnParentIds($conn,$parentCategory){
     //returns all  parent Id in an array
@@ -430,10 +455,33 @@ function showChildCategoriesAndItems($conn,$parentCategory,$productAmount){
     
     foreach($categoryName as $cateName){
         echo '<h1>'.$cateName.'</h1>';
-        showItems($conn,$productAmount,$cateName);
+        showItems($conn,$productAmount,$cateName,$imageWidth);
     }
 
 } 
+function getAllAttributesFromItemViaID($ItemID,$conn){
+    $sql = "SELECT * FROM product WHERE id=?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../category.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$ItemID);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    if(mysqli_num_rows($resultData)>0){
+        while($row =mysqli_fetch_assoc($resultData)){
+            $item[]=$row["parent_category_id"];
+        }
+    }
+    mysqli_stmt_close($stmt);
+    return $item;
+
+}
 function showRandomCategoriesAndItems($conn,$amount,$productAmount){
     //gibt x=$amount zufällige Kategorien und dessen Produkte in HTML gerechter Sprache wieder
 
@@ -474,9 +522,9 @@ function showRandomCategoriesAndItems($conn,$amount,$productAmount){
     foreach($uniqueTMP as $var){
         $unique[]=$var+parentCategoryAmount($conn,1);
     }
-    
+    $temp=0;
     foreach($unique as $var){
-        
+        $temp+=1;
         $sql = "SELECT category_name FROM product_category WHERE id = ?;";
 
         if(!mysqli_stmt_prepare($stmt,$sql)){
@@ -488,11 +536,20 @@ function showRandomCategoriesAndItems($conn,$amount,$productAmount){
         mysqli_stmt_execute($stmt);
         $resultData = mysqli_stmt_get_result($stmt);
         $row=mysqli_fetch_assoc($resultData);
-        echo '<div class="category_item_line"><ul>';
-        echo '<div class="header_name category_info"><h1>'.$row["category_name"].'</h1></div>';
+        
+        echo '<div class="item_border" id="item_border_'.$temp.'">';
+        echo '<a href="javascript:void(0);"><div class="scroll_left_button" id="scroll_left_button_'.$temp.'">
+                <div class="arrow_left"><img src="img/arrow_left.png"></div>
+            </div></a>';
+        echo '<a href="javascript:void(0);"><div class="scroll_right_button" id="scroll_right_button_'.$temp.'">
+        <div class="arrow_right"><img src="img/arrow_right.png"></div>
+        </div></a>';
+        echo '<div class="category_item_line category_item_line_'.$temp.'" id="category_item_line_'.$temp.'"><h1>'.$row["category_name"].'</h1>';
+        echo '<ul>';
         showItems($conn,$productAmount,$row["category_name"]);
-        echo '</ul></div>';
+        echo '</ul></div></div>';
     }
+    $temp=0;
     
     
     mysqli_stmt_close($stmt);
