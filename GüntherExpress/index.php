@@ -18,10 +18,7 @@ if (isset($_SESSION["useruid"])) {
 <?php
     showRandomCategoriesAndItems($conn,$categoryAmount=4,$productAmount=10);
 ?>
-<?php
-$test[]=searchbar("abc",$conn);
-var_dump($test);
-?>
+
 
 
 
