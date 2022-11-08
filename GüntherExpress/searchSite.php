@@ -8,6 +8,7 @@
     $searchbarValue = $_POST['searchbar'];
 
     $searchArr=searchbar($searchbarValue,$conn);
+    
     if($searchArr!=null){
         for($i=0;$i<count($searchArr);$i++){
             $productData = getProductData($conn,$searchArr[$i]);

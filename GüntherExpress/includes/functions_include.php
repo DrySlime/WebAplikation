@@ -337,7 +337,8 @@ function searchbar($searchInput,$conn){
     #returns an array filled with ids of products inwhich the product name is like $searchbarInput
 
     $searchInput = "%".$searchInput."%";
-    $sql = "SELECT id FROM product WHERE product_name LIKE ?;";
+    
+    $sql = "SELECT id FROM product WHERE UPPER(product_name) LIKE UPPER(?);";
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt,$sql)){

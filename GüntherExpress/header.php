@@ -27,8 +27,8 @@
                     }
                 ?>
                 <li><form action="searchSite.php" method="post"><input type="text" name="searchbar" id="searchbar" placeholder="Warensuche..." >
-                <button type="submit" name="searchConfirmButton" id="seachbarConfirmID" >Suchen</button></form>
-                    </li>
+                    <button type="submit" name="searchConfirmButton" id="seachbarConfirmID" >Suchen</button></form>
+                </li>
                 
             </ul>
         </div>
