@@ -1,3 +1,7 @@
+
+<?php
+include_once 'header.php';
+?>
 <!DOCTYPE html>
 <html>
 <link rel="stylesheet" href="CSS/profile.css">
@@ -5,12 +9,19 @@
 
 <head>
     <script type="application/javascript" src="JS\profile.js"></script>
-    <?php require_once  __DIR__ . '\\includes\\functions_include.php'; ?>
+    <?php
+        require_once 'includes/dbh_include.php';
+        require_once 'includes/profile_include.php';
+        require_once 'includes/functions_include.php';
+        var_dump($_SESSION['userid'])
+        ?>
 </head>
 
 
 
 <body>
+    
+
     <div class="container">
         <div class="icon" >
             <div class="profile" onclick="showProfile()">
@@ -25,22 +36,22 @@
                 
                 <div class="tags username_tag">Nutzername:</div>
                 <div class="tags username_info_tag">
-                    <?php echo $result['username']; ?>
+                    <?php echo $resultProfile['username']; ?>
                 </div>
 
                 <div class="tags name_tag">Name:</div>
                 <div class="tags name_info_tag">
-                    <?php echo $result['firstname']; ?>
+                    <?php echo $resultProfile['firstname']; ?>
                 </div>
 
                 <div class="tags surname_tag">Nachame:</div>
                 <div class="tags surname_info_tag">
-                    <?php echo $result['lastname']; ?>
+                    <?php echo $resultProfile['lastname']; ?>
                 </div>
 
                 <div class="tags email_tag">Email-Adresse:</div>
                 <div class="tags email_info_tag">
-                    <?php echo $result['email']; ?>
+                    <?php echo $resultProfile['email']; ?>
                 </div>
 
                 <button class="btn" name="to_edit_profile_btn" onclick="function showProfileEdit()">Profildaten
@@ -48,15 +59,17 @@
             </div>
             <div class="change_profile">
                 <div class="headline">Deine Daten verändern</div>
-                <form action="profile_include.php" method="post">
-                <div class="tags name_tag">Name:</div>
-                    <input type="text" name="username_change" class="username_change" value=" <?php echo $result['username']; ?> "><br>
+                <form action="includes/profile_include.php" method="post">
+                    <div class="tags name_tag">Username:</div>
+                    <input type="text" name="username_change" class="username_change" value="<?php echo $resultProfile['user_uid']; ?>"><br>
                     <div class="tags name_tag">Name:</div>
-                    <input type="text" name="name_change" class="name_change" value="<?php echo $result['firstname']; ?> "><br>
+                    <input type="text" name="name_change" class="name_change" value="<?php echo $resultProfile['firstname']; ?>"><br>
                     <div class="tags surname_tag">Nachame:</div>
-                    <input type="text" name="surname_change" class="surname_change" value="<?php echo $result['lastname']; ?>"><br>
+                    <input type="text" name="surname_change" class="surname_change" value="<?php echo $resultProfile['lastname']; ?>"><br>
                     <div class="tags email_tag">Email-Adresse:</div>
-                    <input type="email" name="email_change" class="email_change" value="<?php echo $result['email']; ?>" required><br>
+                    <input type="email" name="email_change" class="email_change" value="<?php echo $resultProfile['email']; ?>" required><br>
+                    
+                    
                     <button class="btn" type="submit" name="change_profile_btn" >Profildaten abschicken</button>
                 </form>
             </div>
@@ -91,9 +104,9 @@
                 <div class="headline">Deine Adresse(n)</div>
                 <?php
                     $resultAddress = getAllUserAddressData($conn);
-                    while($rows=$result->fetch_assoc()){
+                    while($rows=$resultAddress->fetch_assoc()){
                 ?>
-                <form action="profile_include.php" method="post" name>
+                <form action="includes/profile_include.php" method="post" name>
                 <div class="address_block" id = "<?php echo $rows['id'];?>" name = "addressID" value="<?php echo $rows['id'];?>">
                         <div class="tags address_tag">Adresse:</div>
                         <div class="tags street_info_tag"><?php echo $rows['address_line1'];?></div>
@@ -111,25 +124,24 @@
             <div class="change_address">
                 <div class="headline">Adresse ändern</div>
 
-                <form action="profile_include.php" method="post">
+                <form action="includes/profile_include.php" method="post">
                     <?php 
                         $resultChangeAddress = getAddressDataByID($conn)
                     ?>
                     <div class="tags address_tag">Adresse:</div>
-                    <input type="text" name="street_change" class="street_info_tag" value="<?php echo $rows['address_line1'];?>">
-                    <input type="text" name="houseno_change" class="houseno_info_tag" value="<?php echo $rows['street_number'];?>"><br>
+                    <input type="text" name="street_change" class="street_info_tag" value="<?php echo $resultChangeAddress['address_line1'];?>">
+                    <input type="text" name="houseno_change" class="houseno_info_tag" value="<?php echo $resultChangeAddress['street_number'];?>"><br>
                     <div class="tags city_tag">Stadt:</div>
-                    <input type="text" name="city_change" class="city_change" value="<?php echo $rows['city'];?>"><br>
+                    <input type="text" name="city_change" class="city_change" value="<?php echo $resultChangeAddress['city'];?>"><br>
                     <div class="tags postal_code_tag">PLZ:</div>
-                    <input type="text" name="postal_code_change" class="postal_code_change"
-                        value="<?php echo $rows['postal_code'];?>"><br>
+                    <input type="text" name="postal_code_change" class="postal_code_change" value="<?php echo $resultChangeAddress['postal_code'];?>"><br>
                     <button class="btn" type="submit" name="change_address_btn" >Adresse ändern</button>
                 </form>
             </div>
             <div class="add_address">
                 <div class="headline">Adresse hinzufügen</div>
 
-                <form action="profile_include.php" method="post">
+                <form action="includes/profile_include.php" method="post">
                     <?php 
                         $resultChangeAddress = getAddressDataByID($conn)
                     ?>
@@ -163,6 +175,7 @@
 
 </html>
 
+
 <?php
         $errorMSG;
         if(isset($_GET["error"])){
@@ -190,3 +203,6 @@
             }
         }
     ?>
+    <?php
+include_once 'footer.php';
+?>

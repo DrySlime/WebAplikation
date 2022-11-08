@@ -139,7 +139,7 @@ background-image: url('..\\img\\icons\\profile_icon.png');
 
 
 .profile_info {
-    display: inline;
+    display: none;
 }
 
 .change_profile {
@@ -152,15 +152,15 @@ background-image: url('..\\img\\icons\\profile_icon.png');
 }
 
 .address_info {
-    display: none;
+    display: inline;
 }
 
 .change_address {
-    display: none;
+    display: inline;
 }
 
 .cart_info {
-    display: none;
+    display: inline;
 }
 
 .houseno_info_tag {

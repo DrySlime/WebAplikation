@@ -29,6 +29,7 @@ function invalidUid($username){
     }
     return $result;
 }
+
 function invalidEmail($email){
     if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
         $result=true;
@@ -37,6 +38,7 @@ function invalidEmail($email){
     }
     return $result;
 }
+
 function passwordMatch($password,$passwordRepeat){
     if($password!==$passwordRepeat){
         $result=true;
@@ -485,7 +487,7 @@ function showRandomCategoriesAndItems($conn,$amount,$productAmount){
     }
 
     mysqli_stmt_execute($stmt);
-
+    $array[] = [];
     $resultData = mysqli_stmt_get_result($stmt);
     if(mysqli_num_rows($resultData)>0){
         while($row =mysqli_fetch_assoc($resultData)){
@@ -596,22 +598,20 @@ function changePassword($conn,$password){
 }
 
 function changeProfile($conn,$username, $name, $surname, $email){
-    $sql = " UPDATE site_user SET username = ?, firstname = ?, lastname = ?, email = ? WHERE id = ?;";
+    $sql = "UPDATE site_user SET user_uid = ?, firstname = ?, lastname = ?, email = ? WHERE user_uid = ?;";
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt,$sql)){
         header("location: ../profile.php?error=stmtfailed");
         exit();
     }
-
-    $useruid = $_SESSION['userid'];
-
-    mysqli_stmt_bind_param($stmt,"sssss",$username,$name,$surname,$email,$userid);
+    $useruid = $_SESSION['useruid'];
+    mysqli_stmt_bind_param($stmt,"sssss",$username,$name,$surname,$email,$useruid);
     mysqli_stmt_execute($stmt);
 
     mysqli_stmt_close($stmt);
 
-    header("location: ../profile.php?error=none");
+    header("location: ../profile.php");
     exit();
 
 }
@@ -676,7 +676,7 @@ function getProfileData($conn){
 
     $userid = $_SESSION['userid'];
 
-    $sql = "SELECT username, firstname, lastname, email FROM site_user WHERE id = ?;";
+    $sql = "SELECT user_uid, firstname, lastname, email FROM site_user WHERE id = ?;";
     $stmt = mysqli_stmt_init($conn);
 
     mysqli_stmt_prepare($stmt,$sql);
@@ -724,7 +724,7 @@ function getAddressDataByID($conn){
 function getAddressIDByData($conn,$street, $houseno, $city, $postalCode){
     
 
-    $sql = "SELECT * FROM address WHERE street_number = ? AND address_line1= ? AND city= ? AND postal_code = ? AND;";
+    $sql = "SELECT * FROM address WHERE street_number = ? AND address_line1= ? AND city= ? AND postal_code = ?;";
     $stmt = mysqli_stmt_init($conn);
 
     mysqli_stmt_prepare($stmt,$sql);
