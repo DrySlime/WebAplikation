@@ -8,7 +8,7 @@ require_once 'includes/product_include.php';
         //ID des Produkts wird aus der URL extrahiert
         $productID = $_GET["id"];
         $productData = getProductData($conn, $productID);
-        $userID = $_SESSION['useruid'];
+        
         
         if(is_null($productData)){
                 echo "<p>Dieses Produkt existiert leider nicht!</p>";
@@ -52,9 +52,8 @@ require_once 'includes/product_include.php';
                         <input type="hidden" name="pID" value=<?php echo "$productID" ?>>
                         <input type="hidden" name="pName" value=<?php echo "$name" ?>>
                         <input type="hidden" name="quantaty" id="buyQuantaty">
-                        <input type="hidden" name="userID" value=<?php echo "$userID" ?>>
                         <input type="hidden" name="image" value=<?php echo "$image" ?>>
-                        <input type="submit" value="In den Warenkorb" name="into_shopping_cart" id="into_shopping_cart">
+                        <input type="submit" value="In den Warenkorb" name="into_shopping_cart" id="into_shopping_cart" disabled="true">
                 </form>       
         </div>
 </div>
