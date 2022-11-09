@@ -176,6 +176,11 @@ function get___FromCatergory($conn,$whatYouNeed,$amount,$category,$shuffle){
     }
     mysqli_stmt_close($stmt);
 }
+
+function getCategoryfromItem($conn,){
+    
+}
+
 function getCategoryList($conn){
 
     //Get all names from the product_category table in an array
@@ -309,12 +314,12 @@ function getAllFromCategory($conn,$amount,$category,$shuffle){
 
     return $itemArr;
 }
-function showItems($conn,$amount,$category){
+function showItems($conn,$amount,$categoryName){
 
     //Gibt $amount viele Attribute aus der Datenbank in einer
     //html gerechten sprache wieder zurück.
     
-    $item=getAllFromCategory($conn,$amount,$category,true);
+    $item=getAllFromCategory($conn,$amount,$categoryName,true);
 
     if($amount>count($item)){
         $amount=count($item);
@@ -339,6 +344,32 @@ function searchbar($searchInput,$conn){
     $searchInput = "%".$searchInput."%";
     
     $sql = "SELECT id FROM product WHERE UPPER(product_name) LIKE UPPER(?);";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../category.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$searchInput);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    if(mysqli_num_rows($resultData)>0){
+        while($row =mysqli_fetch_assoc($resultData)){
+            $productIds[]=$row["id"];
+        }
+    }else{$productIds=null;}
+    mysqli_stmt_close($stmt);
+    return $productIds;
+}
+function searchItemInCategory($searchInput,$conn){
+    #returns an array filled with ids of products inwhich the product name is like $searchbarInput
+
+    $searchInput = "%".$searchInput."%";
+    
+    $sql = "SELECT id FROM product_category WHERE UPPER(category_name) LIKE UPPER(?);";
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt,$sql)){
@@ -481,6 +512,33 @@ function getAllAttributesFromItemViaID($ItemID,$conn){
     }
     mysqli_stmt_close($stmt);
     return $item;
+
+}
+
+function getItemIdsFromCategory($conn,$CategoryID,$amount){
+    $sql = "SELECT id FROM product WHERE product_category_id = ? ORDER BY rand() LIMIT  ?;";
+    
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../category.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"ss",$CategoryID,$amount);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    if(mysqli_num_rows($resultData)>0){
+        while($row =mysqli_fetch_assoc($resultData)){
+            $itemIDs[]=$row["id"];
+        }
+    }
+    mysqli_stmt_close($stmt);
+    return $itemIDs;
+
+    
 
 }
 function showRandomCategoriesAndItems($conn,$amount,$productAmount){
