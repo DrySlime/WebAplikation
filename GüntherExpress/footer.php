@@ -17,9 +17,9 @@
                 <a href="kontakt.php">Kontakt</a>
             </div>
             <div class="footer_right">
-                <img src="../../../Desktop/Website/img/paypal.png" width="50" height="30">
-                <img src="../../../Desktop/Website/img/visa.png" width="50" height="30">
-                <img src="../../../Desktop/Website/img/stripe.png" width="50" height="30">
+                <img src="/img/paypal.png" width="50" height="30">
+                <img src="/img/visa.png" width="50" height="30">
+                <img src="/img/stripe.png" width="50" height="30">
             </div>
         </div>
         <section class="footer_copyright">
