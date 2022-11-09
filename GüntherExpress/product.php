@@ -42,6 +42,12 @@ require_once 'includes/product_include.php';
                         ?>
                 </select>
                 <br>
+                <div name="bewertungen">
+                        <!-- fürs erste will ich einfach nur einen zahlenwwert zwischen 1-5 berechnen und ausgeben -->
+                        <?php calculateRating()?>
+
+
+                </div>
 
                 <!-- Ausgewählte Menge wird im Ruckgabeformula gespeichert -->
                 

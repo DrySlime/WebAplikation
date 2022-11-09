@@ -19,7 +19,7 @@ if (isset($_SESSION["useruid"])) {
     showRandomCategoriesAndItems($conn,$categoryAmount=4,$productAmount=10);
 ?>
 
-
+<!-- TODO: PRODUKTKARUSSEL DAS SICH VON ALLEINE DREHT -->
 
 
     
