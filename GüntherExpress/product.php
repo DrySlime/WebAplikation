@@ -2,6 +2,7 @@
 include_once 'header.php';
 include_once 'includes/dbh_include.php';
 require_once 'includes/product_include.php';
+
 ?>
 
 <?php
@@ -18,7 +19,12 @@ require_once 'includes/product_include.php';
         //Produktdaten werden zur anzeige gespeichert
         $name = $productData["product_name"];
         $description = $productData["description"];
-        $price = $productData["price"];
+        if(onSale($conn,$productID)){
+                $price=updatePrice($conn,$productID);
+        }else{
+                $price = $productData["price"];   
+        }
+        
         $image = $productData["product_image"];
         $quantaty = $productData["qty_in_stock"];
         

@@ -177,9 +177,6 @@ function get___FromCatergory($conn,$whatYouNeed,$amount,$category,$shuffle){
     mysqli_stmt_close($stmt);
 }
 
-function getCategoryfromItem($conn,){
-    
-}
 
 function getCategoryList($conn){
 

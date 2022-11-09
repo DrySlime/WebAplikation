@@ -1,6 +1,6 @@
 
 <?php
-
+require_once 'includes/sale_function.php';
 
 //Produktdaten werden aus der Datenbank aufgerufen
 function getProductData($conn, $productID){
@@ -24,13 +24,29 @@ function showProduct($conn, $productID){
     $description = $productData["description"];
     $price = $productData["price"];
     $image = $productData["product_image"];
+    if(onSale($conn,$productID)){
+        $newPrice=updatePrice($conn,$productID);
+        
+    }else{
+            $newPrice = "";   
+    }
 
-    echo 
+    if(onSale($conn,$productID)){
+        echo 
     
-    '<h2>'  .$name.  '</h2>
-     <div>'  .$description.  '</div> <br>
-     <div>'  .$price.  'Euro</div>
-     <img src='  .$image.'> <br>';
+        '<h2>'  .$name.  '</h2>
+        <div>'  .$description.  '</div> <br>
+        <div>Alter Preis: '  .$price.  '  -->   NEUER PREIS: '.$newPrice.' Euro</div>
+        <img src='  .$image.'> <br>';
+    }else{
+        echo 
+    
+        '<h2>'  .$name.  '</h2>
+        <div>'  .$description.  '</div> <br>
+        <div>'  .$price.  'Euro</div>
+        <img src='  .$image.'> <br>';
+    }
+    
 
 }
 
