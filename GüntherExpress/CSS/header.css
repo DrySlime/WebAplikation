@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.header {
+    display: flex;
+    height: auto;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    align-items: flex-start;
+    align-content: center;
+    justify-content: center;
+    padding: 1rem 5rem 0rem 5rem;
+}
+
+.header_wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+    border-style: none;
+    background-color: transparent;
+    border-width: medium;
+}
+
+.header_wrapper .header_name {
+    width: 100%;
+    display: flex;
+    cursor: pointer;
+    border-radius: 3rem;
+    padding: 0.5rem;
+    font-weight: 700;
+    font-size: 1.7rem;
+    background: rgb(63,94,251);
+    background: linear-gradient(204deg, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.navbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    align-content: flex-end;
+}
+
+#navbar {
+    display: inline-flex;
+    justify-content: flex-end;
+    align-items: center;
+    align-content: flex-end;
+}
+
+#navbar li {
+    list-style: none;
+    padding: 0 1.25rem;
+}
+
+#navbar li a {
+    text-decoration: none;
+    transition: 0.2s ease-in-out;
+    color: #121a25;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+#navbar li a:hover {
+    color: #fc466b;
+}
+
+.material-symbols-outlined {
+    list-style: none;
+    vertical-align: middle;
+    font-size: 1.5rem !important;
+    cursor: pointer;
+}
+
+.dropbtn {
+    text-decoration: none;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    color: #121a25;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+.dropbtn:hover {
+    color: #fc466b;
+}
+
+.dropdown_content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown_content a {
+    color: #121a25;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    color: #fc466b;
+}
+
+.show {
+    display: block;
+}

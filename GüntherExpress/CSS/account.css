@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    line-height: 1.5;
+    background-color: #f9d4dc;
+}
+
+.account_wrapper {
+    line-height: 1.5;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+}
+
+.account_header {
+    width: 100%;
+    height: 20%;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    display: flex;
+    margin-top: -8rem;
+}
+
+.header_text {
+    width: 50%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-direction: flex;
+}
+
+.header_text h1 {
+    color: #101010;
+    font-size: 4rem;
+    text-decoration: none;
+    font-weight: 800;
+    text-align: center;
+}
+
+.account_dataWrapper {
+    width: 100%;
+    align-items: center;
+    justify-content: space-evenly;
+    align-content: center;
+    display: flex;
+}
+
+.account_sidebar {
+    width: 30%;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    display: flex;
+}
+
+.account_data{
+    width: 70%;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    display: flex;
+}
+
+.header_sep {
+    margin: auto;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 1.563rem;
+    border-top-color: #101010;
+    border-top: solid;
+    border-radius: .5rem;
+}

@@ -10,16 +10,20 @@
 body {
     line-height: 1.5;
     background-color: #f9d4dc;
-
 }
 
-.bestsellers, .newitems {
-    background-color: #f9d4dc;
-    margin-top: 5rem;
-}
-
-.bestsellers_header, .newitems_header {
+.sale_wrapper {
+    line-height: 1.5;
     width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+}
+
+.sale_header {
+    width: 100%;
+    margin-top: 5rem;
+    overflow: hidden;
     display: flex;
     background: #f9d4dc;
     align-items: center;
@@ -28,17 +32,18 @@ body {
     flex-direction: column;
 }
 
-.bestsellers_header h1, .newitems_header h1{
+.sale_header_text {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+}
+
+.hero_text h1 {
     color: #101010;
     font-size: 4rem;
     text-decoration: none;
     font-weight: 800;
-}
-
-.bestsellers_header h4, .newitems_header h4 {
-    margin-top: 15px;
-    color: #101010;
-    font-size: 1rem;
-    text-decoration: none;
-    font-weight: 500;
 }

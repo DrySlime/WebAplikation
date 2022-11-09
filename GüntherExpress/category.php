@@ -6,8 +6,6 @@
 <?php
     $parentCategory=$_GET["parentCategory"];
     showChildCategoriesAndItems($conn,$parentCategory,2);
-
-    
 ?>
 
     

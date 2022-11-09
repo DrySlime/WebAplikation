@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.hero {
+    line-height: 1.5;
+    width: 100%;
+    height: 95vh;
+    overflow: hidden;
+    display: flex;
+}
+
+.hero_right {
+    width: 50%;
+    overflow: hidden;
+    display: flex;
+}
+
+.hero_right img {
+    width: 100%;
+    overflow: hidden;
+    background: #f9d4dc;
+    background-size:contain;
+}
+
+.hero_left {
+    width: 50%;
+    overflow: hidden;
+    display: flex;
+    background: #f9d4dc;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+}
+
+.hero_text {
+    width: 95%;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    white-space: initial;
+    text-align: center;
+    padding: 0rem 5rem;
+}
+
+.hero_text h1 {
+    color: #101010;
+    font-size: 4rem;
+    text-decoration: none;
+    font-weight: 800;
+}
+
+.hero_text h4 {
+    margin-top: 15px;
+    color: #101010;
+    font-size: 1rem;
+    text-decoration: none;
+    font-weight: 500;
+    text-align: center;
+    padding: 0rem 5rem;
+    width: 100%;
+}
+
+.hero_search {
+    margin-top: 2rem;
+    width: 95%;
+}
+
+.searchbar_container {
+    display: flex;
+    align-items: center;
+    padding-top: 0.5rem;
+    justify-content: center;
+    height: 3.125rem;
+    width: 100%;
+}
+
+.searchbar_container form{
+    display: flex;
+    width: auto;
+    position: relative;
+}
+
+.searchbar_container input {
+    font-size: 1.125rem;
+    font-weight: 300;
+    color: #101010;
+    padding: 0.938rem 0.625rem;
+    border: none;
+    outline: none;
+    border-radius: 3rem;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    width: 45%;
+    background-color: #ffffff;
+    text-indent: 25px;
+    font-weight: 500;
+}
+
+
+.searchbar_container button {
+    font-size: 1.125rem;
+    font-weight: 300;
+    color: #FFFFFF;
+    padding: 0.938rem 0.625rem;
+    outline: none;
+    border: none;
+    border-radius: 3rem;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    width: 20%;
+    background-color: #101010;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.searchbar_container button:hover {
+    color: #fc466b;
+}
