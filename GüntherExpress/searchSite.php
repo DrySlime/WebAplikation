@@ -11,7 +11,7 @@
     require_once 'includes/product_include.php';
 ?>
 <?php
-    $searchbarValue = $_POST['searchbar'];
+    $searchbarValue = $_POST['search'];
 
     $searchArr=searchbar($searchbarValue,$conn);
     
