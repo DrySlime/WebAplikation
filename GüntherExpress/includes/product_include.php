@@ -23,15 +23,25 @@ function showProduct($conn, $productID){
     $name = $productData["product_name"];
     $description = $productData["description"];
     $price = $productData["price"];
+    
+
+    echo 
+    '
+    <h2 class= '.'product-headline'.'>'  .$name.  '</h2>
+    <p class= '.'product-description'.'>'  .$description.  '</p> <br>
+    <div class= '.'product-price'.'>'  .$price.  ' Euro</div>
+    ';
+
+}
+
+function showProductImage($conn, $productID){
+    $productData = getProductData($conn, $productID);
     $image = $productData["product_image"];
 
     echo 
-    
-    '<img class= '.'product-image'.' src='  .$image.'> <br>
-    <h2 class= '.'product-headline'.'>'  .$name.  '</h2>
-    <p class= '.'product-description'.'>'  .$description.  '</p> <br>
-    <div class= '.'product-price'.'>'  .$price.  ' Euro</div>';
-
+    '<div class= '.'product-left-side'.'>
+    <img class= '.'product-image'.' src='  .$image.'> <br>
+    </div>';
 }
 
 function getShoppingCartItems($conn, $userId){

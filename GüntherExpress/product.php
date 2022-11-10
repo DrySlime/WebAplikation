@@ -34,34 +34,38 @@ require_once 'includes/product_include.php';
         <div class="product-background">
                 <!-- Darstellung des Produkts -->
                 <div class="product-container">
-                        <div>
-                                <?php showProduct($conn, $productID); ?>
-                                
+                
+                        <?php showProductImage($conn, $productID); ?>
 
-                                <!-- Select Tag um die Menge auszuwählen -->
-                                <p class="product-qty-text"> Menge: </p>
-                                <select class="product-qty-selection" id="selectQuantaty" onchange="checkValue(this)">
-                                        <?php
-                                        for ($i = 0; $i <= $quantaty; $i++) {
-                                                echo "<option value=".$i.">".$i."</option>";
-                                        }
-                                        ?>
-                                </select>
-                                <br>
+                        <div class="product-right-side">
+                        <?php showProduct($conn, $productID); ?>
+                        
 
-                                <!-- Ausgewählte Menge wird im Ruckgabeformula gespeichert -->
-                                
+                        <!-- Select Tag um die Menge auszuwählen -->
+                        <p class="product-qty-text"> Menge: </p>
+                        <select class="product-qty-selection" id="selectQuantaty" onchange="checkValue(this)">
+                                <?php
+                                for ($i = 0; $i <= $quantaty; $i++) {
+                                        echo "<option value=".$i.">".$i."</option>";
+                                }
+                                ?>
+                        </select>
+                        <br>
 
-                                <!-- Formula um DAten an den Server zu schicken -->
-                                
-                                <form action="shopping_cart_insert.php" onsubmit='getSelectValue()' method="post">
-                                        <input type="hidden" name="pID" value=<?php echo "$productID" ?>>
-                                        <input type="hidden" name="pName" value=<?php echo "$name" ?>>
-                                        <input type="hidden" name="quantaty" id="buyQuantaty">
-                                        <input type="hidden" name="image" value=<?php echo "$image" ?>>
-                                        <input class="product-shopping-cart-btn" type="submit" value="In den Warenkorb" name="into_shopping_cart" id="into_shopping_cart" disabled="true">
-                                </form>  
-                        </div>     
+                        <!-- Ausgewählte Menge wird im Ruckgabeformula gespeichert -->
+                        
+
+                        <!-- Formula um DAten an den Server zu schicken -->
+                        
+                        <form action="shopping_cart_insert.php" onsubmit='getSelectValue()' method="post">
+                                <input type="hidden" name="pID" value=<?php echo "$productID" ?>>
+                                <input type="hidden" name="pName" value=<?php echo "$name" ?>>
+                                <input type="hidden" name="quantaty" id="buyQuantaty">
+                                <input type="hidden" name="image" value=<?php echo "$image" ?>>
+                                <input class="product-shopping-cart-btn" type="submit" value="In den Warenkorb" name="into_shopping_cart" id="into_shopping_cart" disabled="true">
+                        </form> 
+                        </div>
+                                   
                 </div>
         </div>
 
