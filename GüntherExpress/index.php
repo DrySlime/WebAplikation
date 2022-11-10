@@ -75,6 +75,15 @@ $_SESSION['useruid'] = 1234;
 
         </div>
     </div>
+    <div class="newitems">
+        <div class="newitems_header">
+                <h1>Neuheiten</h1>
+                <h4>Schau was beim Confectioner neu eingetroffen ist!</h4>
+        </div>
+        <div class="bestsellers_scroller">
+
+        </div>
+    </div>
 
 
 </body>
