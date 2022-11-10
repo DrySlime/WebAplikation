@@ -86,7 +86,7 @@ $_SESSION['useruid'] = 1234;
 </body>
 
 </html>
-
+<script src="JS/index.js"></script>
 <?php
 include_once 'footer.php';
 ?>
