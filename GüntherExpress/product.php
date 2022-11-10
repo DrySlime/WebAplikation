@@ -2,6 +2,7 @@
 include_once 'header.php';
 include_once 'includes/dbh_include.php';
 require_once 'includes/product_include.php';
+include_once 'includes/rating_functions_inc.php';
 ?>
 
 <?php
@@ -42,6 +43,7 @@ require_once 'includes/product_include.php';
                         ?>
                 </select>
                 <br>
+                
 
                 <!-- Ausgewählte Menge wird im Ruckgabeformula gespeichert -->
                 
