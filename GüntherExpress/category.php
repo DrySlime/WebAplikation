@@ -4,8 +4,9 @@
     require_once 'includes/functions_include.php';
 ?>
 <?php
-    $parentCategory=$_GET["parentCategory"];
-    showChildCategoriesAndItems($conn,$parentCategory,2);
+    $parentCategory=$_GET["name"];
+    
+    echo $parentCategory;
 ?>
 
     
