@@ -32,7 +32,9 @@ session_start();
         </div>
     <?php } else { ?>
         <div class="account_loginWrapper">
-
+            <div class="login_frame">
+                <h1>Login</h1>
+            </div>
         </div>
     <?php } ?>
 </div>

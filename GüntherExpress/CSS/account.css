@@ -14,7 +14,7 @@ body {
 
 .account_wrapper {
     line-height: 1.5;
-    width: 100%;
+    width: 100vw;
     height: 100vh;
     overflow: hidden;
     display: flex;
@@ -77,4 +77,16 @@ body {
 .account_sidebar h1:hover {
     color: #fc466b;
     padding-left: 0.625rem;
+}
+
+.account_loginWrapper {
+    width: 90%;
+    height: 80vh;
+    align-items: center;
+    margin-top: 5rem;
+    background-color: #FFFFFF;
+    border-radius: 5rem;
+    justify-content: space-evenly;
+    align-content: center;
+    display: flex;
 }

@@ -6,6 +6,7 @@ include_once 'header.php';
 include_once 'hero.php';
 session_start();
 $_SESSION['useruid'] = 1234;
+//unset($_SESSION['useruid'])
 ?>
 
 <head>
