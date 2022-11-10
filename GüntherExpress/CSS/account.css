@@ -24,63 +24,57 @@ body {
     flex-direction: column;
 }
 
-.account_header {
-    width: 100%;
-    height: 20%;
-    align-items: center;
-    justify-content: center;
-    align-content: center;
-    display: flex;
-    margin-top: -8rem;
-}
-
-.header_text {
-    width: 50%;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
-    align-content: center;
-    flex-direction: flex;
-}
-
-.header_text h1 {
-    color: #101010;
-    font-size: 4rem;
-    text-decoration: none;
-    font-weight: 800;
-    text-align: center;
-}
-
 .account_dataWrapper {
-    width: 100%;
+    width: 90%;
+    height: 80vh;
     align-items: center;
+    margin-top: 5rem;
     justify-content: space-evenly;
     align-content: center;
     display: flex;
 }
 
 .account_sidebar {
-    width: 30%;
-    align-items: center;
-    justify-content: center;
-    align-content: center;
+    width: 20%;
+    align-items: flex-start;
+    justify-content: left;
+    align-content: flex-start;
     display: flex;
+    line-height: 2.3;
+    flex-direction: column;
+    margin-right: 2rem;
+    margin-bottom: 11rem;
 }
 
 .account_data{
-    width: 70%;
+    width: 80%;
+    height: 100%;
     align-items: center;
     justify-content: center;
     align-content: center;
     display: flex;
+    background-color: #FFFFFF;
+    border-radius: 5rem;
 }
 
-.header_sep {
-    margin: auto;
-    width: 100%;
-    justify-content: center;
-    margin-bottom: 1.563rem;
-    border-top-color: #101010;
-    border-top: solid;
-    border-radius: .5rem;
+.account_sidebar .material-symbols-outlined {
+    list-style: none;
+    vertical-align: middle;
+    margin-right: 1rem;
+    font-size: 2rem !important;
+    cursor: pointer;
+}
+
+.account_sidebar h1 {
+    color: #101010;
+    font-size: 1.5rem;
+    text-decoration: none;
+    font-weight: 800;
+    text-align: center;
+    transition: .3s all;
+}
+
+.account_sidebar h1:hover {
+    color: #fc466b;
+    padding-left: 0.625rem;
 }

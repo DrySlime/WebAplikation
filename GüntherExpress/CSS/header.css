@@ -10,7 +10,7 @@
 .header {
     display: flex;
     height: auto;
-    width: 100%;
+    width: 100vw;
     top: 0;
     left: 0;
     position: absolute;
@@ -21,7 +21,7 @@
 }
 
 .header_wrapper {
-    width: 100%;
+    width: 100vw;
     display: flex;
     align-items: center;
     align-content: center;

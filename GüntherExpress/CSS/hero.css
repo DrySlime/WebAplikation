@@ -9,9 +9,10 @@
 
 .hero {
     line-height: 1.5;
-    width: 100%;
+    width: 100vw;
     height: 95vh;
     overflow: hidden;
+    transition: height 0.66s ease-out;
     display: flex;
 }
 
