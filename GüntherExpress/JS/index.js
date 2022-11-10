@@ -131,6 +131,21 @@ $(document).ready(function(){
         
         
     }
+    var max123= $(".category_item_line").prop('scrollWidth');
+    function autoslide(num){
+        var categoryLineClass=".category_item_line_"+num;
+        
+        if(slider_position<=0){
+            $(categoryLineClass).animate({scrollLeft:max123},50000);
+            
+        }
+       
+
+
+
+            
+    }
+    autoslide(1);
     sliderLogic(1);
     sliderLogic(2);
 });

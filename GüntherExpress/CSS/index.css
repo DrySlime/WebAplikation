@@ -43,11 +43,11 @@ body {
     font-weight: 500;
 }
 div.category_item_line {
-    background-image: linear-gradient(270deg, rgb(29, 86, 170), rgb(142, 199, 251),rgb(29, 86, 170));
+    background-image: linear-gradient(270deg, rgba(253, 153, 175, 0.603), rgba(249, 212, 220, 0.377),rgba(253, 153, 175, 0.603));
     overflow: auto;
     white-space: nowrap;
     
-    height: 370px; 
+    height: 383px; 
     
     
 }
