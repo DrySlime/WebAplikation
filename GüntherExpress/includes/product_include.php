@@ -27,10 +27,10 @@ function showProduct($conn, $productID){
 
     echo 
     
-    '<h2>'  .$name.  '</h2>
-     <div>'  .$description.  '</div> <br>
-     <div>'  .$price.  'Euro</div>
-     <img src='  .$image.'> <br>';
+    '<img class= '.'product-image'.' src='  .$image.'> <br>
+    <h2 class= '.'product-headline'.'>'  .$name.  '</h2>
+    <p class= '.'product-description'.'>'  .$description.  '</p> <br>
+    <div class= '.'product-price'.'>'  .$price.  ' Euro</div>';
 
 }
 
