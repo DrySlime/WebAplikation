@@ -598,18 +598,19 @@ function changePassword($conn,$password){
 }
 
 function changeProfile($conn,$username, $name, $surname, $email){
-    $sql = "UPDATE site_user SET user_uid = ?, firstname = ?, lastname = ?, email = ? WHERE user_uid = ?;";
+    $sql = "UPDATE site_user SET user_uid = ?, firstname = ?, lastname = ?, email = ? WHERE id = ?;";
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt,$sql)){
         header("location: ../profile.php?error=stmtfailed");
         exit();
     }
-    $useruid = $_SESSION['useruid'];
-    mysqli_stmt_bind_param($stmt,"sssss",$username,$name,$surname,$email,$useruid);
+    $userid = $_SESSION['userid'];
+    mysqli_stmt_bind_param($stmt,"sssss",$username,$name,$surname,$email,$userid);
     mysqli_stmt_execute($stmt);
 
     mysqli_stmt_close($stmt);
+    $_SESSION['useruid'] = $username;
 
     header("location: ../profile.php");
     exit();
@@ -644,15 +645,17 @@ function addAddress($conn, $street, $houseno, $city, $postalCode){
         exit();
     }
 
-    mysqli_stmt_bind_param($stmt,"ssss",$houseno,$street,$city,$postalCode,$addressID);
+    mysqli_stmt_bind_param($stmt,"ssss",$houseno,$street,$city,$postalCode);
+    bindAddressToUser($conn, $street, $houseno, $city, $postalCode);
     mysqli_stmt_execute($stmt);
 
     mysqli_stmt_close($stmt);
 }
 
 function bindAddressToUser($conn, $street, $houseno, $city, $postalCode){
-    $userid = §_SESSION['userid'];
-    $addressid = getAddressIDByData($conn, $street, $houseno, $city, $postalCode);
+    $userid = $_SESSION['userid'];
+    $addressid = 1;
+    //getAddressIDByData($conn, $street, $houseno, $city, $postalCode);
     $sql = "INSERT INTO user_address (user_id, address_id) VALUES (?,?);";
     $stmt = mysqli_stmt_init($conn);
 
@@ -684,6 +687,7 @@ function getProfileData($conn){
     mysqli_stmt_execute($stmt);
 
     $resultData = mysqli_stmt_get_result($stmt);
+    mysqli_stmt_close($stmt);
     return mysqli_fetch_assoc($resultData);
 }
 
@@ -700,7 +704,7 @@ function getAllUserAddressData($conn){
     mysqli_stmt_execute($stmt);
 
     $resultData = mysqli_stmt_get_result($stmt);
-
+    mysqli_stmt_close($stmt);
     
     return mysqli_fetch_assoc($resultData);
 }
@@ -716,7 +720,8 @@ function getAddressDataByID($conn){
     mysqli_stmt_execute($stmt);
 
     $resultData = mysqli_stmt_get_result($stmt);
-
+    mysqli_stmt_close($stmt);
+    
     
     return mysqli_fetch_assoc($resultData);
 }
@@ -732,7 +737,7 @@ function getAddressIDByData($conn,$street, $houseno, $city, $postalCode){
     mysqli_stmt_execute($stmt);
 
     $resultData = mysqli_stmt_get_result($stmt);
-
+    mysqli_stmt_close($stmt);
     
     return mysqli_fetch_assoc($resultData);
 }

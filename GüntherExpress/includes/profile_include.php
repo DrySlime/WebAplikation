@@ -29,7 +29,7 @@ require_once 'functions_include.php';
     
     
     if (isset($_POST['change_profile_btn'])) {
-        
+        session_start();
         $usernameChange = $_POST['username_change'];
         $nameChange = $_POST['name_change'];
         $surnameChange = $_POST['surname_change'];
@@ -39,13 +39,24 @@ require_once 'functions_include.php';
             header("location: ../profile.php?error=invaliduid");
             exit();
         }
+        
         else if(invalidEmail($emailChange)!==false){
             header("location: ../profile.php?error=invalidemail");
             exit();
         }
         else if (emptyInputProfile($emailChange,$nameChange,$surnameChange,$usernameChange)!==false) {
             header("location: ../profile.php?error= emptyinput");
+            exit();
+        }
+        else if($usernameChange !== $_SESSION['useruid']){
+            if(uidExists($conn, $usernameChange,$usernameChange)!==false){
+                header("location: ../profile.php?error=uidexists");
                 exit();
+            }
+            else {
+                changeProfile($conn, $usernameChange, $nameChange, $surnameChange, $emailChange);
+                exit();
+            }
         }
         else {
             changeProfile($conn, $usernameChange, $nameChange, $surnameChange, $emailChange);
@@ -64,7 +75,7 @@ require_once 'functions_include.php';
     
         if (invalidUserAddress($conn,$addressID)!==false) {
             header("location: ../profile.php?error= invalidaddress");
-                exit();
+            exit();
         }
         else{
             changeAddress($conn,$addressID,$streetChange,$housenoChange,$cityChange,$postalCodeChange);
@@ -90,14 +101,17 @@ require_once 'functions_include.php';
     
     
     if (isset($_POST['add_address_btn'])) {
+        session_start();
         $streetChange = $_POST['street_change'];
         $housenoChange = $_POST['houseno_change'];
         $cityChange = $_POST['city_change'];
         $postalCodeChange = $_POST['postal_code_change'];
-        if (getAddressIDByData($conn,$streetChange,$housenoChange,$cityChange,$postalCodeChange) === null) {
+
+        if (getAddressIDByData($conn,$streetChange,$housenoChange,$cityChange,$postalCodeChange) !== null) {
             bindAddressToUser($conn,$streetChange,$housenoChange,$cityChange,$postalCodeChange);
         }
         else{
+            echo "ich will sterben";
             addAddress($conn,$streetChange,$housenoChange,$cityChange,$postalCodeChange);
             exit();
         }

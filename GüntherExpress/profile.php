@@ -4,7 +4,7 @@ include_once 'header.php';
 ?>
 <!DOCTYPE html>
 <html>
-<link rel="stylesheet" href="CSS/profile.css">
+<!--<link rel="stylesheet" href="CSS/profile.css">-->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
 <head>
@@ -13,7 +13,6 @@ include_once 'header.php';
         require_once 'includes/dbh_include.php';
         require_once 'includes/profile_include.php';
         require_once 'includes/functions_include.php';
-        var_dump($_SESSION['userid'])
         ?>
 </head>
 
@@ -36,7 +35,7 @@ include_once 'header.php';
                 
                 <div class="tags username_tag">Nutzername:</div>
                 <div class="tags username_info_tag">
-                    <?php echo $resultProfile['username']; ?>
+                    <?php echo $resultProfile['user_uid']; ?>
                 </div>
 
                 <div class="tags name_tag">Name:</div>
@@ -104,7 +103,10 @@ include_once 'header.php';
                 <div class="headline">Deine Adresse(n)</div>
                 <?php
                     $resultAddress = getAllUserAddressData($conn);
-                    while($rows=$resultAddress->fetch_assoc()){
+                    if($resultAddress !== null){
+                        while($rows=$resultAddress->fetch_assoc()){
+                    
+                    
                 ?>
                 <form action="includes/profile_include.php" method="post" name>
                 <div class="address_block" id = "<?php echo $rows['id'];?>" name = "addressID" value="<?php echo $rows['id'];?>">
@@ -119,7 +121,8 @@ include_once 'header.php';
                     
                     </div>
                 </form>
-                <?php } ?>
+                <?php }
+                 } ?>
             </div>
             <div class="change_address">
                 <div class="headline">Adresse ändern</div>
@@ -149,7 +152,7 @@ include_once 'header.php';
                     <input type="text" name="street_change" class="street_info_tag" placeholder="Staßenname">
                     <input type="text" name="houseno_change" class="houseno_info_tag" placeholder="Hausnummer"><br>
                     <div class="tags city_tag">Stadt:</div>
-                    <input type="text" name="city_change" class="Stadtname"><br>
+                    <input type="text" name="city_change" class="Stadtname" placeholder="Stadtname"><br>
                     <div class="tags postal_code_tag">PLZ:</div>
                     <input type="text" name="postal_code_change" class="postal_code_change" placeholder="PLZ"><br>
                     <button class="btn" type="submit" name="add_address_btn" >Adresse hinzufügen</button>
