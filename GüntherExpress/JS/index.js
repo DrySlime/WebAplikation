@@ -1,63 +1,63 @@
 
-var opacity=0;
-var intervalID=0;
-var timeoutID=0;
+// var opacity=0;
+// var intervalID=0;
+// var timeoutID=0;
 
 
 
 
-function sliderFadeIn(num){
-    var borderId='item_border_'+num;
-    var leftButtonId='scroll_left_button_'+num;
-    var rightButtonId='scroll_left_button_'+num;
-    document.getElementById(borderId).onmouseenter=function (evt){
-        console.log("enter");
-        intervalID=setInterval(appear,20);
+// function sliderFadeIn(num){
+//     var borderId='item_border_'+num;
+//     var leftButtonId='scroll_left_button_'+num;
+//     var rightButtonId='scroll_left_button_'+num;
+//     document.getElementById(borderId).onmouseenter=function (evt){
+//         console.log("enter");
+//         intervalID=setInterval(appear,20);
         
-    }
-}
-function appear(){
+//     }
+// }
+// function appear(){
     
-    var div= document.getElementById("scroll_left_button_1");
-    opacity=Number(window.getComputedStyle(div).getPropertyValue("opacity"));
-    if(opacity<1){
-        opacity+=0.1;
+//     var div= document.getElementById("scroll_left_button_1");
+//     opacity=Number(window.getComputedStyle(div).getPropertyValue("opacity"));
+//     if(opacity<1){
+//         opacity+=0.1;
         
-        div.style.opacity=opacity;
-    }else{
-        clearInterval(intervalID);
+//         div.style.opacity=opacity;
+//     }else{
+//         clearInterval(intervalID);
         
-    }
+//     }
     
-}
+// }
 
-function sliderFadeOut(num){
-     var borderId='item_border_'+num;
-     var leftButtonId='scroll_left_button_'+num;
-     var rightButtonId='scroll_left_button_'+num;
-    document.getElementById(borderId).onmouseleave=function (evt){
+// function sliderFadeOut(num){
+//      var borderId='item_border_'+num;
+//      var leftButtonId='scroll_left_button_'+num;
+//      var rightButtonId='scroll_left_button_'+num;
+//     document.getElementById(borderId).onmouseleave=function (evt){
         
-        intervalID=setInterval(hide,20);
+//         intervalID=setInterval(hide,20);
         
         
-    }
-}
+//     }
+// }
 
-function hide(){
+// function hide(){
    
-    var div= document.getElementById("scroll_left_button_1");
-    opacity=Number(window.getComputedStyle(div).getPropertyValue("opacity"));
-    if(opacity>0){
-        opacity-=0.1;
-        div.style.opacity=opacity;
-    }else{
-        clearInterval(intervalID);
+//     var div= document.getElementById("scroll_left_button_1");
+//     opacity=Number(window.getComputedStyle(div).getPropertyValue("opacity"));
+//     if(opacity>0){
+//         opacity-=0.1;
+//         div.style.opacity=opacity;
+//     }else{
+//         clearInterval(intervalID);
         
-    }
+//     }
     
-}
-sliderFadeIn(1);
-sliderFadeOut(1);
+// }
+// sliderFadeIn(1);
+// sliderFadeOut(1);
 
 $(document).ready(function(){
     function scrollButtonFade(num){
