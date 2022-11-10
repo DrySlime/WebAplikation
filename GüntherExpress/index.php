@@ -9,6 +9,7 @@ $_SESSION['useruid'] = 1234;
 ?>
 
 <head>
+    <script src="JS/index.js"></script>
     <link rel="stylesheet" href="CSS/index.css">
     <meta charset="UTF-8" http-equiv="X-UA-Compatible" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -56,6 +57,7 @@ $_SESSION['useruid'] = 1234;
         </div>
     </div>';
 
+    <?php showRandomCategoriesAndItems($conn,2,2); ?>
 
     <div class="bestsellers">
         <div class="bestsellers_header">
@@ -86,7 +88,7 @@ $_SESSION['useruid'] = 1234;
 </body>
 
 </html>
-<script src="JS/index.js"></script>
+
 <?php
 include_once 'footer.php';
 ?>
