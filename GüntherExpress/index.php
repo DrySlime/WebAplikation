@@ -17,6 +17,46 @@ $_SESSION['useruid'] = 1234;
 </head>
 
 <body">
+
+
+    <?php $item=getRandomItems($conn, 10); ?>
+    <div class="item_border" id="item_border_1">
+        <a href="javascript:void(0);">
+            <div class="scroll_left_button" id="scroll_left_button_1">
+                <div class="arrow_left"><img src="img/arrow_left.png"></div>
+            </div>
+        </a>
+        <a href="javascript:void(0);">
+            <div class="scroll_right_button" id="scroll_right_button_1">
+                <div class="arrow_right">
+                    <img src="img/arrow_right.png">
+                </div>
+            </div>
+        </a>
+        <div class="category_item_line category_item_line_1" id="category_item_line_1">
+            <h1>Vorschläge</h1>
+            <ul>
+
+
+
+            <?php
+                for($i=0;$i<count($item);$i++){
+                    echo '
+                    
+                        <li>
+                        <a href="product.php?id='.$item[$i][0].'">
+                        <div class="product_image">
+                            <img src='.$item[$i][3].' alt="'.$item[$i][1].'.png" >
+                        </div></a>';
+                }
+            ?>
+
+
+            </ul>
+        </div>
+    </div>';
+
+
     <div class="bestsellers">
         <div class="bestsellers_header">
             <h1>
