@@ -23,6 +23,7 @@ if(isset($_GET["delete"])){
 
 $items = getShoppingCartItems($conn, $userId);
 
+echo "<div>";
 echo "<h1>Warenkorb:</h1>";
 
 
@@ -37,6 +38,13 @@ while ($row = $items->fetch_assoc()) {
 
 ?>
 
+<form action="check_out.php">
+    <input type="submit" value="Zur Kasse">
+</form>
+
+<?php
+echo "</div>";
+?>
 
 <?php
 include_once 'footer.php';
