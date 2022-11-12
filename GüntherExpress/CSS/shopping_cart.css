@@ -1,0 +1,79 @@
+.background{
+    background-color: #f9d4dc;
+}
+
+.shopping-cart-text{
+    margin-left: 20px;
+}
+
+.product{
+    margin-top: 25px;
+    margin-bottom: 40px;
+    margin-left: 20px;
+}
+
+.right-side{
+    margin-left: 180px;
+
+}
+
+
+.image{
+    width: 150px;
+    height: 150px;
+    float: left;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.delete-icon{
+    color: black;
+    border: 2px solid #D4045F;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.product-headline{
+    font-family: 'Poppins', sans-serif;
+    line-height: 24px;
+    margin-bottom: 5px;
+    text-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.product-price{
+    font-weight: bold;
+    text-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    float: right;
+    margin-right: 20px;
+}
+
+.product-qty-text{
+    text-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.button{
+    background-color: #D94A69;
+    margin-bottom: 30px;
+    margin-left: 1700px;
+    border-radius: 30px;
+    border-style: none;
+    height: 50px;
+    width: 140px;
+    color: white;
+    font-weight: bold;
+    transition: 0.5s;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.button:hover{
+    background-color: #BD405B;
+    margin-bottom: 30px;
+    border-radius: 30px;
+    border-style: none;
+    height: 50px;
+    width: 140px;
+    color: white;
+    font-weight: bold;
+    transition: 0.5s;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}

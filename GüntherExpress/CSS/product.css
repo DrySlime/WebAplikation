@@ -65,7 +65,7 @@
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-.product-qty-selection[open]{
+.product-qty-selection{
     margin-top: 5px;
     margin-bottom: 30px;
     height: 40px;

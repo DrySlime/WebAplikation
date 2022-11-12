@@ -1,3 +1,7 @@
+<head>
+    <link rel="stylesheet" href="../CSS/shopping_cart_insert.css">
+</head>
+
 <?php
 include_once 'header.php';
 include 'includes/dbh_include.php';
@@ -73,15 +77,27 @@ function insert_into_cart($conn, $userId, $productId, $quantaty){
 ?>
 
 
-<h2>Folgender Gegenstand wurde <?php echo $quantaty;?> mal in den Warenkorb gelegt:</h2>
 
-<h2> <?php echo $productName ?> </h2>
-<img src=<?php echo $image;?>> <br>
+<body>
+    <div class="background">
+        <div class="product-container">
+            <h2 class="confirmation">Folgender Gegenstand wurde <?php echo $quantaty;?> mal in den Warenkorb gelegt:</h2>
 
-<form action="index.php">
-    <input type="submit" value="Weiter einkaufen">
-</form>
+            <h2 class="product-name"> <?php echo $productName ?> </h2>
+            <img class="product-img" src=<?php echo $image;?>> <br>
 
-<form action="shopping_cart.php">
-    <input type="submit" value="Zum Einkaufswagen">
-</form>
+            <div class="buttons">
+                <form action="index.php">
+                    <input class="button" type="submit" value="Weiter einkaufen">
+                </form>
+
+                <form action="shopping_cart.php">
+                    <input class="button" type="submit" value="Zum Einkaufswagen">
+                </form>
+            </div>
+        </div>
+        
+        
+    </div>
+    
+</body>
