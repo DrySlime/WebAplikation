@@ -16,24 +16,6 @@ function getProductData($conn, $productID){
     return mysqli_fetch_assoc($resultData);
 }
 
-function getSumPrice($conn, $productID, $userID){
-
-    $singlePrice = getProductData($conn, $productID)["price"];
-    
-    $sql = "SELECT * FROM shopping_cart WHERE user_id = ? AND product_id = ?;";
-    $stmt = mysqli_stmt_init($conn);
-
-    mysqli_stmt_prepare($stmt,$sql);
-    mysqli_stmt_bind_param($stmt,"ss",$userID, $productID,);
-    mysqli_stmt_execute($stmt);
-
-    $resultData = mysqli_stmt_get_result($stmt);
-
-    $quantaty = mysqli_fetch_assoc($resultData)["qty"];
-
-    return $singlePrice*$quantaty;
-    
-}
 
 function showProduct($conn, $productID){
 
@@ -53,17 +35,51 @@ function showProduct($conn, $productID){
 
 }
 
+function getSumPrice($conn, $productID, $userID){
+
+    $singlePrice = getProductData($conn, $productID)["price"];
+    
+    $sql = "SELECT * FROM shopping_cart WHERE user_id = ? AND product_id = ?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"ss",$userID, $productID,);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    $quantaty = mysqli_fetch_assoc($resultData)["qty"];
+
+    return $singlePrice*$quantaty;
+    
+}
+
+function getShoppingCartSum($conn, $userID){
+
+    $items = getShoppingCartItems($conn, $userID);
+    $sum = 0;
+
+    while ($row = $items->fetch_assoc()) {
+        $sum = $sum + (getProductData($conn, $row["product_id"])["price"] * $row["qty"]);
+    }
+
+    return $sum;
+
+}
+
 function showShoppingCartProduct($conn, $productID, $userID){
 
     $productData = getProductData($conn, $productID);
 
     $name = $productData["product_name"];
-    $price = getSumPrice($conn, $productID, $userID);
+    $price = $productData["price"];
+    $sumprice = getSumPrice($conn, $productID, $userID);
 
     echo 
     '
     <h2 class= '.'product-headline'.'>'  .$name.  '</h2>
-    <div class= '.'product-price'.'>'  .$price.  ' Euro</div>
+    <p class= '.'product-price'.'>'  .$price.  ' Euro</p>
+    <div class= '.'product-sum-price'.'>'  .$sumprice.  ' Euro</div>
     ';
 
 }
@@ -74,7 +90,7 @@ function showShoppingCartImage($conn, $productID){
 
     echo 
     '
-    <img class='.'image'.' src='.$image.'> <br>
+    <a  href='.'product.php?'.'id='.''.$productData["id"].'> <img class='.'image'.' src='.$image.''.'> </a> <br>
     ';
 }
 

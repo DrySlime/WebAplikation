@@ -6,32 +6,34 @@
     margin-left: 20px;
 }
 
-.product{
-    margin-top: 25px;
-    margin-bottom: 40px;
-    margin-left: 20px;
+.shopping-cart-container{
+    margin-top: 20px;
 }
 
-.right-side{
-    margin-left: 180px;
+.product{
+    display: grid;
+    grid-template-columns: 10% 90%;
+    margin-top: 15px;
+}
+
+.product-image{
+    width: 150px;
+    height: 150px;
+    margin: auto;
+}
+
+.product-info{
 
 }
 
 
 .image{
-    width: 150px;
-    height: 150px;
-    float: left;
+    width: 100%;
+    height: 100%;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-.delete-icon{
-    color: black;
-    border: 2px solid #D4045F;
-    padding: 5px 10px;
-    text-align: center;
-    text-decoration: none;
-}
+
 
 .product-headline{
     font-family: 'Poppins', sans-serif;
@@ -41,20 +43,43 @@
 }
 
 .product-price{
+
+}
+
+.product-sum-price{
     font-weight: bold;
     text-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     float: right;
     margin-right: 20px;
 }
 
+.end-price{
+    font-weight: bold;
+    text-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    float: right;
+    margin-right: 20px;
+    margin-top: 5px;
+}
+
 .product-qty-text{
     text-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.delete-icon{
+    color: black;
+    border: 2px solid #D4045F;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+
 }
 
 .button{
     background-color: #D94A69;
     margin-bottom: 30px;
-    margin-left: 1700px;
+    margin-right: 30px;
     border-radius: 30px;
     border-style: none;
     height: 50px;
@@ -63,6 +88,7 @@
     font-weight: bold;
     transition: 0.5s;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    float: right;
 }
 
 .button:hover{
@@ -76,4 +102,5 @@
     font-weight: bold;
     transition: 0.5s;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    float: right;
 }
