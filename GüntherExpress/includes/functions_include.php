@@ -514,6 +514,52 @@ function getAllAttributesFromItemViaID($ItemID,$conn){
     return $item;
 
 }
+function getImageFromID($conn,$ItemID){
+    $sql = "SELECT product_image FROM product WHERE id=?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../category.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$ItemID);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    if(mysqli_num_rows($resultData)>0){
+        while($row =mysqli_fetch_assoc($resultData)){
+            $img=$row["product_image"];
+        }
+    }
+    mysqli_stmt_close($stmt);
+    return $img;
+
+}
+function getProductnameFromID($conn,$ItemID){
+    $sql = "SELECT product_name FROM product WHERE id=?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../category.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$ItemID);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    if(mysqli_num_rows($resultData)>0){
+        while($row =mysqli_fetch_assoc($resultData)){
+            $name=$row["product_name"];
+        }
+    }
+    mysqli_stmt_close($stmt);
+    return $name;
+
+}
 
 function getItemIdsFromCategory($conn,$CategoryID,$amount){
     $sql = "SELECT id FROM product WHERE product_category_id = ? ORDER BY rand() LIMIT  ?;";
