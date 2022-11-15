@@ -47,6 +47,8 @@ function passwordMatch($password,$passwordRepeat){
     }
     return $result;
 }
+
+
 function uidExists($conn, $username,$email){
     $sql = "SELECT * FROM site_user WHERE user_uid = ? OR email = ?;";
     $stmt = mysqli_stmt_init($conn);
@@ -124,6 +126,7 @@ function createUser($conn,$email,$password,$firstname,$lastname,$username){
     header("location: ../signup.php?error=none");
     exit();
 }
+
 function loginUser($conn,$password,$username){
     $uidExists = uidExists($conn, $username,$username);
 
@@ -144,6 +147,21 @@ function loginUser($conn,$password,$username){
         header("location: ../index.php?");
         exit();
     }
+    
+}
+
+function rightPassword($conn,$password){
+    $username = $_SESSION['useruid'];
+    $uidExists = uidExists($conn, $username,$username);
+
+    if($uidExists===false){
+        header("location: ../profile.php?error=wronginput");
+        exit();
+    }
+
+    $pwdHashed = $uidExists["user_password"];
+    $checkPwd = password_verify($password,$pwdHashed);
+    return $checkPwd;
     
 }
 
@@ -575,6 +593,7 @@ function getUserIdFromUserName($conn, $userName){
     mysqli_stmt_bind_param($stmt,"s",$userName,);
     return mysqli_fetch_assoc($resultData)["id"];
 }
+
 function changePassword($conn,$password){
     $sql = " UPDATE site_user SET user_password = ? WHERE id = ?;";
     $stmt = mysqli_stmt_init($conn);
@@ -585,7 +604,7 @@ function changePassword($conn,$password){
     }
 
     $hashedPassword = password_hash($password,PASSWORD_DEFAULT);
-    $useruid = $_SESSION['userid'];
+    $userid = $_SESSION['userid'];
 
     mysqli_stmt_bind_param($stmt,"ss",$hashedPassword,$userid);
     mysqli_stmt_execute($stmt);
@@ -646,17 +665,39 @@ function addAddress($conn, $street, $houseno, $city, $postalCode){
     }
 
     mysqli_stmt_bind_param($stmt,"ssss",$houseno,$street,$city,$postalCode);
-    bindAddressToUser($conn, $street, $houseno, $city, $postalCode);
     mysqli_stmt_execute($stmt);
+    bindAddressToUser($conn, $street, $houseno, $city, $postalCode);
+    
 
     mysqli_stmt_close($stmt);
 }
 
 function bindAddressToUser($conn, $street, $houseno, $city, $postalCode){
     $userid = $_SESSION['userid'];
-    $addressid = 1;
-    //getAddressIDByData($conn, $street, $houseno, $city, $postalCode);
+    $address = getAddressIDByData($conn, $street, $houseno, $city, $postalCode);
+    $addressID = $address['id'];
     $sql = "INSERT INTO user_address (user_id, address_id) VALUES (?,?);";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../profile.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt,"ss",$userid,$addressID);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+    
+
+    header("location: ../profile.php?error=none");
+    exit();
+}
+
+function unbindAddress($conn,$addressid){
+    $userid = $_SESSION['userid'];
+
+    $sql = "DELETE FROM user_address WHERE user_id = ? AND address_id = ?";
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt,$sql)){
@@ -672,7 +713,7 @@ function bindAddressToUser($conn, $street, $houseno, $city, $postalCode){
 
     header("location: ../profile.php?error=none");
     exit();
-}
+} 
 
 
 function getProfileData($conn){
@@ -696,7 +737,7 @@ function getAllUserAddressData($conn){
     $userid = $_SESSION['userid'];
 
 
-    $sql = "SELECT * FROM address WHERE id = (SELECT address_id FROM user_address WHERE user_id = ?);";
+    $sql = "SELECT * FROM address INNER JOIN user_address ON address.id = user_address.address_id WHERE user_id = ?";
     $stmt = mysqli_stmt_init($conn);
 
     mysqli_stmt_prepare($stmt,$sql);
@@ -706,7 +747,7 @@ function getAllUserAddressData($conn){
     $resultData = mysqli_stmt_get_result($stmt);
     mysqli_stmt_close($stmt);
     
-    return mysqli_fetch_assoc($resultData);
+    return $resultData;
 }
 
 function getAddressDataByID($conn){

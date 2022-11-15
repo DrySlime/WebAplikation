@@ -4,7 +4,7 @@ include_once 'header.php';
 ?>
 <!DOCTYPE html>
 <html>
-<!--<link rel="stylesheet" href="CSS/profile.css">-->
+<!---<link rel="stylesheet" href="CSS/profile.css">-->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
 <head>
@@ -56,7 +56,7 @@ include_once 'header.php';
                 <button class="btn" name="to_edit_profile_btn" onclick="function showProfileEdit()">Profildaten
                     ändern</button>
             </div>
-            <div class="change_profile">
+            <div #TEST class="change_profile">
                 <div class="headline">Deine Daten verändern</div>
                 <form action="includes/profile_include.php" method="post">
                     <div class="tags name_tag">Username:</div>
@@ -78,10 +78,10 @@ include_once 'header.php';
                 <div class="cover"><img src="https://img.icons8.com/material/452/user-lock.png" alt=""></div>
                 <div class="icon_text password_text">Passwort <br> ändern</div>
             </div>
-            <div class="manage_password">
+            <div #TEST class="manage_password">
                 <div class="headline">Passwort Verwalten</div>
                 <div class="change_password">Passwort ändern</div>
-                <form action="includes/proflie_includes.php" method="post">
+                <form action="includes/profile_include.php" method="post">
                     <input type="password" name="password_old" class="password_old" placeholder="Altes Passwort" required><br>
                     <input type="password" name="password_new" class="password_new" placeholder="Neues Passwort"
                         required><br>
@@ -104,27 +104,27 @@ include_once 'header.php';
                 <?php
                     $resultAddress = getAllUserAddressData($conn);
                     if($resultAddress !== null){
-                        while($rows=$resultAddress->fetch_assoc()){
+                        while($rows = $resultAddress->fetch_assoc()){
                     
                     
                 ?>
                 <form action="includes/profile_include.php" method="post" name>
-                <div class="address_block" id = "<?php echo $rows['id'];?>" name = "addressID" value="<?php echo $rows['id'];?>">
+                <div class="address_block" id = "<?php echo $rows['id'];?>" name = "address_ID" value="<?php echo $rows['id'];?>">
                         <div class="tags address_tag">Adresse:</div>
-                        <div class="tags street_info_tag"><?php echo $rows['address_line1'];?></div>
+                        <div class="tags street_info_tag" ><?php echo $rows['address_line1'];?></div>
                         <div class="tags houseno_info_tag"><?php echo $rows['street_number'];?></div>
                         <div class="tags city_tag">Stadt:</div>
                         <div class="tags city_info_tag"><?php echo $rows['city'];?></div>
                         <div class="tags postal_code_tag">PLZ:</div>
                         <div class="tags postal_code_info_tag"><?php echo $rows['postal_code'];?></div>
-                        <div class="btn" type="submit" name="change_address_action">Diese Addresse ändern</div>
+                        <button class="btn" type="submit" name="change_address_action">Diese Addresse ändern</button>
                     
                     </div>
                 </form>
                 <?php }
                  } ?>
             </div>
-            <div class="change_address">
+            <div #TEST class="change_address">
                 <div class="headline">Adresse ändern</div>
 
                 <form action="includes/profile_include.php" method="post">
@@ -141,16 +141,13 @@ include_once 'header.php';
                     <button class="btn" type="submit" name="change_address_btn" >Adresse ändern</button>
                 </form>
             </div>
-            <div class="add_address">
+            <div #TEST class="add_address">
                 <div class="headline">Adresse hinzufügen</div>
 
                 <form action="includes/profile_include.php" method="post">
-                    <?php 
-                        $resultChangeAddress = getAddressDataByID($conn)
-                    ?>
                     <div class="tags address_tag">Adresse:</div>
                     <input type="text" name="street_change" class="street_info_tag" placeholder="Staßenname">
-                    <input type="text" name="houseno_change" class="houseno_info_tag" placeholder="Hausnummer"><br>
+                    <input type="number" name="houseno_change" class="houseno_info_tag" placeholder="Hausnummer"><br>
                     <div class="tags city_tag">Stadt:</div>
                     <input type="text" name="city_change" class="Stadtname" placeholder="Stadtname"><br>
                     <div class="tags postal_code_tag">PLZ:</div>

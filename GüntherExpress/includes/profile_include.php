@@ -4,25 +4,27 @@ require_once 'functions_include.php';
 
 
     if (isset($_POST['change_password_btn'])){
+        session_start();
+
         $oldPassword = $_POST['password_old'];
         $newPassword = $_POST['password_new'];
         $repeatPassword = $_POST['password_repeat'];
     
-        if ( rightPassword($conn,$oldPassword) !== false) {
-            header("location: ../profile.php?error=wronginput");
-            exit();
-            
-        }
-        else{
-            
+        if ( rightPassword($conn,$oldPassword) ) {
             if (passwordMatch($newPassword, $repeatPassword)!==false) {
                 header("location: ../profile.php?error=passwordsdontmatch");
                 exit();
             }
             else {
-                changePassword($conn,$oldPassword);
+                changePassword($conn,$newPassword);
                 exit();
             }
+            
+        }
+        else{
+            header("location: ../profile.php?error=wonginput");
+            exit();
+            
         }
     
     }
@@ -78,17 +80,25 @@ require_once 'functions_include.php';
             exit();
         }
         else{
-            changeAddress($conn,$addressID,$streetChange,$housenoChange,$cityChange,$postalCodeChange);
-            exit();
+            if (getAddressIDByData($conn,$streetChange,$housenoChange,$cityChange,$postalCodeChange) !== null) {
+                bindAddressToUser($conn,$streetChange,$housenoChange,$cityChange,$postalCodeChange);
+            }
+            else{
+                changeAddress($conn,$addressID,$streetChange,$housenoChange,$cityChange,$postalCodeChange);
+                exit();
+            }
+            unbindAddress($conn,$addressID);
+            
         }
     
     }
     
     
     if (isset($_POST['change_address_action'])) {
+        session_start();
         $changeAddressID = $_POST['address_ID'];
     
-        if (invalidUserAddress($conn,$addressID)!==false) {
+        if (invalidUserAddress($conn,$changeAddressID)!==false) {
             header("location: ../profile.php?error= invalidaddress");
                 exit();
         }
@@ -107,11 +117,12 @@ require_once 'functions_include.php';
         $cityChange = $_POST['city_change'];
         $postalCodeChange = $_POST['postal_code_change'];
 
-        if (getAddressIDByData($conn,$streetChange,$housenoChange,$cityChange,$postalCodeChange) !== null) {
+        if (getAddressIDByData($conn,$streetChange,$housenoChange,$cityChange,$postalCodeChange) == null) {
+            echo 'i want to die';
             bindAddressToUser($conn,$streetChange,$housenoChange,$cityChange,$postalCodeChange);
         }
         else{
-            echo "ich will sterben";
+            echo 'i want to live';
             addAddress($conn,$streetChange,$housenoChange,$cityChange,$postalCodeChange);
             exit();
         }
