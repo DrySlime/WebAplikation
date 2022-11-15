@@ -116,15 +116,16 @@ require_once 'functions_include.php';
         $housenoChange = $_POST['houseno_change'];
         $cityChange = $_POST['city_change'];
         $postalCodeChange = $_POST['postal_code_change'];
-
-        if (getAddressIDByData($conn,$streetChange,$housenoChange,$cityChange,$postalCodeChange) == null) {
-            echo 'i want to die';
-            bindAddressToUser($conn,$streetChange,$housenoChange,$cityChange,$postalCodeChange);
-        }
-        else{
+        $addressHope = getAddressIDByData($conn,$streetChange,$housenoChange,$cityChange,$postalCodeChange);
+        echo $addressHope['id'];
+        if ( $addressHope['id'] == null) {
             echo 'i want to live';
             addAddress($conn,$streetChange,$housenoChange,$cityChange,$postalCodeChange);
             exit();
+        }
+        else{
+            echo 'i want to die';
+            bindAddressToUser($conn,$streetChange,$housenoChange,$cityChange,$postalCodeChange);
         }
     
     }

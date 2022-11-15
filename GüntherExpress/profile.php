@@ -25,7 +25,7 @@ include_once 'header.php';
         <div class="icon" >
             <div class="profile" onclick="showProfile()">
                 <div class="cover"><img src=".\img\icons\profile_icon.png" alt=""></div>
-                <div class="icon_text profile_text">Profil</div>
+                <div class="icon_text profile_text">Account</div>
             </div>
             <div class="profile_info">
                 <?php
@@ -121,8 +121,11 @@ include_once 'header.php';
                     
                     </div>
                 </form>
-                <?php }
-                 } ?>
+                <?php }}else{ ?>
+                 <div  class="noAddress">
+                    <div class="noAddress_tag">Du hast noch keine Adressen eingetragen.</div>
+                 </div>
+                 <?php } ?>
             </div>
             <div #TEST class="change_address">
                 <div class="headline">Adresse ändern</div>

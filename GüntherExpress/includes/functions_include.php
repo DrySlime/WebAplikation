@@ -675,8 +675,13 @@ function addAddress($conn, $street, $houseno, $city, $postalCode){
 function bindAddressToUser($conn, $street, $houseno, $city, $postalCode){
     $userid = $_SESSION['userid'];
     $address = getAddressIDByData($conn, $street, $houseno, $city, $postalCode);
-    $addressID = $address['id'];
-    $sql = "INSERT INTO user_address (user_id, address_id) VALUES (?,?);";
+    $addressid = $address['id'];
+    if (alreadyBindAddress($conn,$addressid,$userid)) {
+        header("location: ../profile.php?error=none");
+        exit();
+    }
+    else {
+        $sql = "INSERT INTO user_address (user_id, address_id) VALUES (?,?);";
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt,$sql)){
@@ -684,7 +689,7 @@ function bindAddressToUser($conn, $street, $houseno, $city, $postalCode){
         exit();
     }
 
-    mysqli_stmt_bind_param($stmt,"ss",$userid,$addressID);
+    mysqli_stmt_bind_param($stmt,"ss",$userid,$addressid);
     mysqli_stmt_execute($stmt);
 
     mysqli_stmt_close($stmt);
@@ -692,6 +697,31 @@ function bindAddressToUser($conn, $street, $houseno, $city, $postalCode){
 
     header("location: ../profile.php?error=none");
     exit();
+    }
+    
+}
+
+function alreadyBindAddress($conn, $addressid,$userid){
+    $sql = "SELECT * FROM user_address WHERE address_id = ? AND user_id = ?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../signup.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt,"ss",$addressid,$userid);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    if($row = mysqli_fetch_assoc($resultData)){
+        return true;
+    }else{
+        return false;
+    }
+    mysqli_stmt_close($stmt);
+
 }
 
 function unbindAddress($conn,$addressid){
@@ -770,7 +800,7 @@ function getAddressDataByID($conn){
 function getAddressIDByData($conn,$street, $houseno, $city, $postalCode){
     
 
-    $sql = "SELECT * FROM address WHERE street_number = ? AND address_line1= ? AND city= ? AND postal_code = ?;";
+    $sql = "SELECT * FROM address WHERE street_number = ? AND address_line1 = ? AND city = ? AND postal_code = ?;";
     $stmt = mysqli_stmt_init($conn);
 
     mysqli_stmt_prepare($stmt,$sql);
@@ -780,7 +810,7 @@ function getAddressIDByData($conn,$street, $houseno, $city, $postalCode){
     $resultData = mysqli_stmt_get_result($stmt);
     mysqli_stmt_close($stmt);
     
-    return mysqli_fetch_assoc($resultData);
+    return $resultData -> fetch_assoc();
 }
 
 
