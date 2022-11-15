@@ -109,7 +109,8 @@ include_once 'header.php';
                     
                 ?>
                 <form action="includes/profile_include.php" method="post" name>
-                <div class="address_block" id = "<?php echo $rows['id'];?>" name = "address_ID" value="<?php echo $rows['id'];?>">
+                <div class="address_block">
+                        <input type="hidden" name= "address_ID" value="<?php echo $rows['id'];?>">
                         <div class="tags address_tag">Adresse:</div>
                         <div class="tags street_info_tag" ><?php echo $rows['address_line1'];?></div>
                         <div class="tags houseno_info_tag"><?php echo $rows['street_number'];?></div>
@@ -118,6 +119,7 @@ include_once 'header.php';
                         <div class="tags postal_code_tag">PLZ:</div>
                         <div class="tags postal_code_info_tag"><?php echo $rows['postal_code'];?></div>
                         <button class="btn" type="submit" name="change_address_action">Diese Addresse ändern</button>
+                        <button class="btn" type="submit" name="delete_address">Diese Adresse löschen</button>
                     
                     </div>
                 </form>

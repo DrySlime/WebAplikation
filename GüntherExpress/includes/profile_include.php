@@ -76,7 +76,7 @@ require_once 'functions_include.php';
         $addressID = $_POST['address_ID'];
     
         if (invalidUserAddress($conn,$addressID)!==false) {
-            header("location: ../profile.php?error= invalidaddress");
+            header("location: ../profile.php?error=invalidaddress");
             exit();
         }
         else{
@@ -98,14 +98,25 @@ require_once 'functions_include.php';
         session_start();
         $changeAddressID = $_POST['address_ID'];
     
-        if (invalidUserAddress($conn,$changeAddressID)!==false) {
-            header("location: ../profile.php?error= invalidaddress");
-                exit();
-        }
-        else{
+        if (invalidUserAddress($conn,$changeAddressID) == false) {
             $_SESSION['change_address_id'] = $changeAddressID;
             exit();
         }
+        else{
+            header("location: ../profile.php?error=invalidchangeaddress");
+            exit();
+            
+        }
+    
+    }
+
+    if (isset($_POST['delete_address'])) {
+        session_start();
+        $deleteAddressID = $_POST['address_ID'];
+    
+        unbindAddress($conn, $deleteAddressID);
+        header("location: ../profile.php?error=none");
+        exit();
     
     }
     
