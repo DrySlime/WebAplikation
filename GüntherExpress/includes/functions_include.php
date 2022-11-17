@@ -541,6 +541,34 @@ function getItemIdsFromCategory($conn,$CategoryID,$amount){
     
 
 }
+function getRandomItems($conn,$amount){
+    $sql = "SELECT * FROM product ORDER BY rand() LIMIT ?;";
+    $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            header("location: ../index.php?error=stmtfailed");
+            exit();
+        }
+        mysqli_stmt_prepare($stmt,$sql);
+        mysqli_stmt_bind_param($stmt,"s",$amount);
+        mysqli_stmt_execute($stmt);
+        $resultData = mysqli_stmt_get_result($stmt);
+        
+            while($row =mysqli_fetch_assoc($resultData)){
+                $array[]=$row["id"];
+                $array[]=$row["product_name"];
+                $array[]=$row["description"];
+                $array[]=$row["product_image"];
+                $array[]=$row["price"];
+                
+
+                $allItems[]=$array; 
+                unset($array);
+            }
+        
+        return $allItems;
+        
+}
 function showRandomCategoriesAndItems($conn,$amount,$productAmount){
     //gibt x=$amount zufällige Kategorien und dessen Produkte in HTML gerechter Sprache wieder
 
