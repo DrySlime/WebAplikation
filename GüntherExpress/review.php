@@ -14,15 +14,15 @@
 </head>
 <?php
     $productID = $_GET["productID"];
-    $orderlineID = $_GET["orderlineID"]
+    $orderlineID = $_GET["orderlineID"];
 ?> 
 <body>
     <!-- <img src= alt=""> -->
-    <?php echo "<img src=".getImgaeFromID($conn,$productID)." >";?>
+    <?php echo "<img src=".getImageFromID($conn,$productID)." >";?>
     <div name="rating_shell">
         <form action="includes/review_include.php" method="post">
-            <input type="hidden" name="productID" value=<?php $productID ?> />
-            <input type="hidden" name="orderlineID" value=<?php $orderlineID ?> />
+            <input type="hidden" name="productID" value=<?php echo $productID ?> />
+            <input type="hidden" name="orderlineID" value=<?php echo $orderlineID ?> />
             <div class="rating">
                 <input id="star5" name="star" type="radio" value="1" class="radio-btn hide" />
                 <label for="star5">☆</label>

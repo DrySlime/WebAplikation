@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ger">
 <?php
     include_once 'header.php';
     require_once 'includes/dbh_include.php';
@@ -13,13 +13,19 @@
     <title>Bitte Bewerten</title>
 </head>
 <?php
+
+
     $uid=$_SESSION["userid"];
+    if($uid==null){
+        header("location: index.php");
+    }
     # wir benötigen eine funktion die alle bewertbaren produkte  in einem array wiedergibt   
     # im array muss die die orderline id sowie die product id gespeichert sein
     $array = getReviewableProducts($conn,$uid);
 ?>
 
 <?php
+    #falls der nutzer produkte zum bewerten besitzt, so wird dieser codeblock ausgeführt
     if($array!=null){
         for($i=0;$i<count($array);$i++){
             $orderlineID=$array[$i]["orderlineID"];
@@ -33,6 +39,7 @@
                 </div>";
         }
     }else{
+        #falls der nutzer keine produkte zum bewerten besitzt, so wird dieser code abschnitt ausgeführt
         echo "Sie haben keine bewertbaren Produkte, kaufen Sie doch gerne was ein!";
     }
     

@@ -2,6 +2,7 @@
 include_once 'header.php';
 include_once 'includes/dbh_include.php';
 require_once 'includes/product_include.php';
+require_once 'includes/review_functions.php';
 ?>
 
 <?php
@@ -42,11 +43,27 @@ require_once 'includes/product_include.php';
                         ?>
                 </select>
                 <br>
-                <div name="bewertungen">
+                <div name="avgBewertung">
                         <!-- fürs erste will ich einfach nur einen zahlenwwert zwischen 1-5 berechnen und ausgeben -->
-                        <?php calculateRating()?>
+                        BEWERTUNG <?php echo getAvrgRating($conn,$productID)?> Sterne <br>
 
+                </div>
+                <div name="kundenbewertungen">
+                    <?php
+                        $nutzer=getProductReview($conn,3,2,$productID);
+                        if($nutzer!=0){
+                            for($i=0;$i<count($nutzer);$i++){
+                                echo "
+                                    <div id='kommentar".$i."' name='kommentarbox'>
+                                        <h1>".$nutzer[$i]['username']."</h1>
+                                        Bewertung: ".$nutzer[$i]['rating_value']."<br>
+                                        Kommentar: ".$nutzer[$i]['comment']."
+                                    </div>
+                                ";
+                            }
+                        }
 
+                    ?>
                 </div>
 
                 <!-- Ausgewählte Menge wird im Ruckgabeformula gespeichert -->
