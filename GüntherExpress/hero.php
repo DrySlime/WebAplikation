@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="hero_right">
-            <img src="/img/backdrop.png" alt="Andre Caputo" style="object-fit: cover; object-position: 100% 0;">
+            <img src="img/backdrop.png" alt="Andre Caputo" style="object-fit: cover; object-position: 100% 0;">
         </div>
     </div>
 </body>

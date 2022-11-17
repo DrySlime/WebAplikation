@@ -4,15 +4,16 @@
 <?php
 include 'includes/dbh_include.php';
 include 'includes/functions_include.php';
+session_start();
 ?>
 
 <head>
     <link rel="stylesheet" href="CSS/header.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0" />
-    <script type="text/javascript" src="/js/header.js"></script>
+    <script type="text/javascript" src="JS/header.js"></script>
     <meta charset="UTF-8" http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
     <title>The Confectioner</title>
 </head>
 
@@ -35,7 +36,11 @@ include 'includes/functions_include.php';
                         </div>
                     </li>
                     <li><a href="sale.php">Sale</a></li>
-                    <li><a href="account.php">Account</a></li>
+                    <?php if (isset($_SESSION["useruid"])) { ?>
+                        <li><a href="account.php">Account</a></li>
+                    <?php } else { ?>
+                        <li><a href="login.php">Login</a></li>
+                    <?php } ?>
                     <li><button class="dropbtn" onclick="showWarenkorb()"> <i class="material-symbols-outlined" style="pointer-events: none;">shopping_cart</i></button></li>
                 </ul>
             </div>

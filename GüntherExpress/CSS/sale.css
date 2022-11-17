@@ -8,15 +8,14 @@
 }
 
 body {
-    line-height: 1.5;
-    background-color: #f9d4dc;
+    overflow-x: hidden;
 }
 
 .sale_wrapper {
     line-height: 1.5;
     width: 100vw;
     height: 100vh;
-    overflow: hidden;
+    background-color: #f9d4dc;
     display: flex;
 }
 

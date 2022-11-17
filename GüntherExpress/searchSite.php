@@ -54,7 +54,7 @@
             }
         }
         
-        //you might also like these products:
+        //you might also like these products.css:
         if($parentID!==null && $categoryArr==null){
             $categoryName = convertIdToCategoryName($conn,$parentID);
             $temp++;

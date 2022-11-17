@@ -1,0 +1,147 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    line-height: 1.5;
+    background-color: #ffffff;
+}
+
+.products_page_wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.products_page_header {
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    position: relative;
+    width: 100%;
+    height: 45vh;
+    padding-top: 20vmin;
+    background-color: #f9d4dc;
+    z-index: -1;
+}
+
+.products_page_header img {
+    background-size: cover;
+    overflow: hidden;
+    height: auto;
+}
+
+.products_page_header h1 {
+    position: absolute;
+    font-size: 10vmin;
+    font-weight: 800;
+    color: #fc466b;
+}
+
+.searchbar_wrapper {
+    width: 50%;
+    top: 42vmin;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.searchbar_wrapper form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    width: 100%;
+}
+
+.searchbar_container {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.searchbar_container input {
+    font-size: 2vmin;
+    color: #101010;
+    padding: 1.5vmin 1vmin;
+    border: none;
+    outline: none;
+    border-radius: 3rem 0 0 3rem;
+    width: 45%;
+    background-color: #ffffff;
+    box-shadow: 0 0 2px #888888;
+    text-indent: 25px;
+    font-weight: 500;
+}
+
+
+.searchbar_container button {
+    font-size: 2vmin;
+    font-weight: 300;
+    color: #FFFFFF;
+    padding: 1.5vmin 1vmin;
+    outline: none;
+    border: none;
+    border-radius: 0 3rem 3rem 0;
+    box-shadow: 0 0 2px #888888;
+    width: 20%;
+    background-color: #101010;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.searchbar_container button:hover {
+    color: #fc466b;
+}
+
+.products_content_wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    background-color: #ffffff;
+    width: 100%;
+}
+
+.products_sidebar_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    background-color: #EFEFEF;
+    height: 100%;
+    width: 25%;
+}
+
+.sidebar_header {
+    background-color: #101010;
+    width: 100%;
+    height: 100%;
+    padding-left: 8vmin;
+}
+
+.sidebar_header h1 {
+    color: #FFFFFF;
+    font-size: 3vmin;
+    font-weight: 400;
+    width: 100%;
+}
+
+.products_items {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    width: 75%;
+}

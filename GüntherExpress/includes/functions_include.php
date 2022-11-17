@@ -339,7 +339,7 @@ function showItems($conn,$amount,$categoryName){
 }
 
 function searchbar($searchInput,$conn){
-    #returns an array filled with ids of products inwhich the product name is like $searchbarInput
+    #returns an array filled with ids of products.css inwhich the product name is like $searchbarInput
 
     $searchInput = "%".$searchInput."%";
     
@@ -365,7 +365,7 @@ function searchbar($searchInput,$conn){
     return $productIds;
 }
 function searchItemInCategory($searchInput,$conn){
-    #returns an array filled with ids of products inwhich the product name is like $searchbarInput
+    #returns an array filled with ids of products.css inwhich the product name is like $searchbarInput
 
     $searchInput = "%".$searchInput."%";
     
