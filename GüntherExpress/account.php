@@ -46,7 +46,7 @@ if (!isset($_SESSION["useruid"])) {
                                 class="material-symbols-outlined">payments</span>Bezahlmethoden</h1></a>
                 <a id="help" class="switchBtn" show-what="helpsection"><h1 class="navbarbutton" id="helpside"><span
                                 class="material-symbols-outlined">help</span>Help Desk</h1></a>
-                <h1 id="logout"><span class="material-symbols-outlined">logout</span>Abmelden</h1>
+                <a href="includes/logout_include.php"><h1 id="logout"><span class="material-symbols-outlined">logout</span>Abmelden</h1></a>
             </div>
             <div class="account_data">
                 <section class="allSections" id="dashsection">

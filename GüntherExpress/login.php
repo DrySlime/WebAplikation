@@ -26,7 +26,7 @@ include_once 'header.php';
     <div class="right_container">
         <div class="loginregister_wrapper">
             <h1>Anmelden</h1>
-            <form action="#">
+            <form action="includes/login_include.php" method="post">
                 <div class="form_container">
                     <input type="text" name="username" id="username" placeholder="E-Mail/Benutzername" required>
                     <input type="password" name="password" id="password" placeholder="Passwort" required>

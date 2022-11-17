@@ -15,35 +15,56 @@ include_once 'header.php';
 </head>
 
 <body>
-<section class="imgheader"></section>
-<div class="page_wrapper">
-    <div class="left_container">
-        <h1>Find your sweet side!</h1>
-        <h4>Melde Dich an, oder registriere Dich auf The Confectioner, um deine Daten beim Kauf immer parat zu
-            haben!</h4>
-        <img src="img/gummibears.jpg" alt="">
-    </div>
-    <div class="right_container">
-        <div class="loginregister_wrapper">
-            <h1>Registrieren</h1>
-            <form action="#">
-                <div class="form_container">
-                    <input type="text" name="username" id="username" placeholder="Benutzername" required>
-                    <input type="text" name="name" id="name" placeholder="Vorname" required>
-                    <input type="text" name="surname" id="surname" placeholder="Nachname" required>
-                    <input type="text" name="email" id="email" placeholder="Email" required>
-                    <input type="password" name="password" id="password" placeholder="Passwort" required>
-                    <input type="password" name="passwordrepeat" id="passwordrepeat" placeholder="Passwort Wiederholen"required>
-                    <button type="submit" name="login_button" onclick="return check_form()">Registieren</button>
-                    <div class="button_container">
-                        <h4>Du hast schon ein Account?</h4>
-                        <a href="login.php"><h4>Anmelden</h4></a>
+    <section class="imgheader"></section>
+    <div class="page_wrapper">
+        <div class="left_container">
+            <h1>Find your sweet side!</h1>
+            <h4>Melde Dich an, oder registriere Dich auf The Confectioner, um deine Daten beim Kauf immer parat zu
+                haben!</h4>
+            <img src="img/gummibears.jpg" alt="">
+        </div>
+        <div class="right_container">
+            <div class="loginregister_wrapper">
+                <h1>Registrieren</h1>
+                <form action="includes/signup_include.php" method="post">
+                    <div class="form_container">
+                        <input type="text" name="username" id="username" placeholder="Benutzername" required>
+                        <input type="text" name="name" id="name" placeholder="Vorname" required>
+                        <input type="text" name="surname" id="surname" placeholder="Nachname" required>
+                        <input type="text" name="email" id="email" placeholder="Email" required>
+                        <input type="password" name="password" id="password" placeholder="Passwort" required>
+                        <input type="password" name="passwordrepeat" id="passwordrepeat" placeholder="Passwort Wiederholen"required>
+                        <button type="submit" name="register_button" >Registieren</button>
+                        <div class="button_container">
+                            <h4>Du hast schon ein Account?</h4>
+                            <a href="login.php"><h4>Anmelden</h4></a>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+    <?php
+
+    if(isset($_GET["error"])){
+        if($_GET["error"]=="emptyinput"){
+            $errorMSG = "Manche Felder sind leer!";
+            echo "<p>$errorMSG</p>";
+        }else  if($_GET["error"]=="invaliduid"){
+            $errorMSG = "Username beinhaltete nicht unterstützte Zeichen!";
+            echo "<p>$errorMSG</p>";
+        }else  if($_GET["error"]=="invalidemail"){
+            $errorMSG = "Email wird bereits verwendet";
+            echo "<p>$errorMSG</p>";
+        }else  if($_GET["error"]=="passwordsdontmatch"){
+            $errorMSG = "Passwörter stimmen nicht überein!";
+            echo "<p>$errorMSG</p>";
+        }else  if($_GET["error"]=="uidexists"){
+            $errorMSG = "Username wird bereits verwendet!";
+            echo "<p>$errorMSG</p>";
+        }
+    }
+    ?>
 </body>
 
 </html>
