@@ -541,6 +541,24 @@ function getItemIdsFromCategory($conn,$CategoryID,$amount){
     
 
 }
+function getImage($conn,$productID){
+    $sql = "SELECT product_image FROM product WHERE id=$productID;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../index.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_execute($stmt);
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    while($row =mysqli_fetch_assoc($resultData)){
+        $img=$row["product_image"];
+    }
+
+    return $img;
+}
 function getRandomItems($conn,$amount){
     $sql = "SELECT * FROM product ORDER BY rand() LIMIT ?;";
     $stmt = mysqli_stmt_init($conn);

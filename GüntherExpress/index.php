@@ -81,46 +81,21 @@ include_once 'hero.php';
     </div>
     <div class="swiper">
         <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <div class="image_wrapper">
-                    <img src="img/macaronProduct.png">
-                </div>
-            </div>
-            <div class="swiper-slide">
-                <div class="image_wrapper">
-                    <img src="img/macaronProduct.png">
-                </div>
-            </div>
-            <div class="swiper-slide">
-                <div class="image_wrapper">
-                    <img src="img/macaronProduct.png">
-                </div>
-            </div>
-            <div class="swiper-slide">
-                <div class="image_wrapper">
-                    <img src="img/macaronProduct.png">
-                </div>
-            </div>
-            <div class="swiper-slide">
-                <div class="image_wrapper">
-                    <img src="img/macaronProduct.png">
-                </div>
-            </div>
-            <div class="swiper-slide">
-                <div class="image_wrapper">
-                    <img src="img/macaronProduct.png">
-                </div>
-            </div>
-            <div class="swiper-slide">
-                <div class="image_wrapper">
-                    <img src="img/macaronProduct.png">
-                </div>
-            </div>
-            <div class="swiper-slide">
-                <div class="image_wrapper">
-                    <img src="img/macaronProduct.png">
-                </div>
-            </div>
+            <?php
+                require_once "includes/review_functions.php";
+
+                $arr=getBestRatedProducts($conn,9);
+                for ($i=0;$i<count($arr);$i++){
+                    echo"
+                        <div class='swiper-slide'>
+                            <div class='image_wrapper'>
+                                <img src=".getImage($conn,$arr[$i]).">
+                            </div>
+                        </div>
+                    ";
+                }
+            ?>
+
         </div>
         <div class="swiper-pagination"></div>
         <div class="swiper-button-prev"></div>
