@@ -15,7 +15,7 @@ body {
     display: flex;
     height: auto;
     width: 100vw;
-    top: 0;
+    top: -14px;
     left: 0;
     position: absolute;
     align-items: flex-start;
@@ -24,8 +24,9 @@ body {
     padding: 1rem 5rem 0rem 5rem;
 }
 
-.header_wrapper {
+.header_wrapper  {
     width: 100%;
+
     display: flex;
     align-items: center;
     align-content: center;
@@ -133,6 +134,7 @@ body {
 
 ::-webkit-scrollbar-track {
     background: #f1f1f1;
+    height: 10px;
 }
 
 ::-webkit-scrollbar-thumb {

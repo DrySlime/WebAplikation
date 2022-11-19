@@ -4,9 +4,11 @@
 <?php
 include_once 'header.php';
 include_once 'hero.php';
+require_once "includes/review_functions.php";
 ?>
 
 <head>
+
     <link rel="stylesheet" href="CSS/index.css">
     <meta charset="UTF-8" http-equiv="X-UA-Compatible" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,46 +27,25 @@ include_once 'hero.php';
     </div>
     <div class="swiper">
         <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <div class="image_wrapper">
-                    <img src="img/macaronProduct.png">
-                </div>
-            </div>
-            <div class="swiper-slide">
-                <div class="image_wrapper">
-                    <img src="img/macaronProduct.png">
-                </div>
-            </div>
-            <div class="swiper-slide">
-                <div class="image_wrapper">
-                    <img src="img/macaronProduct.png">
-                </div>
-            </div>
-            <div class="swiper-slide">
-                <div class="image_wrapper">
-                    <img src="img/macaronProduct.png">
-                </div>
-            </div>
-            <div class="swiper-slide">
-                <div class="image_wrapper">
-                    <img src="img/macaronProduct.png">
-                </div>
-            </div>
-            <div class="swiper-slide">
-                <div class="image_wrapper">
-                    <img src="img/macaronProduct.png">
-                </div>
-            </div>
-            <div class="swiper-slide">
-                <div class="image_wrapper">
-                    <img src="img/macaronProduct.png">
-                </div>
-            </div>
-            <div class="swiper-slide">
-                <div class="image_wrapper">
-                    <img src="img/macaronProduct.png">
-                </div>
-            </div>
+
+            <?php
+            require_once "includes/review_functions.php";
+
+            $newItems=getNewestProducts($conn,9);
+            for ($i=0;$i<count($newItems);$i++){
+                echo"                        
+                            <div class='swiper-slide'>
+                                
+                                <div class='image_wrapper'>
+                                    <a href=product.php?id=".$newItems[$i]["id"].">
+                                        <img src=".$newItems[$i]["product_image"].">
+                                    </a>
+                                </div>
+                                
+                            </div>                                         
+                    ";
+            }
+            ?>
         </div>
         <div class="swiper-pagination"></div>
         <div class="swiper-button-prev"></div>
@@ -82,16 +63,20 @@ include_once 'hero.php';
     <div class="swiper">
         <div class="swiper-wrapper">
             <?php
-                require_once "includes/review_functions.php";
+
 
                 $arr=getBestRatedProducts($conn,9);
                 for ($i=0;$i<count($arr);$i++){
-                    echo"
-                        <div class='swiper-slide'>
-                            <div class='image_wrapper'>
-                                <img src=".getImage($conn,$arr[$i]).">
-                            </div>
-                        </div>
+                    echo"                        
+                            <div class='swiper-slide'>
+                                
+                                <div class='image_wrapper'>
+                                    <a href=product.php?id=".$arr[$i].">
+                                        <img src=".getImage($conn,$arr[$i]).">
+                                    </a>
+                                </div>
+                                
+                            </div>                                         
                     ";
                 }
             ?>

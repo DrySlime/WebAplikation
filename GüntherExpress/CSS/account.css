@@ -6,10 +6,27 @@
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
+::-webkit-scrollbar {
+    width: 0px;
+}
 
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
 body {
     line-height: 1.5;
     background-color: #f9d4dc;
+
 }
 
 .imgheader {
@@ -39,9 +56,11 @@ body {
 }
 
 .account_wrapper {
+    position: relative;
     line-height: 1.5;
     width: 100vw;
-    height: 100vh;
+    height: 101vh;
+    top: 0;
     overflow: hidden;
     display: flex;
     align-items: center;

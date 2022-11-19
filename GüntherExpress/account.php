@@ -2,6 +2,7 @@
 <html lang="de">
 
 <?php
+
 include_once 'header.php';
 
 if (!isset($_SESSION["useruid"])) {
@@ -11,6 +12,7 @@ if (!isset($_SESSION["useruid"])) {
 ?>
 
 <head>
+
     <link rel="stylesheet" href="CSS/account.css">
     <meta charset="UTF-8" http-equiv="X-UA-Compatible" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,12 +22,13 @@ if (!isset($_SESSION["useruid"])) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </head>
 
-<body>
+<body id="body">
+
 <section class="imgheader">
     <h1>Account</h1>
     <img src="img/macaronbanner.png" alt="Andre Caputo">
 </section>
-<div class="account_wrapper">
+<div class="account_wrapper" id="tmp123">
     <?php if (isset($_SESSION["useruid"])) { ?>
         <div class="account_dataWrapper">
             <div class="account_sidebar">
@@ -142,6 +145,7 @@ if (!isset($_SESSION["useruid"])) {
         </div>
     <?php } ?>
 </div>
+<script src="JS/account.js"></script>
 </body>
 
 </html>

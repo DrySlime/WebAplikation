@@ -207,7 +207,7 @@ function getNewestProducts($conn, $amount)
 {
     #get $amount many products in an Array sorted by releaseDate
 
-    $sql = "SELECT product_name, product_image, price FROM product ORDER BY releaseDate DESC LIMIT $amount;";
+    $sql = "SELECT product_name, product_image, price, id FROM product ORDER BY id DESC LIMIT $amount;";
     $stmt = mysqli_stmt_init($conn);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -221,6 +221,7 @@ function getNewestProducts($conn, $amount)
             $product["product_name"] = $row["product_name"];
             $product["product_image"] = $row["product_image"];
             $product["price"] = $row["price"];
+            $product["id"] = $row["id"];
             $productArr[] = $product;
             unset($product);
         }
