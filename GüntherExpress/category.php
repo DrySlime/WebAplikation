@@ -2,14 +2,15 @@
 <html lang="ger">
 
     <head>
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-        <link rel="stylesheet" href="CSS/category.css">
+
+
         <?php
         include_once 'header.php';
         require_once 'includes/dbh_include.php';
         require_once 'includes/functions_include.php';
         ?>
+        <link rel="stylesheet" href="CSS/category.css">
     </head>
 
 
