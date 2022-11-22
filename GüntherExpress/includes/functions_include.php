@@ -89,7 +89,7 @@ function invalidUserAddress($conn, $addressID){
 
     $resultData = mysqli_stmt_get_result($stmt);
     mysqli_stmt_close($stmt);
-    if (($resultData -> fetch_assoc())== null) {
+    if (($resultData -> fetch_assoc()) !== null) {
         return false;
     }
     else {
@@ -631,25 +631,6 @@ function changeProfile($conn,$username, $name, $surname, $email){
     $_SESSION['useruid'] = $username;
 
     header("location: ../profile.php");
-    exit();
-
-}
-
-function changeAddress($conn,$addressID, $street, $houseno, $city, $postalCode){
-    $sql = " UPDATE address SET address_line1 = ?, street_number = ?, city = ?, postal_code = ? WHERE id = ?;";
-    $stmt = mysqli_stmt_init($conn);
-
-    if(!mysqli_stmt_prepare($stmt,$sql)){
-        header("location: ../profile.php?error=stmtfailed");
-        exit();
-    }
-
-    mysqli_stmt_bind_param($stmt,"sssss",$street,$houseno,$city,$postalCode,$addressID);
-    mysqli_stmt_execute($stmt);
-
-    mysqli_stmt_close($stmt);
-
-    header("location: ../profile.php?error=none");
     exit();
 
 }

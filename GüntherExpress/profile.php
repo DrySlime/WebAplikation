@@ -133,12 +133,13 @@ include_once 'header.php';
                 <div class="headline">Adresse ändern</div>
 
                 <form action="includes/profile_include.php" method="post">
-                    <?php 
+                    <?php
+                        var_dump($_SESSION['change_address_id']) ;
                         $resultChangeAddress = getAddressDataByID($conn)
                     ?>
                     <div class="tags address_tag">Adresse:</div>
                     <input type="text" name="street_change" class="street_info_tag" value="<?php echo $resultChangeAddress['address_line1'];?>">
-                    <input type="text" name="houseno_change" class="houseno_info_tag" value="<?php echo $resultChangeAddress['street_number'];?>"><br>
+                    <input type="number" name="houseno_change" class="houseno_info_tag" value="<?php echo $resultChangeAddress['street_number'];?>"><br>
                     <div class="tags city_tag">Stadt:</div>
                     <input type="text" name="city_change" class="city_change" value="<?php echo $resultChangeAddress['city'];?>"><br>
                     <div class="tags postal_code_tag">PLZ:</div>

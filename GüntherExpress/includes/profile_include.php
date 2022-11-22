@@ -69,27 +69,24 @@ require_once 'functions_include.php';
     
     
     if (isset($_POST['change_address_btn'])) {
+        session_start();
         $streetChange = $_POST['street_change'];
         $housenoChange = $_POST['houseno_change'];
         $cityChange = $_POST['city_change'];
         $postalCodeChange = $_POST['postal_code_change'];
-        $addressID = $_POST['address_ID'];
-    
-        if (invalidUserAddress($conn,$addressID)!==false) {
-            header("location: ../profile.php?error=invalidaddress");
-            exit();
-        }
-        else{
+        $addressID = $_SESSION['change_address_id']; 
+
             if (getAddressIDByData($conn,$streetChange,$housenoChange,$cityChange,$postalCodeChange) !== null) {
                 bindAddressToUser($conn,$streetChange,$housenoChange,$cityChange,$postalCodeChange);
             }
             else{
-                changeAddress($conn,$addressID,$streetChange,$housenoChange,$cityChange,$postalCodeChange);
+                addAddress($conn,$addressID,$streetChange,$housenoChange,$cityChange,$postalCodeChange);
                 exit();
             }
             unbindAddress($conn,$addressID);
-            
-        }
+            $_SESSION['change_address_id'] = 0;
+            header("location: ../profile.php?error=none");
+            exit();
     
     }
     
@@ -100,6 +97,7 @@ require_once 'functions_include.php';
     
         if (invalidUserAddress($conn,$changeAddressID) == false) {
             $_SESSION['change_address_id'] = $changeAddressID;
+            header("location: ../profile.php?error=none");
             exit();
         }
         else{
