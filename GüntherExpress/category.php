@@ -18,8 +18,17 @@
 
         <?php
         $parentCategory = $_GET["name"];
+        $categoryID= convertCategoryNameToID($conn,$parentCategory);
 
-        echo $parentCategory;
+        echo $parentCategory."
+         ";
+
+        $productId=getItemIdsFromCategory($conn,$categoryID,5);
+        var_dump($productId);
+
+
+
+
         ?>
         <div class="kategoriepic">
 

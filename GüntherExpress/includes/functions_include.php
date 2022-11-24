@@ -478,6 +478,30 @@ function convertIdToCategoryName($conn,$id){
     return $categoryName;
 
 }
+function convertCategoryNameToID($conn,$categoryName){
+    //converts an categoryName into an id
+    //returns a string
+    $sql = "SELECT id FROM product_category WHERE category_name=?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../category.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$categoryName);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    if(mysqli_num_rows($resultData)>0){
+        $row =mysqli_fetch_assoc($resultData);
+        $categoryName=$row["id"];
+    }
+    mysqli_stmt_close($stmt);
+    return $categoryName;
+
+}
 function showChildCategoriesAndItems($conn,$parentCategory,$productAmount){
     $childId=returnChildrenIds($conn,$parentCategory);
     
@@ -516,6 +540,8 @@ function getAllAttributesFromItemViaID($ItemID,$conn){
 }
 
 function getItemIdsFromCategory($conn,$CategoryID,$amount){
+    #returns $amount many ProductIds in an array from a categoryID
+
     $sql = "SELECT id FROM product WHERE product_category_id = ? ORDER BY rand() LIMIT  ?;";
     
     $stmt = mysqli_stmt_init($conn);
@@ -534,6 +560,8 @@ function getItemIdsFromCategory($conn,$CategoryID,$amount){
         while($row =mysqli_fetch_assoc($resultData)){
             $itemIDs[]=$row["id"];
         }
+    }else{
+        $itemIDs=null;
     }
     mysqli_stmt_close($stmt);
     return $itemIDs;
