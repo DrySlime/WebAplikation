@@ -42,6 +42,10 @@ session_start();
                     <?php } else { ?>
                         <li><a href="login.php">Login</a></li>
                     <?php } ?>
+                    <?php if (isset($_SESSION["useruid"])) {
+                        if ($_SESSION["userid"]==1){?>
+                        <li><a href="admin.php">Admin</a></li>
+                    <?php }} ?>
                     <li><button class="dropbtn" onclick="showWarenkorb()"> <i class="material-symbols-outlined" style="pointer-events: none;">shopping_cart</i></button></li>
                 </ul>
             </div>

@@ -48,12 +48,14 @@ function uidExists($conn, $username,$email){
     $resultData = mysqli_stmt_get_result($stmt);
 
     if($row = mysqli_fetch_assoc($resultData)){
+        mysqli_stmt_close($stmt);
         return $row;
     }else{
         $result = false;
+        mysqli_stmt_close($stmt);
         return $result;
     }
-    mysqli_stmt_close($stmt);
+
 
 
 }
@@ -169,12 +171,14 @@ function get___FromCatergory($conn,$whatYouNeed,$amount,$category,$shuffle){
             $row =mysqli_fetch_assoc($resultData);
             $itemAttribute[]=$row[$whatYouNeed];
         }
+        mysqli_stmt_close($stmt);
         return $itemAttribute;
     }else{
         $result = false;
+        mysqli_stmt_close($stmt);
         return $result;
     }
-    mysqli_stmt_close($stmt);
+
 }
 
 function getCategoryfromItem($conn,){
@@ -201,12 +205,14 @@ function getCategoryList($conn){
         while($row =mysqli_fetch_assoc($resultData)){
             $array[]=$row["category_name"];
         }
+        mysqli_stmt_close($stmt);
         return $array;
     }else{
         $result = false;
+        mysqli_stmt_close($stmt);
         return $result;
     }
-    mysqli_stmt_close($stmt);
+
 }
 function showCategoryList($conn){
     $arr = getCategoryList($conn);
@@ -502,19 +508,7 @@ function convertCategoryNameToID($conn,$categoryName){
     return $categoryName;
 
 }
-function showChildCategoriesAndItems($conn,$parentCategory,$productAmount){
-    $childId=returnChildrenIds($conn,$parentCategory);
-    
-    for($i=0;$i<count($childId);$i++){
-        $categoryName[]=convertIdToCategoryName($conn,$childId[$i]);
-    }
-    
-    foreach($categoryName as $cateName){
-        echo '<h1>'.$cateName.'</h1>';
-        showItems($conn,$productAmount,$cateName,$imageWidth);
-    }
 
-} 
 function getAllAttributesFromItemViaID($ItemID,$conn){
     $sql = "SELECT * FROM product WHERE id=?;";
     $stmt = mysqli_stmt_init($conn);
@@ -615,78 +609,7 @@ function getRandomItems($conn,$amount){
         return $allItems;
         
 }
-function showRandomCategoriesAndItems($conn,$amount,$productAmount){
-    //gibt x=$amount zufällige Kategorien und dessen Produkte in HTML gerechter Sprache wieder
 
-
-
-    $sql = "SELECT * FROM product_category;";
-    $stmt = mysqli_stmt_init($conn);
-
-    if(!mysqli_stmt_prepare($stmt,$sql)){
-        header("location: ../index.php?error=stmtfailed");
-        exit();
-    }
-
-    mysqli_stmt_execute($stmt);
-
-    $resultData = mysqli_stmt_get_result($stmt);
-    if(mysqli_num_rows($resultData)>0){
-        while($row =mysqli_fetch_assoc($resultData)){
-            $array[]=$row["id"];
-        }
-        $array=array_unique($array);
-    }
-    
-    $maxAmount=count($array)-parentCategoryAmount($conn,1);
-    if($maxAmount<$amount){
-        $amount=$maxAmount;
-    }
-    
-    
-    $i=0;
-    $uniqueTMP[]=array();
-    
-    array_shift($uniqueTMP);
-
-    $uniqueTMP=range(1,$maxAmount);
-    shuffle($uniqueTMP);
-
-    foreach($uniqueTMP as $var){
-        $unique[]=$var+parentCategoryAmount($conn,1);
-    }
-    $temp=0;
-    foreach($unique as $var){
-        $temp+=1;
-        $sql = "SELECT category_name FROM product_category WHERE id = ?;";
-
-        if(!mysqli_stmt_prepare($stmt,$sql)){
-            header("location: ../index.php?error=stmtfailed");
-            exit();
-        }
-        mysqli_stmt_prepare($stmt,$sql);
-        mysqli_stmt_bind_param($stmt,"s",$var);
-        mysqli_stmt_execute($stmt);
-        $resultData = mysqli_stmt_get_result($stmt);
-        $row=mysqli_fetch_assoc($resultData);
-        
-        echo '<div class="item_border" id="item_border_'.$temp.'">';
-        echo '<a href="javascript:void(0);"><div class="scroll_left_button" id="scroll_left_button_'.$temp.'">
-                <div class="arrow_left"><img src="img/arrow_left.png"></div>
-            </div></a>';
-        echo '<a href="javascript:void(0);"><div class="scroll_right_button" id="scroll_right_button_'.$temp.'">
-        <div class="arrow_right"><img src="img/arrow_right.png"></div>
-        </div></a>';
-        echo '<div class="category_item_line category_item_line_'.$temp.'" id="category_item_line_'.$temp.'"><h1>'.$row["category_name"].'</h1>';
-        echo '<ul>';
-        showItems($conn,$productAmount,$row["category_name"]);
-        echo '</ul></div></div>';
-    }
-    $temp=0;
-    
-    
-    mysqli_stmt_close($stmt);
-}
 function parentCategoryAmount($conn,$var){
         //returns an integer of the total parentcategories
         $bool=true;
