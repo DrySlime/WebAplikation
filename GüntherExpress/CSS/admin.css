@@ -5,3 +5,33 @@ body {
     background-color: #f9d4dc;
 
 }
+.parentbox{
+    padding: 10px;
+    position: relative;
+    margin: 3px;
+}
+.button{
+    display: inline-block;
+    border: 3px solid black;
+    border-radius: 1rem;
+    padding: 0.5em 1.5em;
+    font-size: 2rem;
+    background-image: linear-gradient(to right, #f9d4dc, #87f1ff);
+    background-size: 1500%;
+    background-position: left;
+    transition: background-position 0.5s;
+    cursor: pointer;
+
+}
+.button:hover{
+    background-position: right;
+}
+hr{
+
+    height: 5px;
+    background-color: black;
+}
+.Produkte, .Sale, .Kategorien ,.Versandmethoden, .Bestellungen{
+
+    display: inline-block;
+}

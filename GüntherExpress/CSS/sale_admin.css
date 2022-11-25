@@ -20,3 +20,22 @@ body {
     background-color: #f9d4dc;
 
 }
+.all{
+    display: flex;
+    width: 100%;
+}
+.table,.changeForm{
+    flex: 1;
+
+}
+.table:first-child{
+    margin-right: 20px;
+}
+.changeForm{
+    border: 5px solid black;
+    width: 20%;
+
+}
+.table{
+    width: 80%;
+}

@@ -239,3 +239,108 @@ function orderlineToTEXT($conn,$order){
 
      return $string;
 }
+function getAllCategories($conn,){
+    $sql = "SELECT id, category_name FROM product_category ";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../signup.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    while($row=mysqli_fetch_assoc($resultData)){
+        $category["id"]=$row["id"];
+        $category["category_name"]= $row["category_name"];
+        $categoryArr[]=$category;
+        unset($category);
+    }
+
+    mysqli_stmt_close($stmt);
+    return $categoryArr;
+}
+function getAllSales($conn){
+    $saleArr=null;
+    $sql = "SELECT id, promotion_name, description, discount_rate, star_date, end_date FROM promotion ";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../signup.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    while($row=mysqli_fetch_assoc($resultData)){
+        $sale["id"]=$row["id"];
+        $sale["promotion_name"]= $row["promotion_name"];
+        $sale["description"]= $row["description"];
+        $sale["discount_rate"]= $row["discount_rate"];
+        $sale["start_date"]= $row["star_date"];
+        $sale["end_date"]= $row["end_date"];
+
+        $saleArr[]=$sale;
+        unset($sale);
+    }
+
+    mysqli_stmt_close($stmt);
+    return $saleArr;
+}
+function deleteSale($conn, $promotionID){
+    $sql = "DELETE FROM promotion WHERE id=?";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../signup.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_prepare($stmt, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $promotionID);
+
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ../sale_admin.php");
+
+}
+function getCategoryNameViaPromotionID($conn,$promotionID){
+    $sql = "SELECT product_category FROM promotion_category WHERE promotion_id=?";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../signup.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_prepare($stmt, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $promotionID);
+
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    $id=mysqli_fetch_assoc($resultData)["product_category"];
+
+    mysqli_stmt_close($stmt);
+
+    $sql = "SELECT category_name FROM product_category WHERE id=?";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../signup.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_prepare($stmt, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $id);
+
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    $categoryName=mysqli_fetch_assoc($resultData)["category_name"];
+
+    mysqli_stmt_close($stmt);
+
+    return $categoryName;
+}
