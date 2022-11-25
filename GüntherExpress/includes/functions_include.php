@@ -55,9 +55,6 @@ function uidExists($conn, $username,$email){
         mysqli_stmt_close($stmt);
         return $result;
     }
-
-
-
 }
 function emptyInputLogin($password,$username){
     $result = false;
@@ -662,7 +659,10 @@ function invalidDiscountrate($discount){
 }
 function createSale($conn,$categoryID,$title,$description,$discount,$startDate,$endDate){
     #create promotion, create promotion category
-
+    if (saleTitleExists($conn,$title)){
+        header("location: ../sale_admin.php?error=titleExists");
+        exit();
+    }
     $sql = "INSERT INTO promotion (promotion_name, description, discount_rate, star_date, end_date) VALUES (?,?,?,?,?);";
     $stmt = mysqli_stmt_init($conn);
 
@@ -721,7 +721,10 @@ function invalidDate($startDate,$endDate){
 }
 function updateSale($conn,$categoryID,$title,$description,$discount,$startDate,$endDate,$promoID){
     #create promotion, create promotion category
-
+    if (saleTitleExists($conn,$title)){
+        header("location: ../sale_admin.php?error=titleExists");
+        exit();
+    }
     $sql = "UPDATE promotion SET promotion_name=?, description=?, discount_rate=?, star_date=?, end_date=?  WHERE id=?;";
     $stmt = mysqli_stmt_init($conn);
 
@@ -758,4 +761,27 @@ function updateSale($conn,$categoryID,$title,$description,$discount,$startDate,$
 
     header("location: ../sale_admin.php?error=none");
     exit();
+}
+function saleTitleExists($conn, $saleTitle){
+    $sql = "SELECT promotion_name FROM promotion WHERE promotion_name = ? ;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../signup.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt,"s",$saleTitle);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    if(mysqli_fetch_assoc($resultData)){
+        mysqli_stmt_close($stmt);
+        return true;
+    }else{
+        $result = false;
+        mysqli_stmt_close($stmt);
+        return $result;
+    }
 }

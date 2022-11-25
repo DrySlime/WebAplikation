@@ -35,9 +35,12 @@
 <?php
 if (isset($_GET["error"])){
     if($_GET["error"]=="invalidDiscount"){
-        echo "Error in your Discountrate. Please enter a value between 1-99! For Example 20";
+        echo "<br><h1 style='color: red'>Error in your Discountrate. Please enter a value between 1-99! For Example 20</h1><br>";
     }if($_GET["error"]=="invalidDate") {
-        echo "Error in your Date. Please check your Dates. End Date cant be in the past and or before the start Date!";
+        echo "<br><h1 style='color: red'>Error in your Date. Please check your Dates. End Date cant be in the past and or before the start Date!</h1><br>";
+    }
+    if($_GET["error"]=="titleExists") {
+        echo "<br><h1 style='color: red'>This Promotion allready exists! Please chose another name!</h1><br>";
     }
 }
 
