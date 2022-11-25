@@ -76,10 +76,10 @@ if($saleArr!=null){
         <td > <a href='sale_admin.php?change=1&promotionID=".$saleArr[$i]["id"]."&promotionName=".$saleArr[$i]["promotion_name"]."&discountRate=".$saleArr[$i]["discount_rate"]." &description=".$saleArr[$i]["description"]."&startDate=".$saleArr[$i]["start_date"]."&endDate=".$saleArr[$i]["end_date"]."'><button>CHANGE</button></a> </td >
         <td > <form action='includes/deleteSale_inc.php' method='post'><input type='submit' name='delButton' value='DELETE'><input name='promotionID' value=".$saleArr[$i]["id"]." hidden> </form></td >
     </tr >
-    </table>
-    </div>";
+    
+    ";
     }
-
+    echo "</table></div>";
     }
 ?>
 <?php
