@@ -31,7 +31,7 @@ hr{
     height: 5px;
     background-color: black;
 }
-.Produkte, .Sale, .Kategorien ,.Versandmethoden, .Bestellungen{
+.Produkte, .Sale, .Kategorien ,.Versandmethoden, .Bestellungen,.Nutzer{
 
     display: inline-block;
 }

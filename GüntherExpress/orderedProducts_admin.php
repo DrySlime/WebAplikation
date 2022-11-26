@@ -60,7 +60,7 @@ $amount = 3;
             }
         }else{
 
-            echo "<h1>Unbekannte ID</h1>";
+            echo "<h1>No Order under this ID</h1>";
         }
 
 
@@ -83,9 +83,10 @@ $amount = 3;
                     </tr>
             
                     ";
-        for($i=0;$i<count($productArray);$i++) {
-            $order=getOrderLine($conn,$productArray[$i]["order_id"]);
-            echo "
+        if($productArray!=null){
+            for($i=0;$i<count($productArray);$i++) {
+                $order=getOrderLine($conn,$productArray[$i]["order_id"]);
+                echo "
                         <tr>
                                 <td > ".$productArray[$i]["order_id"]." </td >
                                 <td > ".getUsername($conn,$productArray[$i]["siteuser_id"])." </td >
@@ -100,6 +101,8 @@ $amount = 3;
                
                             </tr >";
             }
+        }
+
     }
     
     ?>

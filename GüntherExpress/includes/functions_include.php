@@ -696,7 +696,7 @@ function createSale($conn,$categoryID,$title,$description,$discount,$startDate,$
     mysqli_stmt_close($stmt);
 
 
-    $sql = "INSERT INTO promotion_category (product_category,promotion_id) VALUES (?,?);";
+    $sql = "INSERT INTO promotion_category (category_id,promotion_id) VALUES (?,?);";
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt,$sql)){
@@ -713,18 +713,34 @@ function createSale($conn,$categoryID,$title,$description,$discount,$startDate,$
     header("location: ../sale_admin.php?error=none");
     exit();
 }
+function createCategory($conn,$title,$parentID){
+
+    $sql = "INSERT INTO product_category (parent_category_id, category_name) VALUES (?,?);";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../category_admin.php?error=stmtfailed");
+        exit();
+    }
+
+
+
+    mysqli_stmt_bind_param($stmt,"ss",$parentID,$title);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+
+}
 function invalidDate($startDate,$endDate){
     if ($endDate<=date("Y-m-d")||$startDate>$endDate){
         return true;
     }
     return false;
 }
+
 function updateSale($conn,$categoryID,$title,$description,$discount,$startDate,$endDate,$promoID){
     #create promotion, create promotion category
-    if (saleTitleExists($conn,$title)){
-        header("location: ../sale_admin.php?error=titleExists");
-        exit();
-    }
+
     $sql = "UPDATE promotion SET promotion_name=?, description=?, discount_rate=?, star_date=?, end_date=?  WHERE id=?;";
     $stmt = mysqli_stmt_init($conn);
 
@@ -757,9 +773,45 @@ function updateSale($conn,$categoryID,$title,$description,$discount,$startDate,$
 
     mysqli_stmt_close($stmt);
 
+    $sql = "UPDATE promotion_category SET category_id=?,promotion_id=? WHERE promotion_id=?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../signup.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"sss",$categoryID,$promotionID,$promotionID);
+
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+
+    header("location: ../sale_admin.php?error=none");
+    exit();
 
 
     header("location: ../sale_admin.php?error=none");
+    exit();
+}
+function updateCategory($conn,$parentID,$title,$id){
+    #create promotion, create promotion category
+    $sql = "UPDATE product_category SET parent_category_id=?, category_name=? WHERE id=?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../signup.php?error=stmtfailed");
+        exit();
+    }
+
+
+
+    mysqli_stmt_bind_param($stmt,"sss",$parentID,$title,$id);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+
+    header("location: ../category_admin.php?error=none");
     exit();
 }
 function saleTitleExists($conn, $saleTitle){

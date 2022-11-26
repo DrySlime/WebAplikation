@@ -9,7 +9,7 @@
 </head>
     <div><br><br><br><br></div>
 <h1>Create a PROMOTION</h1>
-<form action="includes/sale_admins_inc.php" method="post">
+<form action="includes/createSale_inc.php" method="post">
     <label for="category">Choose a category:</label>
     <select id="cars" name="category_id" size="4" required>
         <?php
@@ -47,7 +47,9 @@ if (isset($_GET["error"])){
 ?>
 
 <?php
+
 $saleArr=getAllSales($conn);
+
 if($saleArr!=null){
     echo"
         <div class='all'>
@@ -72,7 +74,7 @@ if($saleArr!=null){
     <tr>
         <td > ".getCategoryNameViaPromotionID($conn,$saleArr[$i]["id"])." </td >
         <td > ".$saleArr[$i]["promotion_name"]." </td >
-        <td > ".$saleArr[$i]["discount_rate"]." </td >
+        <td > ".$saleArr[$i]["discount_rate"]."% </td >
         <td > ".$saleArr[$i]["description"]." </td >
         <td > ".$saleArr[$i]["start_date"]." </td >
         <td > ".$saleArr[$i]["end_date"]." </td >
@@ -92,7 +94,7 @@ if (isset($_GET["change"])){
     <h1>UPDATE FORM: </h1>
         <form action="includes/updateSale_inc.php" method="post">
             <label for="category">Choose a category:</label>
-            <select  name="category_id" size="4" required>
+            <select  name="category_id" size="4"  required>
             ';
             for ($i=0;$i<count($categories);$i++){
                 echo "
@@ -101,17 +103,19 @@ if (isset($_GET["change"])){
             };
             echo '
             </select><br>
-            Title: <input type="text" name="title"  placeholder="Title: '.$_GET["promotionName"].'" required><br>
-            Description: <textarea name="description" placeholder="Description: '.$_GET["description"].'" rows="1" cols="60" required></textarea><br>
-            Discount <input type="text" name="discount" placeholder="Discount: '.$_GET["discountRate"].'%" required><br>
-            Start Date before '.$_GET["startDate"].': <input type="date" name="start-date" placeholder="StartDate" required><br>
-            End Date before '.$_GET["endDate"].': <input type="date" name="end-date" required><br>
+            Title: <input type="text" name="title"  value="'.$_GET["promotionName"].'" required><br>
+            Description: <textarea name="description"  rows="1" cols="60" required>'.$_GET["description"].'</textarea><br>
+            Discount <input type="text" name="discount" value="'.(int)$_GET["discountRate"].'" required><br>
+            Start Date : <input type="date" name="start-date" value='.$_GET["startDate"].' required><br>
+            End Date : <input type="date" name="end-date" value="'.$_GET["endDate"].'"required><br>
             <input name="promoID" value='.$_GET["promotionID"].' hidden>
             <input type="submit" name="send_form" value="UPDATE">
+            <a href="sale_admin.php" ><button formnovalidate>Cancel</button></a>
     
         </form>
     </div>
     ';
 }
+
 ?>
 </div>

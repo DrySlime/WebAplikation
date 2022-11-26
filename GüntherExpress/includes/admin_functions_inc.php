@@ -1,6 +1,7 @@
 <?php
 function getAllOrderedProducts($conn)
 {
+    $allItems=null;
     $sql = "SELECT * FROM shop_order ORDER BY order_date DESC ;";
     $stmt = mysqli_stmt_init($conn);
 
@@ -25,6 +26,84 @@ function getAllOrderedProducts($conn)
 
         $allItems[] = $array;
         unset($array);
+    }
+
+    return $allItems;
+}
+function getAllUser($conn)
+{
+    $allItems=null;
+    $sql = "SELECT * FROM site_user ;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ../index.php?error=stmtfailed");
+        exit();
+    }
+//    mysqli_stmt_prepare($stmt, $sql);
+//    mysqli_stmt_bind_param($stmt, "s", $amount);
+    mysqli_stmt_execute($stmt);
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    while ($row = mysqli_fetch_assoc($resultData)) {
+        $array["id"] = $row["id"];
+        $array["firstname"] = $row["firstname"];
+        $array["lastname"] = $row["lastname"];
+        $array["email"] = $row["email"];
+        $array["username"] = $row["user_uid"];
+        $allItems[] = $array;
+        unset($array);
+    }
+
+    return $allItems;
+}function getAllFromUser($conn,$userid)
+{
+    $allItems=null;
+    $sql = "SELECT * FROM site_user WHERE id=?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ../index.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_prepare($stmt, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $userid);
+    mysqli_stmt_execute($stmt);
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    while ($row = mysqli_fetch_assoc($resultData)) {
+        $array["id"] = $row["id"];
+        $array["firstname"] = $row["firstname"];
+        $array["lastname"] = $row["lastname"];
+        $array["email"] = $row["email"];
+        $array["username"] = $row["user_uid"];
+        $allItems[] = $array;
+        unset($array);
+    }
+
+    return $allItems;
+}
+function getAdressFromUserID($conn,$userID){
+    $allItems=null;
+    $sql = "SELECT * FROM address WHERE id=(SELECT address_id FROM user_address WHERE user_id=?);";
+    $stmt = mysqli_stmt_init($conn);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ../index.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_prepare($stmt, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $userID);
+    mysqli_stmt_execute($stmt);
+    if($resultData = mysqli_stmt_get_result($stmt)){
+        while ($row = mysqli_fetch_assoc($resultData)) {
+            $array["street_number"] = $row["street_number"];
+            $array["address_line"] = $row["address_line1"];
+            $array["city"] = $row["city"];
+            $array["postal_code"] = $row["postal_code"];
+            $allItems[] = $array;
+            unset($array);
+        }
     }
 
     return $allItems;
@@ -219,15 +298,17 @@ function getUserID($conn,$username){
     mysqli_stmt_prepare($stmt, $sql);
     mysqli_stmt_bind_param($stmt, "s", $username);
     mysqli_stmt_execute($stmt);
-    $resultData = mysqli_stmt_get_result($stmt);
+    if ($resultData = mysqli_stmt_get_result($stmt)){
 
-    $row = mysqli_fetch_assoc($resultData);
-    $id = $row["id"];
+        if($row = mysqli_fetch_assoc($resultData)){
+            $id = $row["id"];
+            return $id;
+        }
 
+    }
 
+    return null;
 
-
-    return $id;
 }
 
 function orderlineToTEXT($conn,$order){
@@ -240,7 +321,7 @@ function orderlineToTEXT($conn,$order){
      return $string;
 }
 function getAllCategories($conn,){
-    $sql = "SELECT id, category_name FROM product_category ";
+    $sql = "SELECT id, category_name, parent_category_id FROM product_category ";
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt,$sql)){
@@ -255,6 +336,7 @@ function getAllCategories($conn,){
     while($row=mysqli_fetch_assoc($resultData)){
         $category["id"]=$row["id"];
         $category["category_name"]= $row["category_name"];
+        $category["parent_category_id"]= $row["parent_category_id"];
         $categoryArr[]=$category;
         unset($category);
     }
@@ -264,7 +346,7 @@ function getAllCategories($conn,){
 }
 function getAllSales($conn){
     $saleArr=null;
-    $sql = "SELECT id, promotion_name, description, discount_rate, star_date, end_date FROM promotion ";
+    $sql = "SELECT * FROM promotion ";
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt,$sql)){
@@ -307,8 +389,23 @@ function deleteSale($conn, $promotionID){
     header("location: ../sale_admin.php");
 
 }
+function deleteCategory($conn, $categoryID){
+    $sql = "DELETE FROM product_category WHERE id=?";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../signup.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_prepare($stmt, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $categoryID);
+
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ../category_admin.php");
+}
 function getCategoryNameViaPromotionID($conn,$promotionID){
-    $sql = "SELECT product_category FROM promotion_category WHERE promotion_id=?";
+    $sql = "SELECT category_id FROM promotion_category WHERE promotion_id=?";
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt,$sql)){
@@ -321,7 +418,7 @@ function getCategoryNameViaPromotionID($conn,$promotionID){
     mysqli_stmt_execute($stmt);
 
     $resultData = mysqli_stmt_get_result($stmt);
-    $id=mysqli_fetch_assoc($resultData)["product_category"];
+    $id=mysqli_fetch_assoc($resultData)["category_id"];
 
     mysqli_stmt_close($stmt);
 
