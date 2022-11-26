@@ -79,7 +79,7 @@ if (isset($_GET["change"])){
             <h1>UPDATE FORM ID-'.$_GET["id"].': </h1>
             <hr style="height: 5px;background-color: #101010"><br>
                 <form action="includes/updateCategory_inc.php" method="post">
-                     New Category Name: <input type="text" name="category_name"  value="Old Title=> '.$_GET["categoryName"].'" required><br>
+                     New Category Name: <input type="text" name="category_name"  value="'.$_GET["categoryName"].'" required><br>
         
                     <label for="category">Choose a new Parent Category:</label>
                     <select  name="parent_category_id" size="4" required>
