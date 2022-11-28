@@ -45,8 +45,6 @@ $userId = getUserIdFromUserName($conn, $userName);
         while ($row1 = $addresses->fetch_assoc()) {
             echo "<div class="."address".">";
     
-                
-                    echo "<input type="."hidden"." name=".$row1["id"].">";
                     echo "<p>"."Straße: ".$row1["address_line1"]."</p>";
                     echo "<p>"."Hausnummer: ".$row1["street_number"]."</p>";
                     echo "<p>"."Stadt: ".$row1["city"]."</p>";
