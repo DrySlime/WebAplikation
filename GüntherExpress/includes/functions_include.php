@@ -731,6 +731,42 @@ function createCategory($conn,$title,$parentID){
     mysqli_stmt_close($stmt);
 
 }
+function createProduct($conn,$categoryID,$name,$productImage,$description,$price,$inStock,$image){
+
+    $sql = "INSERT INTO product (name,product_category_id,product_image,qty_in_stock,price,description,image) VALUES (?,?,?,?,?,?,?);";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../product_admin.php?error=stmtfailed");
+        exit();
+    }
+
+
+
+    mysqli_stmt_bind_param($stmt,"sssssss",$name,$categoryID,$productImage,$inStock,$price,$description,$image);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+
+}
+function createShippingMethod($conn,$name,$price){
+
+    $sql = "INSERT INTO shipping_method (shipping_name, shipping_price) VALUES (?,?);";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../shippingmethod_admin.php?error=stmtfailed");
+        exit();
+    }
+
+
+
+    mysqli_stmt_bind_param($stmt,"ss",$name,$price);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+
+}
 function invalidDate($startDate,$endDate){
     if ($endDate<=date("Y-m-d")||$startDate>$endDate){
         return true;
@@ -814,6 +850,49 @@ function updateCategory($conn,$parentID,$title,$id){
     header("location: ../category_admin.php?error=none");
     exit();
 }
+
+function  updateProduct($conn,$categoryID,$name,$description,$productImage,$price,$inStock,$image,$productID){
+    #create promotion, create promotion category
+    $sql = "UPDATE product SET name=?, product_category_id=?, product_image=?, qty_in_stock=?, price=?, description=?, image=? WHERE id=?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../product_admin.php?error=stmtfailed");
+        exit();
+    }
+
+
+
+    mysqli_stmt_bind_param($stmt,"ssssssss",$name,$categoryID,$productImage,$inStock,$price,$description,$image,$productID);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+
+    header("location: ../product_admin.php?error=none");
+    exit();
+}
+
+function updateShippingMethod($conn,$name,$price,$id){
+    #create promotion, create promotion category
+    $sql = "UPDATE shopping_method SET shipping_name=?, shipping_price=? WHERE id=?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../shippingmethod_admin.php?error=stmtfailed");
+        exit();
+    }
+
+
+
+    mysqli_stmt_bind_param($stmt,"sss",$name,$price,$id);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+
+    header("location: ../shippingmethod_admin.php?error=none");
+    exit();
+}
+
 function saleTitleExists($conn, $saleTitle){
     $sql = "SELECT promotion_name FROM promotion WHERE promotion_name = ? ;";
     $stmt = mysqli_stmt_init($conn);

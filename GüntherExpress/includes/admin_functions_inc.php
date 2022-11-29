@@ -373,12 +373,71 @@ function getAllSales($conn){
     mysqli_stmt_close($stmt);
     return $saleArr;
 }
+
+function getAllProducts($conn){
+    $productArr=null;
+    $sql = "SELECT * FROM products ";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../product_admin.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    while($row=mysqli_fetch_assoc($resultData)){
+        $product["id"]=$row["id"];
+        $product["name"]= $row["name"];
+        $product["product_category_id"]= $row["product_category_id"];
+        $product["product_image"]= $row["product_image"];
+        $product["qty_in_stock"]= $row["qty_in_stock"];
+        $product["price"]= $row["price"];
+        $product["description"]= $row["description"];
+        $product["image"]= $row["image"];
+
+        productArr[]=$product;
+        unset($product);
+    }
+
+    mysqli_stmt_close($stmt);
+    return $productArr;
+}
+function getAllShippingMethods($conn){
+    $sMethodArr=null;
+    $sql = "SELECT * FROM  shipping_method";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../shippingmethod_admin.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    while($row=mysqli_fetch_assoc($resultData)){
+        $sMethod["id"]=$row["id"];
+        $sMethod["shipping_name"]= $row["shipping_name"];
+        $sMethod["shipping_price"]= $row["shipping_price"];
+        
+
+        sMethodArr[]=$sMethod;
+        unset($sMethod);
+    }
+
+    mysqli_stmt_close($stmt);
+    return $sMethodArr;
+}
 function deleteSale($conn, $promotionID){
     $sql = "DELETE FROM promotion WHERE id=?";
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt,$sql)){
-        header("location: ../signup.php?error=stmtfailed");
+        header("location: ../sale_admin.php?error=stmtfailed");
         exit();
     }
     mysqli_stmt_prepare($stmt, $sql);
@@ -394,7 +453,7 @@ function deleteCategory($conn, $categoryID){
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt,$sql)){
-        header("location: ../signup.php?error=stmtfailed");
+        header("location: ../category_admin.php?error=stmtfailed");
         exit();
     }
     mysqli_stmt_prepare($stmt, $sql);
@@ -403,6 +462,38 @@ function deleteCategory($conn, $categoryID){
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
     header("location: ../category_admin.php");
+}
+function deleteProduct($conn, $productID){
+    $sql = "DELETE FROM product WHERE id=?";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../product_admin.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_prepare($stmt, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $productID);
+
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ../product_admin.php");
+
+}
+function deleteSMethod($conn, $sMethodID){
+    $sql = "DELETE FROM shipping_method WHERE id=?";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../shippingmethod_admin.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_prepare($stmt, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $promotionID);
+
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ../shippingmethod_admin.php");
+
 }
 function getCategoryNameViaPromotionID($conn,$promotionID){
     $sql = "SELECT category_id FROM promotion_category WHERE promotion_id=?";
@@ -431,6 +522,27 @@ function getCategoryNameViaPromotionID($conn,$promotionID){
     }
     mysqli_stmt_prepare($stmt, $sql);
     mysqli_stmt_bind_param($stmt, "s", $id);
+
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    $categoryName=mysqli_fetch_assoc($resultData)["category_name"];
+
+    mysqli_stmt_close($stmt);
+
+    return $categoryName;
+}
+
+function getCategoryNameViaID($conn,$categoryID){
+    $sql = "SELECT category_name FROM product_category WHERE id=?";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../product_admin.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_prepare($stmt, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $categoryID);
 
     mysqli_stmt_execute($stmt);
 
