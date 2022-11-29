@@ -3,6 +3,7 @@ include_once 'header.php';
 include_once 'includes/dbh_include.php';
 include_once 'includes/product_include.php';
 include_once 'includes/functions_include.php';
+include_once 'includes/check_out_include.php';
 
 
 $userName;
@@ -45,14 +46,12 @@ $userId = getUserIdFromUserName($conn, $userName);
         while ($row1 = $addresses->fetch_assoc()) {
             echo "<div class="."address".">";
     
-                    echo "<p>"."Straße: ".$row1["address_line1"]."</p>";
-                    echo "<p>"."Hausnummer: ".$row1["street_number"]."</p>";
-                    echo "<p>"."Stadt: ".$row1["city"]."</p>";
-                    echo "<p>"."PLZ: ".$row1["postal_code"]."</p>";
-                    echo '<a href='.'check_out_payment.php?addressId='.$row1["id"].'>Wählen</a>';
-                
-    
-            echo '</div>';
+                showAddress($row1);
+                echo '<a class="button" href='.'check_out_payment.php?addressId='.$row1["id"].'>Wählen</a>';
+
+             echo '</div>';
+            
+            
         }
     }
  }
@@ -66,7 +65,10 @@ $userId = getUserIdFromUserName($conn, $userName);
     </head>
     <body>
         <p>Folgende Adressen sind in ihrem Konto hinterlegt: </p>
-        <?php showUserAddress($conn, getUserAdress($conn, $userId)); ?>
+        <div class="container">
+             <?php showUserAddress($conn, getUserAdress($conn, $userId)); ?>
+        </div>  
+
         <p>Wählen sie eine Adresse aus oder <a href="profile.php">fügen sie eine neue hinzu!</a></p>
     </body>
 </html>
