@@ -37,7 +37,7 @@ function showUserPaymentMethods($conn, $userId){
         echo "<div class="."payment_method".">";
 
             showPaymentMethod($conn, $row1);
-            echo '<a class="button" href='.'check_out_shipping.php?addressId='.$_GET["addressId"].'&paymentId='.$row1["id"].'>Wählen</a>';
+            echo '<p><a class="button" href='.'check_out_shipping.php?addressId='.$_GET["addressId"].'&paymentId='.$row1["id"].'>Wählen</a></p>';
        
         echo '</div>';
         
@@ -56,10 +56,12 @@ function showUserPaymentMethods($conn, $userId){
         <link rel="stylesheet" href="../css/check_out.css">
     </head>
     <body>
-        <p>Folgende Adressen sind in ihrem Konto hinterlegt: </p>
-        <div class="container">
-            <?php showUserPaymentMethods($conn, $userId); ?>
+        <div class="background">
+            <h1>Wählen sie ihre gewünschte Zahlungsmethode aus! </h1>
+            <div class="container">
+                <?php showUserPaymentMethods($conn, $userId); ?>
+            </div>
+            <p class="addBtn"><a class="link" href="profile.php">Neue Bezahlmethode hinzufügen</a></p>
         </div>
-        <p>Wählen sie eine Zahlungsmethode aus oder <a href="profile.php">fügen sie eine neue hinzu!</a></p>
     </body>
 </html>

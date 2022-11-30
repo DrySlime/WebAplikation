@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap');
-.container{
+
+.background{
     background-color: #f9d4dc;
+}
+.container{
     display: grid;
     grid-template-columns: 33% 33% 33%;
 }
@@ -9,7 +12,6 @@
 .payment_method, 
 .shipping_method{
     background-color: white;
-    align-items: center;
     border-style: none;
     border-radius: 40px;
     text-align: center;
@@ -26,6 +28,39 @@
     font-size: large;
     font-family: 'Poppins', sans-serif;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+}
+
+h1{
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    padding-top: 30px;
+}
+
+.addBtn{
+    background-color: #D4045F;
+    border-style: none;
+    border-radius: 20px;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    text-align: center;
+
+}
+
+.addBtn:hover{
+    background-color: #BD405B;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    text-align: center;
+}
+
+.link{
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 .button{

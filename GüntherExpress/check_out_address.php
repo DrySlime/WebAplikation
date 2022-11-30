@@ -47,7 +47,7 @@ $userId = getUserIdFromUserName($conn, $userName);
             echo "<div class="."address".">";
     
                 showAddress($row1);
-                echo '<a class="button" href='.'check_out_payment.php?addressId='.$row1["id"].'>Wählen</a>';
+                echo '<p><a class="button" href='.'check_out_payment.php?addressId='.$row1["id"].'>Wählen</a> </p>';
 
              echo '</div>';
             
@@ -64,11 +64,14 @@ $userId = getUserIdFromUserName($conn, $userName);
         <link rel="stylesheet" href="../css/check_out.css">
     </head>
     <body>
-        <p>Folgende Adressen sind in ihrem Konto hinterlegt: </p>
-        <div class="container">
-             <?php showUserAddress($conn, getUserAdress($conn, $userId)); ?>
-        </div>  
+        <div class="background">
+            <h1>Bitte wählen sie die gewünschte Lieferaddresse aus!</h1>
+            <div class="container">
+                <?php showUserAddress($conn, getUserAdress($conn, $userId)); ?>
+            </div>  
+            <p class="addBtn"><a class="link" href="href="profile.php>Neue Addresse hinzufügen</a> </p>
+        </div>
 
-        <p>Wählen sie eine Adresse aus oder <a href="profile.php">fügen sie eine neue hinzu!</a></p>
+        
     </body>
 </html>

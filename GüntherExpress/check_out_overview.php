@@ -49,6 +49,7 @@ $items = getShoppingCartItems($conn, $userId);
                 $resultData = mysqli_stmt_get_result($stmt);
                 showAddress(mysqli_fetch_assoc($resultData)) 
                 ?>
+                <a class="button" href= <?php echo "check_out_address.php?addressId=".$_GET['addressId']."&paymentId=".$_GET['paymentId']."&shippingId=".$_GET['shippingId']?>> Ändern</a>
             </div>
 
             <div class="payment">
@@ -64,6 +65,7 @@ $items = getShoppingCartItems($conn, $userId);
                 $resultData = mysqli_stmt_get_result($stmt);
                 showPaymentMethod($conn, mysqli_fetch_assoc($resultData));
                 ?>
+                <a class="button" href= <?php echo "check_out_payment.php?addressId=".$_GET['addressId']."&paymentId=".$_GET['paymentId']."&shippingId=".$_GET['shippingId']?>> Ändern</a>
             </div>
 
             <div class="shipping">
@@ -79,6 +81,7 @@ $items = getShoppingCartItems($conn, $userId);
                     $resultData = mysqli_stmt_get_result($stmt);
                     showShippingMethod(mysqli_fetch_assoc($resultData));
                 ?>
+                <a class="button" href= <?php echo "check_out_shipping.php?addressId=".$_GET['addressId']."&paymentId=".$_GET['paymentId']."&shippingId=".$_GET['shippingId']?>> Ändern</a>
             </div>
 
             <div class="price">
@@ -86,7 +89,7 @@ $items = getShoppingCartItems($conn, $userId);
                 <p>Preis:  <?php echo getShoppingCartSum($conn, $userId) ?> Euro</p>
                 <p>Versand:  <?php echo getShippingPrice($conn, $_GET["shippingId"]) ?> Euro</p>
                 <p class="end-price">  Gesamt: <br> <?php echo (getShoppingCartSum($conn, $userId) + getShippingPrice($conn, $_GET["shippingId"])) ?> Euro</p>
-                <a class="button" href= "order_complete.php"> Kostenpflichtig bestellen</a>
+                <a class="button" href= <?php echo "check_out_complete.php?addressId=".$_GET['addressId']."&paymentId=".$_GET['paymentId']."&shippingId=".$_GET['shippingId']?>> Kostenpflichtig bestellen</a>
             </div>
 
 

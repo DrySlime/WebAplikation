@@ -32,7 +32,7 @@ function showShippingMethods($conn){
 
         echo "<div class="."shipping_method".">";
             showShippingMethod($row1);
-            echo '<a class="button" href='.'check_out_overview.php?addressId='.$_GET["addressId"].'&paymentId='.$_GET["paymentId"].'&shippingId='.$row1["id"].'>Wählen</a>';
+            echo '<p><a class="button" href='.'check_out_overview.php?addressId='.$_GET["addressId"].'&paymentId='.$_GET["paymentId"].'&shippingId='.$row1["id"].'>Wählen</a> </p>';
         echo '</div>';
     }
     
@@ -47,9 +47,11 @@ function showShippingMethods($conn){
         <link rel="stylesheet" href="../css/check_out.css">
     </head>
     <body>
-        <p>Wählen sie eine Versandoption: </p>
-        <div class="container">
-            <?php showShippingMethods($conn); ?>
+        <div class="background">
+            <h1>Wählen sie eine Versandoption: </h1>
+            <div class="container">
+                <?php showShippingMethods($conn); ?>
+            </div>
         </div>
     </body>
 </html>
