@@ -398,7 +398,7 @@ function getAllProducts($conn){
         $product["description"]= $row["description"];
         $product["image"]= $row["image"];
 
-        productArr[]=$product;
+        $productArr[]=$product;
         unset($product);
     }
 
@@ -425,7 +425,7 @@ function getAllShippingMethods($conn){
         $sMethod["shipping_price"]= $row["shipping_price"];
         
 
-        sMethodArr[]=$sMethod;
+        $sMethodArr[]=$sMethod;
         unset($sMethod);
     }
 
