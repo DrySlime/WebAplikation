@@ -60,6 +60,10 @@ $items = getShoppingCartItems($conn, $userId);
             <form action="check_out_address.php">
                     <input class="button" type="submit" value="Zur Kasse">
             </form>
+            <form action="check_out_overview.php">
+                    <input type="hidden" name="isFastCheckOut" value="<?php echo "true" ?>">
+                    <input class="button" type="submit" value="Schnell Kauf">
+            </form>
             <div class="end-price">  Gesamt: <br> <?php echo getShoppingCartSum($conn, $userId) ?> Euro</div>
 
         </div>
