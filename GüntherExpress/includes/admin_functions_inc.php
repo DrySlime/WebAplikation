@@ -1,5 +1,6 @@
 <?php
 function getAllOrderedProducts($conn)
+    #return an array filled with all data you could get from an order which is ordered descending!
 {
     $allItems=null;
     $sql = "SELECT * FROM shop_order ORDER BY order_date DESC ;";
@@ -31,6 +32,7 @@ function getAllOrderedProducts($conn)
     return $allItems;
 }
 function getAllUser($conn)
+    #return an array filled with all USER data you could get from the Database
 {
     $allItems=null;
     $sql = "SELECT * FROM site_user ;";
@@ -57,6 +59,7 @@ function getAllUser($conn)
 
     return $allItems;
 }function getAllFromUser($conn,$userid)
+    #returns an array with all USER Data from $userid
 {
     $allItems=null;
     $sql = "SELECT * FROM site_user WHERE id=?;";
@@ -84,6 +87,7 @@ function getAllUser($conn)
     return $allItems;
 }
 function getAdressFromUserID($conn,$userID){
+    #returns an array filled with adress information from a $userid
     $allItems=null;
     $sql = "SELECT * FROM address WHERE id=(SELECT address_id FROM user_address WHERE user_id=?);";
     $stmt = mysqli_stmt_init($conn);
@@ -260,13 +264,31 @@ function getOrderLine($conn,$id){
         $product["price"] = $row["price"];
         $productArr[]=$product;
         unset($product);
-
     }
-
-
     return $productArr;
 }
+function getAllOrderStatus($conn){
+    $sql = "SELECT * FROM order_status ;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ../index.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_execute($stmt);
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    while($row = mysqli_fetch_assoc($resultData)){
+        $status["id"] = $row["id"];
+        $status["status"] = $row["status"];
+        $statusArr[]=$status;
+        unset($product);
+    }
+    return $statusArr;
+}
 function getProductName($conn,$id){
+    #returns the productname from a productID
     $sql = "SELECT product_name FROM product WHERE id=? ;";
     $stmt = mysqli_stmt_init($conn);
 
@@ -287,6 +309,7 @@ function getProductName($conn,$id){
     return $productname;
 }
 function getUserID($conn,$username){
+    #get the userID from a $username
 
     $sql = "SELECT id FROM site_user WHERE upper(user_uid)=upper(?) ;";
     $stmt = mysqli_stmt_init($conn);
@@ -312,6 +335,8 @@ function getUserID($conn,$username){
 }
 
 function orderlineToTEXT($conn,$order){
+    #a toString method to properly display order details
+
     $string ="";
      for($k=0;$k<count($order);$k++){
          $so= $order[$k]["qty"]."x ".getProductName($conn,$order[$k]["product_item_id"])." -> ".$order[$k]["price"]." Euro <br>";
@@ -398,7 +423,7 @@ function getAllProducts($conn){
         $product["description"]= $row["description"];
         $product["image"]= $row["image"];
 
-        productArr[]=$product;
+        $productArr[]=$product;
         unset($product);
     }
 
@@ -425,7 +450,7 @@ function getAllShippingMethods($conn){
         $sMethod["shipping_price"]= $row["shipping_price"];
         
 
-        sMethodArr[]=$sMethod;
+        $sMethodArr[]=$sMethod;
         unset($sMethod);
     }
 

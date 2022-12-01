@@ -4,7 +4,7 @@ window.onscroll = function(event) {
 
     console.log(scrollPos);
     document.getElementById("tmp123").style.top = -1.5*scrollPos+"px";
-    if(scrollPos>423){
-        doc.scrollTop=423;
+    if(scrollPos>375){
+        doc.scrollTop=375;
     }
 }
