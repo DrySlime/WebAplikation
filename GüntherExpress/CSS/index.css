@@ -10,19 +10,19 @@
 body {
     line-height: 1.5;
     background-color: #f9d4dc;
-
 }
 
 .bestsellers {
     background-color: #d4e4f9;
     padding-top: 5rem;
-    padding-bottom: 2rem;
+    padding-bottom: 5rem;
 }
 
 .newitems {
     background-color: #ffffff;
     padding-top: 5rem;
     padding-bottom: 2rem;
+    height: auto;
 }
 
 .bestsellers_header, .newitems_header {
@@ -52,45 +52,4 @@ body {
     font-size: 1rem;
     text-decoration: none;
     font-weight: 500;
-}
-
-.swiper {
-    margin-top: 3vmin;
-    height: 30vmin;
-    width: 90%;
-}
-
-.swiper-slide {
-    text-align: center;
-    font-size: 18px;
-    height: 50%;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: flex;
-    flex-direction: column;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    align-items: center;
-}
-
-.swiper-pagination .swiper-pagination-bullet-active {
-	background-color: #fc466b;
-}
-
-.swiper .swiper-button-prev, .swiper  .swiper-button-next {
-    color: #1c1c1c;
-}
-
-.swiper-wrapper .image_wrapper {
-    width: 100%;
-    height: 100%;
-}
-
-.image_wrapper img {
-    background-size: contain;
-    width: 100%;
-    height: 100%;
 }

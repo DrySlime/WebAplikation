@@ -15,7 +15,7 @@
         <div class="hero_left">
             <div class="hero_text">
                 <h1>
-                    You're never too old for Chocolates!
+                    You're never too old for Candy!
                 </h1>
                 <h4>
                  The Confectioner bietet Dir die größte Auswahl an allerlei Süßigkeiten aus jeder Ecke der Welt. Du willst was neues probieren? Wie wärs mit:

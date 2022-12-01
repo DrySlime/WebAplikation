@@ -10,6 +10,7 @@ require_once "includes/review_functions.php";
 <head>
 
     <link rel="stylesheet" href="CSS/index.css">
+    <link rel="stylesheet" href="CSS/swiper.css">
     <meta charset="UTF-8" http-equiv="X-UA-Compatible" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
@@ -31,14 +32,14 @@ require_once "includes/review_functions.php";
             <?php
             require_once "includes/review_functions.php";
 
-            $newItems=getNewestProducts($conn,9);
-            for ($i=0;$i<count($newItems);$i++){
-                echo"                        
+            $newItems = getNewestProducts($conn, 9);
+            for ($i = 0; $i < count($newItems); $i++) {
+                echo "                        
                             <div class='swiper-slide'>
                                 
                                 <div class='image_wrapper'>
-                                    <a href=product.php?id=".$newItems[$i]["id"].">
-                                        <img src=".$newItems[$i]["product_image"].">
+                                    <a href=product.php?id=" . $newItems[$i]["id"] . ">
+                                        <img src=" . $newItems[$i]["product_image"] . ">
                                     </a>
                                 </div>
                                 
@@ -58,29 +59,26 @@ require_once "includes/review_functions.php";
 <div class="bestsellers">
     <div class="bestsellers_header">
         <h1>Bestseller</h1>
-        <h4>Hol Dir die beliebtesten Schokoladen unserer Kunden!</h4>
+        <h4>Hol Dir die beliebtesten Süßigkeiten unserer Kunden!</h4>
     </div>
     <div class="swiper">
         <div class="swiper-wrapper">
             <?php
 
 
-                $arr=getBestRatedProducts($conn,9);
-                for ($i=0;$i<count($arr);$i++){
-                    echo"                        
+            $arr = getBestRatedProducts($conn, 9);
+            for ($i = 0; $i < count($arr); $i++) {
+                echo "                        
                             <div class='swiper-slide'>
-                                
                                 <div class='image_wrapper'>
-                                    <a href=product.php?id=".$arr[$i].">
-                                        <img src=".getImage($conn,$arr[$i]).">
+                                    <a href=product.php?id=" . $arr[$i] . ">
+                                        <img src=" . getImage($conn, $arr[$i]) . ">
                                     </a>
                                 </div>
-                                
                             </div>                                         
                     ";
-                }
+            }
             ?>
-
         </div>
         <div class="swiper-pagination"></div>
         <div class="swiper-button-prev"></div>

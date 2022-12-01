@@ -1,0 +1,331 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    line-height: 1.5;
+    background-color: #f9d4dc;
+}
+
+.items_header_wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.items_page_header {
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    position: relative;
+    width: 100%;
+    height: 45vh;
+    padding-top: 20vmin;
+    background-color: #f9d4dc;
+    z-index: -1;
+}
+
+.items_page_header img {
+    background-size: cover;
+    overflow: hidden;
+    height: auto;
+}
+
+.items_page_header h1 {
+    position: absolute;
+    font-size: 10vmin;
+    font-weight: 800;
+    color: #fc466b;
+    text-shadow: 0 0 15px #101010;
+}
+
+.searchbar_wrapper {
+    width: 50%;
+    top: 42vmin;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.searchbar_wrapper form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    width: 100%;
+}
+
+.searchbar_container {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    width: 100%;
+    z-index: 1;
+}
+
+.searchbar_container input {
+    font-size: 2vmin;
+    color: #101010;
+    padding: 1.5vmin 1vmin;
+    border: none;
+    outline: none;
+    border-radius: 3rem 0 0 3rem;
+    width: 45%;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px #888888;
+    text-indent: 25px;
+    font-weight: 500;
+}
+
+.searchbar_container button {
+    font-size: 2vmin;
+    font-weight: 300;
+    color: #FFFFFF;
+    padding: 1.5vmin 1vmin;
+    outline: none;
+    border: none;
+    border-radius: 0 3rem 3rem 0;
+    box-shadow: 0 0 10px #888888;
+    width: 20%;
+    background-color: #101010;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.searchbar_container button:hover {
+    color: #fc466b;
+}
+
+.item_wrapper {
+    display: flex;
+    background-color: #FFFFFF;
+    padding-bottom: 10vmin;
+}
+
+.item_section_left {
+    padding-top: 15vmin;
+    width: 30%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    position: relative;
+}
+
+.item_image_container {
+    width: 120%;
+    height: 100%;
+    left: 25%;
+    bottom: 1%;
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    margin-left: 10vmin;
+}
+
+.item_image_container img {
+    object-fit: contain;
+    height: 80%;
+    width: inherit;
+}
+
+.item_section_right {
+    width: 80%;
+    padding-top: 15vmin;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.item_data_wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: flex-end;
+    padding-bottom: 5vmin;
+}
+
+.item_data_container {
+    width: 40%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: flex-start;
+}
+
+.item_data_category h4 {
+    font-weight: 300;
+    margin-bottom: -2vmin;
+}
+
+.item_data_name h3 {
+    font-weight: 700;
+    font-size: 6vmin;
+    padding-bottom: 2vmin;
+}
+
+.item_rating_stars {
+    padding-bottom: 2vmin;
+}
+
+.checked {
+    color:orange;
+}
+
+.item_data_description p{
+    font-weight: 400;
+    font-size: .9rem;
+    padding-bottom: 2vmin;
+}
+
+.item_data_price h4{
+    font-weight: 700;
+    font-size: 2rem;
+    color: #fc466b;
+}
+
+.item_data_settings {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+}
+
+.item_amount_settings {
+    width: 25%;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    display: flex;
+}
+
+.item_amount_settings h4 {
+    font-weight: 700;
+    font-size: 1.4rem;
+    padding-left: 2vmin;
+    padding-right: 2vmin;
+    text-align: center;
+}
+
+.item_amount_settings span {
+    text-align: center;
+}
+
+.buttonAmount {
+    border: none;
+    background: none;
+    color: #101010;
+    cursor: pointer;
+    transition: 1s;
+    width: auto;
+    height: auto;
+}
+
+.material-icons.md48 {
+    font-size: 48px; !important;
+    transition: .3s;
+}
+
+.buttonAmount .material-icons:hover,
+.buttonAmount .material-icons:focus {
+    color: #fc466b;
+}
+
+.item_add_settings {
+    border: none;
+    border-radius: 3rem;
+    background-color: #101010;
+    color: #FFFFFF;
+    margin-left: 5vmin;
+    padding: 1vmin;
+    cursor: pointer;
+    width: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+}
+
+.buttonAddCart {
+    cursor: pointer;
+    background: #fc466b;
+    color: #101010;
+    border-radius: 50%;
+    padding: .75vmin;
+    margin-left: 2vmin;
+    border: none;
+    transition: 1s;
+    text-align: center;
+}
+
+.item_add_settings:hover > button,
+.item_add_settings:focus > button {
+    box-shadow: inset 2em 2em #f9d4dc;
+    color: #101010;
+}
+
+.related_items_wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    background-color: #f9d4dc;
+    padding-top: 5rem;
+    padding-bottom: 4rem;
+    height: auto;
+    width: 100%;
+}
+
+.related_items_header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.related_items_header h1 {
+    width: 100%;
+    text-align: center;
+    color: #101010;
+    font-size: 2rem;
+    text-decoration: none;
+    font-weight: 800;
+}
+
+.related_items_header h4 {
+    width: 100%;
+    margin-top: 15px;
+    text-align: center;
+    color: #101010;
+    font-size: 1rem;
+    text-decoration: none;
+    font-weight: 500;
+}
