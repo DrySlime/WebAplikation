@@ -4,6 +4,9 @@
 <?php
 include_once 'header.php';
 ?>
+<?php
+$items = getAllFromCategory($conn,$_GET["name"]);
+?>
 
 <head>
     <link rel="stylesheet" href="CSS/products.css">
@@ -17,7 +20,7 @@ include_once 'header.php';
 <body>
 <div class="products_page_wrapper">
     <div class="products_page_header">
-        <h1>Schokolade</h1>
+        <h1><?php echo $_GET["name"]?></h1>
         <img src="img/cadbury.png" alt="">
     </div>
     <div class="searchbar_wrapper">
@@ -39,7 +42,9 @@ include_once 'header.php';
                 </div>
                 <div class="sidebar_options_settings">
                     <?php foreach (getCategoryList($conn) as $key => $value) { ?>
-                        <h4><?php echo $value ?></h4><?php } ?>
+                        <?php echo "
+                          <a href='products.php?name=".$value."'><h4>".$value."</h4></a>
+                        " ?><?php } ?>
                 </div>
                 <div class="sidebar_options_header">
                     <h4>Preis</h4>
@@ -62,66 +67,25 @@ include_once 'header.php';
         </div>
         <div class="products_items">
             <div class="products_grid_wrapper">
-                <div class="product_container">
-                    <div class="product_img">
-                        <img src="img/macaronProduct.png">
-                    </div>
-                    <div class="product_description">
-                        <h2>Kanker</h2>
-                        <h4>420.69€</h4>
-                    </div>
-                    <div class="product_add_to_cart">
-                        <span class="material-symbols-outlined">local_mall</span>
-                    </div>
-                </div>
-                <div class="product_container">
-                    <div class="product_img">
-                        <img src="img/macaronProduct.png">
-                    </div>
-                    <div class="product_description">
-                        <h2>Kanker</h2>
-                        <h4>420.69€</h4>
-                    </div>
-                    <div class="product_add_to_cart">
-                        <span class="material-symbols-outlined">local_mall</span>
-                    </div>
-                </div>
-                <div class="product_container">
-                    <div class="product_img">
-                        <img src="img/macaronProduct.png">
-                    </div>
-                    <div class="product_description">
-                        <h2>Kanker</h2>
-                        <h4>420.69€</h4>
-                    </div>
-                    <div class="product_add_to_cart">
-                        <span class="material-symbols-outlined">local_mall</span>
-                    </div>
-                </div>
-                <div class="product_container">
-                    <div class="product_img">
-                        <img src="img/macaronProduct.png">
-                    </div>
-                    <div class="product_description">
-                        <h2>Kanker</h2>
-                        <h4>420.69€</h4>
-                    </div>
-                    <div class="product_add_to_cart">
-                        <span class="material-symbols-outlined">local_mall</span>
-                    </div>
-                </div>
-                <div class="product_container">
-                    <div class="product_img">
-                        <img src="img/macaronProduct.png">
-                    </div>
-                    <div class="product_description">
-                        <h2>Kanker</h2>
-                        <h4>420.69€</h4>
-                    </div>
-                    <div class="product_add_to_cart">
-                        <span class="material-symbols-outlined">local_mall</span>
-                    </div>
-                </div>
+                <?php for($i=0;$i<count($items);$i++){
+                    echo'
+                        <a href="item.php?id='.$items[$i]["id"].'"><div class="product_container">
+                            <div class="product_img">
+                                <img src='.$items[$i]["product_image"].'>
+                            </div>
+                            <div class="product_description">
+                                <h2>'.$items[$i]["product_name"].'</h2>
+                                <h4>'.$items[$i]["price"].'</h4>
+                            </div>
+                            <div class="product_add_to_cart">
+                                <span class="material-symbols-outlined">local_mall</span>
+                            </div>
+                        </div></a>
+                    ';
+                }
+
+                ?>
+
             </div>
         </div>
     </div>

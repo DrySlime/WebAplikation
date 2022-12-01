@@ -219,7 +219,7 @@ function showCategoryList($conn){
 }
 
 
-function getAllFromCategory($conn,$amount,$category,$shuffle){
+function getAllFromCategory($conn,$category){
 
     //returns a 3d Array filled with items
     // id=0
@@ -247,35 +247,23 @@ function getAllFromCategory($conn,$amount,$category,$shuffle){
         return $result;
     }
 
-    if($shuffle){
-        $sql = "SELECT id FROM product WHERE product_category_id = ? ORDER BY rand() LIMIT ?;";
 
-        if(!mysqli_stmt_prepare($stmt,$sql)){
-            header("location: ../index.php?error=stmtfailed");
-            exit();
-        }
-    
-        mysqli_stmt_bind_param($stmt,"ss",$product_id,$amount);
-    }else{
-        $sql = "SELECT id FROM product WHERE product_category_id = ? LIMIT ?;";
+        $sql = "SELECT id FROM product WHERE product_category_id = ? ;";
 
-        if(!mysqli_stmt_prepare($stmt,$sql)){
+        if(!mysqli_stmt_prepare($stmt,$sql)) {
             header("location: ../index.php?error=stmtfailed");
             exit();
         }
         
-        mysqli_stmt_bind_param($stmt,"ss",$product_id,$amount);
-    }
+        mysqli_stmt_bind_param($stmt,"s",$product_id);
+
     mysqli_stmt_execute($stmt);
     
     $resultData = mysqli_stmt_get_result($stmt);
     
     
 
-    //Error handling: falls man mehr produkte ausgegeben haben will als existieren
-    if($amount>mysqli_num_rows($resultData)){
-        $amount=mysqli_num_rows($resultData);
-    }
+
 
 
     if(mysqli_num_rows($resultData)>0){
@@ -298,17 +286,17 @@ function getAllFromCategory($conn,$amount,$category,$shuffle){
         mysqli_stmt_execute($stmt);
         $resultData = mysqli_stmt_get_result($stmt);
         $row =mysqli_fetch_assoc($resultData);
-        
-        $itemAttribute[]=$row["id"];
-        $itemAttribute[]=$row["product_name"];
-        $itemAttribute[]=$row["product_image"];
-        $itemAttribute[]=$row["qty_in_stock"];
-        $itemAttribute[]=$row["price"];
-        $itemAttribute[]=$row["description"];
+
+        $itemAttribute["id"]=$row["id"];
+        $itemAttribute["product_name"]=$row["product_name"];
+        $itemAttribute["product_image"]=$row["product_image"];
+        $itemAttribute["qty_in_stock"]=$row["qty_in_stock"];
+        $itemAttribute["price"]=$row["price"];
+        $itemAttribute["description"]=$row["description"];
         $itemArr[]=$itemAttribute;
         unset($itemAttribute);
     }
-    
+
     mysqli_stmt_close($stmt);
 
 
