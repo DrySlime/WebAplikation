@@ -30,10 +30,10 @@ function showShippingMethods($conn){
 
     while ($row1 = $shippingMethods->fetch_assoc()) {
 
-        echo "<div class="."shipping_method".">";
+        echo '<a class=address href='.'check_out_overview.php?addressId='.$_GET["addressId"].'&paymentId='.$_GET["paymentId"].'&shippingId='.$row1["id"].'>';
+            echo '<p class="box-headline">Versandoption:</p>';
             showShippingMethod($row1);
-            echo '<p><a class="button" href='.'check_out_overview.php?addressId='.$_GET["addressId"].'&paymentId='.$_GET["paymentId"].'&shippingId='.$row1["id"].'>Wählen</a> </p>';
-        echo '</div>';
+        echo '</a>';
     }
     
 }
@@ -47,10 +47,14 @@ function showShippingMethods($conn){
         <link rel="stylesheet" href="../css/check_out.css">
     </head>
     <body>
-        <div class="background">
-            <h1>Wählen sie eine Versandoption: </h1>
+     <div class="background"> 
             <div class="container">
-                <?php showShippingMethods($conn); ?>
+                <div class="headline-container">
+                    <h1 class="headline">Versandoption: </h1>
+                </div>  
+                <div class="box-container">
+                    <?php showShippingMethods($conn); ?>
+                </div>  
             </div>
         </div>
     </body>

@@ -44,12 +44,10 @@ $userId = getUserIdFromUserName($conn, $userName);
         $addresses = mysqli_stmt_get_result($stmt);
 
         while ($row1 = $addresses->fetch_assoc()) {
-            echo "<div class="."address".">";
-    
+            echo '<a class=address href='.'check_out_payment.php?addressId='.$row1["id"].'>';
+                echo '<p class="box-headline">Addresse:</p>';
                 showAddress($row1);
-                echo '<p><a class="button" href='.'check_out_payment.php?addressId='.$row1["id"].'>Wählen</a> </p>';
-
-             echo '</div>';
+            echo '</a>';
             
             
         }
@@ -64,11 +62,15 @@ $userId = getUserIdFromUserName($conn, $userName);
         <link rel="stylesheet" href="../css/check_out.css">
     </head>
     <body>
-        <div class="background">
-            <h1>Bitte wählen sie die gewünschte Lieferaddresse aus!</h1>
+        <div class="background"> 
             <div class="container">
-                <?php showUserAddress($conn, getUserAdress($conn, $userId)); ?>
-            </div>  
+                <div class="headline-container">
+                    <h1 class="headline">Lieferaddresse: </h1>
+                </div>  
+                <div class="box-container">
+                    <?php showUserAddress($conn, getUserAdress($conn, $userId)); ?>
+                </div>  
+            </div>
             <p class="addBtn"><a class="link" href="href="profile.php>Neue Addresse hinzufügen</a> </p>
         </div>
 

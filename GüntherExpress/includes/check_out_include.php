@@ -12,6 +12,7 @@ function getShippingPrice($conn, $id){
 }
 
 function showAddress($address){
+
     
     echo "<p>"."Straße: ".$address["address_line1"]."</p>";
     echo "<p>"."Hausnummer: ".$address["street_number"]."</p>";

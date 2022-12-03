@@ -9,7 +9,15 @@ include_once 'includes/product_include.php';
 include_once 'includes/functions_include.php';
 
 
-$userName = $_SESSION['useruid'];
+if(isset($_SESSION['useruid'])){
+    $userName = $_SESSION['useruid'];
+}else{
+    echo "<div style="."background-color:#f9d4dc".">";
+    echo  "<p class="."confirmation".">Sie müssen sich erst <a href="."login.php".">einlogen!</a></p>";
+    echo "</div>";
+    exit();
+}
+
 $userId = getUserIdFromUserName($conn, $userName);
 
 
@@ -47,16 +55,17 @@ $items = getShoppingCartItems($conn, $userId);
 
                         echo '<div class= '.'product-info'.'>';
                         echo showShoppingCartProduct($conn, $row["product_id"], $userId);
-                        echo '<p> Menge: '.$row["qty"]." </p>";
+                        echo '<p class="product-qty-text"> Menge: '.$row["qty"]." </p>";
                         echo '<a class='.'delete-icon'.' href='.'shopping_cart.php?delete='.$row["product_id"].'>X</a>';
                         echo '</div>';
 
                     echo '</div>';
                 }
             ?>
+        </div>
 
+        <div class="button-container">
             
-
             <form action="check_out_address.php">
                     <input class="button" type="submit" value="Zur Kasse">
             </form>
@@ -65,7 +74,6 @@ $items = getShoppingCartItems($conn, $userId);
                     <input class="button" type="submit" value="Schnell Kauf">
             </form>
             <div class="end-price">  Gesamt: <br> <?php echo getShoppingCartSum($conn, $userId) ?> Euro</div>
-
         </div>
 
     </div>
@@ -73,5 +81,5 @@ $items = getShoppingCartItems($conn, $userId);
 
 
 <?php
-include_once 'footer.php';
+
 ?>

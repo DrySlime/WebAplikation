@@ -34,12 +34,10 @@ function showUserPaymentMethods($conn, $userId){
 
     while ($row1 = $paymentMethods->fetch_assoc()) {
 
-        echo "<div class="."payment_method".">";
-
+        echo '<a class=address href='.'check_out_shipping.php?addressId='.$_GET["addressId"].'&paymentId='.$row1["id"].'>';
+            echo '<p class="box-headline">Zahlunsgmethode:</p>'; 
             showPaymentMethod($conn, $row1);
-            echo '<p><a class="button" href='.'check_out_shipping.php?addressId='.$_GET["addressId"].'&paymentId='.$row1["id"].'>Wählen</a></p>';
-       
-        echo '</div>';
+        echo '</a>';
         
     }
     
@@ -56,12 +54,18 @@ function showUserPaymentMethods($conn, $userId){
         <link rel="stylesheet" href="../css/check_out.css">
     </head>
     <body>
-        <div class="background">
-            <h1>Wählen sie ihre gewünschte Zahlungsmethode aus! </h1>
+    
+        <div class="background"> 
             <div class="container">
-                <?php showUserPaymentMethods($conn, $userId); ?>
+                <div class="headline-container">
+                    <h1 class="headline">Zahlungsmethode: </h1>
+                </div>  
+                <div class="box-container">
+                    <?php showUserPaymentMethods($conn, $userId); ?>
+                </div>  
             </div>
             <p class="addBtn"><a class="link" href="profile.php">Neue Bezahlmethode hinzufügen</a></p>
         </div>
+
     </body>
 </html>

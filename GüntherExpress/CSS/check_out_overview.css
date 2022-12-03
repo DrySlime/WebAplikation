@@ -2,30 +2,60 @@
 
 .background{
     background-color: #f9d4dc;
+    padding: 50px;
 }
 
 .container{
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 10px;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.headline_container{
+}
+
+.headline{
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+}
+
+.box-container{
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 50% 50%;
+    padding-bottom: 50px;
+}
+
+.column_1{
+    justify-self: end;
+    margin-right: 10px;
+}
+
+.column_2{
+    margin-left: 10px;
 }
 
 .address, 
 .shipping, 
 .payment, 
 .price{
-
+    display: flex;
+    flex-direction: column;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 30px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     text-align: center;
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
-    border-style: none;
-    background-color: white;
-    border-radius: 30px;
-    padding-top: 25px;
-    padding-bottom: 25px;
-    margin: auto;
     margin-top: 30px;
-    height: 300px;
+    height: 350px;
     width: 600px;
+    padding-bottom: 20px;
+}
+
+p{
+    margin: 3px;
 }
 
 h1{
@@ -33,12 +63,13 @@ h1{
     text-align: center;
     padding-top: 30px;
     margin: 0;
+    margin-bottom: 50px;
 }
 
 .button{
-    background-color: #D4045F;
+    background-color: #262525;
     border-style: none;
-    border-radius: 20px;
+    border-radius: 30px;
     font-family: 'Poppins', sans-serif;
     color: white;
     padding: 10px;
@@ -46,9 +77,33 @@ h1{
     padding-right: 20px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     text-decoration: none;
+    margin-top: auto;
+    width: 200px;
+    align-self: center;
 }
 
 .button:hover{
+    background-color: #BD405B;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.buy_button{
+    background-color: #D4045F;
+    border-style: none;
+    border-radius: 30px;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    text-decoration: none;
+    margin-top: auto;
+    width: 200px;
+    align-self: center;
+}
+
+.buy_button:hover{
     background-color: #BD405B;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
