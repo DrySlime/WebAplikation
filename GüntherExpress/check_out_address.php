@@ -71,7 +71,7 @@ $userId = getUserIdFromUserName($conn, $userName);
                     <?php showUserAddress($conn, getUserAdress($conn, $userId)); ?>
                 </div>  
             </div>
-            <p class="addBtn"><a class="link" href="href="profile.php>Neue Addresse hinzufügen</a> </p>
+            <a class="addBtn link " href="href="profile.php>Neue Addresse hinzufügen</a>
         </div>
 
         
