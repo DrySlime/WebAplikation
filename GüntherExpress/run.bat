@@ -1,1 +1,1 @@
-php -S 192.168.0.101:8090 -t .
+php -S localhost:8090 -t .

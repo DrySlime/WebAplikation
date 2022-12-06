@@ -3,9 +3,19 @@
 
 <?php
 include_once 'header.php';
+include_once 'includes/products_function.php';
 ?>
 <?php
-$items = getAllFromCategory($conn, $_GET["name"]);
+if(!isset($_POST["search"])){
+    $name=$_GET["name"];
+    $items = getAllFromCategory($conn, $name);
+
+}else{
+    $name=$_POST["skrrr"];
+    $items = productsSearchbar($conn,$_POST["search"],convertCategoryNameToID($conn, $name));
+}
+
+
 ?>
 
 <head>
@@ -20,13 +30,14 @@ $items = getAllFromCategory($conn, $_GET["name"]);
 <body>
 <div class="products_page_wrapper">
     <div class="products_page_header">
-        <h1><?php echo $_GET["name"] ?></h1>
+        <h1><?php echo $name ?></h1>
         <img src="img/cadbury.png" alt="">
     </div>
     <div class="searchbar_wrapper">
-        <form action="#">
+        <form action="products.php" method="post">
             <div class="searchbar_container">
                 <input type="text" name="search" id="search" placeholder="Suchen" required>
+                <input type="text" name="skrrr" id="skrrr" value="<?php echo $name ?>" hidden>
                 <button type="submit">Suchen</button>
             </div>
         </form>
@@ -67,8 +78,10 @@ $items = getAllFromCategory($conn, $_GET["name"]);
         </div>
         <div class="products_items">
             <div class="products_grid_wrapper">
-                <?php for ($i = 0; $i < count($items); $i++) {
-                    echo '
+                <?php
+                if($items!=null){
+                    for ($i = 0; $i < count($items); $i++) {
+                        echo '
                         <div class="product_container">
                             <div class="product_img">
                             <a href="item.php?id=' . $items[$i]["id"] . '">
@@ -86,7 +99,34 @@ $items = getAllFromCategory($conn, $_GET["name"]);
                             </div>
                         </div>
                     ';
+                    }
+                }else{
+                    echo "<h3 style='color: #fc466b'>Dieses produkt ist nicht unter ".$name." bekannt!</h3>";
+
+                    $items = getAllFromCategory($conn, $name);
+
+                    for ($i = 0; $i < count($items); $i++) {
+                        echo '
+                        <div class="product_container">
+                            <div class="product_img">
+                            <a href="item.php?id=' . $items[$i]["id"] . '">
+                                <img src=' . $items[$i]["product_image"] . ' width="265px" height="200px">
+                            </a>
+                            </div>
+                            <div class="product_description">
+                                <a href="item.php?id=' . $items[$i]["id"] . '">
+                                    <h2>' . $items[$i]["product_name"] . '</h2>
+                                </a>
+                                <h4>' . $items[$i]["price"] . ' €</h4>
+                            </div>
+                            <div class="product_add_to_cart">
+                                <span class="material-symbols-outlined">local_mall</span>
+                            </div>
+                        </div>
+                    ';
+                    }
                 }
+
                 ?>
             </div>
         </div>
