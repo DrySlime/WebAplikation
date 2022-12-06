@@ -6,13 +6,16 @@ include_once 'header.php';
 include_once 'includes/products_function.php';
 ?>
 <?php
+
+
 if(!isset($_POST["search"])){
     $name=$_GET["name"];
     $items = getAllFromCategory($conn, $name);
 
-}else{
-    $name=$_POST["skrrr"];
-    $items = productsSearchbar($conn,$_POST["search"],convertCategoryNameToID($conn, $name));
+}
+else{
+    $name=$_POST["search"];
+    $items = searchProduct($conn,$_POST["search"]);
 }
 
 
@@ -37,7 +40,6 @@ if(!isset($_POST["search"])){
         <form action="products.php" method="post">
             <div class="searchbar_container">
                 <input type="text" name="search" id="search" placeholder="Suchen" required>
-                <input type="text" name="skrrr" id="skrrr" value="<?php echo $name ?>" hidden>
                 <button type="submit">Suchen</button>
             </div>
         </form>
@@ -80,6 +82,27 @@ if(!isset($_POST["search"])){
             <div class="products_grid_wrapper">
                 <?php
                 if($items!=null){
+                    for ($i = 0; $i < count($items); $i++) {
+                        echo '
+                        <div class="product_container">
+                            <div class="product_img">
+                            <a href="item.php?id=' . $items[$i]["id"] . '">
+                                <img src=' . $items[$i]["product_image"] . ' width="265px" height="200px">
+                            </a>
+                            </div>
+                            <div class="product_description">
+                                <a href="item.php?id=' . $items[$i]["id"] . '">
+                                    <h2>' . $items[$i]["product_name"] . '</h2>
+                                </a>
+                                <h4>' . $items[$i]["price"] . ' €</h4>
+                            </div>
+                            <div class="product_add_to_cart">
+                                <span class="material-symbols-outlined">local_mall</span>
+                            </div>
+                        </div>
+                    ';
+                    }
+                }else if(isset($_POST["searchIndex"])){
                     for ($i = 0; $i < count($items); $i++) {
                         echo '
                         <div class="product_container">

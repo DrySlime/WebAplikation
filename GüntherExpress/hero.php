@@ -22,7 +22,7 @@
                 </h4>
             </div>
             <div class="hero_search">
-                <form action="searchSite.php" method="post">
+                <form action="products.php" method="post">
                     <div class="searchbar_container">
                     <input type="text" name="search" id="search"  placeholder= <?php echo getRandomProductName($conn)?> required>
                         <button type="submit">Suchen</button>
