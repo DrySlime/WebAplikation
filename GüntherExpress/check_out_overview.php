@@ -25,7 +25,6 @@ $userId = getUserIdFromUserName($conn, $userName);
 
 $items = getShoppingCartItems($conn, $userId);
 
-
 ?>
 
 <body>

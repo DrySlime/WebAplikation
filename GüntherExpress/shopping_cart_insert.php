@@ -82,24 +82,28 @@ function insert_into_cart($conn, $userId, $productId, $quantaty){
 
 <body>
     <div class="background">
-        <div class="product-container">
-            <h2 class="confirmation">Folgender Gegenstand wurde <?php echo $quantaty;?> mal in den Warenkorb gelegt:</h2>
+        <div class="container">
+            <div class="product-container">
+                <h2 class="confirmation">Folgender Gegenstand wurde <?php echo $quantaty;?> mal in den Warenkorb gelegt:</h2>
 
-            <h2 class="product-name"> <?php echo $productName ?> </h2>
-            <img class="product-img" src=<?php echo $image;?>> <br>
+                <h2 class="product-name"> <?php echo $productName ?> </h2>
+                <img class="product-img" src=<?php echo $image;?>> <br>
 
+
+                
+                
+            </div>
+            
             <div class="buttons">
-                <form action="index.php">
-                    <input class="button" type="submit" value="Weiter einkaufen">
-                </form>
+                    <form action="index.php">
+                        <input class="button" type="submit" value="Weiter einkaufen">
+                    </form>
 
-                <form action="shopping_cart.php">
-                    <input class="button" type="submit" value="Zum Einkaufswagen">
-                </form>
+                    <form action="shopping_cart.php">
+                        <input class="button" type="submit" value="Zum Einkaufswagen">
+                    </form>
             </div>
         </div>
-        
-        
     </div>
     
 </body>

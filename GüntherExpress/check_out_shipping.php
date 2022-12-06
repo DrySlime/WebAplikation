@@ -17,8 +17,44 @@ if(isset($_SESSION['useruid'])){
     exit();
 }
 
+$userId = getUserIdFromUserName($conn, $userName);
+if(isset($_GET["addressId"])){
+    $addressId = $_GET["addressId"];
+    $paymentId = $_GET["paymentId"];
+}
 
-function showShippingMethods($conn){
+
+if(isset($_GET["isFastCheckOut"]) and $_GET["isFastCheckOut"] == "true"){
+
+    $sql = "SELECT * FROM user_address WHERE user_id=? AND is_default_address=?";
+    $stmt = mysqli_stmt_init($conn);
+
+    $eins = 1;
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"ss", $userId, $eins);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    $addressId = mysqli_fetch_assoc($resultData)["address_id"];
+
+    $sql = "SELECT * FROM user_payment_method WHERE user_id=? AND is_default_pay_method=?";
+    $stmt = mysqli_stmt_init($conn);
+
+    $eins = 1;
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"ss", $userId, $eins);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    $paymentId = mysqli_fetch_assoc($resultData)["id"];
+
+}
+
+function showShippingMethods($conn, $addressId, $paymentId){
  
     $sql = "SELECT * FROM shipping_method";
     $stmt = mysqli_stmt_init($conn);
@@ -30,7 +66,8 @@ function showShippingMethods($conn){
 
     while ($row1 = $shippingMethods->fetch_assoc()) {
 
-        echo '<a class=address href='.'check_out_overview.php?addressId='.$_GET["addressId"].'&paymentId='.$_GET["paymentId"].'&shippingId='.$row1["id"].'>';
+        
+        echo '<a class=address href='.'check_out_overview.php?addressId='.$addressId.'&paymentId='.$paymentId.'&shippingId='.$row1["id"].'>';
             echo '<p class="box-headline">Versandoption:</p>';
             showShippingMethod($row1);
         echo '</a>';
@@ -53,7 +90,7 @@ function showShippingMethods($conn){
                     <h1 class="headline">Versandoption: </h1>
                 </div>  
                 <div class="box-container">
-                    <?php showShippingMethods($conn); ?>
+                    <?php showShippingMethods($conn, $addressId, $paymentId); ?>
                 </div>  
             </div>
         </div>

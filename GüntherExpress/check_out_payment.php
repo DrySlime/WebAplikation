@@ -19,7 +19,6 @@ if(isset($_SESSION['useruid'])){
 
 $userId = getUserIdFromUserName($conn, $userName);
 
-
 function showUserPaymentMethods($conn, $userId){
 
     
@@ -42,8 +41,6 @@ function showUserPaymentMethods($conn, $userId){
     }
     
 }
-
-
  
 
 ?>

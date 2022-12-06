@@ -19,7 +19,9 @@ if(isset($_SESSION['useruid'])){
 
 $userId = getUserIdFromUserName($conn, $userName);
 
- function getUserAdress($conn, $userId){
+
+
+function getUserAdress($conn, $userId){
     $sql = "SELECT address_id FROM user_address WHERE user_id = ?;";
     $stmt = mysqli_stmt_init($conn);
 
@@ -29,9 +31,9 @@ $userId = getUserIdFromUserName($conn, $userName);
 
     $resultData = mysqli_stmt_get_result($stmt);
     return $resultData;
- }
+}
 
- function showUserAddress($conn, $addressIds){
+function showUserAddress($conn, $addressIds){
 
     while ($row = $addressIds->fetch_assoc()) {
         $sql = "SELECT * FROM address WHERE id = ?;";
@@ -52,7 +54,7 @@ $userId = getUserIdFromUserName($conn, $userName);
             
         }
     }
- }
+}
 
 ?>
 
