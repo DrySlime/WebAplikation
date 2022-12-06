@@ -5,7 +5,7 @@
 include_once 'header.php';
 ?>
 <?php
-$items = getAllFromCategory($conn,$_GET["name"]);
+$items = getAllFromCategory($conn, $_GET["name"]);
 ?>
 
 <head>
@@ -20,7 +20,7 @@ $items = getAllFromCategory($conn,$_GET["name"]);
 <body>
 <div class="products_page_wrapper">
     <div class="products_page_header">
-        <h1><?php echo $_GET["name"]?></h1>
+        <h1><?php echo $_GET["name"] ?></h1>
         <img src="img/cadbury.png" alt="">
     </div>
     <div class="searchbar_wrapper">
@@ -43,7 +43,7 @@ $items = getAllFromCategory($conn,$_GET["name"]);
                 <div class="sidebar_options_settings">
                     <?php foreach (getCategoryList($conn) as $key => $value) { ?>
                         <?php echo "
-                          <a href='products.php?name=".$value."'><h4>".$value."</h4></a>
+                          <a href='products.php?name=" . $value . "'><h4>" . $value . "</h4></a>
                         " ?><?php } ?>
                 </div>
                 <div class="sidebar_options_header">
@@ -67,25 +67,27 @@ $items = getAllFromCategory($conn,$_GET["name"]);
         </div>
         <div class="products_items">
             <div class="products_grid_wrapper">
-                <?php for($i=0;$i<count($items);$i++){
-                    echo'
-                        <a href="item.php?id='.$items[$i]["id"].'"><div class="product_container">
+                <?php for ($i = 0; $i < count($items); $i++) {
+                    echo '
+                        <div class="product_container">
                             <div class="product_img">
-                                <img src='.$items[$i]["product_image"].'>
+                            <a href="item.php?id=' . $items[$i]["id"] . '">
+                                <img src=' . $items[$i]["product_image"] . ' width="265px" height="200px">
+                            </a>
                             </div>
                             <div class="product_description">
-                                <h2>'.$items[$i]["product_name"].'</h2>
-                                <h4>'.$items[$i]["price"].'</h4>
+                                <a href="item.php?id=' . $items[$i]["id"] . '">
+                                    <h2>' . $items[$i]["product_name"] . '</h2>
+                                </a>
+                                <h4>' . $items[$i]["price"] . ' €</h4>
                             </div>
                             <div class="product_add_to_cart">
                                 <span class="material-symbols-outlined">local_mall</span>
                             </div>
-                        </div></a>
+                        </div>
                     ';
                 }
-
                 ?>
-
             </div>
         </div>
     </div>

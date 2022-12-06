@@ -28,8 +28,8 @@ include_once 'header.php';
             <h1>Anmelden</h1>
             <form action="includes/login_include.php" method="post">
                 <div class="form_container">
-                    <input type="text" name="username" id="username" placeholder="E-Mail/Benutzername" required>
-                    <input type="password" name="password" id="password" placeholder="Passwort" required>
+                    <input class="no-autofill-bkg" type="text" name="username" id="username" placeholder="E-Mail/Benutzername" required>
+                    <input class="no-autofill-bkg" type="password" name="password" id="password" placeholder="Passwort" required>
                     <button type="submit" name="login_button" onclick="return check_form()">Anmelden</button>
                     <div class="button_container">
                         <h4>Noch kein Account?</h4>

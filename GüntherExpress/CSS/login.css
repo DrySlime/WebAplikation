@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -116,7 +118,6 @@ body {
     width: 100%;
     text-indent: 25px;
     font-weight: 500;
-    -webkit-appearance: none;
     appearance: none;
     background: linear-gradient(#101010, #101010) center bottom 5px /calc(100% - 10px) 2px no-repeat;
     background-color: transparent;
@@ -135,6 +136,10 @@ body {
     width: 100%;
     cursor: pointer;
     transition: all 0.3s ease;
+}
+
+.form_container button:hover {
+    color: #fc466b;
 }
 
 .button_container {
