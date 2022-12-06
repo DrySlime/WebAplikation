@@ -3,6 +3,13 @@
 
 <?php
 include_once 'header.php';
+include_once "includes/item_function.php";
+include_once "includes/functions_include.php";
+$id=$_GET["id"];
+$product=getAllFromProductID($conn, $id);
+$categoryName= convertIdToCategoryName($conn,$product[0]["product_category_id"]);
+$moreProducts= getAllFromCategory($conn,$categoryName)
+
 ?>
 
 <head>
@@ -18,11 +25,11 @@ include_once 'header.php';
 <body>
 <div class="items_header_wrapper">
     <div class="items_page_header">
-        <h1>UHHHHHHHHHHH</h1>
+        <h1><?php echo $categoryName ?></h1>
         <img src="img/cadbury.png">
     </div>
     <div class="searchbar_wrapper">
-        <form action="#">
+        <form action="products.php" method="post">
             <div class="searchbar_container">
                 <input type="text" name="search" id="search" placeholder="Suchen" required>
                 <button type="submit">Suchen</button>
@@ -33,17 +40,17 @@ include_once 'header.php';
 <div class="item_wrapper">
     <div class="item_section_left">
         <div class="item_image_container">
-            <img src="img/oreo.png">
+            <img src=<?php echo $product[0]["product_image"] ?>>
         </div>
     </div>
     <div class="item_section_right">
         <div class="item_data_wrapper">
             <div class="item_data_container">
                 <div class="item_data_category">
-                    <h4>Schokolade</h4>
+                    <h4><?php echo $categoryName ?></h4>
                 </div>
                 <div class="item_data_name">
-                    <h3>Kanker</h3>
+                    <h3><?php echo $product[0]["product_name"] ?></h3>
                 </div>
                 <div class="item_data_rating">
                     <h4>Bewertungen</h4>
@@ -56,14 +63,10 @@ include_once 'header.php';
                     </div>
                 </div>
                 <div class="item_data_description">
-                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
-                        ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
-                        dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor
-                        sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-                        invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+                    <p><?php echo $product[0]["description"] ?></p>
                 </div>
                 <div class="item_data_price">
-                    <h4>420.69 €</h4>
+                    <h4><?php echo $product[0]["price"] ?>€</h4>
                 </div>
                 <div class="item_data_settings">
                     <div class="item_amount_settings">
@@ -90,31 +93,19 @@ include_once 'header.php';
     </div>
     <div class="swiper">
         <div class="swiper-wrapper">
-            <div class='swiper-slide'>
-                <div class='image_wrapper'>
-                    <a href=item.php?id=""><img src="img/oreo.png"></a>
-                </div>
-            </div>
-            <div class='swiper-slide'>
-                <div class='image_wrapper'>
-                    <a href=item.php?id=""><img src="img/oreo.png"></a>
-                </div>
-            </div>
-            <div class='swiper-slide'>
-                <div class='image_wrapper'>
-                    <a href=item.php?id=""><img src="img/oreo.png"></a>
-                </div>
-            </div>
-            <div class='swiper-slide'>
-                <div class='image_wrapper'>
-                    <a href=item.php?id=""><img src="img/oreo.png"></a>
-                </div>
-            </div>
-            <div class='swiper-slide'>
-                <div class='image_wrapper'>
-                    <a href=item.php?id=""><img src="img/oreo.png"></a>
-                </div>
-            </div>
+            <?php
+             for($i=0;$i<count($moreProducts);$i++){
+                 echo "
+                    <div class='swiper-slide'>
+                        <div class='image_wrapper'>
+                            <a href='item.php?id=".$moreProducts[$i]["id"]."'><img src=".$moreProducts[$i]["product_image"]."></a>
+                        </div>
+                    </div>
+                 ";
+
+             }
+            ?>
+
         </div>
         <div class="swiper-pagination"></div>
         <div class="swiper-button-prev"></div>

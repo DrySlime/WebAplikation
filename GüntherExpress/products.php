@@ -102,52 +102,9 @@ else{
                         </div>
                     ';
                     }
-                }else if(isset($_POST["searchIndex"])){
-                    for ($i = 0; $i < count($items); $i++) {
-                        echo '
-                        <div class="product_container">
-                            <div class="product_img">
-                            <a href="item.php?id=' . $items[$i]["id"] . '">
-                                <img src=' . $items[$i]["product_image"] . ' width="265px" height="200px">
-                            </a>
-                            </div>
-                            <div class="product_description">
-                                <a href="item.php?id=' . $items[$i]["id"] . '">
-                                    <h2>' . $items[$i]["product_name"] . '</h2>
-                                </a>
-                                <h4>' . $items[$i]["price"] . ' €</h4>
-                            </div>
-                            <div class="product_add_to_cart">
-                                <span class="material-symbols-outlined">local_mall</span>
-                            </div>
-                        </div>
-                    ';
-                    }
                 }else{
-                    echo "<h3 style='color: #fc466b'>Dieses produkt ist nicht unter ".$name." bekannt!</h3>";
+                    echo "<h3 style='color: #fc466b'>Dieses produkt ist nicht bekannt!</h3>";
 
-                    $items = getAllFromCategory($conn, $name);
-
-                    for ($i = 0; $i < count($items); $i++) {
-                        echo '
-                        <div class="product_container">
-                            <div class="product_img">
-                            <a href="item.php?id=' . $items[$i]["id"] . '">
-                                <img src=' . $items[$i]["product_image"] . ' width="265px" height="200px">
-                            </a>
-                            </div>
-                            <div class="product_description">
-                                <a href="item.php?id=' . $items[$i]["id"] . '">
-                                    <h2>' . $items[$i]["product_name"] . '</h2>
-                                </a>
-                                <h4>' . $items[$i]["price"] . ' €</h4>
-                            </div>
-                            <div class="product_add_to_cart">
-                                <span class="material-symbols-outlined">local_mall</span>
-                            </div>
-                        </div>
-                    ';
-                    }
                 }
 
                 ?>

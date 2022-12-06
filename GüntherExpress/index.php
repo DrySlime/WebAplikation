@@ -38,7 +38,7 @@ require_once "includes/review_functions.php";
                             <div class='swiper-slide'>
                                 
                                 <div class='image_wrapper'>
-                                    <a href=product.php?id=" . $newItems[$i]["id"] . ">
+                                    <a href=item.php?id=" . $newItems[$i]["id"] . ">
                                         <img src=" . $newItems[$i]["product_image"] . ">
                                     </a>
                                 </div>
@@ -71,7 +71,7 @@ require_once "includes/review_functions.php";
                 echo "                        
                             <div class='swiper-slide'>
                                 <div class='image_wrapper'>
-                                    <a href=product.php?id=" . $arr[$i] . ">
+                                    <a href=item.php?id=" . $arr[$i] . ">
                                         <img src=" . getImage($conn, $arr[$i]) . ">
                                     </a>
                                 </div>
