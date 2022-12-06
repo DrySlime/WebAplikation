@@ -5,10 +5,12 @@
 include_once 'header.php';
 include_once "includes/item_function.php";
 include_once "includes/functions_include.php";
+include_once "includes/review_functions.php";
 $id=$_GET["id"];
 $product=getAllFromProductID($conn, $id);
 $categoryName= convertIdToCategoryName($conn,$product[0]["product_category_id"]);
-$moreProducts= getAllFromCategory($conn,$categoryName)
+$moreProducts= getAllFromCategory($conn,$categoryName);
+$stars=getAvrgRating($conn,$product[0]["id"]);
 
 ?>
 
@@ -54,12 +56,19 @@ $moreProducts= getAllFromCategory($conn,$categoryName)
                 </div>
                 <div class="item_data_rating">
                     <h4>Bewertungen</h4>
+
                     <div class="item_rating_stars">
-                        <span class="material-symbols-outlined checked" id="star1">star</span>
-                        <span class="material-symbols-outlined checked" id="star2">star</span>
-                        <span class="material-symbols-outlined checked" id="star3">star</span>
-                        <span class="material-symbols-outlined" id="star4">star</span>
-                        <span class="material-symbols-outlined" id="star5">star</span>
+                        <?php
+                            for($i=0;$i<5;$i++){
+                                if($i<round($stars)){
+                                    echo '<span class="material-symbols-outlined checked" id="star'.$i.'">star</span>';
+                                }else{
+                                    echo '<span class="material-symbols-outlined" id="star'.$i.'">star</span>';
+                                }
+                            }
+                            echo "<span> ".$stars." Sterne </span>";
+                        ?>
+
                     </div>
                 </div>
                 <div class="item_data_description">

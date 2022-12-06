@@ -64,7 +64,7 @@ function getReviewableProducts($conn, $uid)
     #returns an array which contains a product id and a orderline_id of all the products a user can review
 
 
-    $sql = "SELECT id FROM shop_order WHERE user_id =?;";
+    $sql = "SELECT id FROM shop_order WHERE siteuser_id =?;";
     $stmt = mysqli_stmt_init($conn);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -150,10 +150,10 @@ function getProductReview($conn, $amount, $sortBy, $productID)
     if ($orderLine != null) {
         for ($i = 0; $i < count($orderLine); $i++) {
             if ($sortBy == 1) {
-                $sql = "SELECT comment, rating_value, user_id FROM user_review WHERE ordered_product_id =? ORDER BY rating_value ASC LIMIT $amount;";
+                $sql = "SELECT comment, rating_value, siteuser_id FROM user_review WHERE ordered_product_id =? ORDER BY rating_value ASC LIMIT $amount;";
 
             } else if ($sortBy == 2) {
-                $sql = "SELECT comment, rating_value, user_id FROM user_review WHERE ordered_product_id =? ORDER BY rating_value DESC LIMIT $amount ;";
+                $sql = "SELECT comment, rating_value, siteuser_id FROM user_review WHERE ordered_product_id =? ORDER BY rating_value DESC LIMIT $amount ;";
 
             }
             $stmt = mysqli_stmt_init($conn);
