@@ -31,6 +31,9 @@ include_once 'header.php';
                 <div class="form_container">
                     <label for="username"></label><input class="no-autofill-bkg" type="text" name="username" id="username" placeholder="E-Mail/Benutzername" required>
                     <label for="password"></label><input class="no-autofill-bkg" type="password" name="password" id="password" placeholder="Passwort" required>
+                    <?php if($_GET["error"]=="wronginput"){
+                        echo "<h3 style='color: #ff0736'>Anmeldedaten stimmen nicht überein!</h3>";
+                    } ?>
                     <button type="submit" name="login_button" onclick="return check_form()">Anmelden</button>
                     <div class="button_container">
                         <h4>Noch kein Account?</h4>
