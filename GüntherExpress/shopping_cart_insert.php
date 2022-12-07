@@ -3,8 +3,8 @@ include_once 'header.php';
 include 'includes/dbh_include.php';
 include 'includes/functions_include.php';
 
-
-$userName;
+global $conn;
+global $userName;
 
 if(isset($_SESSION['useruid'])){
     $userName = $_SESSION['useruid'];
@@ -76,7 +76,7 @@ function insert_into_cart($conn, $userId, $productId, $quantaty){
 <h2>Folgender Gegenstand wurde <?php echo $quantaty;?> mal in den Warenkorb gelegt:</h2>
 
 <h2> <?php echo $productName ?> </h2>
-<img src=<?php echo $image;?>> <br>
+<img src="<?php echo $image;?>" alt=""> <br>
 
 <form action="index.php">
     <input type="submit" value="Weiter einkaufen">

@@ -9,9 +9,10 @@ include_once 'header.php';
     <link rel="stylesheet" href="CSS/login.css">
     <meta charset="UTF-8" http-equiv="X-UA-Compatible" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0"/>
+    <title></title>
 </head>
 
 <body>
@@ -28,12 +29,12 @@ include_once 'header.php';
                 <h1>Registrieren</h1>
                 <form action="includes/signup_include.php" method="post">
                     <div class="form_container">
-                        <input type="text" name="username" id="username" placeholder="Benutzername" required>
-                        <input type="text" name="name" id="name" placeholder="Vorname" required>
-                        <input type="text" name="surname" id="surname" placeholder="Nachname" required>
-                        <input type="text" name="email" id="email" placeholder="Email" required>
-                        <input type="password" name="password" id="password" placeholder="Passwort" required>
-                        <input type="password" name="passwordrepeat" id="passwordrepeat" placeholder="Passwort Wiederholen"required>
+                        <label for="username"></label><input type="text" name="username" id="username" placeholder="Benutzername" required>
+                        <label for="name"></label><input type="text" name="name" id="name" placeholder="Vorname" required>
+                        <label for="surname"></label><input type="text" name="surname" id="surname" placeholder="Nachname" required>
+                        <label for="email"></label><input type="text" name="email" id="email" placeholder="Email" required>
+                        <label for="password"></label><input type="password" name="password" id="password" placeholder="Passwort" required>
+                        <label for="passwordrepeat"></label><input type="password" name="passwordrepeat" id="passwordrepeat" placeholder="Passwort Wiederholen" required>
                         <button type="submit" name="register_button" >Registieren</button>
                         <div class="button_container">
                             <h4>Du hast schon ein Account?</h4>

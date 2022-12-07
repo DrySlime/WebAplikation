@@ -18,6 +18,7 @@ if (!isset($_SESSION["useruid"])) {
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+    <title></title>
 </head>
 
 <body id="body">
@@ -28,7 +29,7 @@ if (!isset($_SESSION["useruid"])) {
         <h4>Willkommen zurück beim Confectioner!</h4>
     </div>
     <div class="account_header_image">
-        <img src="img/cookies.png">
+        <img src="img/cookies.png" alt="">
     </div>
     <div class="account_header_logout">
         <a id="logout" class="logout_button" href="includes/logout_include.php">Abmelden</a>
@@ -47,18 +48,18 @@ if (!isset($_SESSION["useruid"])) {
                 </div>
                 <div class="account_dash_wrapper">
                     <form id="changeAccount" action="#" method="post">
-                        <input type="text" name="username" id="username" value="Mtuart"
-                               placeholder="Benutzername">
+                        <label for="username"></label><input type="text" name="username" id="username" value="Mtuart"
+                                                             placeholder="Benutzername">
                         <div class="account_double_container">
-                            <input type="text" name="" id="name" value="Stuart" placeholder="Vorname">
-                            <input type="text" name="surname" id="surname" value="Eichler" placeholder="Nachname">
+                            <label for="name"></label><input type="text" name="" id="name" value="Stuart" placeholder="Vorname">
+                            <label for="surname"></label><input type="text" name="surname" id="surname" value="Eichler" placeholder="Nachname">
                         </div>
-                        <input type="text" name="email" id="email" value="stuart.eichler@stud.hshl.de"
-                               placeholder="Email">
+                        <label for="email"></label><input type="text" name="email" id="email" value="stuart.eichler@stud.hshl.de"
+                                                          placeholder="Email">
                         <div class="account_double_container">
-                            <input type="password" name="newpassword" id="newpassword" placeholder="Neues Passwort">
-                            <input required type="password" name="oldpassword" id="oldpassword"
-                                   placeholder="Altes Passwort">
+                            <label for="newpassword"></label><input type="password" name="newpassword" id="newpassword" placeholder="Neues Passwort">
+                            <label for="oldpassword"></label><input required type="password" name="oldpassword" id="oldpassword"
+                                                                    placeholder="Altes Passwort">
                         </div>
                         <div class="account_error_container">
                             <h4>Print submit response here!</h4>
@@ -94,7 +95,7 @@ if (!isset($_SESSION["useruid"])) {
                 </div>
                 <div class="purchases_wrapper">
                     <div class="grid_item">
-                        <a href="#"><img src="img/macaronProduct.png"></a>
+                        <a href="#"><img src="img/macaronProduct.png" alt=""></a>
                     </div>
                     <div class="grid_item grid_description">
                         <h3>Macaron Box</h3>
@@ -156,8 +157,8 @@ if (!isset($_SESSION["useruid"])) {
         </div>
         <div class="modal_input">
             <form id="deleteAccount" action="#" method="post">
-                <input required type="text" name="delemail" id="delemail" placeholder="Email">
-                <input required type="password" name="delpassword" id="delpassword" placeholder="Passwort">
+                <label for="delemail"></label><input required type="text" name="delemail" id="delemail" placeholder="Email">
+                <label for="delpassword"></label><input required type="password" name="delpassword" id="delpassword" placeholder="Passwort">
             </form>
         </div>
         <div class="modal_buttons">

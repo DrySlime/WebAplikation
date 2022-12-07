@@ -1,6 +1,6 @@
 <?php
 if(isset($_POST["send_form"])){
-
+    global $conn;
     $categoryID = $_POST['category_id'];
     $name = $_POST['product_name'];
     $description = $_POST['description'];

@@ -87,7 +87,7 @@ function getAllUser($conn)
     return $allItems;
 }
 function getAdressFromUserID($conn,$userID){
-    #returns an array filled with adress information from a $userid
+    #returns an array filled with adress information from an $userid
     $allItems=null;
     $sql = "SELECT * FROM address WHERE id=(SELECT address_id FROM user_address WHERE user_id=?);";
     $stmt = mysqli_stmt_init($conn);
@@ -114,6 +114,8 @@ function getAdressFromUserID($conn,$userID){
 }
 function getAllOrderedProductsFromOrderID($conn, $orderID)
 {
+    #returns an array with all inforamtion about an $orderID
+
     $allItems=null;
     $sql = "SELECT * FROM shop_order WHERE id=? ORDER BY order_date DESC ;";
     $stmt = mysqli_stmt_init($conn);
@@ -146,6 +148,8 @@ function getAllOrderedProductsFromOrderID($conn, $orderID)
 
 }
 function getUsername($conn,$userID){
+    #get the username from an $userID
+
     $sql = "SELECT user_uid FROM site_user WHERE id=? ;";
     $stmt = mysqli_stmt_init($conn);
 
@@ -166,6 +170,8 @@ function getUsername($conn,$userID){
     return $username;
 }
 function getPaymentMethod($conn,$paymentmethodID){
+    #returns a String value of a $paymentmethodID
+
     $sql = "SELECT value FROM payment_type WHERE id=? ;";
     $stmt = mysqli_stmt_init($conn);
 
@@ -186,6 +192,8 @@ function getPaymentMethod($conn,$paymentmethodID){
     return $paymentmethod;
 }
 function getShippingAdress($conn,$id){
+    #returns all information about the address from its corresponding $id
+
     $sql = "SELECT * FROM address WHERE id=? ;";
     $stmt = mysqli_stmt_init($conn);
 
@@ -206,6 +214,8 @@ function getShippingAdress($conn,$id){
     return $shippingadress;
 }
 function getShippingMethod($conn,$id){
+    #returns the shipping name corresponding to its id
+
     $sql = "SELECT shipping_name FROM shipping_method WHERE id=? ;";
     $stmt = mysqli_stmt_init($conn);
 
@@ -226,6 +236,8 @@ function getShippingMethod($conn,$id){
     return $shippingname;
 }
 function getOrderStatus($conn,$id){
+    #returns the String status of its corresponding id
+
     $sql = "SELECT status FROM order_status WHERE id=? ;";
     $stmt = mysqli_stmt_init($conn);
 
@@ -246,6 +258,8 @@ function getOrderStatus($conn,$id){
     return $shippingname;
 }
 function getOrderLine($conn,$id){
+    #returns all required information about an orderline to its corresponding id
+
     $sql = "SELECT product_item_id, qty, price FROM order_line WHERE order_id=? ;";
     $stmt = mysqli_stmt_init($conn);
 
@@ -268,6 +282,8 @@ function getOrderLine($conn,$id){
     return $productArr;
 }
 function getAllOrderStatus($conn){
+    #returns all possible order status and their IDs
+
     $statusArr=null;
 
     $sql = "SELECT * FROM order_status ;";
@@ -291,6 +307,7 @@ function getAllOrderStatus($conn){
 }
 function getProductName($conn,$id){
     #returns the productname from a productID
+
     $sql = "SELECT product_name FROM product WHERE id=? ;";
     $stmt = mysqli_stmt_init($conn);
 
@@ -348,6 +365,8 @@ function orderlineToTEXT($conn,$order){
      return $string;
 }
 function getAllCategories($conn,){
+    #returns all necessary information of all categories
+
     $sql = "SELECT id, category_name, parent_category_id FROM product_category ";
     $stmt = mysqli_stmt_init($conn);
 
@@ -402,6 +421,8 @@ function getAllSales($conn){
 }
 
 function getAllProducts($conn){
+    #returns all information of all products in an array
+
     $productArr=null;
     $sql = "SELECT * FROM product ";
     $stmt = mysqli_stmt_init($conn);

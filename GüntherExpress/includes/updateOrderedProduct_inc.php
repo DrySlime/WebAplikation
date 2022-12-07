@@ -1,6 +1,6 @@
 <?php
 include_once "dbh_include.php";
-
+global $conn;
 $orderID=$_POST["orderID"];
 $statusID=$_POST["statusID"];
 

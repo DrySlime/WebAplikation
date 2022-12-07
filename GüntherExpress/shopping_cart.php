@@ -3,7 +3,7 @@ include_once 'header.php';
 include_once 'includes/dbh_include.php';
 include_once 'includes/product_include.php';
 include_once 'includes/functions_include.php';
-
+global $conn;
 
 $userName = $_SESSION['useruid'];
 $userId = getUserIdFromUserName($conn, $userName);
@@ -28,7 +28,7 @@ echo "<h1>Warenkorb:</h1>";
 
 while ($row = $items->fetch_assoc()) {
     echo '<div>';
-    echo showProduct($conn, $row["product_id"]);
+    showProduct($conn, $row["product_id"]);
     echo 'Menge: '.$row["qty"];
     echo "<br>";
     echo "<a href="."shopping_cart.php?delete=".$row["product_id"].">Löschen</a>";

@@ -2,6 +2,8 @@
 include_once "includes/admin_functions_inc.php";
 include_once "includes/dbh_include.php";
 include_once "header.php";
+
+global $conn;
 ?>
 <br><br><br>
 <?php
@@ -14,12 +16,15 @@ if (isset($_GET["error"])){
 ?>
 <head>
     <link rel="stylesheet" href="CSS/category_admin.css">
+    <title></title>
 </head>
 <body>
 <h1>Erstelle eine neue Kategorie:</h1>
     <form action="includes/createCategory_inc.php" method="post">
-        Category Name: <input type="text" name="title"  placeholder="Category Title" required><br>
-        Parent Category: <select id="cars" name="parentID" size="4" required>
+        Category Name: <label>
+            <input type="text" name="title"  placeholder="Category Title" required>
+        </label><br>
+        Parent Category: <label for="cars"></label><select id="cars" name="parentID" size="4" required>
             <?php
             $cateArr=getAllCategories($conn);
             var_dump($cateArr);
@@ -88,7 +93,7 @@ if (isset($_GET["change"])){
                 echo "
                                     <option value=".$cateArr[$i]["id"].">".$cateArr[$i]["category_name"]."</option>
                                 ";
-            };
+            }
             echo '
                     </select><br>
                     <input type="text" name="id"  value='.$_GET["id"].' hidden>
@@ -104,4 +109,3 @@ if (isset($_GET["change"])){
 }
 
 ?>
-</div>

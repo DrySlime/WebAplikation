@@ -5,11 +5,13 @@
 include_once 'header.php';
 include_once "includes/item_function.php";
 include_once "includes/functions_include.php";
-include_once "includes/review_functions.php";
+include_once  "includes/review_functions.php";
+global $conn;
+
 $id=$_GET["id"];
 $product=getAllFromProductID($conn, $id);
 $categoryName= convertIdToCategoryName($conn,$product[0]["product_category_id"]);
-$moreProducts= getAllFromCategory($conn,$categoryName);
+$moreProducts= getAllFromCategory($conn,$categoryName, 10);
 $stars=getAvrgRating($conn,$product[0]["id"]);
 
 ?>
@@ -22,18 +24,19 @@ $stars=getAvrgRating($conn,$product[0]["id"]);
     <meta charset="UTF-8" http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
+    <title></title>
 </head>
 
 <body>
 <div class="items_header_wrapper">
     <div class="items_page_header">
         <h1><?php echo $categoryName ?></h1>
-        <img src="img/cadbury.png">
+        <img src="img/cadbury.png" alt="">
     </div>
     <div class="searchbar_wrapper">
         <form action="products.php" method="post">
             <div class="searchbar_container">
-                <input type="text" name="search" id="search" placeholder="Suchen" required>
+                <label for="search"></label><input type="text" name="search" id="search" placeholder="Suchen" required>
                 <button type="submit">Suchen</button>
             </div>
         </form>
@@ -42,7 +45,7 @@ $stars=getAvrgRating($conn,$product[0]["id"]);
 <div class="item_wrapper">
     <div class="item_section_left">
         <div class="item_image_container">
-            <img src=<?php echo $product[0]["product_image"] ?>>
+            <img src="<?php echo $product[0]["product_image"] ?>" alt="" >
         </div>
     </div>
     <div class="item_section_right">
@@ -107,7 +110,7 @@ $stars=getAvrgRating($conn,$product[0]["id"]);
                  echo "
                     <div class='swiper-slide'>
                         <div class='image_wrapper'>
-                            <a href='item.php?id=".$moreProducts[$i]["id"]."'><img src=".$moreProducts[$i]["product_image"]."></a>
+                            <a href='item.php?id=".$moreProducts[$i]["id"]."'><img src=".$moreProducts[$i]["product_image"]." alt=''></a>
                         </div>
                     </div>
                  ";

@@ -1,7 +1,7 @@
 <?php
 
 if(isset($_POST["register_button"])){
-
+    global $conn;
     $email = $_POST['email'];
     $password = $_POST['password'];
     $passwordRepeat = $_POST['passwordrepeat'];

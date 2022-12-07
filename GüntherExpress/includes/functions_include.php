@@ -221,8 +221,39 @@ function showCategoryList($conn){
 
 }
 
+function totalAmount($conn,$categoryName){
+    $product_id= "SELECT id FROM product_category WHERE category_name = ? ;";
+    $stmt = mysqli_stmt_init($conn);
 
-function getAllFromCategory($conn,$category){
+    if(!mysqli_stmt_prepare($stmt,$product_id)){
+        header("location: ../index.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt,"s", $categoryName);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    if($row = mysqli_fetch_assoc($resultData)){
+        $categoryID=$row["id"];
+    }
+
+    $product_id= "SELECT COUNT(*) as total FROM product WHERE product_category_id = ? ;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$product_id)){
+        header("location: ../index.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt,"s", $categoryID);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    if($row = mysqli_fetch_assoc($resultData)){
+        $totalamount=$row["total"];
+    }
+    return $totalamount;
+}
+function getAllFromCategory($conn,$category,$amount){
 
     //returns a 3d Array filled with items
     // id=0
@@ -232,14 +263,14 @@ function getAllFromCategory($conn,$category){
     // price=4
     // description=5
     // Example: get image of the first item $itemArr[0][2];
-    $product_id= "SELECT id FROM product_category WHERE category_name = ?;";
+    $product_id= "SELECT id FROM product_category WHERE category_name = ? ORDER BY RAND() LIMIT ? ;";
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt,$product_id)){
         header("location: ../index.php?error=stmtfailed");
         exit();
     }
-    mysqli_stmt_bind_param($stmt,"s", $category);
+    mysqli_stmt_bind_param($stmt,"ss", $category,$amount);
     mysqli_stmt_execute($stmt);
 
     $resultData = mysqli_stmt_get_result($stmt);
@@ -810,10 +841,6 @@ function updateSale($conn,$categoryID,$title,$description,$discount,$startDate,$
     mysqli_stmt_execute($stmt);
 
     mysqli_stmt_close($stmt);
-
-    header("location: ../sale_admin.php?error=none");
-    exit();
-
 
     header("location: ../sale_admin.php?error=none");
     exit();

@@ -5,13 +5,14 @@
 include_once 'header.php';
 include_once 'hero.php';
 require_once "includes/review_functions.php";
+global $conn;
 ?>
 
 <head>
 
     <link rel="stylesheet" href="CSS/index.css">
     <link rel="stylesheet" href="CSS/swiper.css">
-    <meta charset="UTF-8" http-equiv="X-UA-Compatible" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
     <link rel="stylesheet"
@@ -39,7 +40,7 @@ require_once "includes/review_functions.php";
                                 
                                 <div class='image_wrapper'>
                                     <a href=item.php?id=" . $newItems[$i]["id"] . ">
-                                        <img src=" . $newItems[$i]["product_image"] . ">
+                                        <img src=" . $newItems[$i]["product_image"] . " alt=''>
                                     </a>
                                 </div>
                                 
@@ -66,13 +67,14 @@ require_once "includes/review_functions.php";
             <?php
 
 
-            $arr = getBestRatedProducts($conn, 9);
+            $arr = getBestRatedProducts($conn, 5);
+
             for ($i = 0; $i < count($arr); $i++) {
                 echo "                        
                             <div class='swiper-slide'>
                                 <div class='image_wrapper'>
                                     <a href=item.php?id=" . $arr[$i] . ">
-                                        <img src=" . getImage($conn, $arr[$i]) . ">
+                                        <img src=" . getImage($conn, $arr[$i]) . " alt=''>
                                     </a>
                                 </div>
                             </div>                                         
@@ -85,6 +87,7 @@ require_once "includes/review_functions.php";
         <div class="swiper-button-next"></div>
     </div>
 </div>
+
 
 <script type="module">
     import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.esm.browser.min.js'

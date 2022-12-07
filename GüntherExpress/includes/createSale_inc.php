@@ -1,7 +1,7 @@
 <?php
 
 if(isset($_POST["send_form"])){
-
+    global $conn;
     $categoryID = $_POST['category_id'];
     $title = $_POST['title'];
     $description = $_POST['description'];

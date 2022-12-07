@@ -30,7 +30,7 @@ function showProduct($conn, $productID){
     '<h2>'  .$name.  '</h2>
      <div>'  .$description.  '</div> <br>
      <div>'  .$price.  'Euro</div>
-     <img src='  .$image.'> <br>';
+     <img src='  .$image.' alt="imigi"> <br>';
 
 }
 

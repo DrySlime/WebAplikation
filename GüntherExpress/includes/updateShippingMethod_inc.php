@@ -4,8 +4,8 @@ if(isset($_POST["send_form"])){
     $name = $_POST['name'];
     $price = $_POST['price'];
     $methodID = $_POST['methodID'];
-    
 
+    global $conn;
     //Error-Handling
     require_once 'dbh_include.php';
     require_once 'functions_include.php';

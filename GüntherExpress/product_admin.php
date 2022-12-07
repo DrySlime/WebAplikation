@@ -1,17 +1,18 @@
 <?php
     include_once "header.php";
     require_once "includes/admin_functions_inc.php";
-
+    global $conn;
     $categories=getAllCategories($conn);
 ?>
 <head>
     <link rel="stylesheet" href="CSS/sale_admin.css">
+    <title></title>
 </head>
     <div><br><br><br><br></div>
 <h1>Create a PRODUCT</h1>
 <form action="includes/createProduct_inc.php" method="post">
     <label for="category">Choose a category:</label>
-    <select id="cars" name="category_id" size="4" required>
+    <label for="cars"></label><select id="cars" name="category_id" size="4" required>
         <?php
             for ($i=0;$i<count($categories);$i++){
                 echo "
@@ -21,11 +22,21 @@
         ?>
 
     </select><br>
-    Name: <input type="text" name="name"  placeholder="Product Name" required><br>
-    Product Image: <input type="text" name="pImage" required>
-    Description: <textarea name="description" placeholder="Description" rows="1" cols="60" required></textarea><br>
-    Price: <input type="text" name="price" placeholder="Price" required><br>
-    Amount in Stock: <input type="number" name="inStock"  required><br>
+    Name: <label>
+        <input type="text" name="name"  placeholder="Product Name" required>
+    </label><br>
+    Product Image: <label>
+        <input type="text" name="pImage" required>
+    </label>
+    Description: <label>
+        <textarea name="description" placeholder="Description" rows="1" cols="60" required></textarea>
+    </label><br>
+    Price: <label>
+        <input type="text" name="price" placeholder="Price" required>
+    </label><br>
+    Amount in Stock: <label>
+        <input type="number" name="inStock"  required>
+    </label><br>
 
     <input type="submit" name="send_form">
 
@@ -121,4 +132,3 @@ if (isset($_GET["change"])){
 }
 
 ?>
-</div>

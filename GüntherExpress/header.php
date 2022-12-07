@@ -4,6 +4,7 @@
 <?php
 include 'includes/dbh_include.php';
 include 'includes/functions_include.php';
+global $conn;
 session_start();
 ?>
 
@@ -31,7 +32,7 @@ session_start();
                             <button onclick="showCategories()" class="dropbtn">Kategorien<i class="material-symbols-outlined" style="pointer-events: none;">expand_more</i></button>
                             <div id="navbarDropdown" class="dropdown_content">
                                 <?php foreach (getCategoryList($conn) as $key => $value) { ?>
-                                <a href=<?php echo "category.php?name=".$value?>><?php echo $value ?></a><?php } ?>
+                                <a href=<?php echo "products.php?name=".$value?>><?php echo $value ?></a><?php } ?>
                                 
                             </div>
                         </div>

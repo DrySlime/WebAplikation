@@ -1,10 +1,11 @@
 <?php
     require_once "header.php";
-
     require_once "includes/admin_functions_inc.php";
+    global $conn;
 ?>
 <head>
     <link rel="stylesheet" href="CSS/orderedProducts.css">
+    <title></title>
 
 </head>
 <body>
@@ -12,7 +13,9 @@
 
 <div class="orderedProductList">
     <form action="orderedProducts_admin.php" method="post">
-        <input type="text" name="search" placeholder="Order ID" required>
+        <label>
+            <input type="text" name="search" placeholder="Order ID" required>
+        </label>
         <button type="submit">Suche</button>
 
     </form><a href="orderedProducts_admin.php"><button formnovalidate>Reset</button></a>
@@ -109,7 +112,6 @@ $amount = 3;
     }
     
     ?>
-</table>
 <?php
 $status=getAllOrderStatus($conn);
 

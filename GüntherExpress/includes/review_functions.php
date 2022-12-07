@@ -27,8 +27,8 @@ function getAvrgRating($conn, $productID)
     }
     mysqli_stmt_close($stmt);
 
+    if ($orderLine!= null){
 
-    if ($orderLine != null) {
         for ($i = 0; $i < count($orderLine); $i++) {
             $sql = "SELECT rating_value FROM user_review WHERE ordered_product_id =?;";
             $stmt = mysqli_stmt_init($conn);
@@ -42,8 +42,13 @@ function getAvrgRating($conn, $productID)
             mysqli_stmt_execute($stmt);
             $resultData = mysqli_stmt_get_result($stmt);
 
-            $row = mysqli_fetch_assoc($resultData);
-            $ratingArr[] = $row["rating_value"];
+            if($row = mysqli_fetch_assoc($resultData)){
+                $ratingArr[] = $row["rating_value"];
+            }else{
+                $ratingArr[]=0;
+            }
+
+
         }
 
         foreach ($ratingArr as $singleRating) {
@@ -150,7 +155,7 @@ function getProductReview($conn, $amount, $sortBy, $productID)
     if ($orderLine != null) {
         for ($i = 0; $i < count($orderLine); $i++) {
             if ($sortBy == 1) {
-                $sql = "SELECT comment, rating_value, siteuser_id FROM user_review WHERE ordered_product_id =? ORDER BY rating_value ASC LIMIT $amount;";
+                $sql = "SELECT comment, rating_value, siteuser_id FROM user_review WHERE ordered_product_id =? ORDER BY rating_value LIMIT $amount;";
 
             } else if ($sortBy == 2) {
                 $sql = "SELECT comment, rating_value, siteuser_id FROM user_review WHERE ordered_product_id =? ORDER BY rating_value DESC LIMIT $amount ;";
@@ -180,9 +185,9 @@ function getProductReview($conn, $amount, $sortBy, $productID)
                 $nutzer = null;
             }
         }
-        return $nutzer;
-    }
 
+    }
+    return $nutzer;
 }
 
 function getUsername($conn, $userID)
@@ -199,8 +204,8 @@ function getUsername($conn, $userID)
     if (mysqli_num_rows($resultData) > 0) {
         $row = mysqli_fetch_assoc($resultData);
         $username = $row["user_uid"];
-        return $username;
-    }
+
+    }return $username;
 }
 
 function getNewestProducts($conn, $amount)
@@ -226,8 +231,8 @@ function getNewestProducts($conn, $amount)
             unset($product);
         }
 
-        return $productArr;
-    }
+
+    }return $productArr;
 }
 
 function getBestRatedProducts($conn, $amount)

@@ -1,3 +1,8 @@
+<?php
+include 'includes/dbh_include.php';
+global $conn;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +11,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0" />
     <meta charset="UTF-8" http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
     <title>The Confectioner</title>
 </head>
 
@@ -24,7 +29,7 @@
             <div class="hero_search">
                 <form action="products.php" method="post">
                     <div class="searchbar_container">
-                    <input type="text" name="search" id="search"  placeholder= <?php echo getRandomProductName($conn)?> required>
+                        <label for="search"></label><input type="text" name="search" id="search" placeholder= <?php echo getRandomProductName($conn)?> required>
                         <button type="submit">Suchen</button>
                     </div>
                 </form>
@@ -40,7 +45,6 @@
 
 
 <?php
-include 'includes/dbh_include.php';
 function getRandomProductName($conn){
     $sql = "SELECT * FROM product WHERE qty_in_stock > ?;";
     $stmt = mysqli_stmt_init($conn);

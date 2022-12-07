@@ -3,6 +3,7 @@
 
 <head>
     <link rel="stylesheet" href="CSS/footer.css">
+    <title></title>
 
 
 </head>
@@ -13,10 +14,10 @@
             <div class="footer_left">
                 <a href="index.php">Home</a>
                 <a href="account.php">Account</a>
-                <a href="kontakt.php">Kontakt</a>
+                
             </div>
             <div class="footer_right">
-                <img src="img/paypal.png" width="50" height="30">
+                <img src="img/paypal.png" width="100" height="60" alt="">
             </div>
         </div>
         <section class="footer_copyright">

@@ -1,18 +1,23 @@
 <?php
     include_once "header.php";
     require_once "includes/admin_functions_inc.php";
-
+    global $conn;
     $categories=getAllCategories($conn);
 ?>
 <head>
     <link rel="stylesheet" href="CSS/sale_admin.css">
+    <title></title>
 </head>
     <div><br><br><br><br></div>
 <h1>Create a Shipping Method</h1>
 <form action="includes/createShippingMethod_inc.php" method="post">
 
-    Shipping Name: <input type="text" name="name"  placeholder="Shipping Method" required><br>
-    Shipping Price: <input type="text" name="price" placeholder="Price" required><br>
+    Shipping Name: <label>
+        <input type="text" name="name"  placeholder="Shipping Method" required>
+    </label><br>
+    Shipping Price: <label>
+        <input type="text" name="price" placeholder="Price" required>
+    </label><br>
     <input type="submit" name="send_form">
 
 </form>
@@ -74,4 +79,3 @@ if (isset($_GET["change"])){
 }
 
 ?>
-</div>

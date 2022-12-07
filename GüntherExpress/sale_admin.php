@@ -1,17 +1,18 @@
 <?php
     include_once "header.php";
     require_once "includes/admin_functions_inc.php";
-
+    global $conn;
     $categories=getAllCategories($conn);
 ?>
 <head>
     <link rel="stylesheet" href="CSS/sale_admin.css">
+    <title></title>
 </head>
     <div><br><br><br><br></div>
 <h1>Create a PROMOTION</h1>
 <form action="includes/createSale_inc.php" method="post">
     <label for="category">Choose a category:</label>
-    <select id="cars" name="category_id" size="4" required>
+    <label for="cars"></label><select id="cars" name="category_id" size="4" required>
         <?php
             for ($i=0;$i<count($categories);$i++){
                 echo "
@@ -21,11 +22,21 @@
         ?>
 
     </select><br>
-    Title: <input type="text" name="title"  placeholder="Sale Title" required><br>
-    Description: <textarea name="description" placeholder="Description" rows="1" cols="60" required></textarea><br>
-    Discount<input type="text" name="discount" placeholder="Discount 1-99" required><br>
-    Start Date: <input type="date" name="start-date" placeholder="StartDate" required><br>
-    End Date: <input type="date" name="end-date" required>
+    Title: <label>
+        <input type="text" name="title"  placeholder="Sale Title" required>
+    </label><br>
+    Description: <label>
+        <textarea name="description" placeholder="Description" rows="1" cols="60" required></textarea>
+    </label><br>
+    Discount<label>
+        <input type="text" name="discount" placeholder="Discount 1-99" required>
+    </label><br>
+    Start Date: <label>
+        <input type="date" name="start-date" placeholder="StartDate" required>
+    </label><br>
+    End Date: <label>
+        <input type="date" name="end-date" required>
+    </label>
     <input type="submit" name="send_form">
 
 </form>
@@ -118,4 +129,3 @@ if (isset($_GET["change"])){
 }
 
 ?>
-</div>

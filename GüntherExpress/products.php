@@ -4,18 +4,16 @@
 <?php
 include_once 'header.php';
 include_once 'includes/products_function.php';
+global $conn;
 ?>
 <?php
+if (!isset($_POST["search"])) {
+    $name = $_GET["name"];
+    $items = getAllFromCategory($conn, $name, totalAmount($conn, $name));
 
-
-if(!isset($_POST["search"])){
-    $name=$_GET["name"];
-    $items = getAllFromCategory($conn, $name);
-
-}
-else{
-    $name=$_POST["search"];
-    $items = searchProduct($conn,$_POST["search"]);
+} else {
+    $name = $_POST["search"];
+    $items = searchProduct($conn, $_POST["search"]);
 }
 
 
@@ -28,6 +26,7 @@ else{
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0"/>
+    <title></title>
 </head>
 
 <body>
@@ -39,7 +38,7 @@ else{
     <div class="searchbar_wrapper">
         <form action="products.php" method="post">
             <div class="searchbar_container">
-                <input type="text" name="search" id="search" placeholder="Suchen" required>
+                <label for="search"></label><input type="text" name="search" id="search" placeholder="Suchen" required>
                 <button type="submit">Suchen</button>
             </div>
         </form>
@@ -66,9 +65,9 @@ else{
                     <form action="" method="post">
                         <div class="form_container">
                             <div class="settings_input_container">
-                                <input type="text" name="min" id="min" placeholder="Min">
+                                <label for="min"></label><input type="text" name="min" id="min" placeholder="Min">
                                 <h4 class="separator">-</h4>
-                                <input type="text" name="max" id="max" placeholder="Max">
+                                <label for="max"></label><input type="text" name="max" id="max" placeholder="Max">
                             </div>
                             <div class="settings_button">
                                 <button type="submit" name="applyfilter">Anwenden</button>
@@ -81,13 +80,13 @@ else{
         <div class="products_items">
             <div class="products_grid_wrapper">
                 <?php
-                if($items!=null){
+                if ($items != null) {
                     for ($i = 0; $i < count($items); $i++) {
                         echo '
                         <div class="product_container">
                             <div class="product_img">
                             <a href="item.php?id=' . $items[$i]["id"] . '">
-                                <img src=' . $items[$i]["product_image"] . ' width="265px" height="200px">
+                                <img src=' . $items[$i]["product_image"] . ' width="265px" alt="" height="200px">
                             </a>
                             </div>
                             <div class="product_description">
@@ -102,7 +101,7 @@ else{
                         </div>
                     ';
                     }
-                }else{
+                } else {
                     echo "<h3 style='color: #fc466b'>Dieses produkt ist nicht bekannt!</h3>";
 
                 }
