@@ -112,10 +112,10 @@ function getAdressFromUserID($conn,$userID){
 
     return $allItems;
 }
-function getAllOrderedProductsFromUserID($conn, $userid)
+function getAllOrderedProductsFromOrderID($conn, $orderID)
 {
     $allItems=null;
-    $sql = "SELECT * FROM shop_order WHERE siteuser_id=? ORDER BY order_date DESC ;";
+    $sql = "SELECT * FROM shop_order WHERE id=? ORDER BY order_date DESC ;";
     $stmt = mysqli_stmt_init($conn);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -268,6 +268,8 @@ function getOrderLine($conn,$id){
     return $productArr;
 }
 function getAllOrderStatus($conn){
+    $statusArr=null;
+
     $sql = "SELECT * FROM order_status ;";
     $stmt = mysqli_stmt_init($conn);
 

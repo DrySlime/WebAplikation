@@ -12,7 +12,7 @@
 
 <div class="orderedProductList">
     <form action="orderedProducts_admin.php" method="post">
-        <input type="text" name="search" placeholder="UserID/Username" required>
+        <input type="text" name="search" placeholder="Order ID" required>
         <button type="submit">Suche</button>
 
     </form><a href="orderedProducts_admin.php"><button formnovalidate>Reset</button></a>
@@ -25,7 +25,7 @@ $amount = 3;
         if(strlen($userid)>3){
             $userid=getUserID($conn,$userid);
         }
-        $productArray=getAllOrderedProductsFromUserID($conn,$userid);
+        $productArray=getAllOrderedProductsFromOrderID($conn,$userid);
         if($productArray!=null){
             echo"<h1>Alle Besttelungen von ".getUsername($conn,$productArray[0]["siteuser_id"])."</h1>
                 <table>
