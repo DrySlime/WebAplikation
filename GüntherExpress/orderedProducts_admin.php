@@ -26,6 +26,7 @@ $amount = 3;
             $userid=getUserID($conn,$userid);
         }
         $productArray=getAllOrderedProductsFromOrderID($conn,$userid);
+
         if($productArray!=null){
             echo"<h1>Alle Besttelungen von ".getUsername($conn,$productArray[0]["siteuser_id"])."</h1>
                 <table>
