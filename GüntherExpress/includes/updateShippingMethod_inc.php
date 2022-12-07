@@ -1,8 +1,8 @@
 <?php
 if(isset($_POST["send_form"])){
 
-    $name = $_POST['methodName'];
-    $price = $_POST['shippingPrice'];
+    $name = $_POST['name'];
+    $price = $_POST['price'];
     $methodID = $_POST['methodID'];
     
 
@@ -10,14 +10,7 @@ if(isset($_POST["send_form"])){
     require_once 'dbh_include.php';
     require_once 'functions_include.php';
     #TODO
-    if(invalidDiscountrate($discount)!==false){
-        header("location: ../shippingMethod_admin.php?error=invalidDiscount");
-        exit();
-    }
-    if(invalidDate($startDate,$endDate)!==false){
-        header("location: ../shippingMethod_admin.php?error=invalidDate");
-        exit();
-    }
+
 
 
     updateShippingMethod($conn,$name,$price,$methodID);

@@ -8,7 +8,7 @@ if(isset($_POST["send_form"])){
     $description = $_POST['description'];
     $price = $_POST['price'];
     $inStock = $_POST['inStock'];
-    $image = $_POST['image'];
+
 
 
     #TODO
@@ -18,10 +18,8 @@ if(isset($_POST["send_form"])){
 
     
     
-    createProduct($conn,$categoryID,$name,$productImage,$description,$price,$inStock,$image );
+    createProduct($conn,$categoryID,$name,$productImage,$description,$price,$inStock, );
 
 
-}else{
-    header("location: ../product_admin.php");
-    exit(  );
-}
+}header("location: ../product_admin.php");
+exit(  );

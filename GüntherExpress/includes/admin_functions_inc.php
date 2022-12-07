@@ -401,7 +401,7 @@ function getAllSales($conn){
 
 function getAllProducts($conn){
     $productArr=null;
-    $sql = "SELECT * FROM products ";
+    $sql = "SELECT * FROM product ";
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt,$sql)){
@@ -415,13 +415,13 @@ function getAllProducts($conn){
 
     while($row=mysqli_fetch_assoc($resultData)){
         $product["id"]=$row["id"];
-        $product["name"]= $row["name"];
+        $product["product_name"]= $row["product_name"];
         $product["product_category_id"]= $row["product_category_id"];
         $product["product_image"]= $row["product_image"];
         $product["qty_in_stock"]= $row["qty_in_stock"];
         $product["price"]= $row["price"];
         $product["description"]= $row["description"];
-        $product["image"]= $row["image"];
+
 
         $productArr[]=$product;
         unset($product);
@@ -513,7 +513,7 @@ function deleteSMethod($conn, $sMethodID){
         exit();
     }
     mysqli_stmt_prepare($stmt, $sql);
-    mysqli_stmt_bind_param($stmt, "s", $promotionID);
+    mysqli_stmt_bind_param($stmt, "s", $sMethodID);
 
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);

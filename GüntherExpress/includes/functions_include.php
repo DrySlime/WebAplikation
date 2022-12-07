@@ -731,9 +731,9 @@ function createCategory($conn,$title,$parentID){
     mysqli_stmt_close($stmt);
 
 }
-function createProduct($conn,$categoryID,$name,$productImage,$description,$price,$inStock,$image){
+function createProduct($conn,$categoryID,$name,$productImage,$description,$price,$inStock){
 
-    $sql = "INSERT INTO product (name,product_category_id,product_image,qty_in_stock,price,description,image) VALUES (?,?,?,?,?,?,?);";
+    $sql = "INSERT INTO product (product_name,product_category_id,product_image,qty_in_stock,price,description) VALUES (?,?,?,?,?,?);";
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt,$sql)){
@@ -743,7 +743,7 @@ function createProduct($conn,$categoryID,$name,$productImage,$description,$price
 
 
 
-    mysqli_stmt_bind_param($stmt,"sssssss",$name,$categoryID,$productImage,$inStock,$price,$description,$image);
+    mysqli_stmt_bind_param($stmt,"ssssss",$name,$categoryID,$productImage,$inStock,$price,$description);
     mysqli_stmt_execute($stmt);
 
     mysqli_stmt_close($stmt);
@@ -851,9 +851,9 @@ function updateCategory($conn,$parentID,$title,$id){
     exit();
 }
 
-function  updateProduct($conn,$categoryID,$name,$description,$productImage,$price,$inStock,$image,$productID){
+function  updateProduct($conn,$categoryID,$name,$description,$productImage,$price,$inStock,$productID){
     #create promotion, create promotion category
-    $sql = "UPDATE product SET name=?, product_category_id=?, product_image=?, qty_in_stock=?, price=?, description=?, image=? WHERE id=?;";
+    $sql = "UPDATE product SET product_name=?, product_category_id=?, product_image=?, qty_in_stock=?, price=?, description=? WHERE id=?;";
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt,$sql)){
@@ -863,7 +863,7 @@ function  updateProduct($conn,$categoryID,$name,$description,$productImage,$pric
 
 
 
-    mysqli_stmt_bind_param($stmt,"ssssssss",$name,$categoryID,$productImage,$inStock,$price,$description,$image,$productID);
+    mysqli_stmt_bind_param($stmt,"sssssss",$name,$categoryID,$productImage,$inStock,$price,$description,$productID);
     mysqli_stmt_execute($stmt);
 
     mysqli_stmt_close($stmt);
@@ -874,7 +874,7 @@ function  updateProduct($conn,$categoryID,$name,$description,$productImage,$pric
 
 function updateShippingMethod($conn,$name,$price,$id){
     #create promotion, create promotion category
-    $sql = "UPDATE shopping_method SET shipping_name=?, shipping_price=? WHERE id=?;";
+    $sql = "UPDATE shipping_method SET shipping_name=?, shipping_price=? WHERE id=?;";
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt,$sql)){

@@ -8,10 +8,10 @@
     <link rel="stylesheet" href="CSS/sale_admin.css">
 </head>
     <div><br><br><br><br></div>
-<h1>Create a PRODUCT</h1>
+<h1>Create a Shipping Method</h1>
 <form action="includes/createShippingMethod_inc.php" method="post">
 
-    Shipping Name: <input type="text" name="name"  placeholder="Product Name" required><br>
+    Shipping Name: <input type="text" name="name"  placeholder="Shipping Method" required><br>
     Shipping Price: <input type="text" name="price" placeholder="Price" required><br>
     <input type="submit" name="send_form">
 
@@ -19,19 +19,7 @@
 
 
 
-<?php #TODO
-if (isset($_GET["error"])){
-    if($_GET["error"]=="invalidDiscount"){
-        echo "<br><h1 style='color: red'>Error in your Discountrate. Please enter a value between 1-99! For Example 20</h1><br>";
-    }if($_GET["error"]=="invalidDate") {
-        echo "<br><h1 style='color: red'>Error in your Date. Please check your Dates. End Date cant be in the past and or before the start Date!</h1><br>";
-    }
-    if($_GET["error"]=="titleExists") {
-        echo "<br><h1 style='color: red'>This Promotion allready exists! Please chose another name!</h1><br>";
-    }
-}
 
-?>
 
 <?php
 $SMethodArr=getAllShippingMethods($conn);
@@ -72,7 +60,7 @@ if (isset($_GET["change"])){
     echo'
     <div class="changeForm">
     <h1>UPDATE FORM: </h1>
-        <form action="includes/updateProduct_inc.php" method="post">
+        <form action="includes/updateShippingMethod_inc.php" method="post">
             </select><br>
             Shipping Name: <input type="text" name="name"  value="'.$_GET["methodName"].'" required><br>
             Shipping Price : <input type="text" name="price" value='.$_GET["shippingPrice"].' required><br>

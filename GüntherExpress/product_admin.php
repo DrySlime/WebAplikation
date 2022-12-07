@@ -26,7 +26,7 @@
     Description: <textarea name="description" placeholder="Description" rows="1" cols="60" required></textarea><br>
     Price: <input type="text" name="price" placeholder="Price" required><br>
     Amount in Stock: <input type="number" name="inStock"  required><br>
-    Image: <input type="text" name="image" required>
+
     <input type="submit" name="send_form">
 
 </form>
@@ -63,7 +63,7 @@ if($productArr!=null){
                 <th>Description </th>
                 <th>Price</th>
                 <th>Amount in Stock</th>
-                <th>Image</th>
+                
                 <th>CHANGE</th>
                 <th>DELETE</th>
             </tr>
@@ -74,13 +74,13 @@ if($productArr!=null){
     echo "
     <tr>
         <td > ".getCategoryNameViaID($conn,$productArr[$i]["product_category_id"])." </td >
-        <td > ".$productArr[$i]["name"]." </td >
-        <td > ".$productArr[$i]["product_image"]."% </td >
+        <td > ".$productArr[$i]["product_name"]." </td >
+        <td > ".$productArr[$i]["product_image"]." </td >
         <td > ".$productArr[$i]["description"]." </td >
         <td > ".$productArr[$i]["price"]." </td >
         <td > ".$productArr[$i]["qty_in_stock"]." </td >
-        <td > ".$productArr[$i]["image"]." </td >
-        <td > <a href='product_admin.php?change=1&productID=".$productArr[$i]["id"]."&productName=".$productArr[$i]["name"]."&productImage=".$productArr[$i]["product_image"]." &description=".$productArr[$i]["description"]."&price=".$productArr[$i]["price"]."&qtyInStock=".$productArr[$i]["qty_in_stock"]."&image=".$productArr[$i]["image"]."'><button>CHANGE</button></a> </td >
+        
+        <td > <a href='product_admin.php?change=1&productID=".$productArr[$i]["id"]."&productName=".$productArr[$i]["product_name"]."&productImage=".$productArr[$i]["product_image"]." &description=".$productArr[$i]["description"]."&price=".$productArr[$i]["price"]."&qtyInStock=".$productArr[$i]["qty_in_stock"]."'><button>CHANGE</button></a> </td >
         <td > <form action='includes/deleteProduct_inc.php' method='post'><input type='submit' name='delButton' value='DELETE'><input name='productID' value=".$productArr[$i]["id"]." hidden> </form></td >
     </tr >
     
@@ -105,12 +105,12 @@ if (isset($_GET["change"])){
             };
             echo '
             </select><br>
-            Name: <input type="text" name="name"  value="'.$_GET["productName"].'" required><br>
+            Name: <input type="text" name="product_name"  value="'.$_GET["productName"].'" required><br>
             Description: <textarea name="description"  rows="1" cols="60" required>'.$_GET["description"].'</textarea><br>
-            Product Image :<input type="text" name="productImage" value="'.(int)$_GET["productImage"].'" required><br>
+            Product Image :<input type="text" name="productImage" value="'.$_GET["productImage"].'" required><br>
             Price : <input type="text" name="price" value='.$_GET["price"].' required><br>
-            Amount in Stock : <input type="number" name="inStock" value="'.$_GET["qtyInStock"].'"required><br>
-            Image : <input type="text" name="image" value="'.$_GET["image"].'"required><br>
+            Amount in Stock : <input type="number" name="qty_in_stock" value="'.$_GET["qtyInStock"].'"required><br>
+            
             <input name="productID" value='.$_GET["productID"].' hidden>
             <input type="submit" name="send_form" value="UPDATE">
             <a href="sale_admin.php" ><button formnovalidate>Cancel</button></a>
