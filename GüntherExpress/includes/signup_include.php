@@ -39,6 +39,6 @@ if(isset($_POST["register_button"])){
 
 
 }else{
-    header("location: ../signup.php");
+    header("location: ../login.php");
     exit(  );
 }
