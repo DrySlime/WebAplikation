@@ -73,9 +73,13 @@ function showUserAddress($conn, $addressIds){
                     <?php showUserAddress($conn, getUserAdress($conn, $userId)); ?>
                 </div>  
             </div>
-            <a class="addBtn link " href="href="profile.php>Neue Addresse hinzufügen</a>
+            <a class="addBtn link " href="account.php">Neue Addresse hinzufügen</a>
         </div>
 
         
     </body>
 </html>
+
+<?php
+include_once 'footer.php';
+?>

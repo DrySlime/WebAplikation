@@ -61,8 +61,12 @@ function showUserPaymentMethods($conn, $userId){
                     <?php showUserPaymentMethods($conn, $userId); ?>
                 </div>  
             </div>
-            <a class="addBtn link " href="href="profile.php>Neue Bezahlmethode hinzufügen</a>
+            <a class="addBtn link " href="account.php">Neue Bezahlmethode hinzufügen</a>
         </div>
 
     </body>
 </html>
+
+<?php
+include_once 'footer.php';
+?>

@@ -96,3 +96,7 @@ function showShippingMethods($conn, $addressId, $paymentId){
         </div>
     </body>
 </html>
+
+<?php
+include_once 'footer.php';
+?>

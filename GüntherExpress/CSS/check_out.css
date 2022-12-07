@@ -2,7 +2,9 @@
 
 .background{
     background-color: #f9d4dc;
-    padding: 50px;
+    padding:5em;
+    padding-top: 5em;
+    padding-bottom: 5em;
     display: flex;
     flex-direction: column;
 }
@@ -11,7 +13,7 @@
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 10px;
     border-radius: 20px;
-    padding: 10px;
+    padding: 1em;
 }
 
 .box-container{
@@ -25,12 +27,13 @@
 .shipping_method{
     color: black;
     text-decoration: none;
+    width: 25vw;
+    overflow-x: hidden;
     border-style: solid;
     border-width: 2px;
     border-radius: 40px;
-    width: 250px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 1em;
+    margin-bottom: 1em;
     margin-left: auto;
     margin-right: auto;
     padding-left: 20%;
@@ -49,12 +52,13 @@
 .shipping_method:hover{
     background-color: #f61b7a;
     color: white;
+    width: 25vw;
     text-decoration: none;
     border-style: solid;
     border-width: 2px;
     border-radius: 40px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 1em;
+    margin-bottom: 1em;
     margin-left: auto;
     margin-right: auto;
     padding-left: 20%;

@@ -1,3 +1,4 @@
+<html>
 <head>
     <link rel="stylesheet" href="../css/shopping_cart.css">
 </head>
@@ -36,16 +37,18 @@ if(isset($_GET["delete"])){
 $items = getShoppingCartItems($conn, $userId);
 
 
-
 ?>
 <body>
 
     <div class="background">
 
-        <h1 class="shopping-cart-text">Warenkorb:</h1>
-
-        <div class="shopping-cart-container" id="shopping-cart-container">
             <?php
+            echo "<div class='shopping-cart-container' id='shopping-cart-container'>";
+            echo "<h1 class='shopping-cart-text'>Warenkorb:</h1>";
+
+            if($items-> num_rows == 0){
+                echo "<h1 style='text-align: center;'>Es befinden sich zurzeit keine Artikel im Warenkorb</h1>";    
+            }
                 while ($row = $items->fetch_assoc()) {
                     echo "<div class="."product".">";
  
@@ -61,8 +64,13 @@ $items = getShoppingCartItems($conn, $userId);
 
                     echo '</div>';
                 }
+
+            echo "</div>";
+            if($items-> num_rows == 0){
+                exit(include_once 'footer.php');
+            }
             ?>
-        </div>
+        
 
         <div class="button-container">
             
@@ -77,9 +85,12 @@ $items = getShoppingCartItems($conn, $userId);
         </div>
 
     </div>
+
+
 </body>
+</html>
 
-
+     
 <?php
-
+include_once 'footer.php';
 ?>
