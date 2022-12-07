@@ -22,6 +22,7 @@ body {
     align-content: center;
     justify-content: center;
     padding: 1rem 5rem 0rem 5rem;
+    z-index: 1;
 }
 
 .header_wrapper  {

@@ -30,6 +30,9 @@ if (!isset($_SESSION["useruid"])) {
     <div class="account_header_image">
         <img src="img/cookies.png">
     </div>
+    <div class="account_header_logout">
+        <a id="logout" class="logout_button" href="includes/logout_include.php">Abmelden</a>
+    </div>
 </div>
 <div class="account_wrapper">
     <div class="account_wrapper_info">
@@ -38,7 +41,9 @@ if (!isset($_SESSION["useruid"])) {
             <div class="grid_container split_divs">
                 <div class="grid_header seperate_header">
                     <h1>Dein Confectioner Account</h1>
-                    <h4>Bearbeite hier dein Account, oder siehe deine letzten Bestellungen ein!</h4>
+                    <h4>Bearbeite hier deinen Account, siehe deine letzten Bestellungen ein, oder <a id="delete"
+                                                                                                     class="delete_account_button">Lösche</a>
+                        deinen Account</h4>
                 </div>
                 <div class="account_dash_wrapper">
                     <form id="changeAccount" action="#" method="post">
@@ -138,6 +143,30 @@ if (!isset($_SESSION["useruid"])) {
         </div>
     </div>
 </div>
+<div class="account_modal" id="delete-modal">
+    <div class="modal_container">
+        <div class="modal_text">
+            <div class="modal_header">
+                <span class="material-symbols-outlined">warning</span>
+                <h3>Account Löschen</h3>
+            </div>
+            <p>Falls du deinen Account für immer löschen möchtest, gib unten deine Daten ein letztes Mal ein und
+                bestätige das löschen. Denk dran, dass das hier nicht rückgängig gemacht werden kann!</p>
+            <p id="sad_life">Wir werden dich beim Confectioner vermissen!</p>
+        </div>
+        <div class="modal_input">
+            <form id="deleteAccount" action="#" method="post">
+                <input required type="text" name="delemail" id="delemail" placeholder="Email">
+                <input required type="password" name="delpassword" id="delpassword" placeholder="Passwort">
+            </form>
+        </div>
+        <div class="modal_buttons">
+            <button id="close_modal">Ich will bleiben!</button>
+            <button type="submit" form="deleteAccount" id="delete_Account">Account Löschen</button>
+        </div>
+    </div>
+</div>
+<script src="JS/account.js"></script>
 <?php } ?>
 </body>
 

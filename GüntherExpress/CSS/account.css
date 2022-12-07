@@ -15,6 +15,7 @@ body {
 
 .account_header_wrapper {
     display: flex;
+    position: relative;
     justify-content: center;
     align-content: center;
     align-items: center;
@@ -30,7 +31,7 @@ body {
     position: relative;
     width: 50%;
     height: 65vh;
-    background-color: #f9d4dc;
+    background-color: transparent;
     margin-left: 30vmin;
     z-index: -1;
 }
@@ -41,6 +42,19 @@ body {
 
 .account_header_container h4 {
     font-size: 2vmin;
+}
+
+.account_header_logout {
+    position: absolute;
+    top: 70%;
+    left: 15%;
+    width: auto;
+    margin-top: 2vmin;
+    z-index: 2 !important;
+}
+
+#logout {
+    z-index: 2 !important;
 }
 
 .account_header_image {
@@ -179,6 +193,14 @@ body {
     margin-top: 2vmin;
     font-weight: 500;
     font-size: 1.8vmin;
+}
+
+.seperate_header a {
+    font-size: 1.8vmin;
+    text-decoration: underline;
+    color: #fc466b;
+    text-underline: #fc466b;
+    cursor: pointer;
 }
 
 .split_divs {
@@ -356,7 +378,8 @@ body {
     align-items: flex-end !important;
 }
 
-.account_section_button a {
+.account_section_button a,
+.account_header_logout a {
     font-weight: 500;
     width: auto;
     text-align: center;
@@ -392,14 +415,162 @@ body {
     border-radius: 3vmin;
     background-color: #101010;
     padding: 1.7vmin;
-    transition: 0.3s;
+    transition: ease-in-out 0.3s;
     border-style: none;
     outline-style: none;
 }
 
 .account_subsection_button button:hover,
 .account_subsection_button a:hover,
-.account_section_button a:hover {
+.account_section_button a:hover,
+.account_header_logout a:hover {
     color: #fc466b;
+    transform: scale(1.05);
     cursor: pointer;
 }
+
+.account_modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2000;
+    overflow: hidden;
+    background-color: rgba(252, 70, 107, 0.4);
+    visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.modal_container {
+    background-color: #FFFFFF;
+    border-radius: 3vmin;
+    height: 35%;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-content: flex-start;
+    align-items: flex-start;
+    padding: 4vmin;
+}
+
+.modal_text,
+.modal_input,
+.modal_buttons {
+    width: 100%;
+}
+
+.modal_header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    vertical-align: middle;
+    align-content: flex-start;
+}
+
+.modal_header h3,
+.modal_header span {
+    color: #fc466b;
+    font-size: 2vmin;
+    font-weight: 600;
+    margin-bottom: 1vmin;
+}
+
+.modal_header span {
+    margin-right: .5vmin;
+}
+
+.modal_text p {
+    font-weight: 500;
+    font-size: 1.5vmin;
+}
+
+#sad_life {
+    margin-top: 2vmin;
+    margin-bottom: 1vmin;
+}
+
+.modal_input {
+    margin-top: 2vmin;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal_input form {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+
+.modal_input form input {
+    margin-bottom: 2vmin;
+    font-size: 1.5vmin;
+    color: #101010;
+    border: none;
+    outline: none;
+    font-weight: 500;
+    text-indent: 2px;
+    appearance: none;
+    padding: 1vmin;
+    background: #f1f1f1;
+    border-radius: 1vmin;
+}
+
+#delemail {
+    width: 55%;
+}
+
+#delpassword {
+    width: 40%;
+}
+
+.modal_buttons {
+    display: flex;
+    flex-direction: row;
+    align-content: flex-start;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.modal_buttons button {
+    font-weight: 500;
+    width: auto;
+    bottom: -1vmin;
+    text-align: center;
+    font-size: 1.3vmin;
+    color: #FFFFFF;
+    text-decoration: none;
+    border-radius: 3vmin;
+    background-color: #101010;
+    padding: 1.2vmin;
+    transition: ease-in-out 0.3s;
+    border-style: none;
+    outline-style: none;
+}
+
+.modal_buttons button:hover {
+    cursor: pointer;
+    color: #fc466b;
+    transform: scale(1.05);
+}
+
+#delete_Account:hover {
+    color: #101010;
+}
+
+#delete_Account {
+    margin-left: 1.5vmin;
+    background-color: #f0594d;
+}
+

@@ -1,10 +1,18 @@
-window.onscroll = function(event) {
-    var doc = document.documentElement;
-    var scrollPos = doc.scrollTop;
+var modal = document.getElementById('delete-modal');
+var modalOpen = document.getElementById('delete');
+var modalClose = document.getElementById('close_modal');
 
-    console.log(scrollPos);
-    document.getElementById("tmp123").style.top = -1.5*scrollPos+"px";
-    if(scrollPos>375){
-        doc.scrollTop=375;
-    }
+modalOpen.addEventListener('click', openModal);
+modalClose.addEventListener('click', closeModal)
+
+function openModal() {
+    document.getElementById('close_modal').style.transition = 'ease-in-out 0.3s';
+    document.getElementById('delete_Account').style.transition = 'ease-in-out 0.3s';
+    modal.style.visibility = 'visible';
+}
+
+function closeModal() {
+    document.getElementById('close_modal').style.transition = 'none';
+    document.getElementById('delete_Account').style.transition = 'none';
+    modal.style.visibility = 'hidden';
 }
