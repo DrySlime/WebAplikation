@@ -1,35 +1,56 @@
-<?php
-    session_start();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
+
+<?php
+include 'includes/dbh_include.php';
+include 'includes/functions_include.php';
+global $conn;
+session_start();
+?>
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="CSS/header.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0" />
+    <script type="text/javascript" src="JS/header.js"></script>
+    <meta charset="UTF-8" http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+    <title>The Confectioner</title>
 </head>
+
 <body>
-    <nav>
-        <div class="Wrapper">
-            <a href="index.php"><img src="img/Logo.png" alt="Günther Express" width="400"></a>
-            <ul>
-                <li><a href="index.php">Home</a></li>
-                <li><a href='category.php'>Kategorie</a></li>
-                <?php
-                    if (isset($_SESSION["useruid"])){
-                        echo "<li><a href='profile.php'>Profile</a></li>";
-                        echo "<li><a href='includes/logout_include.php'>Log-Out</a></li>";
-                    }else{
-                        echo '<li><a href="signup.php">Sign Up</a></li>';
-                        echo '<li><a href="login.php">Login</a></li>';
-                    }
-                ?>
-                <li><form action="searchSite.php" method="post"><input type="text" name="searchbar" id="searchbar" placeholder="Warensuche..." >
-                    <button type="submit" name="searchConfirmButton" id="seachbarConfirmID" >Suchen</button></form>
-                </li>
-                
-            </ul>
+    <header class="header">
+        <div class="header_wrapper">
+            <div>
+                <a class="header_name" href="index.php">The Confectioner</a>
+            </div>
+            <div class="navbar">
+                <ul id="navbar">
+                    <li><a href="index.php">Home</a></li>
+                    <li>
+                        <div class="navbar_dropdown">
+                            <button onclick="showCategories()" class="dropbtn">Kategorien<i class="material-symbols-outlined" style="pointer-events: none;">expand_more</i></button>
+                            <div id="navbarDropdown" class="dropdown_content">
+                                <?php foreach (getCategoryList($conn) as $key => $value) { ?>
+                                <a href=<?php echo "products.php?name=".$value?>><?php echo $value ?></a><?php } ?>
+                                
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="sale.php">Sale</a></li>
+                    <?php if (isset($_SESSION["useruid"])) { ?>
+                        <li><a href="account.php">Account</a></li>
+                    <?php } else { ?>
+                        <li><a href="login.php">Login</a></li>
+                    <?php } ?>
+                    <?php if (isset($_SESSION["useruid"])) {
+                        if ($_SESSION["userid"]==1){?>
+                        <li><a href="admin.php">Admin</a></li>
+                    <?php }} ?>
+                    <li><button class="dropbtn" onclick="showWarenkorb()"> <i class="material-symbols-outlined" style="pointer-events: none;">shopping_cart</i></button></li>
+                </ul>
+            </div>
         </div>
-    </nav>
+    </header>
+</body>
+</html>
