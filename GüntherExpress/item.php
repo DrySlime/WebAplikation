@@ -62,6 +62,7 @@ $stars=getAvrgRating($conn,$product[0]["id"]);
 
                     <div class="item_rating_stars">
                         <?php
+                        echo $stars;
                             for($i=0;$i<5;$i++){
                                 if($i<round($stars)){
                                     echo '<span class="material-symbols-outlined checked" id="star'.$i.'">star</span>';
@@ -83,15 +84,41 @@ $stars=getAvrgRating($conn,$product[0]["id"]);
                 <div class="item_data_settings">
                     <div class="item_amount_settings">
                         <button class="buttonAmount" id="decreaseAmount" onclick="removeFromAmount()"><span class="material-icons md48">remove_circle</span></button>
-                        <h4>1</h4>
+                        <h4 id="amount">1</h4>
                         <button class="buttonAmount" id="increaseAmount" onclick="addToAmount()"><span class="material-icons md48">add_circle</span></button>
                     </div>
-                    <div class="item_add_settings">
-                        <h4>Hinzufügen</h4>
-                        <button class="buttonAddCart" id="addToCart" onclick="addToCart()"><i
-                                    class="material-symbols-outlined" style="pointer-events: none;">shopping_cart</i>
-                        </button>
-                    </div>
+
+                    <button class="item_add_settings" id="addToCart" onclick="addToCart()">
+                            <h4>Hinzufügen</h4>
+                            <i class="material-symbols-outlined" style="pointer-events: none;">shopping_cart</i>
+                    </button>    
+
+                        <script> 
+
+                            function addToCart(){
+                                var amount = getSelectValue();
+                                window.location = "shopping_cart_insert.php?pID=" + "<?php echo $product[0]['id'] ?>" + "&quantaty=" + amount;
+                            }
+                            
+                            function getSelectValue(){
+                               return document.getElementById("amount").innerHTML; 
+                            }
+
+                            function removeFromAmount(){
+                                if(Number(document.getElementById("amount").innerHTML) != 0){
+                                    document.getElementById("amount").innerHTML = Number(document.getElementById("amount").innerHTML) - 1;
+                                }
+                            }
+
+                            function addToAmount(){
+                                if(Number(document.getElementById("amount").innerHTML) < <?php echo $product[0]['qty_in_stock'] ?>)
+                                document.getElementById("amount").innerHTML = Number(document.getElementById("amount").innerHTML) + 1;
+                                
+                            }
+                        </script>
+
+                        
+                    
                 </div>
             </div>
         </div>

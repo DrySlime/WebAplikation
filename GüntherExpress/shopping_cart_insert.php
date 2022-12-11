@@ -5,7 +5,8 @@
 <?php
 include_once 'header.php';
 include 'includes/dbh_include.php';
-include 'includes/functions_include.php';
+include_once 'includes/functions_include.php';
+include_once "includes/item_function.php";
 
 
 $userName;
@@ -20,15 +21,11 @@ if(isset($_SESSION['useruid'])){
 }
 
 
-$productId = $_POST['pID'];
-$productName = $_POST['pName'];
-$quantaty = $_POST['quantaty'];
-$image = $_POST['image'];
-
+$product=getAllFromProductID($conn, $_GET['pID']);
 
 
 $userId = getUserIdFromUserName($conn, $userName);
-insert_into_cart($conn, $userId, $productId, $quantaty);
+insert_into_cart($conn, $userId, $_GET['pID'], $_GET['quantaty']);
 
 
 // Item wird in den Einkaufswagen gelegt
@@ -84,10 +81,10 @@ function insert_into_cart($conn, $userId, $productId, $quantaty){
     <div class="background">
         <div class="container">
             <div class="product-container">
-                <h2 class="confirmation">Folgender Gegenstand wurde <?php echo $quantaty;?> mal in den Warenkorb gelegt:</h2>
+                <h2 class="confirmation">Folgender Gegenstand wurde <?php echo $_GET["quantaty"];?> mal in den Warenkorb gelegt:</h2>
 
-                <h2 class="product-name"> <?php echo $productName ?> </h2>
-                <img class="product-img" src=<?php echo $image;?>> <br>
+                <h2 class="product-name"> <?php echo $product[0]["product_name"] ?> </h2>
+                <img class="product-img" src=<?php echo $product[0]["product_image"];?>> <br>
 
 
                 
