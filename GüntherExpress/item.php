@@ -62,7 +62,6 @@ $stars=getAvrgRating($conn,$product[0]["id"]);
 
                     <div class="item_rating_stars">
                         <?php
-                        echo $stars;
                             for($i=0;$i<5;$i++){
                                 if($i<round($stars)){
                                     echo '<span class="material-symbols-outlined checked" id="star'.$i.'">star</span>';
