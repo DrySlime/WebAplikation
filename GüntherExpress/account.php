@@ -18,7 +18,6 @@ if (!isset($_SESSION["useruid"])) {
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
-    <script src="JS/account.js"></script>
     <title></title>
 </head>
 
@@ -42,8 +41,7 @@ if (!isset($_SESSION["useruid"])) {
                 <div class="grid_container split_divs">
                     <div class="grid_header seperate_header">
                         <h1>Dein Confectioner Account</h1>
-                        <h4>Bearbeite hier deinen Account, siehe deine letzten Bestellungen ein, oder <a id="delete"
-                                                                                                         class="delete_account_button">Lösche</a>
+                        <h4>Bearbeite hier deinen Account, siehe deine letzten Bestellungen ein, oder <a id="delete" class="delete_account_button">Lösche</a>
                             deinen Account</h4>
                     </div>
                     <div class="account_dash_wrapper">
@@ -177,7 +175,7 @@ if (!isset($_SESSION["useruid"])) {
             </div>
         </div>
     </div>
-    <div tabindex="0" class="account_modal" id="address-modal">
+    <div class="account_modal" id="address-modal">
         <div class="modal_container modal_container_address">
             <div class="modal_text">
                 <div class="modal_header">
@@ -264,7 +262,7 @@ if (!isset($_SESSION["useruid"])) {
             </div>
         </div>
     </div>
-    <div tabindex="0" class="account_modal" id="orders-modal">
+    <div class="account_modal" id="orders-modal">
         <div class="modal_container modal_container_order">
             <div id="order_text_shadow" class="modal_text">
                 <div class="modal_header">
@@ -381,6 +379,7 @@ if (!isset($_SESSION["useruid"])) {
             </div>
         </div>
     </div>
+    <script src="JS/account.js"></script>
 <?php } ?>
 </body>
 

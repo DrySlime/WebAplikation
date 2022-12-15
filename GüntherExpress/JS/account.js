@@ -1,5 +1,5 @@
 var deleteModal = document.getElementById('delete-modal');
-var deleteModalOpen = document.getElementById('delete');
+const deleteModalOpen = document.getElementById('delete');
 var deleteModalClose = document.getElementById('close_delete_modal');
 
 deleteModalOpen.addEventListener('click', openDeleteModal);
