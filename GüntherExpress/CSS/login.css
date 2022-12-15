@@ -100,6 +100,25 @@ body {
     width: 80%;
 }
 
+.login_error_text {
+    width: auto;
+    height: auto;
+    padding-top: 2vmin;
+}
+
+.login_error_text h3,
+.register_error_text h3 {
+    font-weight: 500;
+    font-size: 1.5vmin;
+    color: #fc466b;
+}
+
+.register_error_text {
+    width: auto;
+    height: auto;
+    padding-top: 1vmin;
+}
+
 .loginregister_wrapper form {
     display: flex;
     width: 100%;

@@ -13,6 +13,7 @@ include_once 'header.php';
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0"/>
     <title></title>
+    <script src="JS/login.js"></script>
 </head>
 
 <body>
@@ -29,15 +30,24 @@ include_once 'header.php';
             <h1>Anmelden</h1>
             <form action="includes/login_include.php" method="post">
                 <div class="form_container">
-                    <label for="username"></label><input class="no-autofill-bkg" type="text" name="username" id="username" placeholder="E-Mail/Benutzername" required>
-                    <label for="password"></label><input class="no-autofill-bkg" type="password" name="password" id="password" placeholder="Passwort" required>
+                    <label for="username"></label><input class="no-autofill-bkg" type="text" name="username"
+                                                         id="username" placeholder="E-Mail/Benutzername" required>
+                    <label for="password"></label><input class="no-autofill-bkg" type="password" name="password"
+                                                         id="password" placeholder="Passwort" required>
+
+                    <div id="errorMsg" class="login_error_text" style="visibility: hidden">
+                        <h3>Anmeldedaten stimmen nicht überein!</h3>
+                    </div>
                     <?php
-                    if(isset($_GET["error"])){
-                        if($_GET["error"]=="wronginput"){
-                            echo "<h3 style='color: #ff0736'>Anmeldedaten stimmen nicht überein!</h3>";
+                    if (isset($_GET["error"])) {
+                        if ($_GET["error"] == "wronginput") {
+                            echo '<script type="text/javascript">',
+                            'showErrorMsg();',
+                            '</script>';
                         }
                     }
-                     ?>
+                    ?>
+                    <h3 id='errorcode'></h3>
                     <button type="submit" name="login_button" onclick="return check_form()">Anmelden</button>
                     <div class="button_container">
                         <h4>Noch kein Account?</h4>
