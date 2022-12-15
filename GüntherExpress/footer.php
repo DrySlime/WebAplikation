@@ -17,7 +17,7 @@
                 
             </div>
             <div class="footer_right">
-                <img src="img/paypal.png" width="100" height="60" alt="">
+                <img src="img/paypal.png" width="80" height="48" alt="">
             </div>
         </div>
         <section class="footer_copyright">
