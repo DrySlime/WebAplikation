@@ -152,7 +152,7 @@ if (!isset($_SESSION["useruid"])) {
         </div>
     </div>
     <div tabindex="0" class="account_modal" id="delete-modal">
-        <div class="modal_container">
+        <div class="modal_container modal_container_delete">
             <div class="modal_text">
                 <div class="modal_header">
                     <span class="material-symbols-outlined">warning</span>
