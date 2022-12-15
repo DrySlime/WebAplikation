@@ -13,10 +13,8 @@ include_once 'includes/functions_include.php';
 if(isset($_SESSION['useruid'])){
     $userName = $_SESSION['useruid'];
 }else{
-    echo "<div style="."background-color:#f9d4dc".">";
-    echo  "<p class="."confirmation".">Sie müssen sich erst <a href="."login.php".">einlogen!</a></p>";
-    echo "</div>";
-    exit();
+    header('Location: login.php');
+    die();
 }
 
 $userId = getUserIdFromUserName($conn, $userName);
