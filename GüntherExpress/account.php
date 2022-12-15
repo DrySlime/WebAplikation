@@ -18,6 +18,7 @@ if (!isset($_SESSION["useruid"])) {
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+    <script src="JS/account.js"></script>
     <title></title>
 </head>
 
@@ -381,7 +382,6 @@ if (!isset($_SESSION["useruid"])) {
         </div>
     </div>
 <?php } ?>
-<script src="JS/account.js"></script>
 </body>
 
 </html>

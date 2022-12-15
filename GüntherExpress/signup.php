@@ -12,7 +12,7 @@ include_once 'header.php';
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0"/>
-    <title></title>
+    <title>The Confectioner</title>
     <script src="JS/signup.js"></script>
 </head>
 
