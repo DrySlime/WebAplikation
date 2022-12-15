@@ -37,7 +37,6 @@ session_start();
                             </div>
                         </div>
                     </li>
-                    <li><a href="sale.php">Sale</a></li>
                     <?php if (isset($_SESSION["useruid"])) { ?>
                         <li><a href="account.php">Account</a></li>
                     <?php } else { ?>
