@@ -17,7 +17,8 @@
                 
             </div>
             <div class="footer_right">
-                <img src="img/paypal.png" width="80" height="48" alt="">
+                <img src="img/MasterCard.svg" width="60" height="30" alt="">
+                <img src="img/Visa.svg" width="60" height="30" alt="">
             </div>
         </div>
         <section class="footer_copyright">

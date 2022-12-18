@@ -54,7 +54,7 @@ if(isset($_POST["search"])&&$_POST["search"]!=null){
                                 <td > ".$userArray[$i]["id"]." </td >
                                 <td > ".$userArray[$i]["firstname"]." </td >
                                 <td > ".$userArray[$i]["lastname"]." </td >
-                                <td > ".$userArray[$i]["email"]."Euro </td >
+                                <td > ".$userArray[$i]["email"]." </td >
                                 <td > ".$userArray[$i]["username"]." </td >                                             
                             ";
             $address=getAdressFromUserID($conn,$userArray[$i]["id"]);

@@ -33,7 +33,13 @@ if (!isset($_POST["search"])) {
 <div class="products_page_wrapper">
     <div class="products_page_header">
         <h1><?php echo $name ?></h1>
-        <img src="img/cadbury.png" alt="">
+        <?php
+        if ($name == "Cerealien") {
+            echo '<img src = "img/cereals.png" alt = "Andre Caputo" >';
+        } else {
+            echo '<img src = "img/cadbury.png" alt = "Andre Caputo" >';
+        }
+        ?>
     </div>
     <div class="searchbar_wrapper">
         <form action="products.php" method="post">
