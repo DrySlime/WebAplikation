@@ -19,22 +19,22 @@ if (!isset($_SESSION["useruid"])) {
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
     <title></title>
-    <?php 
-        require_once 'includes/dbh_include.php';
-        require_once 'includes/account_include.php';
-        require_once 'includes/functions_include.php';
-        $resultProfile = getProfileData($conn);
-        //$resultDefAddress = getDefUserAddressData($conn);
-        //$resultAddressWODef = getUserAddressDataWODef($conn);
+    <?php
+    require_once 'includes/dbh_include.php';
+    require_once 'includes/account_include.php';
+    require_once 'includes/functions_include.php';
+    $resultProfile = getProfileData($conn);
+    //$resultDefAddress = getDefUserAddressData($conn);
+    //$resultAddressWODef = getUserAddressDataWODef($conn);
     ?>
-    
+
 
 </head>
 
 <body id="body">
 <div class="account_header_wrapper">
     <div class="account_header_container">
-        <h1>Hallo <?php  echo $_SESSION["useruid"] ?></h1>
+        <h1>Hallo <?php echo $_SESSION["useruid"] ?></h1>
         <h4>Willkommen zurück beim Confectioner!</h4>
     </div>
     <div class="account_header_image">
@@ -52,9 +52,9 @@ if (!isset($_SESSION["useruid"])) {
                     <div class="grid_header seperate_header">
                         <h1>Dein Confectioner Account</h1>
                         <h4>Bearbeite hier deinen Account und sieh deine letzten Bestellungen ein
-                            <?php if ($_SESSION["userid" ]!= 1) { ?>
+                            <?php if ($_SESSION["userid"] != 1) { ?>
                                 , oder <a id="delete" class="delete_account_button">Lösche</a>deinen Account .
-                            <?php } else{?>
+                            <?php } else { ?>
                                 .
                             <?php } ?>
                         </h4>
@@ -65,9 +65,9 @@ if (!isset($_SESSION["useruid"])) {
                                                                  value=<?php echo $resultProfile['user_uid']; ?>
                                                                  placeholder="Benutzername">
                             <div class="account_double_container">
-                                <label for="name"></label><input type="text" name="" id="name" 
-                                                                    value= <?php echo $resultProfile['firstname']; ?>
-                                                                    placeholder="Vorname">
+                                <label for="name"></label><input type="text" name="" id="name"
+                                                                 value= <?php echo $resultProfile['firstname']; ?>
+                                                                 placeholder="Vorname">
                                 <label for="surname"></label><input type="text" name="surname" id="surname"
                                                                     value=<?php echo $resultProfile['lastname']; ?>
                                                                     placeholder="Nachname">
@@ -171,7 +171,7 @@ if (!isset($_SESSION["useruid"])) {
             <div class="modal_text">
                 <div class="modal_header">
                     <span class="material-symbols-outlined">warning</span>
-                    <h3>Account Löschen</h3>                    
+                    <h3>Account Löschen</h3>
                 </div>
                 <p>Falls du deinen Account für immer löschen möchtest, gib unten deine Daten ein letztes Mal ein und
                     bestätige das löschen. Denk dran, dass das hier nicht rückgängig gemacht werden kann!</p>
@@ -278,7 +278,9 @@ if (!isset($_SESSION["useruid"])) {
                             <input type="text" name="postal-code" id="postal-code" placeholder="PLZ">
                         </form>
                         <div class="addressitem_addbutton">
-                            <button id="add_Address" form="addAddress" type="submit" name="add_address_button">Hinzufügen</button>
+                            <button id="add_Address" form="addAddress" type="submit" name="add_address_button">
+                                Hinzufügen
+                            </button>
                         </div>
                     </div>
                 </div>

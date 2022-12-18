@@ -1,9 +1,11 @@
-var deleteModal = document.getElementById('delete-modal');
+const deleteModal = document.getElementById('delete-modal');
 const deleteModalOpen = document.getElementById('delete');
-var deleteModalClose = document.getElementById('close_delete_modal');
+const deleteModalClose = document.getElementById('close_delete_modal');
 
-deleteModalOpen.addEventListener('click', openDeleteModal);
-deleteModalClose.addEventListener('click', closeDeleteModal)
+if (deleteModalOpen) {
+    deleteModalOpen.addEventListener('click', openDeleteModal);
+    deleteModalClose.addEventListener('click', closeDeleteModal)
+}
 
 function openDeleteModal() {
     document.getElementById('close_delete_modal').style.transition = 'ease-in-out 0.3s';
@@ -18,9 +20,9 @@ function closeDeleteModal() {
 }
 
 
-var addressModal = document.getElementById('address-modal');
-var addressModalOpen = document.getElementById('address');
-var addressModalClose = document.getElementById('close_address_modal');
+const addressModal = document.getElementById('address-modal');
+const addressModalOpen = document.getElementById('address');
+const addressModalClose = document.getElementById('close_address_modal');
 
 addressModalOpen.addEventListener('click', openAddressModal);
 addressModalClose.addEventListener('click', closeAddressModal)
@@ -46,9 +48,9 @@ function closeAddressModal() {
 }
 
 
-var orderModal = document.getElementById('orders-modal');
-var orderModalOpen = document.getElementById('orders');
-var orderModalClose = document.getElementById('close_orders_modal');
+const orderModal = document.getElementById('orders-modal');
+const orderModalOpen = document.getElementById('orders');
+const orderModalClose = document.getElementById('close_orders_modal');
 
 orderModalOpen.addEventListener('click', openOrderModal);
 orderModalClose.addEventListener('click', closeOrderModal)
