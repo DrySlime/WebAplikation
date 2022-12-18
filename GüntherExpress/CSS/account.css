@@ -54,6 +54,7 @@ body {
 }
 
 #logout {
+    display: inline-block;
     z-index: 2 !important;
 }
 
@@ -150,7 +151,7 @@ body {
     margin-right: 1vmin;
 }
 
-.account_dash_wrapper input {
+.account_dash_wrapper input{
     margin-bottom: 2vmin;
     font-size: 1.5vmin;
     color: #101010;
@@ -423,7 +424,8 @@ body {
 .account_subsection_button button:hover,
 .account_subsection_button a:hover,
 .account_section_button a:hover,
-.account_header_logout a:hover {
+.account_header_logout a:hover,
+.add_address button:hover {
     color: #fc466b;
     transform: scale(1.05);
     cursor: pointer;
@@ -590,25 +592,26 @@ body {
     display: grid;
     width: 95%;
     height: 80%;
-    grid-template-columns: .7fr .7fr .7fr;
-    row-gap: 2vmin;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    row-gap: 5vmin;
     column-gap: 2.3rem;
-    padding-top: 10vmin;
-    padding-left: 5vmin;
-    padding-right: 5vmin;
+    padding: 5vmin 5vmin 5vmin;
 }
 
 .modal_address_grid_container {
     width: 100%;
     max-width: 100%;
-    height: 100%;
+    height: 120%;
     border-color: #888888;
     border-style: solid;
     border-width: 2px;
     border-radius: 2rem;
-    padding: 6vmin 6vmin 0;
+    padding: 3vmin 3vmin 0;
     overflow-wrap: break-word;
     word-wrap: break-word;
+    max-height: 120%;
+    overflow: hidden;
 }
 
 .addressitem_container {
@@ -625,7 +628,7 @@ body {
     word-wrap: break-word;
 }
 
-.addressitem_container h1 {
+.addressitem_container h2 {
     font-size: 3vmin;
 }
 
@@ -647,7 +650,7 @@ body {
 
 .addressitem_container .defaultText {
     position: absolute;
-    top: -5vmin;
+    top: -2vmin;
     font-size: 1.25vmin;
     font-weight: 400;
 }
@@ -740,3 +743,61 @@ body {
     border-bottom-style: solid;
     border-bottom-width: 1px;
 }
+
+#addAddress {
+    width: 100%;
+    height: auto;
+}
+
+.add_address_oneline {
+    display: flex;
+    flex-direction: row;
+}
+
+.add_address h2{
+    padding-bottom: 1vmin;
+}
+
+.addressitem_container form input {
+    margin-bottom: .5vmin;
+    width: 100%;
+    font-size: 1.5vmin;
+    color: #101010;
+    border: none;
+    outline: none;
+    font-weight: 500;
+    text-indent: 2px;
+    appearance: none;
+    padding: .5vmin;
+    background: #f1f1f1;
+    border-radius: 1vmin;
+}
+
+.add_address_oneline input:last-child {
+    width: 30%;
+}
+
+.addressitem_addbutton {
+    display: flex;
+    padding-top: 1vmin;
+    width: 100%;
+    justify-content: flex-end;
+    align-content: flex-end;
+    align-items: flex-end;
+}
+
+.addressitem_addbutton button {
+    font-weight: 500;
+    width: auto;
+    text-align: center;
+    font-size: 1.3vmin;
+    color: #FFFFFF;
+    text-decoration: none;
+    border-radius: 3vmin;
+    background-color: #101010;
+    padding: .8vmin;
+    transition: ease-in-out 0.3s;
+    border-style: none;
+    outline-style: none;
+}
+
