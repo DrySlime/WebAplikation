@@ -930,4 +930,24 @@ function saleTitleExists($conn, $saleTitle){
         mysqli_stmt_close($stmt);
         return $result;
     }
+
+    
+}
+
+# Für die Account-Seite
+
+function getProfileData($conn){
+
+    $userid = $_SESSION['userid'];
+
+    $sql = "SELECT user_uid, firstname, lastname, email FROM site_user WHERE id = ?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$userid);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    mysqli_stmt_close($stmt);
+    return mysqli_fetch_assoc($resultData);
 }
