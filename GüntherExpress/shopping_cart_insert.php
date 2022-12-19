@@ -14,9 +14,7 @@ $userName;
 if(isset($_SESSION['useruid'])){
     $userName = $_SESSION['useruid'];
 }else{
-    echo "<div style="."background-color:#f9d4dc".">";
-    echo  "<p class="."confirmation".">Sie müssen sich erst <a href="."login.php".">einlogen!</a></p>";
-    echo "</div>";
+    header('Location: login.php');
     exit();
 }
 

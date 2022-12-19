@@ -35,9 +35,15 @@ if (!isset($_POST["search"])) {
         <h1><?php echo $name ?></h1>
         <?php
         if ($name == "Cerealien") {
-            echo '<img src = "img/cereals.png" alt = "Andre Caputo" >';
-        } else {
-            echo '<img src = "img/cadbury.png" alt = "Andre Caputo" >';
+            echo '<img src = "img/cereals.png" alt = "Andre Caputo">';
+        } else if($name == "Fruchtgummi") {
+            echo '<img src = "img/gummies.png" alt = "3DJustincase">';
+        } else if($name == "Kekse") {
+            echo '<img src = "img/cookieSnap.png" alt = "Andre Caputo">';
+        } else if($name == "Backwaren") {
+            echo '<img src = "img/macarons.png" alt = "Andre Caputo">';
+        }  else {
+            echo '<img src = "img/cadbury.png" alt = "Andre Caputo">';
         }
         ?>
     </div>

@@ -216,11 +216,10 @@ body {
 
 .item_amount_settings {
     width: 25%;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     align-content: center;
-    text-align: center;
-    display: flex;
+    display: inline-flex;
 }
 
 .item_amount_settings h4 {
@@ -233,6 +232,10 @@ body {
 
 .item_amount_settings span {
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
 }
 
 .buttonAmount {
@@ -252,6 +255,7 @@ body {
 
 .buttonAmount .material-icons:hover,
 .buttonAmount .material-icons:focus {
+    transform: scale(1.05);
     color: #fc466b;
 }
 
@@ -260,12 +264,13 @@ body {
     border-radius: 3rem;
     background-color: #101010;
     color: #FFFFFF;
-    margin-left: 5vmin;
+    margin-left: 3vmin;
     padding: 1vmin;
     cursor: pointer;
     width: auto;
     display: flex;
     justify-content: flex-start;
+    transition: ease-in-out 0.5s;
     align-items: center;
     align-content: center;
     text-align: center;
@@ -277,15 +282,15 @@ body {
     color: #101010;
     border-radius: 50%;
     padding: .75vmin;
-    margin-left: 2vmin;
     border: none;
     transition: 1s;
     text-align: center;
 }
 
-.item_add_settings:hover > button,
-.item_add_settings:focus > button {
-    box-shadow: inset 2em 2em #f9d4dc;
+.item_add_settings:hover,
+.item_add_settings:focus {
+    box-shadow: inset 4em 4em #fc466b;
+    transform: scale(1.05);
     color: #101010;
 }
 
