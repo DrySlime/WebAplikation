@@ -239,6 +239,11 @@ body {
     flex-direction: column;
 }
 
+.address_data #noEmail {
+    font-size: 1.8vmin;
+    font-weight: 500;
+}
+
 .payment_card {
     height: 80%;
     width: 100%;
