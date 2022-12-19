@@ -24,8 +24,8 @@ if (!isset($_SESSION["useruid"])) {
     require_once 'includes/account_include.php';
     require_once 'includes/functions_include.php';
     $resultProfile = getProfileData($conn);
-    //$resultDefAddress = getDefUserAddressData($conn);
-    //$resultAddressWODef = getUserAddressDataWODef($conn);
+    $resultDefAddress = getDefUserAddressData($conn);
+    $resultAddressWODef = getUserAddressDataWODef($conn);
     ?>
 
 
@@ -98,10 +98,20 @@ if (!isset($_SESSION["useruid"])) {
                     </div>
                     <div class="standard_address_wrapper">
                         <div class="address_data">
-                            <h2>Stuart Eichler</h2>
-                            <h4>Paracelsuspark 1</h4>
-                            <h4>Hamm, 59063</h4>
-                            <h4>Deutschland</h4>
+                            <?php 
+                                if ($resultDefAddress !== null) {
+                                    ?>
+                                    <h2><?php echo $resultProfile['firstname']; ?> <?php echo $resultProfile['lastname']; ?></h2>
+                                    <h4><?php echo $resultDefAddress['address_line1'];?> <?php echo $resultDefAddress['street_number'];?></h4>
+                                    <h4><?php echo $resultDefAddress['city'];?>, <?php echo $resultDefAddress['postal_code'];?></h4>
+                                    <?php
+                                }else{
+                                    ?>
+                                        <h2>Es ist noch keine Adresse bei uns hinterlegt!</h2>
+                                        <h4>Du kannst aber gerne eine hinzufügen</h4>
+                                    <?php
+                                }?>
+                            
                         </div>
                     </div>
                     <div class="account_subsection_button">
@@ -201,90 +211,70 @@ if (!isset($_SESSION["useruid"])) {
                 <p>Hier kannst du deine gespeicherten Adressen einsehen, bearbeiten, oder weitere hinzufügen.</p>
             </div>
             <div class="modal_address_grid_wrapper">
-                <div class="modal_address_grid_container">
-                    <div class="addressitem_container">
-                        <h2>Stuart Eichler</h2>
-                        <h4>Paracelsuspark 1</h4>
-                        <h4>Hamm, 59063</h4>
-                        <h4>Deutschland</h4>
-                        <a class="defaultText">Standard Adresse</a>
-                        <div class="address_setting_container">
-                            <span id="addressicon" class="material-symbols-outlined"
-                                  title="Adresse Löschen">delete</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal_address_grid_container">
-                    <div class="addressitem_container">
-                        <h2>Stuart Eichler</h2>
-                        <h4>Paracelsuspark 1</h4>
-                        <h4>Hamm, 59063</h4>
-                        <h4>Deutschland</h4>
-                        <div class="address_setting_container">
-                            <span id="addressicon" class="material-symbols-outlined" title="Als Standard Setzen">edit_location</span>
-                            <span id="addressicon" class="material-symbols-outlined"
-                                  title="Adresse Löschen">delete</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal_address_grid_container">
-                    <div class="addressitem_container">
-                        <h2>Stuart Eichler</h2>
-                        <h4>Paracelsuspark 1</h4>
-                        <h4>Hamm, 59063</h4>
-                        <h4>Deutschland</h4>
-                        <div class="address_setting_container">
-                            <span id="addressicon" class="material-symbols-outlined" title="Als Standard Setzen">edit_location</span>
-                            <span id="addressicon" class="material-symbols-outlined"
-                                  title="Adresse Löschen">delete</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal_address_grid_container">
-                    <div class="addressitem_container">
-                        <h2>Stuart Eichler</h2>
-                        <h4>Paracelsuspark 1</h4>
-                        <h4>Hamm, 59063</h4>
-                        <h4>Deutschland</h4>
-                        <div class="address_setting_container">
-                            <span id="addressicon" class="material-symbols-outlined" title="Als Standard Setzen">edit_location</span>
-                            <span id="addressicon" class="material-symbols-outlined"
-                                  title="Adresse Löschen">delete</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal_address_grid_container">
-                    <div class="addressitem_container">
-                        <h2>Stuart Eichler</h2>
-                        <h4>Paracelsuspark 1</h4>
-                        <h4>Hamm, 59063</h4>
-                        <h4>Deutschland</h4>
-                        <div class="address_setting_container">
-                            <span id="addressicon" class="material-symbols-outlined" title="Als Standard Setzen">edit_location</span>
-                            <span id="addressicon" class="material-symbols-outlined"
-                                  title="Adresse Löschen">delete</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal_address_grid_container">
-                    <div class="addressitem_container add_address">
-                        <h2>Neue Adresse</h2>
-                        <form id="addAddress" action="#" method="post">
-                            <div class="add_address_oneline">
-                                <input type="text" name="addStreet" id="addStreet" placeholder="Straße">
-                                <input type="text" name="addHausnummer" id="addHausnummer" placeholder="No.">
+                <?php 
+                    $toWriteAdresses = 6;
+                    if ($resultDefAddress !== null) {
+                ?>
+                        <div class="modal_address_grid_container">
+                            <div class="addressitem_container">
+                                <h2><?php echo $resultProfile['firstname']; ?> <?php echo $resultProfile['lastname']; ?></h2>
+                                <h4><?php echo $resultDefAddress['address_line1'];?> <?php echo $resultDefAddress['street_number'];?></h4>
+                                <h4><?php echo $resultDefAddress['city'];?>, <?php echo $resultDefAddress['postal_code'];?></h4>    
+                                <a class="defaultText">Standard Adresse</a>
+                                <div class="address_setting_container">
+                                    <span id="addressicon" class="material-symbols-outlined"
+                                        title="Adresse Löschen">delete</span>
+                                </div>
                             </div>
-                            <input type="text" name="addStadt" id="addStadt" placeholder="Stadt">
-                            <input type="text" name="postal-code" id="postal-code" placeholder="PLZ">
-                        </form>
-                        <div class="addressitem_addbutton">
-                            <button id="add_Address" form="addAddress" type="submit" name="add_address_button">
-                                Hinzufügen
-                            </button>
                         </div>
-                    </div>
-                </div>
-            </div>
+                <?php
+                        $toWriteAdresses --;
+                    }
+
+                    if($resultAddressWODef !== null){
+                        while($rows = $resultAddressWODef->fetch_assoc()){
+                            if ($toWriteAdresses > 1) {
+                ?>
+                                <div class="modal_address_grid_container">
+                                    <div class="addressitem_container">
+                                        <h2><?php echo $resultProfile['firstname']; ?> <?php echo $resultProfile['lastname']; ?></h2>
+                                        <h4><?php echo $rows['address_line1'];?> <?php echo $rows['street_number'];?></h4>                        
+                                        <h4><?php echo $rows['city'];?>, <?php echo $rows['postal_code'];?></h4>
+                                        <div class="address_setting_container">
+                                            <span id="addressicon" class="material-symbols-outlined" title="Als Standard Setzen">edit_location</span>
+                                            <span id="addressicon" class="material-symbols-outlined"
+                                                title="Adresse Löschen">delete</span>
+                                        </div>
+                                    </div>
+                                </div>
+                <?php
+                                $toWriteAdresses --;
+                            }
+                        }
+                    }
+
+                    for ($x = 0; $x < $toWriteAdresses; $x++ ) { 
+                ?>
+                        <div class="modal_address_grid_container">
+                            <div class="addressitem_container add_address">
+                                <h2>Neue Adresse</h2>
+                                <form id="addAddress" action="#" method="post">
+                                    <div class="add_address_oneline">
+                                        <input type="text" name="addStreet" id="addStreet" placeholder="Straße">
+                                        <input type="text" name="addHausnummer" id="addHausnummer" placeholder="No.">
+                                    </div>
+                                    <input type="text" name="addStadt" id="addStadt" placeholder="Stadt">
+                                    <input type="text" name="postal-code" id="postal-code" placeholder="PLZ">
+                                </form>
+                                <div class="addressitem_addbutton">
+                                    <button id="add_Address" form="addAddress" type="submit" name="add_address_button">Hinzufügen</button>
+                                </div>
+                            </div>
+                        </div>
+            
+            <?php
+        }?>
+        </div>
             <div class="modal_buttons">
                 <button id="close_address_modal">Schließen</button>
             </div>

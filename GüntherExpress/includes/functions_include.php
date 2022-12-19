@@ -951,3 +951,39 @@ function getProfileData($conn){
     mysqli_stmt_close($stmt);
     return mysqli_fetch_assoc($resultData);
 }
+
+function getDefUserAddressData($conn){
+
+    $userid = $_SESSION['userid'];
+
+
+    $sql = "SELECT * FROM address INNER JOIN user_address ON address.id = user_address.address_id WHERE user_id = ? AND user_address.is_default_address = 1";
+    $stmt = mysqli_stmt_init($conn);
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$userid);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    mysqli_stmt_close($stmt);
+    
+    return mysqli_fetch_assoc($resultData);
+}
+
+function getUserAddressDataWODef($conn){
+
+    $userid = $_SESSION['userid'];
+
+
+    $sql = "SELECT * FROM address INNER JOIN user_address ON address.id = user_address.address_id WHERE user_id = ? AND user_address.is_default_address = 0";
+    $stmt = mysqli_stmt_init($conn);
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$userid);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    mysqli_stmt_close($stmt);
+    
+    return $resultData;
+}
