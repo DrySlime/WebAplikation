@@ -30,6 +30,10 @@ addressModalClose.addEventListener('click', closeAddressModal)
 function openAddressModal() {
     document.getElementById('close_address_modal').style.transition = 'ease-in-out 0.3s';
     document.getElementById('add_Address').style.transition = 'ease-in-out 0.3s';
+    const buttons = document.querySelectorAll('.addressitem_addbutton button');
+    buttons.forEach(button => {
+        button.style.transition = 'ease-in-out 0.3s'
+    });
     const icons = document.querySelectorAll('.address_setting_container span');
     icons.forEach(icon => {
         icon.style.transition = 'ease-in-out 0.3s'
@@ -40,6 +44,10 @@ function openAddressModal() {
 function closeAddressModal() {
     document.getElementById('close_address_modal').style.transition = 'none';
     document.getElementById('add_Address').style.transition = 'none';
+    const buttons = document.querySelectorAll('.addressitem_addbutton button');
+    buttons.forEach(button => {
+        button.style.transition = 'none'
+    });
     const icons = document.querySelectorAll('.address_setting_container span');
     icons.forEach(icon => {
         icon.style.transition = 'none'

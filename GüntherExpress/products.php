@@ -36,13 +36,13 @@ if (!isset($_POST["search"])) {
         <?php
         if ($name == "Cerealien") {
             echo '<img src = "img/cereals.png" alt = "Andre Caputo">';
-        } else if($name == "Fruchtgummi") {
+        } else if ($name == "Fruchtgummi") {
             echo '<img src = "img/gummies.png" alt = "3DJustincase">';
-        } else if($name == "Kekse") {
+        } else if ($name == "Kekse") {
             echo '<img src = "img/cookieSnap.png" alt = "Andre Caputo">';
-        } else if($name == "Backwaren") {
+        } else if ($name == "Backwaren") {
             echo '<img src = "img/macarons.png" alt = "Andre Caputo">';
-        }  else {
+        } else {
             echo '<img src = "img/cadbury.png" alt = "Andre Caputo">';
         }
         ?>
@@ -65,10 +65,17 @@ if (!isset($_POST["search"])) {
                     <h4>Kategorien</h4>
                 </div>
                 <div class="sidebar_options_settings">
-                    <?php foreach (getCategoryList($conn) as $key => $value) { ?>
-                        <?php echo "
+                    <?php foreach (getCategoryList($conn) as $key => $value) {
+                        if ($value == $name) {
+                            echo "
+                            <a href='products.php?name=" . $value . "'><h4 style='color: #fc466b'>" . $value ."</h4></a>
+                            ";
+                        } else {
+                            echo "
                           <a href='products.php?name=" . $value . "'><h4>" . $value . "</h4></a>
-                        " ?><?php } ?>
+                        ";
+                        }
+                    } ?>
                 </div>
                 <div class="sidebar_options_header">
                     <h4>Preis</h4>
