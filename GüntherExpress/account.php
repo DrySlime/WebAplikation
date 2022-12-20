@@ -23,7 +23,7 @@ if (!isset($_SESSION["useruid"])) {
     require_once 'includes/dbh_include.php';
     require_once 'includes/account_include.php';
     require_once 'includes/functions_include.php';
-    $resultProfile = getProfileData($conn);
+    $resultAccount = getAccountData($conn);
     $resultDefAddress = getDefUserAddressData($conn);
     $resultAddressWODef = getUserAddressDataWODef($conn);
     ?>
@@ -60,12 +60,12 @@ if (!isset($_SESSION["useruid"])) {
                         </h4>
                     </div>
                     <div class="account_dash_wrapper">
-                        <form id="changeAccount" action="#" method="post">
+                        <form id="changeAccount" action="include/account_include.php" method="post">
                             <div class="dash_label_headers">
                                 <h4>Benutzername:</h4>
                             </div>
                             <label for="username"></label><input required type="text" name="username" id="username"
-                                                                 value="<?php echo $resultProfile['user_uid']; ?>"
+                                                                 value="<?php echo $resultAccount['user_uid']; ?>"
                                                                  placeholder="Benutzername">
                             <div class="dash_label_headers account_double_container">
                                 <h4>Vorname:</h4>
@@ -73,17 +73,17 @@ if (!isset($_SESSION["useruid"])) {
                             </div>
                             <div class="account_double_container">
                                 <label for="name"></label><input required type="text" name="" id="name"
-                                                                 value= "<?php echo $resultProfile['firstname']; ?>"
+                                                                 value= "<?php echo $resultAccount['firstname']; ?>"
                                                                  placeholder="Vorname">
                                 <label for="surname"></label><input required type="text" name="surname" id="surname"
-                                                                    value="<?php echo $resultProfile['lastname']; ?>"
+                                                                    value="<?php echo $resultAccount['lastname']; ?>"
                                                                     placeholder="Nachname">
                             </div>
                             <div class="dash_label_headers">
                                 <h4>Email:</h4>
                             </div>
                             <label for="email"></label><input required type="text" name="email" id="email"
-                                                              value="<?php echo $resultProfile['email']; ?>"
+                                                              value="<?php echo $resultAccount['email']; ?>"
                                                               placeholder="Email">
                             <div class="dash_label_headers account_double_container">
                                 <h4>Neues Passwort:</h4>
@@ -115,7 +115,7 @@ if (!isset($_SESSION["useruid"])) {
                             <?php
                             if ($resultDefAddress !== null) {
                                 ?>
-                                <h2><?php echo $resultProfile['firstname']; ?><?php echo $resultProfile['lastname']; ?></h2>
+                                <h2><?php echo $resultAccount['firstname']; ?><?php echo $resultAccount['lastname']; ?></h2>
                                 <h4><?php echo $resultDefAddress['address_line1']; ?><?php echo $resultDefAddress['street_number']; ?></h4>
                                 <h4><?php echo $resultDefAddress['city']; ?>
                                     , <?php echo $resultDefAddress['postal_code']; ?></h4>
@@ -202,7 +202,7 @@ if (!isset($_SESSION["useruid"])) {
                 <p id="sad_life">Wir werden dich beim Confectioner vermissen!</p>
             </div>
             <div class="modal_input">
-                <form id="deleteAccount" action="#" method="post">
+                <form id="deleteAccount" action="include/account_include.php" method="post">
                     <label for="delemail"></label><input required type="text" name="delemail" id="delemail"
                                                          placeholder="Email">
                     <label for="delpassword"></label><input required type="password" name="delpassword" id="delpassword"
@@ -231,7 +231,7 @@ if (!isset($_SESSION["useruid"])) {
                     ?>
                     <div class="modal_address_grid_container">
                         <div class="addressitem_container">
-                            <h2><?php echo $resultProfile['firstname']; ?><?php echo $resultProfile['lastname']; ?></h2>
+                            <h2><?php echo $resultAccount['firstname']; ?><?php echo $resultAccount['lastname']; ?></h2>
                             <h4><?php echo $resultDefAddress['address_line1']; ?><?php echo $resultDefAddress['street_number']; ?></h4>
                             <h4><?php echo $resultDefAddress['city']; ?>
                                 , <?php echo $resultDefAddress['postal_code']; ?></h4>
@@ -252,7 +252,7 @@ if (!isset($_SESSION["useruid"])) {
                             ?>
                             <div class="modal_address_grid_container">
                                 <div class="addressitem_container">
-                                    <h2><?php echo $resultProfile['firstname']; ?><?php echo $resultProfile['lastname']; ?></h2>
+                                    <h2><?php echo $resultAccount['firstname']; ?><?php echo $resultAccount['lastname']; ?></h2>
                                     <h4><?php echo $rows['address_line1']; ?><?php echo $rows['street_number']; ?></h4>
                                     <h4><?php echo $rows['city']; ?>, <?php echo $rows['postal_code']; ?></h4>
                                     <div class="address_setting_container">
@@ -447,7 +447,7 @@ if (!isset($_SESSION["useruid"])) {
                 <p id="sad_life">Wir werden dich beim Confectioner vermissen!</p>
             </div>
             <div class="modal_input">
-                <form id="deleteAccount" action="#" method="post">
+                <form id="deleteAccount" action="include/account_include.php" method="post">
                     <label for="delemail"></label><input required type="text" name="delemail" id="delemail"
                                                          placeholder="Email">
                     <label for="delpassword"></label><input required type="password" name="delpassword" id="delpassword"

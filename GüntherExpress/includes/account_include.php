@@ -3,39 +3,17 @@ require_once 'dbh_include.php';
 require_once 'functions_include.php';
 
 
-    if (isset($_POST['change_password_btn'])){
+    
+    #TODO : change password hakt
+    if (isset($_POST['register_button'])) {
         session_start();
-
-        $oldPassword = $_POST['password_old'];
-        $newPassword = $_POST['password_new'];
-        $repeatPassword = $_POST['password_repeat'];
-    
-        if ( rightPassword($conn,$oldPassword) ) {
-            if (passwordMatch($newPassword, $repeatPassword)!==false) {
-                header("location: ../account.php?error=passwordsdontmatch");
-                exit();
-            }
-            else {
-                changePassword($conn,$newPassword);
-                exit();
-            }
-            
-        }
-        else{
-            header("location: ../account.php?error=wonginput");
-            exit();
-            
-        }
-    
-    }
-    
-    
-    if (isset($_POST['change_profile_btn'])) {
-        session_start();
-        $usernameChange = $_POST['username_change'];
-        $nameChange = $_POST['name_change'];
-        $surnameChange = $_POST['surname_change'];
-        $emailChange = $_POST['email_change'];
+        $usernameChange = $_POST['username'];
+        $nameChange = $_POST['name'];
+        $surnameChange = $_POST['surname'];
+        $emailChange = $_POST['email'];
+        $newPassword = $_POST['newpassword'];
+        $oldPassword = $_POST['oldpassword'];
+        
 
         if(invalidUid($usernameChange)!==false){
             header("location: ../account.php?error=invaliduid");
@@ -46,51 +24,46 @@ require_once 'functions_include.php';
             header("location: ../account.php?error=invalidemail");
             exit();
         }
-        else if (emptyInputProfile($emailChange,$nameChange,$surnameChange,$usernameChange)!==false) {
-            header("location: ../account.php?error= emptyinput");
-            exit();
-        }
-        else if($usernameChange !== $_SESSION['useruid']){
-            if(uidExists($conn, $usernameChange,$usernameChange)!==false){
+        else if(rightPassword($conn,$oldPassword)){
+            if($usernameChange !== $_SESSION['useruid']){
+                if(uidExists($conn, $usernameChange,$usernameChange)!==false){
                 header("location: ../account.php?error=uidexists");
                 exit();
+                }   
+                else {
+                    if ($newPassword = null) {
+                        changeAccount($conn, $usernameChange, $nameChange, $surnameChange, $emailChange);
+                        header("location: ../account.php?error=none");
+                        exit();
+                        
+                    }
+                    else {
+                        changeAccount($conn, $usernameChange, $nameChange, $surnameChange, $emailChange);
+                        changePassword($conn,$newPassword);
+                        header("location: ../account.php?error=none");
+                        exit();
+                    }
+                    
+                }
+            } else {
+                if ($newPassword = null) {
+                        changeAccount($conn, $usernameChange, $nameChange, $surnameChange, $emailChange);
+                        header("location: ../account.php?error=none");
+                        exit();
+                    }
+                    else {
+                        changeAccount($conn, $usernameChange, $nameChange, $surnameChange, $emailChange);
+                        changePassword($conn,$newPassword);
+                        header("location: ../account.php?error=none");
+                        exit();
+                    }
             }
-            else {
-                changeProfile($conn, $usernameChange, $nameChange, $surnameChange, $emailChange);
-                exit();
-            }
-        }
-        else {
-            changeProfile($conn, $usernameChange, $nameChange, $surnameChange, $emailChange);
-            exit();
         }
     
     }
     
     
-    if (isset($_POST['change_address_btn'])) {
-        session_start();
-        $streetChange = $_POST['street_change'];
-        $housenoChange = $_POST['houseno_change'];
-        $cityChange = $_POST['city_change'];
-        $postalCodeChange = $_POST['postal_code_change'];
-        $addressID = $_SESSION['change_address_id']; 
-
-            if (getAddressIDByData($conn,$streetChange,$housenoChange,$cityChange,$postalCodeChange) !== null) {
-                bindAddressToUser($conn,$streetChange,$housenoChange,$cityChange,$postalCodeChange);
-            }
-            else{
-                addAddress($conn,$addressID,$streetChange,$housenoChange,$cityChange,$postalCodeChange);
-                exit();
-            }
-            unbindAddress($conn,$addressID);
-            $_SESSION['change_address_id'] = 0;
-            header("location: ../account.php?error=none");
-            exit();
-    
-    }
-    
-    
+    #TODO
     if (isset($_POST['change_address_action'])) {
         session_start();
         $changeAddressID = $_POST['address_ID'];
@@ -107,7 +80,7 @@ require_once 'functions_include.php';
         }
     
     }
-
+    #TODO
     if (isset($_POST['delete_address'])) {
         session_start();
         $deleteAddressID = $_POST['address_ID'];
@@ -119,25 +92,39 @@ require_once 'functions_include.php';
     }
     
     
-    if (isset($_POST['add_address_btn'])) {
-        session_start();
-        $streetChange = $_POST['street_change'];
-        $housenoChange = $_POST['houseno_change'];
-        $cityChange = $_POST['city_change'];
-        $postalCodeChange = $_POST['postal_code_change'];
-        $addressHope = getAddressIDByData($conn,$streetChange,$housenoChange,$cityChange,$postalCodeChange);
-        echo $addressHope['id'];
-        if ( $addressHope['id'] == null) {
-            echo 'i want to live';
-            addAddress($conn,$streetChange,$housenoChange,$cityChange,$postalCodeChange);
+    if (isset($_POST['add_address_button'])) {
+        $streetAdd = $_POST['addStreet'];
+        $housenoAdd = $_POST['addHausnummer'];
+        $cityAdd = $_POST['addStadt'];
+        $postalCodeAdd = $_POST['postal-code'];
+        $addressExists = getAddressIDByData($conn,$streetAdd,$housenoAdd,$cityAdd,$postalCodeAdd);
+        if ( $addressExists['id'] == null) {
+            addAddress($conn,$streetAdd,$housenoAdd,$cityAdd,$postalCodeAdd);
             exit();
         }
         else{
-            echo 'i want to die';
-            bindAddressToUser($conn,$streetChange,$housenoChange,$cityChange,$postalCodeChange);
+            bindAddressToUser($conn,$streetAdd,$housenoAdd,$cityAdd,$postalCodeAdd);
         }
     
     }
+
+    if (isset($_POST['delete_Account'])) {
+        $password = $_POST['delpassword'];
+        $email = $_POST['delemail'];
+
+        if (rightPassword($conn,$password) && rightEmail($conn,$email)) {
+            deactivateUser($conn);
+            session_unset();
+            session_destroy();
+            header("location: ../index.php");
+            exit();
+        }
+        else {
+            header("location: ../account.php?error=deletionfailed");
+        }
+    }
+
+    
     
 
 

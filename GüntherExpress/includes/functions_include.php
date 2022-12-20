@@ -936,7 +936,7 @@ function saleTitleExists($conn, $saleTitle){
 
 # Für die Account-Seite
 
-function getProfileData($conn){
+function getaccountData($conn){
 
     $userid = $_SESSION['userid'];
 
@@ -987,3 +987,236 @@ function getUserAddressDataWODef($conn){
     
     return $resultData;
 }
+
+function changeaccount($conn,$username, $name, $surname, $email){
+    $sql = "UPDATE site_user SET user_uid = ?, firstname = ?, lastname = ?, email = ? WHERE id = ?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../account.php?error=stmtfailed");
+        exit();
+    }
+    $userid = $_SESSION['userid'];
+    mysqli_stmt_bind_param($stmt,"sssss",$username,$name,$surname,$email,$userid);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+    $_SESSION['useruid'] = $username;
+
+}
+
+function changePassword($conn,$password){
+    $sql = " UPDATE site_user SET user_password = ? WHERE id = ?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../account.php?error=stmtfailed");
+        exit();
+    }
+
+    $hashedPassword = password_hash($password,PASSWORD_DEFAULT);
+    $userid = $_SESSION['userid'];
+
+    mysqli_stmt_bind_param($stmt,"ss",$hashedPassword,$userid);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+
+}
+
+function rightPassword($conn,$password){
+    $username = $_SESSION['useruid'];
+    $uidExists = uidExists($conn, $username,$username);
+
+    if($uidExists===false){
+        header("location: ../account.php?error=wronginput");
+        exit();
+    }
+
+    $pwdHashed = $uidExists["user_password"];
+    $checkPwd = password_verify($password,$pwdHashed);
+    return $checkPwd;
+    
+}
+
+function rightEmail($conn,$email){
+    $username = $_SESSION['useruid'];
+    $uidExists = uidExists($conn, $username,$username);
+
+    if($uidExists===false){
+        header("location: ../account.php?error=wronginput");
+        exit();
+    }
+
+    $checkEmail = $uidExists["email"];
+    return $checkEmail == $email;
+    
+}
+
+function addAddress($conn, $street, $houseno, $city, $postalCode){
+    $sql = " INSERT INTO address (street_number, address_line1, city, postal_code) VALUES (?,?,?,?);";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../account.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt,"ssss",$houseno,$street,$city,$postalCode);
+    mysqli_stmt_execute($stmt);
+    bindAddressToUser($conn, $street, $houseno, $city, $postalCode);
+    
+
+    mysqli_stmt_close($stmt);
+}
+
+function bindAddressToUser($conn, $street, $houseno, $city, $postalCode){
+    $userid = $_SESSION['userid'];
+    $address = getAddressIDByData($conn, $street, $houseno, $city, $postalCode);
+    $addressid = $address['id'];
+    if (alreadyBindAddress($conn,$addressid,$userid)) {
+        header("location: ../account.php?error=none");
+        exit();
+    }
+    else {
+        $sql = "INSERT INTO user_address (user_id, address_id) VALUES (?,?);";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../account.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt,"ss",$userid,$addressid);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+    
+
+    header("location: ../account.php?error=none");
+    exit();
+    }
+    
+}
+
+function unbindAddress($conn,$addressid){
+    $userid = $_SESSION['userid'];
+
+    $sql = "DELETE FROM user_address WHERE user_id = ? AND address_id = ?";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../profile.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt,"ss",$userid,$addressid);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+    
+
+    header("location: ../profile.php?error=none");
+    exit();
+} 
+
+function alreadyBindAddress($conn, $addressid,$userid){
+    $sql = "SELECT * FROM user_address WHERE address_id = ? AND user_id = ?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../account.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt,"ss",$addressid,$userid);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    if($row = mysqli_fetch_assoc($resultData)){
+        return true;
+    }else{
+        return false;
+    }
+    mysqli_stmt_close($stmt);
+
+}
+
+function getAddressIDByData($conn,$street, $houseno, $city, $postalCode){
+    
+
+    $sql = "SELECT * FROM address WHERE street_number = ? AND address_line1 = ? AND city = ? AND postal_code = ?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"ssss",$houseno, $street, $city, $postalCode);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    mysqli_stmt_close($stmt);
+    
+    return $resultData -> fetch_assoc();
+}
+
+function getPersonalOrderIDsDescending($conn){
+
+    $userid = $_SESSION['userid'];
+
+
+    $sql = "SELECT id FROM shop_order WHERE userid = ? DESC";
+    $stmt = mysqli_stmt_init($conn);
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$userid);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    mysqli_stmt_close($stmt);
+    
+    return $resultData;
+}
+
+function getPersonalOrderDataByID($conn,$orderID){
+
+    $sql = "SELECT * FROM shop_order INNER JOIN ON site_user.id = shop_order.siteuser_id INNER JOIN ON #TODO = shop_order.payment_method_id INNER JOIN ON #TODO = shop_order.shipping_address_id INNER JOIN ON #TODO = shop_order.shipping_method_id INNER JOIN ON order_status.id =  shop_order.order_status_id WHERE shop_order.id=?";
+    $stmt = mysqli_stmt_init($conn);
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$userid);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    mysqli_stmt_close($stmt);
+    
+    return $resultData;
+}
+
+function getObjectOrderDataByID($conn,$orderID){
+
+    $sql = "SELECT * FROM shop_line INNER JOIN ON product.id = order_line.product_item_id WHERE order_line.order_id=?";
+    $stmt = mysqli_stmt_init($conn);
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$userid);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    mysqli_stmt_close($stmt);
+    
+    return $resultData;
+}
+
+function deactivateUser($conn){
+    $userid = $_SESSION['userid'];
+    $sql = "UPDATE site_user SET active = 0 WHERE id=?";
+    $stmt = mysqli_stmt_init($conn);
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$userid);
+    mysqli_stmt_execute($stmt);
+
+    
+    mysqli_stmt_close($stmt);
+}
+
