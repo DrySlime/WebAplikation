@@ -1163,7 +1163,7 @@ function getPersonalOrderIDsDescending($conn){
     $userid = $_SESSION['userid'];
 
 
-    $sql = "SELECT id FROM shop_order WHERE userid = ? DESC";
+    $sql = "SELECT id FROM shop_order WHERE siteuser_id = ? ORDER BY id DESC";
     $stmt = mysqli_stmt_init($conn);
 
     mysqli_stmt_prepare($stmt,$sql);

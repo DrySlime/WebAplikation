@@ -26,6 +26,7 @@ if (!isset($_SESSION["useruid"])) {
     $resultAccount = getAccountData($conn);
     $resultDefAddress = getDefUserAddressData($conn);
     $resultAddressWODef = getUserAddressDataWODef($conn);
+    $resultOrderIDs = getPersonalOrderIDsDescending($conn);
     ?>
 </head>
 
@@ -137,26 +138,40 @@ if (!isset($_SESSION["useruid"])) {
                             <a id="orders">Deine Bestellungen</a>
                         </div>
                     </div>
-                    <div class="purchases_wrapper">
-                        <div class="grid_item">
-                            <a href="#"><img src="img/macaronProduct.png" alt=""></a>
-                        </div>
-                        <div class="grid_item grid_description">
-                            <h3>Macaron Box</h3>
-                            <div class="grid_inline">
-                                <h4 id="title">Menge:</h4>
-                                <h4>2</h4>
+                    <?php 
+                        $rows = $resultOrderIDs->fetch_assoc();
+                        if($rows != null){
+                            getObjectOrderDataByID($conn,$rows)
+                    ?>
+                            <div class="purchases_wrapper">
+                                <div class="grid_item">
+                                    <a href="#"><img src="img/macaronProduct.png" alt=""></a>
+                                </div>
+                                <div class="grid_item grid_description">
+                                    <h3>Macaron Box</h3>
+                                    <div class="grid_inline">
+                                        <h4 id="title">Menge:</h4>
+                                        <h4>2</h4>
+                                    </div>
+                                    <div class="grid_inline">
+                                        <h4 id="title">Summe:</h4>
+                                        <h4>420.69€</h4>
+                                    </div>
+                                    <div class="grid_inline">
+                                        <h4 id="title">Datum:</h4>
+                                        <h4>5. Dezember, 2022</h4>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="grid_inline">
-                                <h4 id="title">Summe:</h4>
-                                <h4>420.69€</h4>
-                            </div>
-                            <div class="grid_inline">
-                                <h4 id="title">Datum:</h4>
-                                <h4>5. Dezember, 2022</h4>
-                            </div>
-                        </div>
-                    </div>
+                    <?php    
+                        }else{
+                    ?>
+                            <h3>Du hast bisher noch nichts bei uns gekauft...</h3>
+                            <h4><a href ="index.php" id="delete" class="delete_account_button">Hier</a> geht es zu unserem Shop</h4>
+                            #TODO Link zum Shop farbig schön
+                    <?php       
+                        }
+                    ?>
                 </div>
                 <div class="grid_container flex_display">
                     <div class="grid_header underline_grid">
