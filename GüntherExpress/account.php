@@ -63,7 +63,7 @@ if (!isset($_SESSION["useruid"])) {
                                 <h4>Benutzername:</h4>
                             </div>
                             <label for="username"></label><input required type="text" name="username" id="username"
-                                                                 value="<?php echo $resultAccount['user_uid']; ?>"
+                                                                 value="<?php echo $resultAccount['user_uid'];?>"
                                                                  placeholder="Benutzername">
                             <div class="dash_label_headers account_double_container">
                                 <h4>Vorname:</h4>
@@ -71,17 +71,17 @@ if (!isset($_SESSION["useruid"])) {
                             </div>
                             <div class="account_double_container">
                                 <label for="name"></label><input required type="text" name="name" id="name"
-                                                                 value= "<?php echo $resultAccount['firstname']; ?>"
+                                                                 value= "<?php echo $resultAccount['firstname'];?>"
                                                                  placeholder="Vorname">
                                 <label for="surname"></label><input required type="text" name="surname" id="surname"
-                                                                    value="<?php echo $resultAccount['lastname']; ?>"
+                                                                    value="<?php echo $resultAccount['lastname'];?>"
                                                                     placeholder="Nachname">
                             </div>
                             <div class="dash_label_headers">
                                 <h4>Email:</h4>
                             </div>
                             <label for="email"></label><input required type="text" name="email" id="email"
-                                                              value="<?php echo $resultAccount['email']; ?>"
+                                                              value="<?php echo $resultAccount['email'];?>"
                                                               placeholder="Email">
                             <div class="dash_label_headers account_double_container">
                                 <h4>Neues Passwort:</h4>

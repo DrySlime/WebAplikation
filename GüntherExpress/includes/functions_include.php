@@ -940,7 +940,7 @@ function getaccountData($conn){
 
     $userid = $_SESSION['userid'];
 
-    $sql = "SELECT user_uid, firstname, lastname, email FROM site_user WHERE id = ?;";
+    $sql = "SELECT user_uid, firstname, lastname, email, user_password FROM site_user WHERE id = ?;";
     $stmt = mysqli_stmt_init($conn);
 
     mysqli_stmt_prepare($stmt,$sql);
@@ -1002,10 +1002,9 @@ function changeAccount($conn,$username, $name, $surname, $email,$newPassword){
 
     mysqli_stmt_close($stmt);
     $_SESSION['useruid'] = $username;
-    if ($newPassword == null) {
+    if ($newPassword != null) {
         changePassword($conn,$newPassword);
     }
-
 }
 
 function changePassword($conn,$password){
@@ -1028,26 +1027,29 @@ function changePassword($conn,$password){
 }
 
 function rightPassword($conn,$password){
-    $account=getAccountData($conn);
+    $username = $_SESSION['useruid'];
+    $uidExists = uidExists($conn, $username,$username);
 
-    $pwdHashed = $account["user_password"];
-    $passwordNewHashed = password_hash($password,PASSWORD_DEFAULT);
-    return ($pwdHashed === $passwordNewHashed);
-    
+    if($uidExists===false){
+        header("location: ../profile.php?error=wronginput");
+        exit();
+    }
+
+    $pwdHashed = $uidExists["user_password"];
+    $checkPwd = password_verify($password,$pwdHashed);
+    return $checkPwd;
+
 }
 
 function rightEmail($conn,$email){
     $username = $_SESSION['useruid'];
     $uidExists = uidExists($conn, $username,$username);
-
     if($uidExists===false){
         header("location: ../account.php?error=wronginput");
         exit();
     }
-
     $checkEmail = $uidExists["email"];
     return $checkEmail == $email;
-    
 }
 
 function addAddress($conn, $street, $houseno, $city, $postalCode){
