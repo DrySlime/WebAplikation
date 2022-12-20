@@ -60,7 +60,7 @@ if (!isset($_SESSION["useruid"])) {
                         </h4>
                     </div>
                     <div class="account_dash_wrapper">
-                        <form id="changeAccount" action="include/account_include.php" method="post">
+                        <form id="changeAccount" action="includes/account_include.php" method="post">
                             <div class="dash_label_headers">
                                 <h4>Benutzername:</h4>
                             </div>
@@ -72,7 +72,7 @@ if (!isset($_SESSION["useruid"])) {
                                 <h4>Nachname:</h4>
                             </div>
                             <div class="account_double_container">
-                                <label for="name"></label><input required type="text" name="" id="name"
+                                <label for="name"></label><input required type="text" name="name" id="name"
                                                                  value= "<?php echo $resultAccount['firstname']; ?>"
                                                                  placeholder="Vorname">
                                 <label for="surname"></label><input required type="text" name="surname" id="surname"
@@ -90,7 +90,7 @@ if (!isset($_SESSION["useruid"])) {
                                 <h4>Altes Passwort:</h4>
                             </div>
                             <div class="account_double_container">
-                                <label for="newpassword"></label><input required type="password" name="newpassword"
+                                <label for="newpassword"></label><input type="password" name="newpassword"
                                                                         id="newpassword"
                                                                         placeholder="Neues Passwort">
                                 <label for="oldpassword"></label><input required type="password" name="oldpassword"
@@ -202,7 +202,7 @@ if (!isset($_SESSION["useruid"])) {
                 <p id="sad_life">Wir werden dich beim Confectioner vermissen!</p>
             </div>
             <div class="modal_input">
-                <form id="deleteAccount" action="include/account_include.php" method="post">
+                <form id="deleteAccount" action="includes/account_include.php" method="post">
                     <label for="delemail"></label><input required type="text" name="delemail" id="delemail"
                                                          placeholder="Email">
                     <label for="delpassword"></label><input required type="password" name="delpassword" id="delpassword"
@@ -447,7 +447,7 @@ if (!isset($_SESSION["useruid"])) {
                 <p id="sad_life">Wir werden dich beim Confectioner vermissen!</p>
             </div>
             <div class="modal_input">
-                <form id="deleteAccount" action="include/account_include.php" method="post">
+                <form id="deleteAccount" action="includes/account_include.php" method="post">
                     <label for="delemail"></label><input required type="text" name="delemail" id="delemail"
                                                          placeholder="Email">
                     <label for="delpassword"></label><input required type="password" name="delpassword" id="delpassword"

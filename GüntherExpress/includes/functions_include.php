@@ -1002,6 +1002,7 @@ function changeaccount($conn,$username, $name, $surname, $email){
 
     mysqli_stmt_close($stmt);
     $_SESSION['useruid'] = $username;
+    exit();
 
 }
 
@@ -1021,6 +1022,7 @@ function changePassword($conn,$password){
     mysqli_stmt_execute($stmt);
 
     mysqli_stmt_close($stmt);
+    exit();
 
 }
 
