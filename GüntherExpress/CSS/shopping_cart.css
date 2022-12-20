@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap');
+.background{
+    background-color: #f9d4dc;
+    padding-top: 3%;
+}
+
+.shopping-cart-text{
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+}
+
+.shopping-cart-container{
+    background-color: white;
+    border-radius: 20px;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 10px;
+    
+}
+
+.product{
+    display: grid;
+    grid-template-columns: 10% 90%;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.product-image{
+    width: 150px;
+    height: 150px;
+    margin: auto;
+}
+
+.product-info{
+    font-family: 'Poppins', sans-serif;
+}
+
+
+.image{
+    width: 100%;
+    height: 100%;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+
+
+.product-headline{
+    font-family: 'Poppins', sans-serif;
+    line-height: 24px;
+    margin-bottom: 5px;
+    text-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.product-price{
+    margin: 0%;
+}
+
+.product-qty-text{
+    text-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    font-family: 'Poppins', sans-serif;
+    margin: 0%;
+}
+
+
+.product-sum-price{
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    text-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    float: right;
+    margin-right: 20px;
+}
+
+
+
+
+.delete-icon{
+    color: black;
+    font-family: 'Poppins', sans-serif;
+    border: 2px solid #D4045F;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.button-container{
+    margin-top: 15px;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: row-reverse;
+ 
+}
+
+.end-price{
+    font-weight: bold;
+    text-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    font-family: 'Poppins', sans-serif;
+    margin-right: 20px;
+    margin-top: 5px;
+    
+}
+
+.button{
+    background-color: #D94A69;
+    margin-bottom: 30px;
+    margin-right: 30px;
+    border-radius: 30px;
+    border-style: none;
+    height: 50px;
+    width: 140px;
+    color: white;
+    font-weight: bold;
+    transition: 0.5s;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    
+    
+}
+
+.button:hover{
+    background-color: #BD405B;
+    margin-bottom: 30px;
+    border-radius: 30px;
+    border-style: none;
+    height: 50px;
+    width: 140px;
+    color: white;
+    font-weight: bold;
+    transition: 0.5s;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    
+}

@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap');
+
+.background{
+    background-color: #f9d4dc;
+    padding:5em;
+    padding-top: 5em;
+    padding-bottom: 5em;
+}
+
+.container{
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 10px;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.headline_container{
+}
+
+.headline{
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+}
+
+.box-container{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    padding-bottom: 50px;
+}
+
+.column_1{
+    justify-self: end;
+    margin-right: 10px;
+}
+
+.column_2{
+    margin-left: 10px;
+}
+
+.address, 
+.shipping, 
+.payment, 
+.price{
+    display: flex;
+    flex-direction: column;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 30px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    margin-top: 3vh;
+    height: 350px;
+    width: 30vw;
+    padding-bottom: 20px;
+}
+
+p{
+    margin: 3px;
+}
+
+h1{
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    padding-top: 30px;
+    margin: 0;
+    margin-bottom: 50px;
+}
+
+.button{
+    background-color: #262525;
+    border-style: none;
+    border-radius: 30px;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    text-decoration: none;
+    margin-top: auto;
+    width: 200px;
+    align-self: center;
+}
+
+.button:hover{
+    background-color: #BD405B;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.buy_button{
+    background-color: #D4045F;
+    border-style: none;
+    border-radius: 30px;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    text-decoration: none;
+    margin-top: auto;
+    width: 200px;
+    align-self: center;
+}
+
+.buy_button:hover{
+    background-color: #BD405B;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}

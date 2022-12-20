@@ -9,18 +9,6 @@ function emptyInputSignup($email,$password,$passwordRepeat,$firstname,$lastname,
     return $result;
 }
 
-function emptyInputProfile($email,$firstname,$lastname,$username){
-    $result = false;
-    if(empty($email) || empty($firstname) || empty($lastname) || empty($username)){
-        $result=true;
-    }else{
-        $result=false;
-    }
-    return $result;
-}
-
-
-
 function invalidUid($username){
     if(!preg_match("/^[a-zA-Z0-9]*$/",$username)){
         $result=true;
@@ -60,40 +48,14 @@ function uidExists($conn, $username,$email){
     $resultData = mysqli_stmt_get_result($stmt);
 
     if($row = mysqli_fetch_assoc($resultData)){
+        mysqli_stmt_close($stmt);
         return $row;
     }else{
         $result = false;
+        mysqli_stmt_close($stmt);
         return $result;
     }
-    mysqli_stmt_close($stmt);
-
-
 }
-
-function invalidUserAddress($conn, $addressID){
-    $userid = $_SESSION['userid'];
-    $sql = "SELECT * FROM user_address WHERE user_id = ? AND address_id = ?;";
-    $stmt = mysqli_stmt_init($conn);
-
-    if(!mysqli_stmt_prepare($stmt,$sql)){
-        header("location: ../profile.php?error=stmtfailed");
-        exit();
-    }
-
-    mysqli_stmt_bind_param($stmt,"ss",$userid,$addressID);
-    mysqli_stmt_execute($stmt);
-
-    $resultData = mysqli_stmt_get_result($stmt);
-
-    if($row = mysqli_fetch_assoc($resultData)){
-        return $row;
-    }else{
-        $result = false;
-        return $result;
-    }
-    mysqli_stmt_close($stmt);
-}
-
 function emptyInputLogin($password,$username){
     $result = false;
     if( empty($password) || empty($username)){
@@ -139,15 +101,14 @@ function loginUser($conn,$password,$username){
         session_start();
         $_SESSION["userid"]=$uidExists["id"];
         $_SESSION["useruid"]=$uidExists["user_uid"];
-        header("location: ../index.php?");
+        header("location: ../account.php?");
         exit();
     }
     
 }
 
 
-
-function get___FromCatergory($conn,$whatYouNeed,$amount,$category){
+function get___FromCatergory($conn,$whatYouNeed,$amount,$category,$shuffle){
 
     //Get all Data from a catagory
     //Hier nen Beispiel, du suchst die Bilder von der kategorie Schuhe
@@ -171,19 +132,30 @@ function get___FromCatergory($conn,$whatYouNeed,$amount,$category){
         return $result;
     }
 
-    $sql = "SELECT * FROM product WHERE product_category_id = ?;";
+    if($shuffle){
+    $sql = "SELECT * FROM product WHERE product_category_id = ? LIMIT ?;";
 
     if(!mysqli_stmt_prepare($stmt,$sql)){
         header("location: ../index.php?error=stmtfailed");
         exit();
     }
     
-    mysqli_stmt_bind_param($stmt,"s",$product_id);
+    mysqli_stmt_bind_param($stmt,"ss",$product_id,$amount);
+    }else{
+        $sql = "SELECT * FROM product WHERE product_category_id = ? LIMIT ?;";
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../index.php?error=stmtfailed");
+        exit();
+    }
+    
+    mysqli_stmt_bind_param($stmt,"ss",$product_id,$amount);
+    }
     mysqli_stmt_execute($stmt);
     
     $resultData = mysqli_stmt_get_result($stmt);
     
-    $itemAttribute[]=array();
+    
 
     //Error handling: falls man mehr produkte ausgegeben haben will als existieren
     if($amount>mysqli_num_rows($resultData)){
@@ -192,17 +164,24 @@ function get___FromCatergory($conn,$whatYouNeed,$amount,$category){
 
     if(mysqli_num_rows($resultData)>0){
         
-        for($i=1;$i<$amount+1;$i++){
+        for($i=0;$i<$amount;$i++){
             $row =mysqli_fetch_assoc($resultData);
             $itemAttribute[]=$row[$whatYouNeed];
         }
+        mysqli_stmt_close($stmt);
         return $itemAttribute;
     }else{
         $result = false;
+        mysqli_stmt_close($stmt);
         return $result;
     }
-    mysqli_stmt_close($stmt);
+
 }
+
+function getCategoryfromItem($conn,){
+    
+}
+
 function getCategoryList($conn){
 
     //Get all names from the product_category table in an array
@@ -223,12 +202,14 @@ function getCategoryList($conn){
         while($row =mysqli_fetch_assoc($resultData)){
             $array[]=$row["category_name"];
         }
+        mysqli_stmt_close($stmt);
         return $array;
     }else{
         $result = false;
+        mysqli_stmt_close($stmt);
         return $result;
     }
-    mysqli_stmt_close($stmt);
+
 }
 function showCategoryList($conn){
     $arr = getCategoryList($conn);
@@ -240,59 +221,366 @@ function showCategoryList($conn){
 
 }
 
-
-//URl-Parameter werden ausgelesen
-function getURLParameter(){
-    $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
-    $url_components = parse_url($url);
-    parse_str($url_components['query'], $params);
-    return $params;
-}
-
-//Produktdaten werden aus der Datenbank aufgerufen
-function getProductData($conn, $productID){
-
-    $sql = "SELECT * FROM Artikel WHERE ArtikelID = ?;";
+function totalAmount($conn,$categoryName){
+    $product_id= "SELECT id FROM product_category WHERE category_name = ? ;";
     $stmt = mysqli_stmt_init($conn);
 
-    mysqli_stmt_prepare($stmt,$sql);
-    mysqli_stmt_bind_param($stmt,"s",$productID,);
+    if(!mysqli_stmt_prepare($stmt,$product_id)){
+        header("location: ../index.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt,"s", $categoryName);
     mysqli_stmt_execute($stmt);
 
     $resultData = mysqli_stmt_get_result($stmt);
-    return mysqli_fetch_assoc($resultData);
-}
-function showExamples($conn,$amount,$category){
+    if($row = mysqli_fetch_assoc($resultData)){
+        $categoryID=$row["id"];
+    }
 
-    //Gibt viele Attribute aus der Datenbank in einer ...
+    $product_id= "SELECT COUNT(*) as total FROM product WHERE product_category_id = ? ;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$product_id)){
+        header("location: ../index.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt,"s", $categoryID);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    if($row = mysqli_fetch_assoc($resultData)){
+        $totalamount=$row["total"];
+    }
+    return $totalamount;
+}
+function getAllFromCategory($conn,$category,$amount){
+
+    //returns a 3d Array filled with items
+    // id=0
+    // name=1
+    // image=2
+    // qty=3
+    // price=4
+    // description=5
+    // Example: get image of the first item $itemArr[0][2];
+    $product_id= "SELECT id FROM product_category WHERE category_name = ? ORDER BY RAND() LIMIT ? ;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$product_id)){
+        header("location: ../index.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt,"ss", $category,$amount);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    if($row = mysqli_fetch_assoc($resultData)){
+        $product_id=$row["id"];
+    }else{
+        $result = false;
+        return $result;
+    }
+
+
+        $sql = "SELECT id FROM product WHERE product_category_id = ? ;";
+
+        if(!mysqli_stmt_prepare($stmt,$sql)) {
+            header("location: ../index.php?error=stmtfailed");
+            exit();
+        }
+        
+        mysqli_stmt_bind_param($stmt,"s",$product_id);
+
+    mysqli_stmt_execute($stmt);
+    
+    $resultData = mysqli_stmt_get_result($stmt);
+    
+    
+
+
+
+
+    if(mysqli_num_rows($resultData)>0){
+        while($row =mysqli_fetch_assoc($resultData)){
+            $itemId[]=$row["id"];
+        }
+    }else{
+        $result = false;
+        return $result;
+    }
+
+    $sql = "SELECT * FROM product WHERE id = ?;";
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../index.php?error=stmtfailed");
+        exit();
+    }
+    for($i=0;$i<count($itemId);$i++){
+        mysqli_stmt_bind_param($stmt,"s",$itemId[$i]);
+        mysqli_stmt_execute($stmt);
+        $resultData = mysqli_stmt_get_result($stmt);
+        $row =mysqli_fetch_assoc($resultData);
+
+        $itemAttribute["id"]=$row["id"];
+        $itemAttribute["product_name"]=$row["product_name"];
+        $itemAttribute["product_image"]=$row["product_image"];
+        $itemAttribute["qty_in_stock"]=$row["qty_in_stock"];
+        $itemAttribute["price"]=$row["price"];
+        $itemAttribute["description"]=$row["description"];
+        $itemArr[]=$itemAttribute;
+        unset($itemAttribute);
+    }
+
+    mysqli_stmt_close($stmt);
+
+
+    return $itemArr;
+}
+function showItems($conn,$amount,$categoryName){
+
+    //Gibt $amount viele Attribute aus der Datenbank in einer
     //html gerechten sprache wieder zurück.
     
-    $itemName = get___FromCatergory($conn,"product_name",$amount,$category);
-    $itemImage = get___FromCatergory($conn,"product_image",$amount,$category);
-    $itemQty = get___FromCatergory($conn,"qty_in_stock",$amount,$category);
-    $itemPrice = get___FromCatergory($conn,"price",$amount,$category);
-    $itemDescription = get___FromCatergory($conn,"description",$amount,$category);
+    $item=getAllFromCategory($conn,$amount,$categoryName,true);
 
-    if($amount>count($itemName)-1){
-        $amount=count($itemName)-1;
+    if($amount>count($item)){
+        $amount=count($item);
     }
 
-    echo '<div class="'.$category.'_category"><ul>';
-    for($i=1;$i<=$amount;$i++){
-        echo '<li>Produktname:'.$itemName[$i].'<br>
-            <img src='.$itemImage[$i].'><br>
-            Stückzahl noch vorhanden:' .$itemQty[$i].'<br>
-            Preis:' .$itemPrice[$i].'<br>
-            Produktbeschreibung:' .$itemDescription[$i].'<br>';
+    for($i=0;$i<count($item);$i++){
+        echo '
+                
+                    <li>
+                    <a href="product.php?id='.$item[$i][0].'">
+                    <div class="product_image">
+                        <img src='.$item[$i][2].' alt="'.$item[$i][1].'.png" >
+                    </div></a>';
     }
-    echo '</ul></div>';
+   
 
 }
-function showRandomCategory($conn,$amount){
-    //gibt zufällige Kategorien und dessen Produkte in HTML gerechter Sprache wieder
+
+function searchbar($searchInput,$conn){
+    #returns an array filled with ids of products.css inwhich the product name is like $searchbarInput
+
+    $searchInput = "%".$searchInput."%";
+    
+    $sql = "SELECT id FROM product WHERE UPPER(product_name) LIKE UPPER(?);";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../category.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$searchInput);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    if(mysqli_num_rows($resultData)>0){
+        while($row =mysqli_fetch_assoc($resultData)){
+            $productIds[]=$row["id"];
+        }
+    }else{$productIds=null;}
+    mysqli_stmt_close($stmt);
+    return $productIds;
+}
+function searchItemInCategory($searchInput,$conn){
+    #returns an array filled with ids of products.css inwhich the product name is like $searchbarInput
+
+    $searchInput = "%".$searchInput."%";
+    
+    $sql = "SELECT id FROM product_category WHERE UPPER(category_name) LIKE UPPER(?);";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../category.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$searchInput);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    if(mysqli_num_rows($resultData)>0){
+        while($row =mysqli_fetch_assoc($resultData)){
+            $productIds[]=$row["id"];
+        }
+    }else{$productIds=null;}
+    mysqli_stmt_close($stmt);
+    return $productIds;
+}
+function returnParentIds($conn,$parentCategory){
+    //returns all  parent Id in an array
+    $sql = "SELECT parent_category_id FROM product_category WHERE category_name=?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../category.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$parentCategory);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    if(mysqli_num_rows($resultData)>0){
+        while($row =mysqli_fetch_assoc($resultData)){
+            $parentId[]=$row["parent_category_id"];
+        }
+    }
+    mysqli_stmt_close($stmt);
+    return $parentId;
+}
+function returnChildrenIds($conn,$parentCategory){
+    //returns all  child Ids in an array
+    $parentId=returnParentIds($conn,$parentCategory);
+    
+    $sql = "SELECT id FROM product_category WHERE parent_category_id=?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../category.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$parentId[0]);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
 
 
-    $sql = "SELECT * FROM product_category;";
+    if(mysqli_num_rows($resultData)>0){
+        while($row =mysqli_fetch_assoc($resultData)){
+            $childId[]=$row["id"];
+        }
+        
+        if($childId[0]==$parentId[0]){
+        
+            array_shift($childId);
+        }
+        
+    }
+    for($i=0;$i<count($childId);$i++){
+        
+        if($parentCategory==convertIdToCategoryName($conn,$childId[$i])){
+            $tmp=$childId[$i];
+            array_shift($childId);
+            $childId[0]=$tmp;
+        }
+    }
+    mysqli_stmt_close($stmt);
+    return $childId;
+}
+function convertIdToCategoryName($conn,$id){
+    //converts an id into a categoryname
+    //returns a string
+    $sql = "SELECT category_name FROM product_category WHERE id=?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../category.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$id);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    if(mysqli_num_rows($resultData)>0){
+        $row =mysqli_fetch_assoc($resultData);
+        $categoryName=$row["category_name"];
+    }
+    mysqli_stmt_close($stmt);
+    return $categoryName;
+
+}
+function convertCategoryNameToID($conn,$categoryName){
+    //converts an categoryName into an id
+    //returns a string
+    $sql = "SELECT id FROM product_category WHERE category_name=?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../category.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$categoryName);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    if(mysqli_num_rows($resultData)>0){
+        $row =mysqli_fetch_assoc($resultData);
+        $categoryName=$row["id"];
+    }
+    mysqli_stmt_close($stmt);
+    return $categoryName;
+
+}
+
+function getAllAttributesFromItemViaID($ItemID,$conn){
+    $sql = "SELECT * FROM product WHERE id=?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../category.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$ItemID);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    if(mysqli_num_rows($resultData)>0){
+        while($row =mysqli_fetch_assoc($resultData)){
+            $item[]=$row["parent_category_id"];
+        }
+    }
+    mysqli_stmt_close($stmt);
+    return $item;
+
+}
+
+function getItemIdsFromCategory($conn,$CategoryID,$amount){
+    #returns $amount many ProductIds in an array from a categoryID
+
+    $sql = "SELECT id FROM product WHERE product_category_id = ? ORDER BY rand() LIMIT  ?;";
+    
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../category.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"ss",$CategoryID,$amount);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    if(mysqli_num_rows($resultData)>0){
+        while($row =mysqli_fetch_assoc($resultData)){
+            $itemIDs[]=$row["id"];
+        }
+    }else{
+        $itemIDs=null;
+    }
+    mysqli_stmt_close($stmt);
+    return $itemIDs;
+
+    
+
+}
+function getImage($conn,$productID){
+    $sql = "SELECT product_image FROM product WHERE id=$productID;";
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt,$sql)){
@@ -301,53 +589,45 @@ function showRandomCategory($conn,$amount){
     }
 
     mysqli_stmt_execute($stmt);
-
     $resultData = mysqli_stmt_get_result($stmt);
-    if(mysqli_num_rows($resultData)>0){
-        while($row =mysqli_fetch_assoc($resultData)){
-            $array[]=$row["id"];
-        }
-        $array=array_unique($array);
-    }
-    
-    $maxAmount=count($array)-parentCategoryAmount($conn,1);
-    if($maxAmount<$amount){
-        $amount=$maxAmount;
-    }
-    
-    
-    $i=0;
-    $uniqueTMP[]=array();
-    unset($uniqueTMP[0]);
 
-    $uniqueTMP=range(1,$maxAmount);
-    shuffle($uniqueTMP);
-
-    foreach($uniqueTMP as $var){
-        $unique[]=$var+parentCategoryAmount($conn,1);
+    while($row =mysqli_fetch_assoc($resultData)){
+        $img=$row["product_image"];
     }
 
-    foreach($unique as $var){
-        
-        $sql = "SELECT category_name FROM product_category WHERE id = ?;";
+    return $img;
+}
+function getRandomItems($conn,$amount){
+    $sql = "SELECT * FROM product ORDER BY rand() LIMIT ?;";
+    $stmt = mysqli_stmt_init($conn);
 
         if(!mysqli_stmt_prepare($stmt,$sql)){
             header("location: ../index.php?error=stmtfailed");
             exit();
         }
         mysqli_stmt_prepare($stmt,$sql);
-        mysqli_stmt_bind_param($stmt,"s",$var);
+        mysqli_stmt_bind_param($stmt,"s",$amount);
         mysqli_stmt_execute($stmt);
         $resultData = mysqli_stmt_get_result($stmt);
-        $row=mysqli_fetch_assoc($resultData);
-        echo '<h1>'.$row["category_name"].'</h1>';
         
-        showExamples($conn,3,$row["category_name"]);
-    }
-    
-    mysqli_stmt_close($stmt);
+            while($row =mysqli_fetch_assoc($resultData)){
+                $array[]=$row["id"];
+                $array[]=$row["product_name"];
+                $array[]=$row["description"];
+                $array[]=$row["product_image"];
+                $array[]=$row["price"];
+                
+
+                $allItems[]=$array; 
+                unset($array);
+            }
+        
+        return $allItems;
+        
 }
+
 function parentCategoryAmount($conn,$var){
+        //returns an integer of the total parentcategories
         $bool=true;
         $count=0;
         while($bool){
@@ -375,171 +655,279 @@ function parentCategoryAmount($conn,$var){
         return $count;
 }
 
-function changePassword($conn,$password){
-    $sql = " UPDATE site_user SET user_password = ? WHERE id = ?;";
-    $stmt = mysqli_stmt_init($conn);
+//Username wird in UserId umgewandelt
+function getUserIdFromUserName($conn, $userName){
 
-    if(!mysqli_stmt_prepare($stmt,$sql)){
-        header("location: ../profile.php?error=stmtfailed");
-        exit();
-    }
-
-    $hashedPassword = password_hash($password,PASSWORD_DEFAULT);
-    $useruid = $_SESSION['userid'];
-
-    mysqli_stmt_bind_param($stmt,"ss",$hashedPassword,$userid);
-    mysqli_stmt_execute($stmt);
-
-    mysqli_stmt_close($stmt);
-
-    header("location: ../profile.php?error=none");
-    exit();
-
-}
-
-function changeProfile($conn,$username, $name, $surname, $email){
-    $sql = " UPDATE site_user SET username = ?, firstname = ?, lastname = ?, email = ? WHERE id = ?;";
-    $stmt = mysqli_stmt_init($conn);
-
-    if(!mysqli_stmt_prepare($stmt,$sql)){
-        header("location: ../profile.php?error=stmtfailed");
-        exit();
-    }
-
-    $useruid = $_SESSION['userid'];
-
-    mysqli_stmt_bind_param($stmt,"sssss",$username,$name,$surname,$email,$userid);
-    mysqli_stmt_execute($stmt);
-
-    mysqli_stmt_close($stmt);
-
-    header("location: ../profile.php?error=none");
-    exit();
-
-}
-
-function changeAddress($conn,$addressID, $street, $houseno, $city, $postalCode){
-    $sql = " UPDATE address SET address_line1 = ?, street_number = ?, city = ?, postal_code = ? WHERE id = ?;";
-    $stmt = mysqli_stmt_init($conn);
-
-    if(!mysqli_stmt_prepare($stmt,$sql)){
-        header("location: ../profile.php?error=stmtfailed");
-        exit();
-    }
-
-    mysqli_stmt_bind_param($stmt,"sssss",$street,$houseno,$city,$postalCode,$addressID);
-    mysqli_stmt_execute($stmt);
-
-    mysqli_stmt_close($stmt);
-
-    header("location: ../profile.php?error=none");
-    exit();
-
-}
-
-function addAddress($conn, $street, $houseno, $city, $postalCode){
-    $sql = " INSERT INTO address (street_number, address_line1, city, postal_code) VALUES (?,?,?,?);";
-    $stmt = mysqli_stmt_init($conn);
-
-    if(!mysqli_stmt_prepare($stmt,$sql)){
-        header("location: ../profile.php?error=stmtfailed");
-        exit();
-    }
-
-    mysqli_stmt_bind_param($stmt,"ssss",$houseno,$street,$city,$postalCode,$addressID);
-    mysqli_stmt_execute($stmt);
-
-    mysqli_stmt_close($stmt);
-}
-
-function bindAddressToUser($conn, $street, $houseno, $city, $postalCode){
-    $userid = §_SESSION['userid'];
-    $addressid = getAddressIDByData($conn, $street, $houseno, $city, $postalCode);
-    $sql = "INSERT INTO user_address (user_id, address_id) VALUES (?,?);";
-    $stmt = mysqli_stmt_init($conn);
-
-    if(!mysqli_stmt_prepare($stmt,$sql)){
-        header("location: ../profile.php?error=stmtfailed");
-        exit();
-    }
-
-    mysqli_stmt_bind_param($stmt,"ss",$userid,$addressid);
-    mysqli_stmt_execute($stmt);
-
-    mysqli_stmt_close($stmt);
-    
-
-    header("location: ../profile.php?error=none");
-    exit();
-}
-
-
-function getProfileData($conn){
-
-    $userid = $_SESSION['userid'];
-
-    $sql = "SELECT username, firstname, lastname, email FROM site_user WHERE id = ?;";
+    $sql = "SELECT * FROM site_user WHERE user_uid = ?;";
     $stmt = mysqli_stmt_init($conn);
 
     mysqli_stmt_prepare($stmt,$sql);
-    mysqli_stmt_bind_param($stmt,"s",$userid);
-    mysqli_stmt_execute($stmt);
-
-    $resultData = mysqli_stmt_get_result($stmt);
-    return mysqli_fetch_assoc($resultData);
-}
-
-function getAllUserAddressData($conn){
-
-    $userid = $_SESSION['userid'];
-
-
-    $sql = "SELECT * FROM address WHERE id = (SELECT address_id FROM user_address WHERE user_id = ?);";
-    $stmt = mysqli_stmt_init($conn);
-
-    mysqli_stmt_prepare($stmt,$sql);
-    mysqli_stmt_bind_param($stmt,"s",$userid);
+    mysqli_stmt_bind_param($stmt,"s",$userName,);
     mysqli_stmt_execute($stmt);
 
     $resultData = mysqli_stmt_get_result($stmt);
 
-    
-    return mysqli_fetch_assoc($resultData);
+    return mysqli_fetch_assoc($resultData)["id"];
 }
-
-function getAddressDataByID($conn){
-    
-
-    $sql = "SELECT * FROM address WHERE id = ?;";
+function invalidDiscountrate($discount){
+    if(strlen($discount)>2 || !preg_match("/^[0-9]*$/",$discount)){
+        echo strlen($discount);
+        return true;
+    }
+    return false;
+}
+function createSale($conn,$categoryID,$title,$description,$discount,$startDate,$endDate){
+    #create promotion, create promotion category
+    if (saleTitleExists($conn,$title)){
+        header("location: ../sale_admin.php?error=titleExists");
+        exit();
+    }
+    $sql = "INSERT INTO promotion (promotion_name, description, discount_rate, star_date, end_date) VALUES (?,?,?,?,?);";
     $stmt = mysqli_stmt_init($conn);
 
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../signup.php?error=stmtfailed");
+        exit();
+    }
+
+
+
+    mysqli_stmt_bind_param($stmt,"sssss",$title,$description,$discount,$startDate,$endDate);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+
+    $sql = "SELECT id FROM promotion WHERE promotion_name=?";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../signup.php?error=stmtfailed");
+        exit();
+    }
     mysqli_stmt_prepare($stmt,$sql);
-    mysqli_stmt_bind_param($stmt,"s",$_SESSION['change_address_id']);
+    mysqli_stmt_bind_param($stmt,"s",$title);
     mysqli_stmt_execute($stmt);
 
     $resultData = mysqli_stmt_get_result($stmt);
 
-    
-    return mysqli_fetch_assoc($resultData);
-}
+    $promotionID= mysqli_fetch_assoc($resultData)["id"];
 
-function getAddressIDByData($conn,$street, $houseno, $city, $postalCode){
-    
+    mysqli_stmt_close($stmt);
 
-    $sql = "SELECT * FROM address WHERE street_number = ? AND address_line1= ? AND city= ? AND postal_code = ? AND;";
+
+    $sql = "INSERT INTO promotion_category (category_id,promotion_id) VALUES (?,?);";
     $stmt = mysqli_stmt_init($conn);
 
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../signup.php?error=stmtfailed");
+        exit();
+    }
     mysqli_stmt_prepare($stmt,$sql);
-    mysqli_stmt_bind_param($stmt,"ssss",$houseno, $street, $city, $postalCode);
+    mysqli_stmt_bind_param($stmt,"ss",$categoryID,$promotionID);
+
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+
+    header("location: ../sale_admin.php?error=none");
+    exit();
+}
+function createCategory($conn,$title,$parentID){
+
+    $sql = "INSERT INTO product_category (parent_category_id, category_name) VALUES (?,?);";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../category_admin.php?error=stmtfailed");
+        exit();
+    }
+
+
+
+    mysqli_stmt_bind_param($stmt,"ss",$parentID,$title);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+
+}
+function createProduct($conn,$categoryID,$name,$productImage,$description,$price,$inStock){
+
+    $sql = "INSERT INTO product (product_name,product_category_id,product_image,qty_in_stock,price,description) VALUES (?,?,?,?,?,?);";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../product_admin.php?error=stmtfailed");
+        exit();
+    }
+
+
+
+    mysqli_stmt_bind_param($stmt,"ssssss",$name,$categoryID,$productImage,$inStock,$price,$description);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+
+}
+function createShippingMethod($conn,$name,$price){
+
+    $sql = "INSERT INTO shipping_method (shipping_name, shipping_price) VALUES (?,?);";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../shippingmethod_admin.php?error=stmtfailed");
+        exit();
+    }
+
+
+
+    mysqli_stmt_bind_param($stmt,"ss",$name,$price);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+
+}
+function invalidDate($startDate,$endDate){
+    if ($endDate<=date("Y-m-d")||$startDate>$endDate){
+        return true;
+    }
+    return false;
+}
+
+function updateSale($conn,$categoryID,$title,$description,$discount,$startDate,$endDate,$promoID){
+    #create promotion, create promotion category
+
+    $sql = "UPDATE promotion SET promotion_name=?, description=?, discount_rate=?, star_date=?, end_date=?  WHERE id=?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../signup.php?error=stmtfailed");
+        exit();
+    }
+
+
+
+    mysqli_stmt_bind_param($stmt,"ssssss",$title,$description,$discount,$startDate,$endDate,$promoID);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+
+    $sql = "SELECT id FROM promotion WHERE promotion_name=?";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../signup.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$title);
     mysqli_stmt_execute($stmt);
 
     $resultData = mysqli_stmt_get_result($stmt);
 
-    
-    return mysqli_fetch_assoc($resultData);
+    $promotionID= mysqli_fetch_assoc($resultData)["id"];
+
+    mysqli_stmt_close($stmt);
+
+    $sql = "UPDATE promotion_category SET category_id=?,promotion_id=? WHERE promotion_id=?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../signup.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"sss",$categoryID,$promotionID,$promotionID);
+
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+
+    header("location: ../sale_admin.php?error=none");
+    exit();
+}
+function updateCategory($conn,$parentID,$title,$id){
+    #create promotion, create promotion category
+    $sql = "UPDATE product_category SET parent_category_id=?, category_name=? WHERE id=?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../signup.php?error=stmtfailed");
+        exit();
+    }
+
+
+
+    mysqli_stmt_bind_param($stmt,"sss",$parentID,$title,$id);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+
+    header("location: ../category_admin.php?error=none");
+    exit();
 }
 
+function  updateProduct($conn,$categoryID,$name,$description,$productImage,$price,$inStock,$productID){
+    #create promotion, create promotion category
+    $sql = "UPDATE product SET product_name=?, product_category_id=?, product_image=?, qty_in_stock=?, price=?, description=? WHERE id=?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../product_admin.php?error=stmtfailed");
+        exit();
+    }
 
 
 
+    mysqli_stmt_bind_param($stmt,"sssssss",$name,$categoryID,$productImage,$inStock,$price,$description,$productID);
+    mysqli_stmt_execute($stmt);
 
+    mysqli_stmt_close($stmt);
+
+    header("location: ../product_admin.php?error=none");
+    exit();
+}
+
+function updateShippingMethod($conn,$name,$price,$id){
+    #create promotion, create promotion category
+    $sql = "UPDATE shipping_method SET shipping_name=?, shipping_price=? WHERE id=?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../shippingmethod_admin.php?error=stmtfailed");
+        exit();
+    }
+
+
+
+    mysqli_stmt_bind_param($stmt,"sss",$name,$price,$id);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+
+    header("location: ../shippingmethod_admin.php?error=none");
+    exit();
+}
+
+function saleTitleExists($conn, $saleTitle){
+    $sql = "SELECT promotion_name FROM promotion WHERE promotion_name = ? ;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../signup.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt,"s",$saleTitle);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    if(mysqli_fetch_assoc($resultData)){
+        mysqli_stmt_close($stmt);
+        return true;
+    }else{
+        $result = false;
+        mysqli_stmt_close($stmt);
+        return $result;
+    }
+}

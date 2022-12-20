@@ -1,0 +1,42 @@
+.swiper {
+    margin-top: 3vmin;
+    padding-bottom: 2rem;
+    height: 30vmin;
+    width: 90%;
+    overflow: visible;
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    height: 50%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+.swiper-pagination .swiper-pagination-bullet-active {
+    background-color: #fc466b;
+}
+
+.swiper .swiper-button-prev, .swiper  .swiper-button-next {
+    color: #1c1c1c;
+}
+
+.swiper-wrapper .image_wrapper {
+    width: 100%;
+    height: 100%;
+}
+
+.image_wrapper img {
+    background-size: contain;
+    width: 100%;
+    height: 100%;
+}

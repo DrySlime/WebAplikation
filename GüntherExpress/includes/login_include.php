@@ -1,5 +1,5 @@
 <?php
-
+global $conn;
 if (isset($_POST["login_button"])) {
     $password = $_POST['password'];
     $username = $_POST['username'];
