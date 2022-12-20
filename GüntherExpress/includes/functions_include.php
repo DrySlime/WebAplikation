@@ -1028,17 +1028,11 @@ function changePassword($conn,$password){
 }
 
 function rightPassword($conn,$password){
-    $username = $_SESSION['useruid'];
-    $uidExists = uidExists($conn, $username,$username);
+    $account=getAccountData($conn);
 
-    if($uidExists===false){
-        header("location: ../account.php?error=wronginput");
-        exit();
-    }
-
-    $pwdHashed = $uidExists["user_password"];
-    $checkPwd = password_verify($password,$pwdHashed);
-    return $checkPwd;
+    $pwdHashed = $account["user_password"];
+    $passwordNewHashed = password_hash($password,PASSWORD_DEFAULT);
+    return ($pwdHashed === $passwordNewHashed);
     
 }
 

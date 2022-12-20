@@ -23,7 +23,7 @@ require_once 'functions_include.php';
             header("location: ../account.php?error=invalidemail");
             exit();
         }
-        else if(rightPassword($conn,$oldPassword)){
+        if(rightPassword($conn,$oldPassword)){
             if($usernameChange !== $_SESSION['useruid']){
                 if(uidExists($conn, $usernameChange,$usernameChange)!==false){
                 header("location: ../account.php?error=uidexists");
@@ -42,7 +42,10 @@ require_once 'functions_include.php';
             }
             
         }
-        //header("location: ../account.php?error=runthrough");
+        else{
+            header("location: ../account.php?error=wrongpassword");
+        }
+        
         exit();
     
     }
