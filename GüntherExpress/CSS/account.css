@@ -147,12 +147,29 @@ body {
     justify-content: space-evenly;
 }
 
+.dash_label_headers {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.dash_label_headers h4 {
+    font-weight: 400;
+    font-size: 1.5vmin;
+    width: 50%;
+}
+
+.dash_label_headers.account_double_container h4:first-of-type {
+    margin-right: 1vmin;
+}
+
 .account_double_container input:first-of-type {
     margin-right: 1vmin;
 }
 
-.account_dash_wrapper input{
-    margin-bottom: 2vmin;
+.account_dash_wrapper input {
+    margin-bottom: .5vmin;
     font-size: 1.5vmin;
     color: #101010;
     border: none;
@@ -171,6 +188,7 @@ body {
 
 .account_error_container {
     width: 100%;
+    margin-top: 1vmin;
     display: flex;
 }
 
@@ -559,7 +577,8 @@ body {
     justify-content: flex-end;
 }
 
-.modal_buttons button {
+.modal_buttons button,
+.orders_products_button button {
     font-weight: 500;
     width: auto;
     bottom: -1vmin;
@@ -575,7 +594,8 @@ body {
     outline-style: none;
 }
 
-.modal_buttons button:hover {
+.modal_buttons button:hover,
+.orders_products_button button:hover {
     cursor: pointer;
     color: #fc466b;
     transform: scale(1.05);
@@ -684,7 +704,7 @@ body {
 .modal_orders_grid_container {
     padding: 2vmin;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     width: 100%;
     max-width: 100%;
     height: 100%;
@@ -697,7 +717,7 @@ body {
     position: relative;
 }
 
-.order_item_container {
+.order_container {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -707,7 +727,7 @@ body {
     height: 100%;
 }
 
-.orders_product_image {
+.orders_info_image {
     width: 30%;
     height: auto;
     display: flex;
@@ -716,29 +736,30 @@ body {
     align-items: center;
 }
 
-.orders_product_image img{
+.orders_info_image img {
     max-width: 265px;
     max-height: 200px;
     width: 265px;
     height: 200px;
 }
 
-.orders_product_description {
+.orders_info_description {
     width: 65%;
 }
 
-.orders_product_description h2 {
-    padding-bottom: 2vmin;
-    font-weight: 600;
-    font-size: 3vmin;
-}
-
-.orders_product_description h4{
+.orders_info_description h4,
+.single_order_product_description h4{
     font-weight: 500;
     font-size: 1.5vmin;
 }
 
-#order_product_title {
+.orders_info_title,
+.single_order_product_description h2 {
+    padding-bottom: 1.5vmin;
+}
+
+.orders_info_title h2,
+.single_order_product_description h2 {
     font-size: 2vmin;
     font-weight: 600;
 }
@@ -747,6 +768,78 @@ body {
     border-bottom-color: #888888;
     border-bottom-style: solid;
     border-bottom-width: 1px;
+}
+
+.orders_products_button {
+    height: 100%;
+    width: auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    align-content: flex-end;
+}
+
+.single_order_grid_wrapper {
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    display: grid;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    margin-top: 0;
+    grid-template-columns: 1fr;
+    row-gap: 1vmin;
+    transition: all 0s;
+}
+
+.open {
+    width: 100%;
+    height: auto;
+    opacity: 1;
+    margin-top: 1.2vmin;
+    transition: all cubic-bezier(.13,1,0,.89) 1s;
+}
+
+.single_order_grid_container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    padding-left: 8vmin;
+    border-top-color: #888888;
+    border-top-style: solid;
+    border-top-width: 1px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    position: relative;
+}
+
+.single_order_item_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.single_order_product_image {
+    width: 30%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.single_order_product_image img {
+    max-width: 265px;
+    max-height: 200px;
+    width: 265px;
+    height: 200px;
 }
 
 #addAddress {
@@ -759,7 +852,7 @@ body {
     flex-direction: row;
 }
 
-.add_address h2{
+.add_address h2 {
     padding-bottom: 1vmin;
 }
 

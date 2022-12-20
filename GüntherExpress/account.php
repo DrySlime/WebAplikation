@@ -53,7 +53,7 @@ if (!isset($_SESSION["useruid"])) {
                         <h1>Dein Confectioner Account</h1>
                         <h4>Bearbeite hier deinen Account und sieh deine letzten Bestellungen ein
                             <?php if ($_SESSION["userid"] != 1) { ?>
-                                , oder <a id="delete" class="delete_account_button">Lösche</a>deinen Account .
+                                , oder <a id="delete" class="delete_account_button">Lösche</a> deinen Account.
                             <?php } else { ?>
                                 .
                             <?php } ?>
@@ -61,9 +61,16 @@ if (!isset($_SESSION["useruid"])) {
                     </div>
                     <div class="account_dash_wrapper">
                         <form id="changeAccount" action="#" method="post">
+                            <div class="dash_label_headers">
+                                <h4>Benutzername:</h4>
+                            </div>
                             <label for="username"></label><input type="text" name="username" id="username"
                                                                  value=<?php echo $resultProfile['user_uid']; ?>
                                                                  placeholder="Benutzername">
+                            <div class="dash_label_headers account_double_container">
+                                <h4>Vorname:</h4>
+                                <h4>Nachname:</h4>
+                            </div>
                             <div class="account_double_container">
                                 <label for="name"></label><input type="text" name="" id="name"
                                                                  value= <?php echo $resultProfile['firstname']; ?>
@@ -72,9 +79,16 @@ if (!isset($_SESSION["useruid"])) {
                                                                     value=<?php echo $resultProfile['lastname']; ?>
                                                                     placeholder="Nachname">
                             </div>
+                            <div class="dash_label_headers">
+                                <h4>Email:</h4>
+                            </div>
                             <label for="email"></label><input type="text" name="email" id="email"
                                                               value=<?php echo $resultProfile['email']; ?>
                                                               placeholder="Email">
+                            <div class="dash_label_headers account_double_container">
+                                <h4>Neues Passwort:</h4>
+                                <h4>Altes Passwort:</h4>
+                            </div>
                             <div class="account_double_container">
                                 <label for="newpassword"></label><input type="password" name="newpassword"
                                                                         id="newpassword"
@@ -98,20 +112,20 @@ if (!isset($_SESSION["useruid"])) {
                     </div>
                     <div class="standard_address_wrapper">
                         <div class="address_data">
-                            <?php 
-                                if ($resultDefAddress !== null) {
-                                    ?>
-                                    <h2><?php echo $resultProfile['firstname']; ?> <?php echo $resultProfile['lastname']; ?></h2>
-                                    <h4><?php echo $resultDefAddress['address_line1'];?> <?php echo $resultDefAddress['street_number'];?></h4>
-                                    <h4><?php echo $resultDefAddress['city'];?>, <?php echo $resultDefAddress['postal_code'];?></h4>
-                                    <?php
-                                }else{
-                                    ?>
-                                        <h2>Es ist noch keine Adresse bei uns hinterlegt!</h2>
-                                        <h4>Du kannst aber gerne eine hinzufügen</h4>
-                                    <?php
-                                }?>
-                            
+                            <?php
+                            if ($resultDefAddress !== null) {
+                                ?>
+                                <h2><?php echo $resultProfile['firstname']; ?><?php echo $resultProfile['lastname']; ?></h2>
+                                <h4><?php echo $resultDefAddress['address_line1']; ?><?php echo $resultDefAddress['street_number']; ?></h4>
+                                <h4><?php echo $resultDefAddress['city']; ?>
+                                    , <?php echo $resultDefAddress['postal_code']; ?></h4>
+                                <?php
+                            } else {
+                                ?>
+                                <h4 id="noEmail">Du hast noch keine Adresse beim Confectioner hinterlegt!</h4>
+                                <?php
+                            } ?>
+
                         </div>
                     </div>
                     <div class="account_subsection_button">
@@ -211,70 +225,74 @@ if (!isset($_SESSION["useruid"])) {
                 <p>Hier kannst du deine gespeicherten Adressen einsehen, bearbeiten, oder weitere hinzufügen.</p>
             </div>
             <div class="modal_address_grid_wrapper">
-                <?php 
-                    $toWriteAdresses = 6;
-                    if ($resultDefAddress !== null) {
-                ?>
-                        <div class="modal_address_grid_container">
-                            <div class="addressitem_container">
-                                <h2><?php echo $resultProfile['firstname']; ?> <?php echo $resultProfile['lastname']; ?></h2>
-                                <h4><?php echo $resultDefAddress['address_line1'];?> <?php echo $resultDefAddress['street_number'];?></h4>
-                                <h4><?php echo $resultDefAddress['city'];?>, <?php echo $resultDefAddress['postal_code'];?></h4>    
-                                <a class="defaultText">Standard Adresse</a>
-                                <div class="address_setting_container">
+                <?php
+                $toWriteAdresses = 6;
+                if ($resultDefAddress !== null) {
+                    ?>
+                    <div class="modal_address_grid_container">
+                        <div class="addressitem_container">
+                            <h2><?php echo $resultProfile['firstname']; ?><?php echo $resultProfile['lastname']; ?></h2>
+                            <h4><?php echo $resultDefAddress['address_line1']; ?><?php echo $resultDefAddress['street_number']; ?></h4>
+                            <h4><?php echo $resultDefAddress['city']; ?>
+                                , <?php echo $resultDefAddress['postal_code']; ?></h4>
+                            <a class="defaultText">Standard Adresse</a>
+                            <div class="address_setting_container">
                                     <span id="addressicon" class="material-symbols-outlined"
-                                        title="Adresse Löschen">delete</span>
-                                </div>
+                                          title="Adresse Löschen">delete</span>
                             </div>
                         </div>
-                <?php
-                        $toWriteAdresses --;
-                    }
+                    </div>
+                    <?php
+                    $toWriteAdresses--;
+                }
 
-                    if($resultAddressWODef !== null){
-                        while($rows = $resultAddressWODef->fetch_assoc()){
-                            if ($toWriteAdresses > 1) {
-                ?>
-                                <div class="modal_address_grid_container">
-                                    <div class="addressitem_container">
-                                        <h2><?php echo $resultProfile['firstname']; ?> <?php echo $resultProfile['lastname']; ?></h2>
-                                        <h4><?php echo $rows['address_line1'];?> <?php echo $rows['street_number'];?></h4>                        
-                                        <h4><?php echo $rows['city'];?>, <?php echo $rows['postal_code'];?></h4>
-                                        <div class="address_setting_container">
-                                            <span id="addressicon" class="material-symbols-outlined" title="Als Standard Setzen">edit_location</span>
-                                            <span id="addressicon" class="material-symbols-outlined"
-                                                title="Adresse Löschen">delete</span>
-                                        </div>
+                if ($resultAddressWODef !== null) {
+                    while ($rows = $resultAddressWODef->fetch_assoc()) {
+                        if ($toWriteAdresses > 1) {
+                            ?>
+                            <div class="modal_address_grid_container">
+                                <div class="addressitem_container">
+                                    <h2><?php echo $resultProfile['firstname']; ?><?php echo $resultProfile['lastname']; ?></h2>
+                                    <h4><?php echo $rows['address_line1']; ?><?php echo $rows['street_number']; ?></h4>
+                                    <h4><?php echo $rows['city']; ?>, <?php echo $rows['postal_code']; ?></h4>
+                                    <div class="address_setting_container">
+                                        <span id="addressicon" class="material-symbols-outlined"
+                                              title="Als Standard Setzen">edit_location</span>
+                                        <span id="addressicon" class="material-symbols-outlined"
+                                              title="Adresse Löschen">delete</span>
                                     </div>
                                 </div>
-                <?php
-                                $toWriteAdresses --;
-                            }
+                            </div>
+                            <?php
+                            $toWriteAdresses--;
                         }
                     }
+                }
 
-                    for ($x = 0; $x < $toWriteAdresses; $x++ ) { 
-                ?>
-                        <div class="modal_address_grid_container">
-                            <div class="addressitem_container add_address">
-                                <h2>Neue Adresse</h2>
-                                <form id="addAddress" action="#" method="post">
-                                    <div class="add_address_oneline">
-                                        <input type="text" name="addStreet" id="addStreet" placeholder="Straße">
-                                        <input type="text" name="addHausnummer" id="addHausnummer" placeholder="No.">
-                                    </div>
-                                    <input type="text" name="addStadt" id="addStadt" placeholder="Stadt">
-                                    <input type="text" name="postal-code" id="postal-code" placeholder="PLZ">
-                                </form>
-                                <div class="addressitem_addbutton">
-                                    <button id="add_Address" form="addAddress" type="submit" name="add_address_button">Hinzufügen</button>
+                for ($x = 0; $x < $toWriteAdresses; $x++) {
+                    ?>
+                    <div class="modal_address_grid_container">
+                        <div class="addressitem_container add_address">
+                            <h2>Neue Adresse</h2>
+                            <form id="addAddress" action="#" method="post">
+                                <div class="add_address_oneline">
+                                    <input type="text" name="addStreet" id="addStreet" placeholder="Straße">
+                                    <input type="text" name="addHausnummer" id="addHausnummer" placeholder="No.">
                                 </div>
+                                <input type="text" name="addStadt" id="addStadt" placeholder="Stadt">
+                                <input type="text" name="postal-code" id="postal-code" placeholder="PLZ">
+                            </form>
+                            <div class="addressitem_addbutton">
+                                <button id="add_Address" form="addAddress" type="submit" name="add_address_button">
+                                    Hinzufügen
+                                </button>
                             </div>
                         </div>
-            
-            <?php
-        }?>
-        </div>
+                    </div>
+
+                    <?php
+                } ?>
+            </div>
             <div class="modal_buttons">
                 <button id="close_address_modal">Schließen</button>
             </div>
@@ -292,77 +310,122 @@ if (!isset($_SESSION["useruid"])) {
             </div>
             <div class="modal_orders_grid_wrapper">
                 <div class="modal_orders_grid_container">
-                    <div class="order_item_container">
-                        <div class="orders_product_image">
-                            <a href="#"><img src="img/macaronProduct.png" alt=""></a>
+                    <div class="order_container">
+                        <div class="orders_info_image">
+                            <img src="img/macaronProduct.png" alt="">
                         </div>
-                        <div class="orders_product_description">
-                            <h2 id="order_product_title">Macaron Box - 12er Packung</h2>
-                            <h4>Menge: 2</h4>
-                            <h4>Datum: 15. Dezember, 2022</h4>
+                        <div class="orders_info_description">
+                            <div class="orders_info_title">
+                                <h2>Bestellung #345513</h2>
+                                <h2>Datum: 19.12.2022</h2>
+                            </div>
+                            <h4>Anzahl Artikel: 2</h4>
                             <h4>Lieferadresse: Paracelsuspark 1, 59063, Hamm</h4>
                             <h4>Bezahlmethode: SEPA Lastschrift</h4>
                             <h4>Summe: 420,69€</h4>
+                        </div>
+                        <div class="orders_products_button">
+                            <button class="order_button" id="order_show_1">Bestellung Anzeigen</button>
+                        </div>
+                    </div>
+                    <div id="order_products_1" class="single_order_grid_wrapper">
+                        <div class="single_order_grid_container">
+                            <div class="single_order_item_container">
+                                <div class="single_order_product_image">
+                                    <img src="img/macaronProduct.png" alt="">
+                                </div>
+                                <div class="single_order_product_description">
+                                    <h2>Macaron Box - 12er Packung</h2>
+                                    <h4>Menge: 2</h4>
+                                    <h4>Preis: 420,69€</h4>
+                                    <div class="order_product_review">
+                                        <span class="material-symbols-outlined" id="star1">star</span>
+                                        <span class="material-symbols-outlined" id="star2">star</span>
+                                        <span class="material-symbols-outlined" id="star3">star</span>
+                                        <span class="material-symbols-outlined" id="star4">star</span>
+                                        <span class="material-symbols-outlined" id="star5">star</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="single_order_grid_container">
+                            <div class="single_order_item_container">
+                                <div class="single_order_product_image">
+                                    <img src="img/macaronProduct.png" alt="">
+                                </div>
+                                <div class="single_order_product_description">
+                                    <h2>Macaron Box - 12er Packung</h2>
+                                    <h4>Menge: 2</h4>
+                                    <h4>Preis: 420,69€</h4>
+                                    <div class="order_product_review">
+                                        <span class="material-symbols-outlined" id="star1">star</span>
+                                        <span class="material-symbols-outlined" id="star2">star</span>
+                                        <span class="material-symbols-outlined" id="star3">star</span>
+                                        <span class="material-symbols-outlined" id="star4">star</span>
+                                        <span class="material-symbols-outlined" id="star5">star</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal_orders_grid_container">
-                    <div class="order_item_container">
-                        <div class="orders_product_image">
-                            <a href="#"><img src="img/macaronProduct.png" alt=""></a>
+                    <div class="order_container">
+                        <div class="orders_info_image">
+                            <img src="img/macaronProduct.png" alt="">
                         </div>
-                        <div class="orders_product_description">
-                            <h2 id="order_product_title">Macaron Box - 12er Packung</h2>
-                            <h4>Menge: 2</h4>
-                            <h4>Datum: 15. Dezember, 2022</h4>
+                        <div class="orders_info_description">
+                            <div class="orders_info_title">
+                                <h2>Bestellung #345513</h2>
+                                <h2>Datum: 19.12.2022</h2>
+                            </div>
+                            <h4>Anzahl Artikel: 2</h4>
                             <h4>Lieferadresse: Paracelsuspark 1, 59063, Hamm</h4>
                             <h4>Bezahlmethode: SEPA Lastschrift</h4>
                             <h4>Summe: 420,69€</h4>
+                        </div>
+                        <div class="orders_products_button">
+                            <button class="order_button" id="order_show_2">Bestellung Anzeigen</button>
                         </div>
                     </div>
-                </div>
-                <div class="modal_orders_grid_container">
-                    <div class="order_item_container">
-                        <div class="orders_product_image">
-                            <a href="#"><img src="img/macaronProduct.png" alt=""></a>
+                    <div id="order_products_2" class="single_order_grid_wrapper">
+                        <div class="single_order_grid_container">
+                            <div class="single_order_item_container">
+                                <div class="single_order_product_image">
+                                    <img src="img/macaronProduct.png" alt="">
+                                </div>
+                                <div class="single_order_product_description">
+                                    <h2>Macaron Box - 12er Packung</h2>
+                                    <h4>Menge: 2</h4>
+                                    <h4>Preis: 420,69€</h4>
+                                    <div class="order_product_review">
+                                        <span class="material-symbols-outlined" id="star1">star</span>
+                                        <span class="material-symbols-outlined" id="star2">star</span>
+                                        <span class="material-symbols-outlined" id="star3">star</span>
+                                        <span class="material-symbols-outlined" id="star4">star</span>
+                                        <span class="material-symbols-outlined" id="star5">star</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="orders_product_description">
-                            <h2 id="order_product_title">Macaron Box - 12er Packung</h2>
-                            <h4>Menge: 2</h4>
-                            <h4>Datum: 15. Dezember, 2022</h4>
-                            <h4>Lieferadresse: Paracelsuspark 1, 59063, Hamm</h4>
-                            <h4>Bezahlmethode: SEPA Lastschrift</h4>
-                            <h4>Summe: 420,69€</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal_orders_grid_container">
-                    <div class="order_item_container">
-                        <div class="orders_product_image">
-                            <a href="#"><img src="img/macaronProduct.png" alt=""></a>
-                        </div>
-                        <div class="orders_product_description">
-                            <h2 id="order_product_title">Macaron Box - 12er Packung</h2>
-                            <h4>Menge: 2</h4>
-                            <h4>Datum: 15. Dezember, 2022</h4>
-                            <h4>Lieferadresse: Paracelsuspark 1, 59063, Hamm</h4>
-                            <h4>Bezahlmethode: SEPA Lastschrift</h4>
-                            <h4>Summe: 420,69€</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal_orders_grid_container">
-                    <div class="order_item_container">
-                        <div class="orders_product_image">
-                            <a href="#"><img src="img/macaronProduct.png" alt=""></a>
-                        </div>
-                        <div class="orders_product_description">
-                            <h2 id="order_product_title">Macaron Box - 12er Packung</h2>
-                            <h4>Menge: 2</h4>
-                            <h4>Datum: 15. Dezember, 2022</h4>
-                            <h4>Lieferadresse: Paracelsuspark 1, 59063, Hamm</h4>
-                            <h4>Bezahlmethode: SEPA Lastschrift</h4>
-                            <h4>Summe: 420,69€</h4>
+                        <div class="single_order_grid_container">
+                            <div class="single_order_item_container">
+                                <div class="single_order_product_image">
+                                    <img src="img/macaronProduct.png" alt="">
+                                </div>
+                                <div class="single_order_product_description">
+                                    <h2>Macaron Box - 12er Packung</h2>
+                                    <h4>Menge: 2</h4>
+                                    <h4>Preis: 420,69€</h4>
+                                    <div class="order_product_review">
+                                        <span class="material-symbols-outlined" id="star1">star</span>
+                                        <span class="material-symbols-outlined" id="star2">star</span>
+                                        <span class="material-symbols-outlined" id="star3">star</span>
+                                        <span class="material-symbols-outlined" id="star4">star</span>
+                                        <span class="material-symbols-outlined" id="star5">star</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

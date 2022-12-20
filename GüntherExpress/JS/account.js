@@ -70,5 +70,47 @@ function openOrderModal() {
 
 function closeOrderModal() {
     document.getElementById('close_orders_modal').style.transition = 'none';
+    var orderModalContainers = document.getElementsByClassName('open');
+    for (var i = 0; i < orderModalContainers.length; i++) {
+        var orderModalContainer = orderModalContainers[i];
+        orderModalContainer.style.transition = 'none';
+        orderModalContainer.classList.remove('open')
+    }
+    var orderModalButtons = document.getElementsByClassName('order_button');
+    for (var i = 0; i < orderModalButtons.length; i++) {
+        var orderModalButton = orderModalButtons[i];
+        orderModalButton.style.transition = 'none';
+        orderModalButton.textContent = "Bestellung Anzeigen"
+    }
     orderModal.style.visibility = 'hidden';
+}
+
+
+
+var openOrderProducts = document.getElementsByClassName('order_button');
+
+for (var i = 0; i < openOrderProducts.length; i++) {
+    var openSpecificOrder = openOrderProducts[i];
+    openSpecificOrder.onclick = function () {
+        const split = this.id.split("_");
+        const id = split[2];
+        showData(id)
+    }
+}
+
+function showData(id) {
+    const orderGroup = document.getElementById('order_products_' + id);
+    const orderButton = document.getElementById('order_show_' + id);
+
+    if (orderButton.textContent === "Bestellung Anzeigen") {
+        orderButton.textContent = "Bestellung Verstecken"
+    } else {
+        orderButton.textContent = "Bestellung Anzeigen"
+    }
+
+    if (orderGroup.classList.contains("open")) {
+        orderGroup.classList.remove("open");
+    } else {
+        orderGroup.classList.add("open");
+    }
 }
