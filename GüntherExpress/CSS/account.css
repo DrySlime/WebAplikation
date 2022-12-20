@@ -362,14 +362,8 @@ body {
     flex-direction: column;
 }
 
-.grid_description h3 {
-    font-size: 3vmin;
-    font-weight: 500;
-    margin-bottom: 2vmin;
-}
-
 .grid_description h4 {
-    font-size: 2vmin;
+    font-size: 1.6vmin;
     font-weight: 400;
 }
 

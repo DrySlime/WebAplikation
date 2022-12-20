@@ -148,19 +148,14 @@ if (!isset($_SESSION["useruid"])) {
                                     <a href="#"><img src="img/macaronProduct.png" alt=""></a>
                                 </div>
                                 <div class="grid_item grid_description">
-                                    <h3>Macaron Box</h3>
-                                    <div class="grid_inline">
-                                        <h4 id="title">Menge:</h4>
-                                        <h4>2</h4>
+                                    <div class="orders_info_title">
+                                        <h2>Bestellung #345513</h2>
+                                        <h2>Datum: 19.12.2022</h2>
                                     </div>
-                                    <div class="grid_inline">
-                                        <h4 id="title">Summe:</h4>
-                                        <h4>420.69€</h4>
-                                    </div>
-                                    <div class="grid_inline">
-                                        <h4 id="title">Datum:</h4>
-                                        <h4>5. Dezember, 2022</h4>
-                                    </div>
+                                    <h4>Anzahl Artikel: 2</h4>
+                                    <h4>Lieferadresse: Paracelsuspark 1, 59063, Hamm</h4>
+                                    <h4>Bezahlmethode: SEPA Lastschrift</h4>
+                                    <h4>Summe: 420,69€</h4>
                                 </div>
                             </div>
                     <?php    
