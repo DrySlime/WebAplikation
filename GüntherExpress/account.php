@@ -2,8 +2,8 @@
 <html lang="de">
 
 <?php
-
 include_once 'header.php';
+global $conn;
 
 if (!isset($_SESSION["useruid"])) {
     header('Location: login.php');
@@ -64,33 +64,33 @@ if (!isset($_SESSION["useruid"])) {
                             <div class="dash_label_headers">
                                 <h4>Benutzername:</h4>
                             </div>
-                            <label for="username"></label><input type="text" name="username" id="username"
-                                                                 value=<?php echo $resultProfile['user_uid']; ?>
+                            <label for="username"></label><input required type="text" name="username" id="username"
+                                                                 value="<?php echo $resultProfile['user_uid']; ?>"
                                                                  placeholder="Benutzername">
                             <div class="dash_label_headers account_double_container">
                                 <h4>Vorname:</h4>
                                 <h4>Nachname:</h4>
                             </div>
                             <div class="account_double_container">
-                                <label for="name"></label><input type="text" name="" id="name"
-                                                                 value= <?php echo $resultProfile['firstname']; ?>
+                                <label for="name"></label><input required type="text" name="" id="name"
+                                                                 value= "<?php echo $resultProfile['firstname']; ?>"
                                                                  placeholder="Vorname">
-                                <label for="surname"></label><input type="text" name="surname" id="surname"
-                                                                    value=<?php echo $resultProfile['lastname']; ?>
+                                <label for="surname"></label><input required type="text" name="surname" id="surname"
+                                                                    value="<?php echo $resultProfile['lastname']; ?>"
                                                                     placeholder="Nachname">
                             </div>
                             <div class="dash_label_headers">
                                 <h4>Email:</h4>
                             </div>
-                            <label for="email"></label><input type="text" name="email" id="email"
-                                                              value=<?php echo $resultProfile['email']; ?>
+                            <label for="email"></label><input required type="text" name="email" id="email"
+                                                              value="<?php echo $resultProfile['email']; ?>"
                                                               placeholder="Email">
                             <div class="dash_label_headers account_double_container">
                                 <h4>Neues Passwort:</h4>
                                 <h4>Altes Passwort:</h4>
                             </div>
                             <div class="account_double_container">
-                                <label for="newpassword"></label><input type="password" name="newpassword"
+                                <label for="newpassword"></label><input required type="password" name="newpassword"
                                                                         id="newpassword"
                                                                         placeholder="Neues Passwort">
                                 <label for="oldpassword"></label><input required type="password" name="oldpassword"
