@@ -19,7 +19,6 @@ require_once 'functions_include.php';
             header("location: ../account.php?error=invaliduid");
             exit();
         }
-        
         else if(invalidEmail($emailChange)!==false){
             header("location: ../account.php?error=invalidemail");
             exit();
@@ -31,34 +30,20 @@ require_once 'functions_include.php';
                 exit();
                 }   
                 else {
-                    if ($newPassword = null) {
-                        changeAccount($conn, $usernameChange, $nameChange, $surnameChange, $emailChange);
+                    changeAccount($conn, $usernameChange, $nameChange, $surnameChange, $emailChange,$newPassword);
                         header("location: ../account.php?error=none");
                         exit();
-                        
-                    }
-                    else {
-                        changeAccount($conn, $usernameChange, $nameChange, $surnameChange, $emailChange);
-                        changePassword($conn,$newPassword);
-                        header("location: ../account.php?error=none");
-                        exit();
-                    }
                     
                 }
             } else {
-                if ($newPassword = null) {
-                        changeAccount($conn, $usernameChange, $nameChange, $surnameChange, $emailChange);
+                changeAccount($conn, $usernameChange, $nameChange, $surnameChange, $emailChange,$newPassword);
                         header("location: ../account.php?error=none");
                         exit();
-                    }
-                    else {
-                        changeAccount($conn, $usernameChange, $nameChange, $surnameChange, $emailChange);
-                        changePassword($conn,$newPassword);
-                        header("location: ../account.php?error=none");
-                        exit();
-                    }
             }
+            
         }
+        //header("location: ../account.php?error=runthrough");
+        exit();
     
     }
     

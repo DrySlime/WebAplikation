@@ -988,7 +988,7 @@ function getUserAddressDataWODef($conn){
     return $resultData;
 }
 
-function changeaccount($conn,$username, $name, $surname, $email){
+function changeAccount($conn,$username, $name, $surname, $email,$newPassword){
     $sql = "UPDATE site_user SET user_uid = ?, firstname = ?, lastname = ?, email = ? WHERE id = ?;";
     $stmt = mysqli_stmt_init($conn);
 
@@ -1002,7 +1002,9 @@ function changeaccount($conn,$username, $name, $surname, $email){
 
     mysqli_stmt_close($stmt);
     $_SESSION['useruid'] = $username;
-    exit();
+    if ($newPassword == null) {
+        changePassword($conn,$newPassword);
+    }
 
 }
 
@@ -1022,7 +1024,6 @@ function changePassword($conn,$password){
     mysqli_stmt_execute($stmt);
 
     mysqli_stmt_close($stmt);
-    exit();
 
 }
 
@@ -1181,7 +1182,7 @@ function getPersonalOrderIDsDescending($conn){
 
 function getPersonalOrderDataByID($conn,$orderID){
 
-    $sql = "SELECT * FROM shop_order INNER JOIN ON site_user.id = shop_order.siteuser_id INNER JOIN ON #TODO = shop_order.payment_method_id INNER JOIN ON #TODO = shop_order.shipping_address_id INNER JOIN ON #TODO = shop_order.shipping_method_id INNER JOIN ON order_status.id =  shop_order.order_status_id WHERE shop_order.id=?";
+    $sql = "SELECT * FROM shop_order INNER JOIN ON site_user.id = shop_order.siteuser_id INNER JOIN ON payment_type.id = shop_order.payment_method_id INNER JOIN ON address.id = shop_order.shipping_address_id INNER JOIN ON shipping_method.id = shop_order.shipping_method_id INNER JOIN ON order_status.id =  shop_order.order_status_id WHERE shop_order.id=?";
     $stmt = mysqli_stmt_init($conn);
 
     mysqli_stmt_prepare($stmt,$sql);
