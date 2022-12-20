@@ -139,9 +139,10 @@ if (!isset($_SESSION["useruid"])) {
                         </div>
                     </div>
                     <?php 
-                        $rows = $resultOrderIDs->fetch_assoc();
-                        if($rows != null){
-                            getObjectOrderDataByID($conn,$rows)
+                        $IDRows = $resultOrderIDs->fetch_assoc();
+                        if($IDRows != null){
+                            $ObjectRows = getObjectOrderDataByID($conn,$IDRows['id'])->fetch_assoc();
+                            $DataRows = getPersonalOrderDataByID($conn,$IDRows['id']);
                     ?>
                             <div class="purchases_wrapper">
                                 <div class="grid_item">
@@ -149,21 +150,23 @@ if (!isset($_SESSION["useruid"])) {
                                 </div>
                                 <div class="grid_item grid_description">
                                     <div class="orders_info_title">
-                                        <h2>Bestellung #345513</h2>
-                                        <h2>Datum: 19.12.2022</h2>
+                                        <h2>Bestellung #<?php echo $IDRows['id']?></h2>
+                                        <h2>Datum: <?php echo $DataRows['order_date']?></h2>
                                     </div>
                                     <h4>Anzahl Artikel: 2</h4>
-                                    <h4>Lieferadresse: Paracelsuspark 1, 59063, Hamm</h4>
-                                    <h4>Bezahlmethode: SEPA Lastschrift</h4>
-                                    <h4>Summe: 420,69€</h4>
+                                    <h4>Lieferadresse: <?php echo $DataRows['address_line']?> <?php echo $DataRows['street_number']?>, <?php echo $DataRows['postal_code']?>, <?php echo $DataRows['city']?></h4>
+                                    <h4>Bezahlmethode: <?php echo $DataRows['value']?></h4>
+                                    <h4>Summe: <?php echo $DataRows['order_total']?>€</h4>
                                 </div>
                             </div>
                     <?php    
                         }else{
                     ?>
-                            <h3>Du hast bisher noch nichts bei uns gekauft...</h3>
-                            <h4><a href ="index.php" id="delete" class="delete_account_button">Hier</a> geht es zu unserem Shop</h4>
-                            #TODO Link zum Shop farbig schön
+                            <div class="noPurchases">
+  <h3>Keine Bestellung verfügbar</h3>
+  <h4>Du hast noch keine Bestellung beim Confectioner gemacht!</h4>
+  <a href="index.php" class="purchases_button_back">Zum Confectioner</a>
+</div>
                     <?php       
                         }
                     ?>
@@ -225,7 +228,7 @@ if (!isset($_SESSION["useruid"])) {
     </div>
     <div class="account_modal" id="address-modal">
         <div class="modal_container modal_container_address">
-            <div class="modal_text">
+            <div class="modal_text" id="address_text_shadow">
                 <div class="modal_header">
                     <span class="material-symbols-outlined">home</span>
                     <h3>Deine Adressen</h3>
@@ -310,127 +313,62 @@ if (!isset($_SESSION["useruid"])) {
                 <p>Hier kannst du deinen Bestellverlauf einsehen - Du findest hier das Bestelldatum, deine Bestellten
                     Artikel, den Preis, sowie die Lieferadresse deiner Bestellung!</p>
             </div>
+            
             <div class="modal_orders_grid_wrapper">
-                <div class="modal_orders_grid_container">
-                    <div class="order_container">
-                        <div class="orders_info_image">
-                            <img src="img/macaronProduct.png" alt="">
-                        </div>
-                        <div class="orders_info_description">
-                            <div class="orders_info_title">
-                                <h2>Bestellung #345513</h2>
-                                <h2>Datum: 19.12.2022</h2>
-                            </div>
-                            <h4>Anzahl Artikel: 2</h4>
-                            <h4>Lieferadresse: Paracelsuspark 1, 59063, Hamm</h4>
-                            <h4>Bezahlmethode: SEPA Lastschrift</h4>
-                            <h4>Summe: 420,69€</h4>
-                        </div>
-                        <div class="orders_products_button">
-                            <button class="order_button" id="order_show_1">Bestellung Anzeigen</button>
-                        </div>
-                    </div>
-                    <div id="order_products_1" class="single_order_grid_wrapper">
-                        <div class="single_order_grid_container">
-                            <div class="single_order_item_container">
-                                <div class="single_order_product_image">
+                <?php 
+                    while ( $rows = $resultOrderIDs->fetch_assoc()) {#ADD
+                        $DataRows = getPersonalOrderDataByID($conn,$rows['id']);
+                ?>
+                        <div class="modal_orders_grid_container">
+                            <div class="order_container">
+                                <div class="orders_info_image">
                                     <img src="img/macaronProduct.png" alt="">
                                 </div>
-                                <div class="single_order_product_description">
-                                    <h2>Macaron Box - 12er Packung</h2>
-                                    <h4>Menge: 2</h4>
-                                    <h4>Preis: 420,69€</h4>
-                                    <div class="order_product_review">
-                                        <span class="material-symbols-outlined" id="star1">star</span>
-                                        <span class="material-symbols-outlined" id="star2">star</span>
-                                        <span class="material-symbols-outlined" id="star3">star</span>
-                                        <span class="material-symbols-outlined" id="star4">star</span>
-                                        <span class="material-symbols-outlined" id="star5">star</span>
+                                <div class="orders_info_description">
+                                    <div class="orders_info_title">
+                                        <h2>Bestellung # <?php echo $rows['id']?></h2>
+                                        <h2>Datum: <?php echo $DataRows['order_date']?></h2>
                                     </div>
+                                    <h4>Anzahl Artikel: 2</h4>
+                                    <h4>Lieferadresse: <?php echo $DataRows['address_line']?> <?php echo $DataRows['street_number']?>, <?php echo $DataRows['postal_code']?>, <?php echo $DataRows['city']?></h4>
+                                    <h4>Bezahlmethode: <?php echo $DataRows['value']?></h4>
+                                    <h4>Summe: <?php echo $DataRows['order_total']?>€</h4>
+                                </div>
+                                <div class="orders_products_button">
+                                    <button class="order_button" id="order_show_<?php echo $rows['id']?>">Bestellung Anzeigen</button>
                                 </div>
                             </div>
-                        </div>
-                        <div class="single_order_grid_container">
-                            <div class="single_order_item_container">
-                                <div class="single_order_product_image">
-                                    <img src="img/macaronProduct.png" alt="">
-                                </div>
-                                <div class="single_order_product_description">
-                                    <h2>Macaron Box - 12er Packung</h2>
-                                    <h4>Menge: 2</h4>
-                                    <h4>Preis: 420,69€</h4>
-                                    <div class="order_product_review">
-                                        <span class="material-symbols-outlined" id="star1">star</span>
-                                        <span class="material-symbols-outlined" id="star2">star</span>
-                                        <span class="material-symbols-outlined" id="star3">star</span>
-                                        <span class="material-symbols-outlined" id="star4">star</span>
-                                        <span class="material-symbols-outlined" id="star5">star</span>
+                            <div id="order_products_<?php echo $rows['id']?>" class="single_order_grid_wrapper">
+                                <?php 
+                                    while ($OrderRow = getObjectOrderDataByID($conn,$rows['id']->fetch_assoc())){
+                                ?>
+                                    <div class="single_order_grid_container">
+                                        <div class="single_order_item_container">
+                                            <div class="single_order_product_image">
+                                                <img src="img/macaronProduct.png" alt="">
+                                            </div>
+                                            <div class="single_order_product_description">
+                                                <h2><?php echo $OrderRow['product_name']?></h2>
+                                                <h4>Menge: <?php echo $OrderRow['qty']?></h4>
+                                                <h4>Preis: <?php echo ($OrderRow['qty']*$OrderRow['price'])?></h4>
+                                                <div class="order_product_review">
+                                                    <span class="material-symbols-outlined" id="star1">star</span>
+                                                    <span class="material-symbols-outlined" id="star2">star</span>
+                                                    <span class="material-symbols-outlined" id="star3">star</span>
+                                                    <span class="material-symbols-outlined" id="star4">star</span>
+                                                    <span class="material-symbols-outlined" id="star5">star</span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
+                            <?php
+                                }
+                            ?>
                     </div>
                 </div>
-                <div class="modal_orders_grid_container">
-                    <div class="order_container">
-                        <div class="orders_info_image">
-                            <img src="img/macaronProduct.png" alt="">
-                        </div>
-                        <div class="orders_info_description">
-                            <div class="orders_info_title">
-                                <h2>Bestellung #345513</h2>
-                                <h2>Datum: 19.12.2022</h2>
-                            </div>
-                            <h4>Anzahl Artikel: 2</h4>
-                            <h4>Lieferadresse: Paracelsuspark 1, 59063, Hamm</h4>
-                            <h4>Bezahlmethode: SEPA Lastschrift</h4>
-                            <h4>Summe: 420,69€</h4>
-                        </div>
-                        <div class="orders_products_button">
-                            <button class="order_button" id="order_show_2">Bestellung Anzeigen</button>
-                        </div>
-                    </div>
-                    <div id="order_products_2" class="single_order_grid_wrapper">
-                        <div class="single_order_grid_container">
-                            <div class="single_order_item_container">
-                                <div class="single_order_product_image">
-                                    <img src="img/macaronProduct.png" alt="">
-                                </div>
-                                <div class="single_order_product_description">
-                                    <h2>Macaron Box - 12er Packung</h2>
-                                    <h4>Menge: 2</h4>
-                                    <h4>Preis: 420,69€</h4>
-                                    <div class="order_product_review">
-                                        <span class="material-symbols-outlined" id="star1">star</span>
-                                        <span class="material-symbols-outlined" id="star2">star</span>
-                                        <span class="material-symbols-outlined" id="star3">star</span>
-                                        <span class="material-symbols-outlined" id="star4">star</span>
-                                        <span class="material-symbols-outlined" id="star5">star</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="single_order_grid_container">
-                            <div class="single_order_item_container">
-                                <div class="single_order_product_image">
-                                    <img src="img/macaronProduct.png" alt="">
-                                </div>
-                                <div class="single_order_product_description">
-                                    <h2>Macaron Box - 12er Packung</h2>
-                                    <h4>Menge: 2</h4>
-                                    <h4>Preis: 420,69€</h4>
-                                    <div class="order_product_review">
-                                        <span class="material-symbols-outlined" id="star1">star</span>
-                                        <span class="material-symbols-outlined" id="star2">star</span>
-                                        <span class="material-symbols-outlined" id="star3">star</span>
-                                        <span class="material-symbols-outlined" id="star4">star</span>
-                                        <span class="material-symbols-outlined" id="star5">star</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?php
+                                }
+                            ?>
             </div>
             <div class="modal_buttons">
                 <button id="close_orders_modal">Schließen</button>

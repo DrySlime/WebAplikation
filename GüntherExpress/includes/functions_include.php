@@ -1178,7 +1178,7 @@ function getPersonalOrderIDsDescending($conn){
 
 function getPersonalOrderDataByID($conn,$orderID){
 
-    $sql = "SELECT * FROM shop_order INNER JOIN ON site_user.id = shop_order.siteuser_id INNER JOIN ON payment_type.id = shop_order.payment_method_id INNER JOIN ON address.id = shop_order.shipping_address_id INNER JOIN ON shipping_method.id = shop_order.shipping_method_id INNER JOIN ON order_status.id =  shop_order.order_status_id WHERE shop_order.id=?";
+    $sql = "SELECT * FROM shop_order INNER JOIN site_user ON shop_order.siteuser_id = site_user.id INNER JOIN payment_type ON shop_order.payment_method_id = payment_type.id INNER JOIN address ON shop_order.shipping_address_id = address.id  INNER JOIN shipping_method ON shop_order.shipping_method_id = shipping_method.id INNER JOIN order_status ON shop_order.order_status_id = order_status.id  WHERE shop_order.id=?";
     $stmt = mysqli_stmt_init($conn);
 
     mysqli_stmt_prepare($stmt,$sql);
@@ -1188,12 +1188,12 @@ function getPersonalOrderDataByID($conn,$orderID){
     $resultData = mysqli_stmt_get_result($stmt);
     mysqli_stmt_close($stmt);
     
-    return $resultData;
+    return $resultData-> fetch_assoc();
 }
 
 function getObjectOrderDataByID($conn,$orderID){
 
-    $sql = "SELECT * FROM shop_line INNER JOIN ON product.id = order_line.product_item_id WHERE order_line.order_id=?";
+    $sql = "SELECT product.product_name, product.product_image, order_line.qty, product.price FROM order_line INNER JOIN product ON order_line.product_item_id = product.id WHERE order_line.order_id=?";
     $stmt = mysqli_stmt_init($conn);
 
     mysqli_stmt_prepare($stmt,$sql);
