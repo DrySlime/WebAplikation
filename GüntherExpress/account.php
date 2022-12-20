@@ -27,8 +27,6 @@ if (!isset($_SESSION["useruid"])) {
     $resultDefAddress = getDefUserAddressData($conn);
     $resultAddressWODef = getUserAddressDataWODef($conn);
     ?>
-
-
 </head>
 
 <body id="body">
@@ -115,8 +113,8 @@ if (!isset($_SESSION["useruid"])) {
                             <?php
                             if ($resultDefAddress !== null) {
                                 ?>
-                                <h2><?php echo $resultAccount['firstname']; ?><?php echo $resultAccount['lastname']; ?></h2>
-                                <h4><?php echo $resultDefAddress['address_line1']; ?><?php echo $resultDefAddress['street_number']; ?></h4>
+                                <h2><?php echo $resultAccount['firstname']; ?> <?php echo $resultAccount['lastname']; ?></h2>
+                                <h4><?php echo $resultDefAddress['address_line1']; ?> <?php echo $resultDefAddress['street_number']; ?></h4>
                                 <h4><?php echo $resultDefAddress['city']; ?>
                                     , <?php echo $resultDefAddress['postal_code']; ?></h4>
                                 <?php
@@ -226,50 +224,7 @@ if (!isset($_SESSION["useruid"])) {
             </div>
             <div class="modal_address_grid_wrapper">
                 <?php
-                $toWriteAdresses = 6;
-                if ($resultDefAddress !== null) {
-                    ?>
-                    <div class="modal_address_grid_container">
-                        <div class="addressitem_container">
-                            <h2><?php echo $resultAccount['firstname']; ?><?php echo $resultAccount['lastname']; ?></h2>
-                            <h4><?php echo $resultDefAddress['address_line1']; ?><?php echo $resultDefAddress['street_number']; ?></h4>
-                            <h4><?php echo $resultDefAddress['city']; ?>
-                                , <?php echo $resultDefAddress['postal_code']; ?></h4>
-                            <a class="defaultText">Standard Adresse</a>
-                            <div class="address_setting_container">
-                                    <span id="addressicon" class="material-symbols-outlined"
-                                          title="Adresse Löschen">delete</span>
-                            </div>
-                        </div>
-                    </div>
-                    <?php
-                    $toWriteAdresses--;
-                }
-
-                if ($resultAddressWODef !== null) {
-                    while ($rows = $resultAddressWODef->fetch_assoc()) {
-                        if ($toWriteAdresses > 1) {
-                            ?>
-                            <div class="modal_address_grid_container">
-                                <div class="addressitem_container">
-                                    <h2><?php echo $resultAccount['firstname']; ?><?php echo $resultAccount['lastname']; ?></h2>
-                                    <h4><?php echo $rows['address_line1']; ?><?php echo $rows['street_number']; ?></h4>
-                                    <h4><?php echo $rows['city']; ?>, <?php echo $rows['postal_code']; ?></h4>
-                                    <div class="address_setting_container">
-                                        <span id="addressicon" class="material-symbols-outlined"
-                                              title="Als Standard Setzen">edit_location</span>
-                                        <span id="addressicon" class="material-symbols-outlined"
-                                              title="Adresse Löschen">delete</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <?php
-                            $toWriteAdresses--;
-                        }
-                    }
-                }
-
-                for ($x = 0; $x < $toWriteAdresses; $x++) {
+                if($resultAddressWODef->num_rows < 5) {
                     ?>
                     <div class="modal_address_grid_container">
                         <div class="addressitem_container add_address">
@@ -289,8 +244,45 @@ if (!isset($_SESSION["useruid"])) {
                             </div>
                         </div>
                     </div>
-
                     <?php
+                } ?>
+                <?php
+                if ($resultDefAddress !== null) {
+                    ?>
+                    <div class="modal_address_grid_container">
+                        <div class="addressitem_container">
+                            <h2><?php echo $resultAccount['firstname']; ?> <?php echo $resultAccount['lastname']; ?></h2>
+                            <h4><?php echo $resultDefAddress['address_line1']; ?> <?php echo $resultDefAddress['street_number']; ?></h4>
+                            <h4><?php echo $resultDefAddress['city']; ?>
+                                , <?php echo $resultDefAddress['postal_code']; ?></h4>
+                            <a class="defaultText">Standard Adresse</a>
+                            <div class="address_setting_container">
+                                    <span id="addressicon" class="material-symbols-outlined"
+                                          title="Adresse Löschen">delete</span>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                }
+
+                if ($resultAddressWODef !== null) {
+                    while ($rows = $resultAddressWODef->fetch_assoc()) {
+                            ?>
+                            <div class="modal_address_grid_container">
+                                <div class="addressitem_container">
+                                    <h2><?php echo $resultAccount['firstname']; ?> <?php echo $resultAccount['lastname']; ?></h2>
+                                    <h4><?php echo $rows['address_line1']; ?> <?php echo $rows['street_number']; ?></h4>
+                                    <h4><?php echo $rows['city']; ?>, <?php echo $rows['postal_code']; ?></h4>
+                                    <div class="address_setting_container">
+                                        <span id="addressicon" class="material-symbols-outlined"
+                                              title="Als Standard Setzen">edit_location</span>
+                                        <span id="addressicon" class="material-symbols-outlined"
+                                              title="Adresse Löschen">delete</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php
+                    }
                 } ?>
             </div>
             <div class="modal_buttons">
