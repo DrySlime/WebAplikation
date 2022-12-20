@@ -338,6 +338,46 @@ body {
     text-decoration: none;
 }
 
+.noPurchases {
+    width: 100%;
+    height: 80%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    padding-left: 5vmin;
+    padding-right: 5vmin;
+    text-decoration: none;
+}
+
+.noPurchases h3 {
+    font-size: 2vmin;
+    font-weight: 500;
+}
+
+.noPurchases h4 {
+    font-weight: 500;
+    font-size: 1.3vmin;
+    padding-bottom: 4vmin;
+}
+
+.noPurchases a {
+    font-weight: 500;
+    width: auto;
+    text-align: center;
+    font-size: 1.3vmin;
+    color: #FFFFFF;
+    text-decoration: none;
+    border-radius: 3vmin;
+    background-color: #101010;
+    padding: 1.7vmin;
+    transition: 0.3s;
+    border-style: none;
+    outline-style: none;
+}
+
 .orders_header {
     display: flex;
     flex-direction: row;
@@ -442,7 +482,8 @@ body {
 .account_subsection_button a:hover,
 .account_section_button a:hover,
 .account_header_logout a:hover,
-.add_address button:hover {
+.add_address button:hover,
+.noPurchases a:hover {
     color: #fc466b;
     transform: scale(1.05);
     cursor: pointer;
@@ -742,7 +783,7 @@ body {
 }
 
 .orders_info_description h4,
-.single_order_product_description h4{
+.single_order_product_description h4 {
     font-weight: 500;
     font-size: 1.5vmin;
 }
@@ -758,7 +799,8 @@ body {
     font-weight: 600;
 }
 
-#order_text_shadow {
+#order_text_shadow,
+#address_text_shadow {
     border-bottom-color: #888888;
     border-bottom-style: solid;
     border-bottom-width: 1px;
@@ -792,7 +834,7 @@ body {
     height: auto;
     opacity: 1;
     margin-top: 1.2vmin;
-    transition: all cubic-bezier(.13,1,0,.89) 1s;
+    transition: all cubic-bezier(.13, 1, 0, .89) 1s;
 }
 
 .single_order_grid_container {
@@ -867,6 +909,7 @@ body {
 
 .add_address_oneline input:last-child {
     width: 30%;
+    margin-left: 1vmin;
 }
 
 .addressitem_addbutton {

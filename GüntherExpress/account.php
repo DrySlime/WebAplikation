@@ -64,7 +64,7 @@ if (!isset($_SESSION["useruid"])) {
                                 <h4>Benutzername:</h4>
                             </div>
                             <label for="username"></label><input required type="text" name="username" id="username"
-                                                                 value="<?php echo $resultAccount['user_uid'];?>"
+                                                                 value="<?php echo $resultAccount['user_uid']; ?>"
                                                                  placeholder="Benutzername">
                             <div class="dash_label_headers account_double_container">
                                 <h4>Vorname:</h4>
@@ -72,17 +72,17 @@ if (!isset($_SESSION["useruid"])) {
                             </div>
                             <div class="account_double_container">
                                 <label for="name"></label><input required type="text" name="name" id="name"
-                                                                 value= "<?php echo $resultAccount['firstname'];?>"
+                                                                 value="<?php echo $resultAccount['firstname']; ?>"
                                                                  placeholder="Vorname">
                                 <label for="surname"></label><input required type="text" name="surname" id="surname"
-                                                                    value="<?php echo $resultAccount['lastname'];?>"
+                                                                    value="<?php echo $resultAccount['lastname']; ?>"
                                                                     placeholder="Nachname">
                             </div>
                             <div class="dash_label_headers">
                                 <h4>Email:</h4>
                             </div>
                             <label for="email"></label><input required type="text" name="email" id="email"
-                                                              value="<?php echo $resultAccount['email'];?>"
+                                                              value="<?php echo $resultAccount['email']; ?>"
                                                               placeholder="Email">
                             <div class="dash_label_headers account_double_container">
                                 <h4>Neues Passwort:</h4>
@@ -114,8 +114,8 @@ if (!isset($_SESSION["useruid"])) {
                             <?php
                             if ($resultDefAddress !== null) {
                                 ?>
-                                <h2><?php echo $resultAccount['firstname']; ?> <?php echo $resultAccount['lastname']; ?></h2>
-                                <h4><?php echo $resultDefAddress['address_line1']; ?> <?php echo $resultDefAddress['street_number']; ?></h4>
+                                <h2><?php echo $resultAccount['firstname']; ?><?php echo $resultAccount['lastname']; ?></h2>
+                                <h4><?php echo $resultDefAddress['address_line1']; ?><?php echo $resultDefAddress['street_number']; ?></h4>
                                 <h4><?php echo $resultDefAddress['city']; ?>
                                     , <?php echo $resultDefAddress['postal_code']; ?></h4>
                                 <?php
@@ -138,37 +138,39 @@ if (!isset($_SESSION["useruid"])) {
                             <a id="orders">Deine Bestellungen</a>
                         </div>
                     </div>
-                    <?php 
-                        $IDRows = $resultOrderIDs->fetch_assoc();
-                        if($IDRows != null){
-                            $ObjectRows = getObjectOrderDataByID($conn,$IDRows['id'])->fetch_assoc();
-                            $DataRows = getPersonalOrderDataByID($conn,$IDRows['id']);
-                    ?>
-                            <div class="purchases_wrapper">
-                                <div class="grid_item">
-                                    <a href="#"><img src="img/macaronProduct.png" alt=""></a>
-                                </div>
-                                <div class="grid_item grid_description">
-                                    <div class="orders_info_title">
-                                        <h2>Bestellung #<?php echo $IDRows['id']?></h2>
-                                        <h2>Datum: <?php echo $DataRows['order_date']?></h2>
-                                    </div>
-                                    <h4>Anzahl Artikel: 2</h4>
-                                    <h4>Lieferadresse: <?php echo $DataRows['address_line']?> <?php echo $DataRows['street_number']?>, <?php echo $DataRows['postal_code']?>, <?php echo $DataRows['city']?></h4>
-                                    <h4>Bezahlmethode: <?php echo $DataRows['value']?></h4>
-                                    <h4>Summe: <?php echo $DataRows['order_total']?>€</h4>
-                                </div>
+                    <?php
+                    $IDRows = $resultOrderIDs->fetch_assoc();
+                    if ($IDRows != null) {
+                        $ObjectRows = getObjectOrderDataByID($conn, $IDRows['id'])->fetch_assoc();
+                        $DataRows = getPersonalOrderDataByID($conn, $IDRows['id']);
+                        ?>
+                        <div class="purchases_wrapper">
+                            <div class="grid_item">
+                                <a href="#"><img src="img/macaronProduct.png" alt=""></a>
                             </div>
-                    <?php    
-                        }else{
-                    ?>
-                            <div class="noPurchases">
-  <h3>Keine Bestellung verfügbar</h3>
-  <h4>Du hast noch keine Bestellung beim Confectioner gemacht!</h4>
-  <a href="index.php" class="purchases_button_back">Zum Confectioner</a>
-</div>
-                    <?php       
-                        }
+                            <div class="grid_item grid_description">
+                                <div class="orders_info_title">
+                                    <h2>Bestellung #<?php echo $IDRows['id'] ?></h2>
+                                    <h2>Datum: <?php echo $DataRows['order_date'] ?></h2>
+                                </div>
+                                <h4>Anzahl Artikel: 2</h4>
+                                <h4>
+                                    Lieferadresse: <?php echo $DataRows['address_line'] ?> <?php echo $DataRows['street_number'] ?>
+                                    , <?php echo $DataRows['postal_code'] ?>, <?php echo $DataRows['city'] ?></h4>
+                                <h4>Bezahlmethode: <?php echo $DataRows['value'] ?></h4>
+                                <h4>Summe: <?php echo $DataRows['order_total'] ?>€</h4>
+                            </div>
+                        </div>
+                        <?php
+                    } else {
+                        ?>
+                        <div class="noPurchases">
+                            <h3>Keine Bestellung verfügbar</h3>
+                            <h4>Du hast noch keine Bestellung beim Confectioner gemacht!</h4>
+                            <a href="index.php" class="purchases_button_back">Zum Confectioner</a>
+                        </div>
+                        <?php
+                    }
                     ?>
                 </div>
                 <div class="grid_container flex_display">
@@ -237,7 +239,7 @@ if (!isset($_SESSION["useruid"])) {
             </div>
             <div class="modal_address_grid_wrapper">
                 <?php
-                if($resultAddressWODef->num_rows < 5) {
+                if ($resultAddressWODef->num_rows < 5) {
                     ?>
                     <div class="modal_address_grid_container">
                         <div class="addressitem_container add_address">
@@ -264,8 +266,8 @@ if (!isset($_SESSION["useruid"])) {
                     ?>
                     <div class="modal_address_grid_container">
                         <div class="addressitem_container">
-                            <h2><?php echo $resultAccount['firstname']; ?> <?php echo $resultAccount['lastname']; ?></h2>
-                            <h4><?php echo $resultDefAddress['address_line1']; ?> <?php echo $resultDefAddress['street_number']; ?></h4>
+                            <h2><?php echo $resultAccount['firstname']; ?><?php echo $resultAccount['lastname']; ?></h2>
+                            <h4><?php echo $resultDefAddress['address_line1']; ?><?php echo $resultDefAddress['street_number']; ?></h4>
                             <h4><?php echo $resultDefAddress['city']; ?>
                                 , <?php echo $resultDefAddress['postal_code']; ?></h4>
                             <a class="defaultText">Standard Adresse</a>
@@ -280,21 +282,21 @@ if (!isset($_SESSION["useruid"])) {
 
                 if ($resultAddressWODef !== null) {
                     while ($rows = $resultAddressWODef->fetch_assoc()) {
-                            ?>
-                            <div class="modal_address_grid_container">
-                                <div class="addressitem_container">
-                                    <h2><?php echo $resultAccount['firstname']; ?> <?php echo $resultAccount['lastname']; ?></h2>
-                                    <h4><?php echo $rows['address_line1']; ?> <?php echo $rows['street_number']; ?></h4>
-                                    <h4><?php echo $rows['city']; ?>, <?php echo $rows['postal_code']; ?></h4>
-                                    <div class="address_setting_container">
+                        ?>
+                        <div class="modal_address_grid_container">
+                            <div class="addressitem_container">
+                                <h2><?php echo $resultAccount['firstname']; ?><?php echo $resultAccount['lastname']; ?></h2>
+                                <h4><?php echo $rows['address_line1']; ?><?php echo $rows['street_number']; ?></h4>
+                                <h4><?php echo $rows['city']; ?>, <?php echo $rows['postal_code']; ?></h4>
+                                <div class="address_setting_container">
                                         <span id="addressicon" class="material-symbols-outlined"
                                               title="Als Standard Setzen">edit_location</span>
-                                        <span id="addressicon" class="material-symbols-outlined"
-                                              title="Adresse Löschen">delete</span>
-                                    </div>
+                                    <span id="addressicon" class="material-symbols-outlined"
+                                          title="Adresse Löschen">delete</span>
                                 </div>
                             </div>
-                            <?php
+                        </div>
+                        <?php
                     }
                 } ?>
             </div>
@@ -313,62 +315,66 @@ if (!isset($_SESSION["useruid"])) {
                 <p>Hier kannst du deinen Bestellverlauf einsehen - Du findest hier das Bestelldatum, deine Bestellten
                     Artikel, den Preis, sowie die Lieferadresse deiner Bestellung!</p>
             </div>
-            
+
             <div class="modal_orders_grid_wrapper">
-                <?php 
-                    while ( $rows = $resultOrderIDs->fetch_assoc()) {#ADD
-                        $DataRows = getPersonalOrderDataByID($conn,$rows['id']);
-                ?>
-                        <div class="modal_orders_grid_container">
-                            <div class="order_container">
-                                <div class="orders_info_image">
-                                    <img src="img/macaronProduct.png" alt="">
-                                </div>
-                                <div class="orders_info_description">
-                                    <div class="orders_info_title">
-                                        <h2>Bestellung # <?php echo $rows['id']?></h2>
-                                        <h2>Datum: <?php echo $DataRows['order_date']?></h2>
-                                    </div>
-                                    <h4>Anzahl Artikel: 2</h4>
-                                    <h4>Lieferadresse: <?php echo $DataRows['address_line']?> <?php echo $DataRows['street_number']?>, <?php echo $DataRows['postal_code']?>, <?php echo $DataRows['city']?></h4>
-                                    <h4>Bezahlmethode: <?php echo $DataRows['value']?></h4>
-                                    <h4>Summe: <?php echo $DataRows['order_total']?>€</h4>
-                                </div>
-                                <div class="orders_products_button">
-                                    <button class="order_button" id="order_show_<?php echo $rows['id']?>">Bestellung Anzeigen</button>
-                                </div>
+                <?php
+                while ($rows = $resultOrderIDs->fetch_assoc()) {#ADD
+                    $DataRows = getPersonalOrderDataByID($conn, $rows['id']);
+                    ?>
+                    <div class="modal_orders_grid_container">
+                        <div class="order_container">
+                            <div class="orders_info_image">
+                                <img src="img/macaronProduct.png" alt="">
                             </div>
-                            <div id="order_products_<?php echo $rows['id']?>" class="single_order_grid_wrapper">
-                                <?php 
-                                    while ($OrderRow = getObjectOrderDataByID($conn,$rows['id']->fetch_assoc())){
+                            <div class="orders_info_description">
+                                <div class="orders_info_title">
+                                    <h2>Bestellung # <?php echo $rows['id'] ?></h2>
+                                    <h2>Datum: <?php echo $DataRows['order_date'] ?></h2>
+                                </div>
+                                <h4>Anzahl Artikel: 2</h4>
+                                <h4>
+                                    Lieferadresse: <?php echo $DataRows['address_line'] ?> <?php echo $DataRows['street_number'] ?>
+                                    , <?php echo $DataRows['postal_code'] ?>, <?php echo $DataRows['city'] ?></h4>
+                                <h4>Bezahlmethode: <?php echo $DataRows['value'] ?></h4>
+                                <h4>Summe: <?php echo $DataRows['order_total'] ?>€</h4>
+                            </div>
+                            <div class="orders_products_button">
+                                <button class="order_button" id="order_show_<?php echo $rows['id'] ?>">Bestellung
+                                    Anzeigen
+                                </button>
+                            </div>
+                        </div>
+                        <div id="order_products_<?php echo $rows['id'] ?>" class="single_order_grid_wrapper">
+                            <?php
+                            while ($OrderRow = getObjectOrderDataByID($conn, $rows['id']->fetch_assoc())) {
                                 ?>
-                                    <div class="single_order_grid_container">
-                                        <div class="single_order_item_container">
-                                            <div class="single_order_product_image">
-                                                <img src="img/macaronProduct.png" alt="">
-                                            </div>
-                                            <div class="single_order_product_description">
-                                                <h2><?php echo $OrderRow['product_name']?></h2>
-                                                <h4>Menge: <?php echo $OrderRow['qty']?></h4>
-                                                <h4>Preis: <?php echo ($OrderRow['qty']*$OrderRow['price'])?></h4>
-                                                <div class="order_product_review">
-                                                    <span class="material-symbols-outlined" id="star1">star</span>
-                                                    <span class="material-symbols-outlined" id="star2">star</span>
-                                                    <span class="material-symbols-outlined" id="star3">star</span>
-                                                    <span class="material-symbols-outlined" id="star4">star</span>
-                                                    <span class="material-symbols-outlined" id="star5">star</span>
-                                                </div>
+                                <div class="single_order_grid_container">
+                                    <div class="single_order_item_container">
+                                        <div class="single_order_product_image">
+                                            <img src="img/macaronProduct.png" alt="">
+                                        </div>
+                                        <div class="single_order_product_description">
+                                            <h2><?php echo $OrderRow['product_name'] ?></h2>
+                                            <h4>Menge: <?php echo $OrderRow['qty'] ?></h4>
+                                            <h4>Preis: <?php echo($OrderRow['qty'] * $OrderRow['price']) ?></h4>
+                                            <div class="order_product_review">
+                                                <span class="material-symbols-outlined" id="star1">star</span>
+                                                <span class="material-symbols-outlined" id="star2">star</span>
+                                                <span class="material-symbols-outlined" id="star3">star</span>
+                                                <span class="material-symbols-outlined" id="star4">star</span>
+                                                <span class="material-symbols-outlined" id="star5">star</span>
                                             </div>
                                         </div>
                                     </div>
-                            <?php
-                                }
+                                </div>
+                                <?php
+                            }
                             ?>
+                        </div>
                     </div>
-                </div>
-                <?php
-                                }
-                            ?>
+                    <?php
+                }
+                ?>
             </div>
             <div class="modal_buttons">
                 <button id="close_orders_modal">Schließen</button>
