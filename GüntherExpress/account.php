@@ -16,8 +16,7 @@ if (!isset($_SESSION["useruid"])) {
     <meta charset="UTF-8" http-equiv="X-UA-Compatible" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
     <title></title>
     <?php
     require_once 'includes/dbh_include.php';
@@ -63,38 +62,26 @@ if (!isset($_SESSION["useruid"])) {
                             <div class="dash_label_headers">
                                 <h4>Benutzername:</h4>
                             </div>
-                            <label for="username"></label><input required type="text" name="username" id="username"
-                                                                 value="<?php echo $resultAccount['user_uid']; ?>"
-                                                                 placeholder="Benutzername">
+                            <label for="username"></label><input required type="text" name="username" id="username" value="<?php echo $resultAccount['user_uid']; ?>" placeholder="Benutzername">
                             <div class="dash_label_headers account_double_container">
                                 <h4>Vorname:</h4>
                                 <h4>Nachname:</h4>
                             </div>
                             <div class="account_double_container">
-                                <label for="name"></label><input required type="text" name="name" id="name"
-                                                                 value="<?php echo $resultAccount['firstname']; ?>"
-                                                                 placeholder="Vorname">
-                                <label for="surname"></label><input required type="text" name="surname" id="surname"
-                                                                    value="<?php echo $resultAccount['lastname']; ?>"
-                                                                    placeholder="Nachname">
+                                <label for="name"></label><input required type="text" name="name" id="name" value="<?php echo $resultAccount['firstname']; ?>" placeholder="Vorname">
+                                <label for="surname"></label><input required type="text" name="surname" id="surname" value="<?php echo $resultAccount['lastname']; ?>" placeholder="Nachname">
                             </div>
                             <div class="dash_label_headers">
                                 <h4>Email:</h4>
                             </div>
-                            <label for="email"></label><input required type="text" name="email" id="email"
-                                                              value="<?php echo $resultAccount['email']; ?>"
-                                                              placeholder="Email">
+                            <label for="email"></label><input required type="text" name="email" id="email" value="<?php echo $resultAccount['email']; ?>" placeholder="Email">
                             <div class="dash_label_headers account_double_container">
                                 <h4>Neues Passwort:</h4>
                                 <h4>Altes Passwort:</h4>
                             </div>
                             <div class="account_double_container">
-                                <label for="newpassword"></label><input type="password" name="newpassword"
-                                                                        id="newpassword"
-                                                                        placeholder="Neues Passwort">
-                                <label for="oldpassword"></label><input required type="password" name="oldpassword"
-                                                                        id="oldpassword"
-                                                                        placeholder="Altes Passwort">
+                                <label for="newpassword"></label><input type="password" name="newpassword" id="newpassword" placeholder="Neues Passwort">
+                                <label for="oldpassword"></label><input required type="password" name="oldpassword" id="oldpassword" placeholder="Altes Passwort">
                             </div>
                             <div class="account_error_container">
                                 <h4>Print submit response here!</h4>
@@ -114,9 +101,9 @@ if (!isset($_SESSION["useruid"])) {
                             <?php
                             if ($resultDefAddress !== null) {
                                 ?>
-                                <h2><?php echo $resultAccount['firstname']; ?><?php echo $resultAccount['lastname']; ?></h2>
-                                <h4><?php echo $resultDefAddress['address_line1']; ?><?php echo $resultDefAddress['street_number']; ?></h4>
-                                <h4><?php echo $resultDefAddress['city']; ?>
+                                <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                                <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?><?php echo $resultDefAddress['street_number']; ?></h4>
+                                <h4><?php echo ucfirst($resultDefAddress['city']); ?>
                                     , <?php echo $resultDefAddress['postal_code']; ?></h4>
                                 <?php
                             } else {
@@ -138,26 +125,15 @@ if (!isset($_SESSION["useruid"])) {
                             <a id="orders">Deine Bestellungen</a>
                         </div>
                     </div>
-                    <?php 
-                        $IDRows = $resultOrderIDs->fetch_assoc();
-                        if($IDRows != null){
-                            $ObjectRows = getObjectOrderDataByID($conn,$IDRows['id'])->fetch_assoc();
-                            $DataRows = getPersonalOrderDataByID($conn,$IDRows['id'])->fetch_assoc();
-                    ?>
-                            <div class="purchases_wrapper">
-                                <div class="grid_item">
-                                    <a href="#"><img src="img/macaronProduct.png" alt=""></a>
-                                </div>
-                                <div class="grid_item grid_description">
-                                    <div class="orders_info_title">
-                                        <h2>Bestellung #<?php echo $IDRows['id']?></h2>
-                                        <h2>Datum: <?php echo $DataRows['order_date']?></h2>
-                                    </div>
-                                    <h4>Anzahl Artikel: 2</h4>
-                                    <h4>Lieferadresse: <?php echo $DataRows['address_line']?> <?php echo $DataRows['street_number']?>, <?php echo $DataRows['postal_code']?>, <?php echo $DataRows['city']?></h4>
-                                    <h4>Bezahlmethode: <?php echo $DataRows['value']?></h4>
-                                    <h4>Summe: <?php echo $DataRows['order_total']?>€</h4>
-                                </div>
+                    <?php
+                    $IDRows = $resultOrderIDs->fetch_assoc();
+                    if ($IDRows != null) {
+                        $ObjectRows = getObjectOrderDataByID($conn, $IDRows['id'])->fetch_assoc();
+                        $DataRows = mysqli_fetch_assoc(getPersonalOrderDataByID($conn, $IDRows['id']));
+                        ?>
+                        <div class="purchases_wrapper">
+                            <div class="grid_item">
+                                <img src="img/macaronProduct.png" alt="">
                             </div>
                             <div class="grid_item grid_description">
                                 <div class="orders_info_title">
@@ -166,8 +142,8 @@ if (!isset($_SESSION["useruid"])) {
                                 </div>
                                 <h4>Anzahl Artikel: 2</h4>
                                 <h4>
-                                    Lieferadresse: <?php echo $DataRows['address_line'] ?> <?php echo $DataRows['street_number'] ?>
-                                    , <?php echo $DataRows['postal_code'] ?>, <?php echo $DataRows['city'] ?></h4>
+                                    Lieferadresse: <?php echo ucfirst($DataRows['address_line1']) ?> <?php echo $DataRows['street_number'] ?>
+                                    , <?php echo $DataRows['postal_code'] ?>, <?php echo ucfirst($DataRows['city']) ?></h4>
                                 <h4>Bezahlmethode: <?php echo $DataRows['value'] ?></h4>
                                 <h4>Summe: <?php echo $DataRows['order_total'] ?>€</h4>
                             </div>
@@ -191,8 +167,7 @@ if (!isset($_SESSION["useruid"])) {
                     <div class="standard_payment_wrapper">
                         <div class="payment_card">
                             <div class="card_top card_info">
-                                <i class="material-symbols-outlined"
-                                   style="pointer-events: none; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;">credit_card</i>
+                                <i class="material-symbols-outlined" style="pointer-events: none; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;">credit_card</i>
                                 <h4>Comdirect</h4>
                             </div>
                             <div class="card_middle card_info">
@@ -227,10 +202,8 @@ if (!isset($_SESSION["useruid"])) {
             </div>
             <div class="modal_input">
                 <form id="deleteAccount" action="includes/account_include.php" method="post">
-                    <label for="delemail"></label><input required type="text" name="delemail" id="delemail"
-                                                         placeholder="Email">
-                    <label for="delpassword"></label><input required type="password" name="delpassword" id="delpassword"
-                                                            placeholder="Passwort">
+                    <label for="delemail"></label><input required type="text" name="delemail" id="delemail" placeholder="Email">
+                    <label for="delpassword"></label><input required type="password" name="delpassword" id="delpassword" placeholder="Passwort">
                 </form>
             </div>
             <div class="modal_buttons">
@@ -277,15 +250,14 @@ if (!isset($_SESSION["useruid"])) {
                     ?>
                     <div class="modal_address_grid_container">
                         <div class="addressitem_container">
-                            <h2><?php echo $resultAccount['firstname']; ?><?php echo $resultAccount['lastname']; ?></h2>
-                            <h4><?php echo $resultDefAddress['address_line1']; ?><?php echo $resultDefAddress['street_number']; ?></h4>
-                            <h4><?php echo $resultDefAddress['city']; ?>
+                            <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                            <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?><?php echo $resultDefAddress['street_number']; ?></h4>
+                            <h4><?php echo ucfirst($resultDefAddress['city']); ?>
                                 , <?php echo $resultDefAddress['postal_code']; ?></h4>
                             <a class="defaultText">Standard Adresse</a>
                             <div class="address_setting_container">
-                            <a href= "account.php?delete=<?php echo $resultDefAddress['id']?>">
-                                    <span  id="addressicon" class="material-symbols-outlined"
-                                          title="Adresse Löschen">delete</span></a>
+                                <a href="account.php?delete=<?php echo $resultDefAddress['id'] ?>">
+                                    <span id="addressicon" class="material-symbols-outlined" title="Adresse Löschen">delete</span></a>
                             </div>
                         </div>
                     </div>
@@ -294,20 +266,17 @@ if (!isset($_SESSION["useruid"])) {
 
                 if ($resultAddressWODef !== null) {
                     while ($rows = $resultAddressWODef->fetch_assoc()) {
-                            ?>
-                            <div class="modal_address_grid_container">
-                                <div class="addressitem_container">
-                                    <h2><?php echo $resultAccount['firstname']; ?> <?php echo $resultAccount['lastname']; ?></h2>
-                                    <h4><?php echo $rows['address_line1']; ?> <?php echo $rows['street_number']; ?></h4>
-                                    <h4><?php echo $rows['city']; ?>, <?php echo $rows['postal_code']; ?></h4>
-                                    <div class="address_setting_container">
-                                    <a href= "account.php?edit=<?php echo $rows['id']?>">
-                                        <span id="addressicon" class="material-symbols-outlined"
-                                              title="Als Standard Setzen">edit_location</span></a>
-                                              <a href= "account.php?delete=<?php echo $rows['id']?>">
-                                        <span  id="addressicon" class="material-symbols-outlined"
-                                              title="Adresse Löschen">delete</span></a>
-                                    </div>
+                        ?>
+                        <div class="modal_address_grid_container">
+                            <div class="addressitem_container">
+                                <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                                <h4><?php echo ucfirst($rows['address_line1']); ?><?php echo $rows['street_number']; ?></h4>
+                                <h4><?php echo ucfirst($rows['city']); ?>, <?php echo $rows['postal_code']; ?></h4>
+                                <div class="address_setting_container">
+                                    <a href="account.php?edit=<?php echo $rows['id'] ?>">
+                                        <span id="addressicon" class="material-symbols-outlined" title="Als Standard Setzen">edit_location</span></a>
+                                    <a href="account.php?delete=<?php echo $rows['id'] ?>">
+                                        <span id="addressicon" class="material-symbols-outlined" title="Adresse Löschen">delete</span></a>
                                 </div>
                             </div>
                         </div>
@@ -330,30 +299,15 @@ if (!isset($_SESSION["useruid"])) {
                 <p>Hier kannst du deinen Bestellverlauf einsehen - Du findest hier das Bestelldatum, deine Bestellten
                     Artikel, den Preis, sowie die Lieferadresse deiner Bestellung!</p>
             </div>
-
             <div class="modal_orders_grid_wrapper">
-                <?php 
-                    while ( $rows = $resultOrderIDs->fetch_assoc()) {
-                        $DataRows = getPersonalOrderDataByID($conn,$rows['id']->fetch_assoc());
-                ?>
-                        <div class="modal_orders_grid_container">
-                            <div class="order_container">
-                                <div class="orders_info_image">
-                                    <img src="img/macaronProduct.png" alt="">
-                                </div>
-                                <div class="orders_info_description">
-                                    <div class="orders_info_title">
-                                        <h2>Bestellung # <?php echo $rows['id']?></h2>
-                                        <h2>Datum: <?php echo $DataRows['order_date']?></h2>
-                                    </div>
-                                    <h4>Anzahl Artikel: 2</h4>
-                                    <h4>Lieferadresse: <?php echo $DataRows['address_line']?> <?php echo $DataRows['street_number']?>, <?php echo $DataRows['postal_code']?>, <?php echo $DataRows['city']?></h4>
-                                    <h4>Bezahlmethode: <?php echo $DataRows['value']?></h4>
-                                    <h4>Summe: <?php echo $DataRows['order_total']?>€</h4>
-                                </div>
-                                <div class="orders_products_button">
-                                    <button class="order_button" id="order_show_<?php echo $rows['id']?>">Bestellung Anzeigen</button>
-                                </div>
+                <?php
+                while ($rows = $resultOrderIDs->fetch_assoc()) {
+                    $DataRows = mysqli_fetch_assoc(getPersonalOrderDataByID($conn, $IDRows['id']));
+                    ?>
+                    <div class="modal_orders_grid_container">
+                        <div class="order_container">
+                            <div class="orders_info_image">
+                                <img src="img/macaronProduct.png" alt="">
                             </div>
                             <div class="orders_info_description">
                                 <div class="orders_info_title">
@@ -362,15 +316,14 @@ if (!isset($_SESSION["useruid"])) {
                                 </div>
                                 <h4>Anzahl Artikel: 2</h4>
                                 <h4>
-                                    Lieferadresse: <?php echo $DataRows['address_line'] ?> <?php echo $DataRows['street_number'] ?>
-                                    , <?php echo $DataRows['postal_code'] ?>, <?php echo $DataRows['city'] ?></h4>
+                                    Lieferadresse: <?php echo ucfirst($DataRows['address_line1']) ?> <?php echo $DataRows['street_number'] ?>
+                                    , <?php echo $DataRows['postal_code'] ?>
+                                    , <?php echo ucfirst($DataRows['city']) ?></h4>
                                 <h4>Bezahlmethode: <?php echo $DataRows['value'] ?></h4>
                                 <h4>Summe: <?php echo $DataRows['order_total'] ?>€</h4>
                             </div>
                             <div class="orders_products_button">
-                                <button class="order_button" id="order_show_<?php echo $rows['id'] ?>">Bestellung
-                                    Anzeigen
-                                </button>
+                                <button class="order_button" id="order_show_<?php echo $rows['id'] ?>">Bestellung Anzeigen</button>
                             </div>
                         </div>
                         <div id="order_products_<?php echo $rows['id'] ?>" class="single_order_grid_wrapper">
@@ -423,10 +376,8 @@ if (!isset($_SESSION["useruid"])) {
             </div>
             <div class="modal_input">
                 <form id="deleteAccount" action="includes/account_include.php" method="post">
-                    <label for="delemail"></label><input required type="text" name="delemail" id="delemail"
-                                                         placeholder="Email">
-                    <label for="delpassword"></label><input required type="password" name="delpassword" id="delpassword"
-                                                            placeholder="Passwort">
+                    <label for="delemail"></label><input required type="text" name="delemail" id="delemail" placeholder="Email">
+                    <label for="delpassword"></label><input required type="password" name="delpassword" id="delpassword" placeholder="Passwort">
                 </form>
             </div>
             <div class="modal_buttons">

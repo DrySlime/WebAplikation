@@ -276,6 +276,10 @@ body {
     text-align: center;
 }
 
+.item_add_settings h4 {
+    margin-right: .5vmin;
+}
+
 .buttonAddCart {
     cursor: pointer;
     background: #fc466b;

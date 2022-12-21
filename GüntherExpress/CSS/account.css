@@ -686,6 +686,12 @@ body {
     padding-bottom: 6vmin;
     overflow-wrap: break-word;
     word-wrap: break-word;
+    text-decoration: none;
+}
+
+.address_setting_container a {
+    text-decoration: none;
+    color: #101010;
 }
 
 .addressitem_container h2 {

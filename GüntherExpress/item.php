@@ -92,7 +92,7 @@ $stars = getAvrgRating($conn, $product[0]["id"]);
 
                     <button class="item_add_settings" id="addToCart" onclick="addToCart()">
                         <h4>Hinzufügen</h4>
-                        <i class="material-symbols-outlined" style="pointer-events: none;">shopping_cart</i>
+                        <i class="material-symbols-outlined" style="pointer-events: none;">add_shopping_cart</i>
                     </button>
 
                     <script>
