@@ -1031,7 +1031,7 @@ function rightPassword($conn,$password){
     $uidExists = uidExists($conn, $username,$username);
 
     if($uidExists===false){
-        header("location: ../profile.php?error=wronginput");
+        header("location: ../account.php?error=wronginput");
         exit();
     }
 
@@ -1098,6 +1098,38 @@ function bindAddressToUser($conn, $street, $houseno, $city, $postalCode){
     
 }
 
+function setDefaultAddress($conn,$addressid){
+    $userid = $_SESSION['userid'];
+
+    $sql = "UPDATE user_address SET is_default_address = 0 WHERE user_id = ?";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../account.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt,"s",$userid);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+
+    $sql = "UPDATE user_address SET is_default_address = 1 WHERE user_id = ? AND address_id = ?";
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$sql)){
+        header("location: ../account.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt,"ss",$userid,$addressid);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+    header("location: ../account.php?error=none");
+    exit();
+}
+
 function unbindAddress($conn,$addressid){
     $userid = $_SESSION['userid'];
 
@@ -1105,7 +1137,7 @@ function unbindAddress($conn,$addressid){
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt,$sql)){
-        header("location: ../profile.php?error=stmtfailed");
+        header("location: ../account.php?error=stmtfailed");
         exit();
     }
 
@@ -1115,7 +1147,7 @@ function unbindAddress($conn,$addressid){
     mysqli_stmt_close($stmt);
     
 
-    header("location: ../profile.php?error=none");
+    header("location: ../account.php?error=none");
     exit();
 } 
 
@@ -1188,7 +1220,7 @@ function getPersonalOrderDataByID($conn,$orderID){
     $resultData = mysqli_stmt_get_result($stmt);
     mysqli_stmt_close($stmt);
     
-    return $resultData-> fetch_assoc();
+    return $resultData;
 }
 
 function getObjectOrderDataByID($conn,$orderID){

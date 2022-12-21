@@ -4,7 +4,6 @@ require_once 'functions_include.php';
 global $conn;
 
 
-#TODO : change password hakt
 if (isset($_POST['register_button'])) {
     session_start();
     $usernameChange = $_POST['username'];
@@ -44,26 +43,19 @@ if (isset($_POST['register_button'])) {
 }
 
 
-#TODO
-if (isset($_POST['change_address_action'])) {
+if (isset($_GET['edit'])) {
     session_start();
-    $changeAddressID = $_POST['address_ID'];
+    $AddressID = $_GET['edit'];
 
-    if (invalidUserAddress($conn, $changeAddressID) == false) {
-        $_SESSION['change_address_id'] = $changeAddressID;
-        header("location: ../account.php?error=none");
-        exit();
-    } else {
-        header("location: ../account.php?error=invalidchangeaddress");
-        exit();
-
-    }
+    setDefaultAddress($conn, $AddressID);
+    header("location: ../account.php?error=none");
+    exit();
 
 }
-#TODO
-if (isset($_POST['delete_address'])) {
+
+if (isset($_GET['delete'])) {
     session_start();
-    $deleteAddressID = $_POST['address_ID'];
+    $deleteAddressID = $_GET['delete'];
 
     unbindAddress($conn, $deleteAddressID);
     header("location: ../account.php?error=none");

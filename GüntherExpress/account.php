@@ -142,7 +142,7 @@ if (!isset($_SESSION["useruid"])) {
                         $IDRows = $resultOrderIDs->fetch_assoc();
                         if($IDRows != null){
                             $ObjectRows = getObjectOrderDataByID($conn,$IDRows['id'])->fetch_assoc();
-                            $DataRows = getPersonalOrderDataByID($conn,$IDRows['id']);
+                            $DataRows = getPersonalOrderDataByID($conn,$IDRows['id'])->fetch_assoc();
                     ?>
                             <div class="purchases_wrapper">
                                 <div class="grid_item">
@@ -270,8 +270,9 @@ if (!isset($_SESSION["useruid"])) {
                                 , <?php echo $resultDefAddress['postal_code']; ?></h4>
                             <a class="defaultText">Standard Adresse</a>
                             <div class="address_setting_container">
-                                    <span id="addressicon" class="material-symbols-outlined"
-                                          title="Adresse Löschen">delete</span>
+                            <a href= "account.php?delete=<?php echo $resultDefAddress['id']?>">
+                                    <span  id="addressicon" class="material-symbols-outlined"
+                                          title="Adresse Löschen">delete</span></a>
                             </div>
                         </div>
                     </div>
@@ -287,10 +288,12 @@ if (!isset($_SESSION["useruid"])) {
                                     <h4><?php echo $rows['address_line1']; ?> <?php echo $rows['street_number']; ?></h4>
                                     <h4><?php echo $rows['city']; ?>, <?php echo $rows['postal_code']; ?></h4>
                                     <div class="address_setting_container">
+                                    <a href= "account.php?edit=<?php echo $rows['id']?>">
                                         <span id="addressicon" class="material-symbols-outlined"
-                                              title="Als Standard Setzen">edit_location</span>
-                                        <span id="addressicon" class="material-symbols-outlined"
-                                              title="Adresse Löschen">delete</span>
+                                              title="Als Standard Setzen">edit_location</span></a>
+                                              <a href= "account.php?delete=<?php echo $rows['id']?>">
+                                        <span  id="addressicon" class="material-symbols-outlined"
+                                              title="Adresse Löschen">delete</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -316,8 +319,8 @@ if (!isset($_SESSION["useruid"])) {
             
             <div class="modal_orders_grid_wrapper">
                 <?php 
-                    while ( $rows = $resultOrderIDs->fetch_assoc()) {#ADD
-                        $DataRows = getPersonalOrderDataByID($conn,$rows['id']);
+                    while ( $rows = $resultOrderIDs->fetch_assoc()) {
+                        $DataRows = getPersonalOrderDataByID($conn,$rows['id']->fetch_assoc());
                 ?>
                         <div class="modal_orders_grid_container">
                             <div class="order_container">
