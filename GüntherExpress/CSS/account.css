@@ -786,6 +786,7 @@ body {
 
 .orders_info_description {
     width: 65%;
+    padding-left: 2vmin;
 }
 
 .orders_info_description h4,

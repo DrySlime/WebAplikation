@@ -40,59 +40,169 @@ if (!isset($_SESSION["useruid"])) {
             <div class="cart_products_grid_wrapper">
                 <!-- NEW PRODUCT STARTING HERE -->
                 <div class="cart_products_grid_container">
-                    <div class="cart_product_data_image">
-                        <img src="img/macaronProduct.png" alt="">
-                    </div>
-                    <div class="cart_product_data_description flexCol">
-                        <h3>Macaron Product</h3>
-                        <h4>Kategorie</h4>
-                    </div>
-                    <div class="cart_product_data_description">
-                        <h4>Einzelpreis €</h4>
-                    </div>
-                    <div class="cart_product_data_settings">
-                        <button class="buttonAmount" id="decreaseAmount" onclick="removeFromAmount()">
-                            <span class="material-icons md48">remove_circle</span>
-                        </button>
-                        <h4 id="amount">1</h4>
-                        <button class="buttonAmount" id="increaseAmount" onclick="addToAmount()">
-                            <span class="material-icons md48">add_circle</span>
-                        </button>
-                    </div>
-                    <div class="cart_product_data_description">
-                        <h4>Final Price €</h4>
-                    </div>
-                    <div class="cart_product_data_settings">
-                        <a><span class="material-symbols-outlined">remove_shopping_cart</span></a>
+                    <div class="cart_product_wrapper">
+                        <div class="cart_product_data_image">
+                            <img src="img/macaronProduct.png" alt="">
+                        </div>
+                        <div id="mainItemDescription" class="cart_product_data_description flexCol">
+                            <h3>Macaron Product</h3>
+                            <h4>Kategorie</h4>
+                        </div>
+                        <div class="cart_product_data_settings">
+                            <button class="buttonAmount" id="decreaseAmount" onclick="removeFromAmount()">
+                                <span class="material-icons md40">remove_circle</span>
+                            </button>
+                            <h4 id="amount">1</h4>
+                            <button class="buttonAmount" id="increaseAmount" onclick="addToAmount()">
+                                <span class="material-icons md40">add_circle</span>
+                            </button>
+                        </div>
+                        <div class="cart_product_data_description smallerDiv">
+                            <h3>420,69 €</h3>
+                        </div>
+                        <div class="cart_product_data_settings soloPadding">
+                            <a><span class="material-symbols-outlined">remove_shopping_cart</span></a>
+                        </div>
                     </div>
                 </div>
                 <!-- PRODUCT ENDS HERE -->
                 <!-- NEW PRODUCT STARTING HERE -->
                 <div class="cart_products_grid_container">
-                    <div class="cart_product_data_image">
-                        <img src="img/macaronProduct.png" alt="">
+                    <div class="cart_product_wrapper">
+                        <div class="cart_product_data_image">
+                            <img src="img/macaronProduct.png" alt="">
+                        </div>
+                        <div id="mainItemDescription" class="cart_product_data_description flexCol">
+                            <h3>Macaron Product</h3>
+                            <h4>Kategorie</h4>
+                        </div>
+                        <div class="cart_product_data_settings">
+                            <button class="buttonAmount" id="decreaseAmount" onclick="removeFromAmount()">
+                                <span class="material-icons md40">remove_circle</span>
+                            </button>
+                            <h4 id="amount">1</h4>
+                            <button class="buttonAmount" id="increaseAmount" onclick="addToAmount()">
+                                <span class="material-icons md40">add_circle</span>
+                            </button>
+                        </div>
+                        <div class="cart_product_data_description smallerDiv">
+                            <h3>420,69 €</h3>
+                        </div>
+                        <div class="cart_product_data_settings soloPadding">
+                            <a><span class="material-symbols-outlined">remove_shopping_cart</span></a>
+                        </div>
                     </div>
-                    <div class="cart_product_data_description">
-                        <h3>Macaron Product</h3>
-                        <h4>Kategorie</h4>
+                </div>
+                <!-- PRODUCT ENDS HERE -->
+                <!-- NEW PRODUCT STARTING HERE -->
+                <div class="cart_products_grid_container">
+                    <div class="cart_product_wrapper">
+                        <div class="cart_product_data_image">
+                            <img src="img/macaronProduct.png" alt="">
+                        </div>
+                        <div id="mainItemDescription" class="cart_product_data_description flexCol">
+                            <h3>Macaron Product</h3>
+                            <h4>Kategorie</h4>
+                        </div>
+                        <div class="cart_product_data_settings">
+                            <button class="buttonAmount" id="decreaseAmount" onclick="removeFromAmount()">
+                                <span class="material-icons md40">remove_circle</span>
+                            </button>
+                            <h4 id="amount">1</h4>
+                            <button class="buttonAmount" id="increaseAmount" onclick="addToAmount()">
+                                <span class="material-icons md40">add_circle</span>
+                            </button>
+                        </div>
+                        <div class="cart_product_data_description smallerDiv">
+                            <h3>420,69 €</h3>
+                        </div>
+                        <div class="cart_product_data_settings soloPadding">
+                            <a><span class="material-symbols-outlined">remove_shopping_cart</span></a>
+                        </div>
                     </div>
-                    <div class="cart_product_data_description">
-                        <h4>Einzelpreis €</h4>
+                </div>
+                <!-- PRODUCT ENDS HERE -->
+                <!-- NEW PRODUCT STARTING HERE -->
+                <div class="cart_products_grid_container">
+                    <div class="cart_product_wrapper">
+                        <div class="cart_product_data_image">
+                            <img src="img/macaronProduct.png" alt="">
+                        </div>
+                        <div id="mainItemDescription" class="cart_product_data_description flexCol">
+                            <h3>Macaron Product</h3>
+                            <h4>Kategorie</h4>
+                        </div>
+                        <div class="cart_product_data_settings">
+                            <button class="buttonAmount" id="decreaseAmount" onclick="removeFromAmount()">
+                                <span class="material-icons md40">remove_circle</span>
+                            </button>
+                            <h4 id="amount">1</h4>
+                            <button class="buttonAmount" id="increaseAmount" onclick="addToAmount()">
+                                <span class="material-icons md40">add_circle</span>
+                            </button>
+                        </div>
+                        <div class="cart_product_data_description smallerDiv">
+                            <h3>420,69 €</h3>
+                        </div>
+                        <div class="cart_product_data_settings soloPadding">
+                            <a><span class="material-symbols-outlined">remove_shopping_cart</span></a>
+                        </div>
                     </div>
-                    <div class="cart_product_data_settings">
-                        <button class="buttonAmount" id="decreaseAmount" onclick="removeFromAmount()">
-                            <span class="material-icons md48">remove_circle</span>
-                        </button>
-                        <h4 id="amount">1</h4>
-                        <button class="buttonAmount" id="increaseAmount" onclick="addToAmount()">
-                            <span class="material-icons md48">add_circle</span>
-                        </button>
+                </div>
+                <!-- PRODUCT ENDS HERE -->
+                <!-- NEW PRODUCT STARTING HERE -->
+                <div class="cart_products_grid_container">
+                    <div class="cart_product_wrapper">
+                        <div class="cart_product_data_image">
+                            <img src="img/macaronProduct.png" alt="">
+                        </div>
+                        <div id="mainItemDescription" class="cart_product_data_description flexCol">
+                            <h3>Macaron Product</h3>
+                            <h4>Kategorie</h4>
+                        </div>
+                        <div class="cart_product_data_settings">
+                            <button class="buttonAmount" id="decreaseAmount" onclick="removeFromAmount()">
+                                <span class="material-icons md40">remove_circle</span>
+                            </button>
+                            <h4 id="amount">1</h4>
+                            <button class="buttonAmount" id="increaseAmount" onclick="addToAmount()">
+                                <span class="material-icons md40">add_circle</span>
+                            </button>
+                        </div>
+                        <div class="cart_product_data_description smallerDiv">
+                            <h3>420,69 €</h3>
+                        </div>
+                        <div class="cart_product_data_settings soloPadding">
+                            <a><span class="material-symbols-outlined">remove_shopping_cart</span></a>
+                        </div>
                     </div>
-                    <div class="cart_product_data_description">
-                        <h4>Final Price €</h4>
-                    </div>
-                    <div class="cart_product_data_settings">
-                        <a><span class="material-symbols-outlined">remove_shopping_cart</span></a>
+                </div>
+                <!-- PRODUCT ENDS HERE -->
+                <!-- NEW PRODUCT STARTING HERE -->
+                <div class="cart_products_grid_container">
+                    <div class="cart_product_wrapper">
+                        <div class="cart_product_data_image">
+                            <img src="img/macaronProduct.png" alt="">
+                        </div>
+                        <div id="mainItemDescription" class="cart_product_data_description flexCol">
+                            <h3>Macaron Product</h3>
+                            <h4>Kategorie</h4>
+                        </div>
+                        <div class="cart_product_data_settings">
+                            <button class="buttonAmount" id="decreaseAmount" onclick="removeFromAmount()">
+                                <span class="material-icons md40">remove_circle</span>
+                            </button>
+                            <h4 id="amount">1</h4>
+                            <button class="buttonAmount" id="increaseAmount" onclick="addToAmount()">
+                                <span class="material-icons md40">add_circle</span>
+                            </button>
+                        </div>
+                        <div class="cart_product_data_description smallerDiv">
+                            <h3>420,69 €</h3>
+                        </div>
+                        <div class="cart_product_data_settings soloPadding">
+                            <a><span class="material-symbols-outlined">remove_shopping_cart</span></a>
+                        </div>
                     </div>
                 </div>
                 <!-- PRODUCT ENDS HERE -->

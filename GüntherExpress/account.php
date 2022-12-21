@@ -102,10 +102,9 @@ if (!isset($_SESSION["useruid"])) {
                             <?php
                             if ($resultDefAddress !== null) {
                                 ?>
-                                <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
-                                <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?><?php echo $resultDefAddress['street_number']; ?></h4>
-                                <h4><?php echo ucfirst($resultDefAddress['city']); ?>
-                                    , <?php echo $resultDefAddress['postal_code']; ?></h4>
+                                <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                                <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?> <?php echo $resultDefAddress['street_number']; ?></h4>
+                                <h4><?php echo ucfirst($resultDefAddress['city']); ?>, <?php echo $resultDefAddress['postal_code']; ?></h4>
                                 <?php
                             } else {
                                 ?>
@@ -143,8 +142,7 @@ if (!isset($_SESSION["useruid"])) {
                                 </div>
                                 <h4>Anzahl Artikel: 2</h4>
                                 <h4>
-                                    Lieferadresse: <?php echo ucfirst($DataRows['address_line1']) ?> <?php echo $DataRows['street_number'] ?>
-                                    , <?php echo $DataRows['postal_code'] ?>, <?php echo ucfirst($DataRows['city']) ?></h4>
+                                    Lieferadresse: <?php echo ucfirst($DataRows['address_line1']) ?> <?php echo $DataRows['street_number'] ?>, <?php echo $DataRows['postal_code'] ?>, <?php echo ucfirst($DataRows['city']) ?></h4>
                                 <h4>Bezahlmethode: <?php echo $DataRows['value'] ?></h4>
                                 <h4>Summe: <?php echo $DataRows['order_total'] ?>€</h4>
                             </div>
@@ -253,8 +251,7 @@ if (!isset($_SESSION["useruid"])) {
                         <div class="addressitem_container">
                             <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
                             <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?> <?php echo $resultDefAddress['street_number']; ?></h4>
-                            <h4><?php echo ucfirst($resultDefAddress['city']); ?>
-                                , <?php echo $resultDefAddress['postal_code']; ?></h4>
+                            <h4><?php echo ucfirst($resultDefAddress['city']); ?>, <?php echo $resultDefAddress['postal_code']; ?></h4>
                             <a class="defaultText">Standard Adresse</a>
                             <div class="address_setting_container">
                                 <a href="account.php?delete=<?php echo $resultDefAddress['id'] ?>">
