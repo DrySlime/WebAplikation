@@ -26,6 +26,7 @@ if (!isset($_SESSION["useruid"])) {
     $resultDefAddress = getDefUserAddressData($conn);
     $resultAddressWODef = getUserAddressDataWODef($conn);
     $resultOrderIDs = getPersonalOrderIDsDescending($conn);
+    $reOrderIDs = getPersonalOrderIDsDescending($conn);
     ?>
 </head>
 
@@ -133,7 +134,7 @@ if (!isset($_SESSION["useruid"])) {
                         ?>
                         <div class="purchases_wrapper">
                             <div class="grid_item">
-                                <img src="img/macaronProduct.png" alt="">
+                                <img src="<?php echo $ObjectRows['product_image']?>" alt="">
                             </div>
                             <div class="grid_item grid_description">
                                 <div class="orders_info_title">
@@ -250,8 +251,8 @@ if (!isset($_SESSION["useruid"])) {
                     ?>
                     <div class="modal_address_grid_container">
                         <div class="addressitem_container">
-                            <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
-                            <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?><?php echo $resultDefAddress['street_number']; ?></h4>
+                            <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                            <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?> <?php echo $resultDefAddress['street_number']; ?></h4>
                             <h4><?php echo ucfirst($resultDefAddress['city']); ?>
                                 , <?php echo $resultDefAddress['postal_code']; ?></h4>
                             <a class="defaultText">Standard Adresse</a>
@@ -269,8 +270,8 @@ if (!isset($_SESSION["useruid"])) {
                         ?>
                         <div class="modal_address_grid_container">
                             <div class="addressitem_container">
-                                <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
-                                <h4><?php echo ucfirst($rows['address_line1']); ?><?php echo $rows['street_number']; ?></h4>
+                                <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                                <h4><?php echo ucfirst($rows['address_line1']); ?> <?php echo $rows['street_number']; ?></h4>
                                 <h4><?php echo ucfirst($rows['city']); ?>, <?php echo $rows['postal_code']; ?></h4>
                                 <div class="address_setting_container">
                                     <a href="account.php?edit=<?php echo $rows['id'] ?>">
@@ -301,17 +302,19 @@ if (!isset($_SESSION["useruid"])) {
             </div>
             <div class="modal_orders_grid_wrapper">
                 <?php
-                while ($rows = $resultOrderIDs->fetch_assoc()) {
-                    $DataRows = mysqli_fetch_assoc(getPersonalOrderDataByID($conn, $IDRows['id']));
+                
+                while ($rows = $reOrderIDs->fetch_assoc()) {
+                    $DataRows = mysqli_fetch_assoc(getPersonalOrderDataByID($conn, $rows['id']));
+                    $OrderArray = getObjectOrderDataByID($conn, $rows['id']);
                     ?>
                     <div class="modal_orders_grid_container">
                         <div class="order_container">
                             <div class="orders_info_image">
-                                <img src="img/macaronProduct.png" alt="">
+                                <img src="<?php echo mysqli_fetch_assoc($OrderArray)['product_image']?>" alt="">
                             </div>
                             <div class="orders_info_description">
                                 <div class="orders_info_title">
-                                    <h2>Bestellung # <?php echo $rows['id'] ?></h2>
+                                    <h2>Bestellung #<?php echo $rows['id'] ?></h2>
                                     <h2>Datum: <?php echo $DataRows['order_date'] ?></h2>
                                 </div>
                                 <h4>Anzahl Artikel: 2</h4>
@@ -328,17 +331,18 @@ if (!isset($_SESSION["useruid"])) {
                         </div>
                         <div id="order_products_<?php echo $rows['id'] ?>" class="single_order_grid_wrapper">
                             <?php
-                            while ($OrderRow = getObjectOrderDataByID($conn, $rows['id']->fetch_assoc())) {
+                            $OrderArray = getObjectOrderDataByID($conn, $rows['id']);
+                            while ($OrderRow= $OrderArray->fetch_assoc()) {
                                 ?>
                                 <div class="single_order_grid_container">
                                     <div class="single_order_item_container">
                                         <div class="single_order_product_image">
-                                            <img src="img/macaronProduct.png" alt="">
+                                            <img src="<?php echo $OrderRow['product_image'] ?>" alt="">
                                         </div>
                                         <div class="single_order_product_description">
                                             <h2><?php echo $OrderRow['product_name'] ?></h2>
                                             <h4>Menge: <?php echo $OrderRow['qty'] ?></h4>
-                                            <h4>Preis: <?php echo($OrderRow['qty'] * $OrderRow['price']) ?></h4>
+                                            <h4>Preis: <?php echo($OrderRow['qty'] * $OrderRow['price']) ?>€</h4>
                                             <div class="order_product_review">
                                                 <span class="material-symbols-outlined" id="star1">star</span>
                                                 <span class="material-symbols-outlined" id="star2">star</span>
