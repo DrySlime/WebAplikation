@@ -95,7 +95,7 @@ if (!isset($_POST["search"])) {
                                 </a>
                                 <h4>' . $items[$i]["price"] . ' €</h4>
                             </div>
-                            <div class="product_add_to_cart">
+                            <div class="product_add_to_cart" id="'. $items[$i]["id"] .'" onclick="add(this.id)">
                                 <span class="material-symbols-outlined">local_mall</span>
                             </div>
                         </div>
@@ -107,6 +107,11 @@ if (!isset($_POST["search"])) {
                 }
 
                 ?>
+                <script>
+                    function add(id){
+                        window.location = "shopping_cart_insert.php?pID="+id+"&quantaty=1";
+                    }
+                </script>
             </div>
         </div>
     </div>

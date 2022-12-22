@@ -77,13 +77,20 @@
 
 
 .delete-icon{
-    color: black;
+    color: white;
     font-family: 'Poppins', sans-serif;
-    border: 2px solid #D4045F;
+    font-weight: bold;
+    background-color: #D94A69;
+    border-radius: 20px;
     padding: 5px 10px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
+    margin-top: 1rem;
+}
+
+.delete-icon:hover{
+    background-color: #BD405B;
 }
 
 .button-container{
@@ -115,20 +122,8 @@
     font-weight: bold;
     transition: 0.5s;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    
-    
 }
 
 .button:hover{
     background-color: #BD405B;
-    margin-bottom: 30px;
-    border-radius: 30px;
-    border-style: none;
-    height: 50px;
-    width: 140px;
-    color: white;
-    font-weight: bold;
-    transition: 0.5s;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    
 }

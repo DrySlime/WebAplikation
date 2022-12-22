@@ -30,9 +30,6 @@ $items = getShoppingCartItems($conn, $userId);
 <body>
 
     <div class="background">
-
-        
-
         <div class="container">
 
                 <div class="headline-container">
@@ -99,12 +96,6 @@ $items = getShoppingCartItems($conn, $userId);
                         <a class="buy_button" href= <?php echo "check_out_complete.php?addressId=".$_GET['addressId']."&paymentId=".$_GET['paymentId']."&shippingId=".$_GET['shippingId']?>> Kostenpflichtig bestellen</a>
                     </div>
                 </div>
-
-                
-
-
-            
-
             </div>
         </div>
 

@@ -67,10 +67,11 @@ function showShippingMethods($conn, $addressId, $paymentId){
     while ($row1 = $shippingMethods->fetch_assoc()) {
 
         
-        echo '<a class=address href='.'check_out_overview.php?addressId='.$addressId.'&paymentId='.$paymentId.'&shippingId='.$row1["id"].'>';
+        echo '<div class=address>';
             echo '<p class="box-headline">Versandoption:</p>';
             showShippingMethod($row1);
-        echo '</a>';
+            echo '<a class="select_btn link" href='.'check_out_overview.php?addressId='.$addressId.'&paymentId='.$paymentId.'&shippingId='.$row1["id"].'>Wählen</a>';
+        echo '</div>';
     }
     
 }

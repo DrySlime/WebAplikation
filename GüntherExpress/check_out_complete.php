@@ -6,10 +6,10 @@
 <?php 
 
 include_once 'header.php';
-include 'includes/dbh_include.php';
-include 'includes/functions_include.php';
-include 'includes/product_include.php';
-include 'includes/check_out_include.php';
+include_once 'includes/dbh_include.php';
+include_once 'includes/functions_include.php';
+include_once 'includes/product_include.php';
+include_once 'includes/check_out_include.php';
 
 $userId = getUserIdFromUserName($conn, $_SESSION['useruid']);
 
@@ -19,6 +19,10 @@ checkItemQty($conn, $userId);
 doOrder($conn, $userId);
 fill_order_line($conn, $userId);
 clearShoppingCart($conn, $userId);
+
+header("Location: index.php");
+
+
 
 function checkItemQty($conn, $userId){
 
@@ -131,8 +135,4 @@ function clearShoppingCart($conn, $userId){
 
 ?>
 
-<body>
-    <p>Ihre Bestellung würde erfolgreich aufgegeben</p>
-    <p>Sie können den Status der Bestellung jederzeit in ihrem Profil verfolgen</p>
-</body>
 

@@ -59,7 +59,7 @@ $items = getShoppingCartItems($conn, $userId);
                         echo '<div class= '.'product-info'.'>';
                         echo showShoppingCartProduct($conn, $row["product_id"], $userId);
                         echo '<p class="product-qty-text"> Menge: '.$row["qty"]." </p>";
-                        echo '<a class='.'delete-icon'.' href='.'shopping_cart.php?delete='.$row["product_id"].'>X</a>';
+                        echo '<a class='.'delete-icon'.' href='.'shopping_cart.php?delete='.$row["product_id"].'>Löschen</a>';
                         echo '</div>';
 
                     echo '</div>';

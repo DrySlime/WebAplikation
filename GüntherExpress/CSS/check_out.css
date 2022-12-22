@@ -25,6 +25,12 @@
 .address, 
 .payment_method, 
 .shipping_method{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
     color: black;
     text-decoration: none;
     width: 25vw;
@@ -37,7 +43,7 @@
     margin-left: auto;
     margin-right: auto;
     padding-left: 20%;
-    padding-right: 20%;
+    padding-right: 20%; 
     padding-top: 10%;
     padding-bottom: 10%;
     font-size: large;
@@ -47,31 +53,6 @@
     transition: 300ms;
 }
 
-.address:hover, 
-.payment_method:hover, 
-.shipping_method:hover{
-    background-color: #f61b7a;
-    color: white;
-    width: 25vw;
-    text-decoration: none;
-    border-style: solid;
-    border-width: 2px;
-    border-radius: 40px;
-    margin-top: 1em;
-    margin-bottom: 1em;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 20%;
-    padding-right: 20%;
-    padding-top: 10%;
-    padding-bottom: 10%;
-    font-size: large;
-    font-weight: 500;
-    font-family: 'Poppins', sans-serif;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    transition: 300ms;
-
-}
 
 .headline_container{
 }
@@ -83,6 +64,24 @@
 
 .box-headline{
     font-weight: bold;
+}
+
+.select_btn{
+    background-color: #D4045F;
+    border-style: none;
+    border-radius: 20px;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    margin-top: auto;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    text-align: center;
+}
+
+.select_btn:hover{
+    background-color: #BD405B;
 }
 
 

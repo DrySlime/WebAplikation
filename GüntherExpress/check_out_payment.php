@@ -33,10 +33,11 @@ function showUserPaymentMethods($conn, $userId){
 
     while ($row1 = $paymentMethods->fetch_assoc()) {
 
-        echo '<a class=address href='.'check_out_shipping.php?addressId='.$_GET["addressId"].'&paymentId='.$row1["id"].'>';
+        echo '<div class=address>';
             echo '<p class="box-headline">Zahlunsgmethode:</p>'; 
             showPaymentMethod($conn, $row1);
-        echo '</a>';
+            echo '<a class="select_btn link" href='.'check_out_shipping.php?addressId='.$_GET["addressId"].'&paymentId='.$row1["id"].'>Wählen</a>';
+        echo '</div>';
         
     }
     
