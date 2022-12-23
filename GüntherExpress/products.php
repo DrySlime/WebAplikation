@@ -6,18 +6,7 @@ include_once 'header.php';
 include_once 'includes/products_function.php';
 global $conn;
 ?>
-<?php
-if (!isset($_POST["search"])) {
-    $name = $_GET["name"];
-    $items = getAllFromCategory($conn, $name, totalAmount($conn, $name));
 
-} else {
-    $name = $_POST["search"];
-    $items = searchProduct($conn, $_POST["search"]);
-}
-
-
-?>
 
 <head>
     <link rel="stylesheet" href="CSS/products.css">
@@ -28,6 +17,35 @@ if (!isset($_POST["search"])) {
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0"/>
     <title></title>
 </head>
+
+
+<?php
+if(isset($_POST["priceSearch"])){
+
+    $name=$_GET["name"];
+    $min=$_POST["min"];
+    $max=$_POST["max"];
+    if($min>$max){
+        $error="Eingabe überprufen!!";
+        echo "<body onload='scrollToElement()'></body>";
+        goto next;
+    }
+    $items= searchByPrice($conn,$name,$min,$max);
+}elseif (!isset($_POST["search"])) {
+
+    next:
+    $name = $_GET["name"];
+    $items = getAllFromCategory($conn, $name, totalAmount($conn, $name));
+
+
+} else {
+    $name = $_POST["search"];
+    $items = searchProduct($conn, $_POST["search"]);
+}
+
+
+?>
+
 
 <body>
 <div class="products_page_wrapper">
@@ -61,17 +79,19 @@ if (!isset($_POST["search"])) {
                 <div class="sidebar_options_header">
                     <h4>Preis</h4>
                 </div>
-                <div class="sidebar_options_settings slider_wrapper">
-                    <form action="" method="post">
+                <div class="sidebar_options_settings slider_wrapper" id="search123">
+                    <form action="products.php?name=<?php echo $name ?>" method="post">
                         <div class="form_container">
                             <div class="settings_input_container">
                                 <label for="min"></label><input type="text" name="min" id="min" placeholder="Min">
                                 <h4 class="separator">-</h4>
                                 <label for="max"></label><input type="text" name="max" id="max" placeholder="Max">
+                                <input type="text" name="priceSearch" value="true" hidden>
                             </div>
                             <div class="settings_button">
                                 <button type="submit" name="applyfilter">Anwenden</button>
                             </div>
+                            <?php if(isset($error)){echo "<h3 style='color: #D4045F'>".$error."</h3>";} ?>
                         </div>
                     </form>
                 </div>
@@ -117,6 +137,7 @@ if (!isset($_POST["search"])) {
     </div>
 </div>
 </body>
+<script src="JS/products.js"></script>
 </html>
 
 <?php
