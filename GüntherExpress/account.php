@@ -108,7 +108,7 @@ if (!isset($_SESSION["useruid"])) {
                                 <?php
                             } else {
                                 ?>
-                                <h4 id="noEmail">Du hast noch keine Adresse beim Confectioner hinterlegt!</h4>
+                                <h4 id="noEmail">Du hast noch keine Standard Adresse beim Confectioner hinterlegt!</h4>
                                 <?php
                             } ?>
 
@@ -133,7 +133,7 @@ if (!isset($_SESSION["useruid"])) {
                         ?>
                         <div class="purchases_wrapper">
                             <div class="grid_item">
-                                <img src="<?php echo $ObjectRows['product_image']?>" alt="">
+                                <img src="<?php echo $ObjectRows['product_image'] ?>" alt="">
                             </div>
                             <div class="grid_item grid_description">
                                 <div class="orders_info_title">
@@ -250,7 +250,7 @@ if (!isset($_SESSION["useruid"])) {
                     <div class="modal_address_grid_container">
                         <div class="addressitem_container">
                             <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
-                            <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?> <?php echo $resultDefAddress['street_number']; ?></h4>
+                            <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?><?php echo $resultDefAddress['street_number']; ?></h4>
                             <h4><?php echo ucfirst($resultDefAddress['city']); ?>, <?php echo $resultDefAddress['postal_code']; ?></h4>
                             <a class="defaultText">Standard Adresse</a>
                             <div class="address_setting_container">
@@ -299,7 +299,7 @@ if (!isset($_SESSION["useruid"])) {
             </div>
             <div class="modal_orders_grid_wrapper">
                 <?php
-                
+
                 while ($rows = $reOrderIDs->fetch_assoc()) {
                     $DataRows = mysqli_fetch_assoc(getPersonalOrderDataByID($conn, $rows['id']));
                     $OrderArray = getObjectOrderDataByID($conn, $rows['id']);
@@ -307,7 +307,7 @@ if (!isset($_SESSION["useruid"])) {
                     <div class="modal_orders_grid_container">
                         <div class="order_container">
                             <div class="orders_info_image">
-                                <img src="<?php echo mysqli_fetch_assoc($OrderArray)['product_image']?>" alt="">
+                                <img src="<?php echo mysqli_fetch_assoc($OrderArray)['product_image'] ?>" alt="">
                             </div>
                             <div class="orders_info_description">
                                 <div class="orders_info_title">
@@ -329,7 +329,7 @@ if (!isset($_SESSION["useruid"])) {
                         <div id="order_products_<?php echo $rows['id'] ?>" class="single_order_grid_wrapper">
                             <?php
                             $OrderArray = getObjectOrderDataByID($conn, $rows['id']);
-                            while ($OrderRow= $OrderArray->fetch_assoc()) {
+                            while ($OrderRow = $OrderArray->fetch_assoc()) {
                                 ?>
                                 <div class="single_order_grid_container">
                                     <div class="single_order_item_container">

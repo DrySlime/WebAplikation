@@ -701,7 +701,6 @@ body {
 .addressitem_container h4 {
     font-size: 2vmin;
     overflow-wrap: anywhere;
-    word-wrap: break-word;
 }
 
 .address_setting_container {
