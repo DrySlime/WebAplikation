@@ -234,3 +234,13 @@ button[disabled] {
     transform: scale(1.05);
     cursor: pointer;
 }
+
+.checkout_data_buttons .disable {
+    background-color: #888888;
+}
+
+.checkout_data_buttons .disable:hover {
+    color: #FFFFFF;
+    transform: scale(1.00);
+    cursor: not-allowed;
+}

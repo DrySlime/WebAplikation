@@ -162,6 +162,10 @@ if (!isset($_SESSION["useruid"])) {
                     <h3>2</h3>
                 </div>
                 <div class="cart_checkout_info">
+                    <h3>Kosten Artikel</h3>
+                    <h3>420.69 €</h3>
+                </div>
+                <div class="cart_checkout_info">
                     <h3>Lieferkosten</h3>
                     <h3 id="lieferkosten">Wird im nächsten Schritt Berechnet</h3>
                 </div>

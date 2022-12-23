@@ -110,7 +110,16 @@ $resultAddressWODef = getUserAddressDataWODef($conn);
                     </section>
                     <section class="checkout_section checkout_delivery">
                         <div class="checkout_delivery_grid_wrapper">
-
+                            <div class="checkout_delivery_grid_container">
+                                <div class="delivery_container">
+                                    <input type="radio" id="---ID GOES HERE---" name="delivery_buttons" value="---ID GOES HERE---">
+                                    <div class="addressitem_container">
+                                        <h2>DHL Lieferung</h2>
+                                        <h4>Lieferdauer: 3-5 Tage</h4>
+                                        <h4>Lieferkosten: 2.50 €</h4>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </section>
                     <section class="checkout_section checkout_payment">
@@ -125,7 +134,7 @@ $resultAddressWODef = getUserAddressDataWODef($conn);
                     </section>
                 </div>
                 <div class="checkout_data_buttons">
-                    <button class="previous disable " id="prevPage" onclick="goBack()">Zurück</button>
+                    <button class="previous disable" id="prevPage" onclick="goBack()">Zurück</button>
                     <button class="next" id="nextPage" onclick="goNext()">Weiter</button>
                 </div>
             </div>
@@ -138,6 +147,10 @@ $resultAddressWODef = getUserAddressDataWODef($conn);
                 <div class="cart_checkout_info dashBorder">
                     <h3>Anzahl Artikel</h3>
                     <h3>2</h3>
+                </div>
+                <div class="cart_checkout_info">
+                    <h3>Kosten Artikel</h3>
+                    <h3>420.69 €</h3>
                 </div>
                 <div class="cart_checkout_info">
                     <h3>Lieferkosten</h3>

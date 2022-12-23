@@ -6,18 +6,7 @@ include_once 'header.php';
 include_once 'includes/products_function.php';
 global $conn;
 ?>
-<?php
-if (!isset($_POST["search"])) {
-    $name = $_GET["name"];
-    $items = getAllFromCategory($conn, $name, totalAmount($conn, $name));
 
-} else {
-    $name = $_POST["search"];
-    $items = searchProduct($conn, $_POST["search"]);
-}
-
-
-?>
 
 <head>
     <link rel="stylesheet" href="CSS/products.css">
@@ -29,23 +18,40 @@ if (!isset($_POST["search"])) {
     <title></title>
 </head>
 
+
+<?php
+if(isset($_POST["priceSearch"])){
+
+    $name=$_GET["name"];
+    $min=$_POST["min"];
+    $max=$_POST["max"];
+    if($min>$max){
+        $error="Eingabe überprufen!!";
+        echo "<body onload='scrollToElement()'></body>";
+        goto next;
+    }
+    $items= searchByPrice($conn,$name,$min,$max);
+}elseif (!isset($_POST["search"])) {
+
+    next:
+    $name = $_GET["name"];
+    $items = getAllFromCategory($conn, $name, totalAmount($conn, $name));
+
+
+} else {
+    $name = $_POST["search"];
+    $items = searchProduct($conn, $_POST["search"]);
+}
+
+
+?>
+
+
 <body>
 <div class="products_page_wrapper">
     <div class="products_page_header">
         <h1><?php echo $name ?></h1>
-        <?php
-        if ($name == "Cerealien") {
-            echo '<img src = "img/cereals.png" alt = "Andre Caputo">';
-        } else if ($name == "Fruchtgummi") {
-            echo '<img src = "img/gummies.png" alt = "3DJustincase">';
-        } else if ($name == "Kekse") {
-            echo '<img src = "img/cookieSnap.png" alt = "Andre Caputo">';
-        } else if ($name == "Backwaren") {
-            echo '<img src = "img/macarons.png" alt = "Andre Caputo">';
-        } else {
-            echo '<img src = "img/cadbury.png" alt = "Andre Caputo">';
-        }
-        ?>
+        <img src="img/cadbury.png" alt="">
     </div>
     <div class="searchbar_wrapper">
         <form action="products.php" method="post">
@@ -65,32 +71,27 @@ if (!isset($_POST["search"])) {
                     <h4>Kategorien</h4>
                 </div>
                 <div class="sidebar_options_settings">
-                    <?php foreach (getCategoryList($conn) as $key => $value) {
-                        if ($value == $name) {
-                            echo "
-                            <a href='products.php?name=" . $value . "'><h4 style='color: #fc466b'>" . $value ."</h4></a>
-                            ";
-                        } else {
-                            echo "
+                    <?php foreach (getCategoryList($conn) as $key => $value) { ?>
+                        <?php echo "
                           <a href='products.php?name=" . $value . "'><h4>" . $value . "</h4></a>
-                        ";
-                        }
-                    } ?>
+                        " ?><?php } ?>
                 </div>
                 <div class="sidebar_options_header">
                     <h4>Preis</h4>
                 </div>
-                <div class="sidebar_options_settings slider_wrapper">
-                    <form action="" method="post">
+                <div class="sidebar_options_settings slider_wrapper" id="search123">
+                    <form action="products.php?name=<?php echo $name ?>" method="post">
                         <div class="form_container">
                             <div class="settings_input_container">
                                 <label for="min"></label><input type="text" name="min" id="min" placeholder="Min">
                                 <h4 class="separator">-</h4>
                                 <label for="max"></label><input type="text" name="max" id="max" placeholder="Max">
+                                <input type="text" name="priceSearch" value="true" hidden>
                             </div>
                             <div class="settings_button">
                                 <button type="submit" name="applyfilter">Anwenden</button>
                             </div>
+                            <?php if(isset($error)){echo "<h3 style='color: #D4045F'>".$error."</h3>";} ?>
                         </div>
                     </form>
                 </div>
@@ -114,7 +115,7 @@ if (!isset($_POST["search"])) {
                                 </a>
                                 <h4>' . $items[$i]["price"] . ' €</h4>
                             </div>
-                            <div class="product_add_to_cart">
+                            <div class="product_add_to_cart" id="'. $items[$i]["id"] .'" onclick="add(this.id)">
                                 <span class="material-symbols-outlined">local_mall</span>
                             </div>
                         </div>
@@ -126,11 +127,17 @@ if (!isset($_POST["search"])) {
                 }
 
                 ?>
+                <script>
+                    function add(id){
+                        window.location = "shopping_cart_insert.php?pID="+id+"&quantaty=1";
+                    }
+                </script>
             </div>
         </div>
     </div>
 </div>
 </body>
+<script src="JS/products.js"></script>
 </html>
 
 <?php
