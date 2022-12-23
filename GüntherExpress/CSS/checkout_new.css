@@ -8,6 +8,10 @@
     min-font-size: 16px !important;
 }
 
+html,body {
+    height:100%;
+}
+
 body {
     line-height: 1.5;
     background-color: #f9d4dc;
@@ -18,17 +22,22 @@ button[disabled] {
     background-color: #888888;
 }
 
+.cart_grid_container {
+    height: 100%;
+    min-height: 60vh;
+}
+
 .checkout_wrapper {
     height: 100%;
     width: 100%;
-}
-
-.cart_grid_container {
-    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
 }
 
 .limited_height {
-    height: 45vh;
+    max-height: 45vh !important;
+    height: 45vh !important;
 }
 
 .cart_checkout_buttons button:disabled:hover,
@@ -84,9 +93,10 @@ button[disabled] {
     padding-top: 2vmin;
 }
 
-.checkout_address_grid_wrapper {
+.checkout_data_grid_wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
     row-gap: 2vmin;
     column-gap: 2vmin;
     padding-bottom: 5vmin;
@@ -95,7 +105,7 @@ button[disabled] {
     position: relative;
 }
 
-.checkout_address_grid_container {
+.checkout_grid_container {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -107,13 +117,13 @@ button[disabled] {
     padding: 1.5vmin;
     overflow-wrap: anywhere;
     width: auto;
-    height: auto;
+    height: 100%;
     overflow: hidden;
 }
 
-.checkout_address_grid_container h2,
-.checkout_address_grid_container h4,
-.checkout_address_grid_container a {
+.checkout_grid_container h2,
+.checkout_grid_container h4,
+.checkout_grid_container a {
     width: 10vw;
     height: auto;
     display: block;
@@ -147,7 +157,7 @@ button[disabled] {
     padding-bottom: .5vmin;
 }
 
-.addressitem_container form input {
+.add_address form input {
     margin-bottom: .5vmin;
     width: 100%;
     font-size: 1.5vmin;
@@ -210,6 +220,7 @@ button[disabled] {
     justify-content: space-between;
     align-content: center;
     align-items: center;
+    float: bottom;
     width: 100%;
     height: auto;
 }

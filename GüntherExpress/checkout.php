@@ -25,7 +25,8 @@ $resultAddressWODef = getUserAddressDataWODef($conn);
     <meta charset="UTF-8" http-equiv="X-UA-Compatible" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0"/>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <title></title>
@@ -53,23 +54,25 @@ $resultAddressWODef = getUserAddressDataWODef($conn);
                 </ul>
                 <div class="checkout_data_container">
                     <section class="checkout_section checkout_address active">
-                        <div class="checkout_address_grid_wrapper">
+                        <div class="checkout_data_grid_wrapper">
                             <?php
                             if ($resultAddressWODef->num_rows < 5) {
                                 ?>
-                                <div class="checkout_address_grid_container addAddressContainer">
-                                    <div class="addressitem_container add_address">
+                                <div class="checkout_grid_container addAddressContainer">
+                                    <div class="grid_container add_address">
                                         <h2>Neue Adresse</h2>
                                         <form id="addAddress" action="#" method="post">
                                             <div class="add_address_oneline">
                                                 <input type="text" name="addStreet" id="addStreet" placeholder="Straße">
-                                                <input type="text" name="addHausnummer" id="addHausnummer" placeholder="No.">
+                                                <input type="text" name="addHausnummer" id="addHausnummer"
+                                                       placeholder="No.">
                                             </div>
                                             <input type="text" name="addStadt" id="addStadt" placeholder="Stadt">
                                             <input type="text" name="postal-code" id="postal-code" placeholder="PLZ">
                                         </form>
                                         <div class="addressitem_addbutton">
-                                            <button id="add_Address" form="addAddress" type="submit" name="add_address_button">
+                                            <button id="add_Address" form="addAddress" type="submit"
+                                                    name="add_address_button">
                                                 Hinzufügen
                                             </button>
                                         </div>
@@ -80,12 +83,14 @@ $resultAddressWODef = getUserAddressDataWODef($conn);
                             <?php
                             if ($resultDefAddress !== null) {
                                 ?>
-                                <div class="checkout_address_grid_container">
-                                    <input type="radio" id="---ID GOES HERE---" name="address_buttons" value="---ID GOES HERE---" checked="checked">
-                                    <div class="addressitem_container">
-                                        <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
-                                        <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?> <?php echo $resultDefAddress['street_number']; ?></h4>
-                                        <h4><?php echo ucfirst($resultDefAddress['city']); ?>, <?php echo $resultDefAddress['postal_code']; ?></h4>
+                                <div class="checkout_grid_container">
+                                    <input type="radio" id="---ID GOES HERE---" name="address_buttons"
+                                           value="---ID GOES HERE---" checked="checked">
+                                    <div class="grid_container">
+                                        <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                                        <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?><?php echo $resultDefAddress['street_number']; ?></h4>
+                                        <h4><?php echo ucfirst($resultDefAddress['city']); ?>
+                                            , <?php echo $resultDefAddress['postal_code']; ?></h4>
                                         <a class="defaultText">Standard Adresse</a>
                                     </div>
                                 </div>
@@ -95,12 +100,14 @@ $resultAddressWODef = getUserAddressDataWODef($conn);
                             if ($resultAddressWODef !== null) {
                                 while ($rows = $resultAddressWODef->fetch_assoc()) {
                                     ?>
-                                    <div class="checkout_address_grid_container">
-                                        <input type="radio" id="---ID GOES HERE---" name="address_buttons" value="---ID GOES HERE---">
-                                        <div class="addressitem_container">
-                                            <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
-                                            <h4><?php echo ucfirst($rows['address_line1']); ?> <?php echo $rows['street_number']; ?></h4>
-                                            <h4><?php echo ucfirst($rows['city']); ?>, <?php echo $rows['postal_code']; ?></h4>
+                                    <div class="checkout_grid_container">
+                                        <input type="radio" id="---ID GOES HERE---" name="address_buttons"
+                                               value="---ID GOES HERE---">
+                                        <div class="grid_container">
+                                            <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                                            <h4><?php echo ucfirst($rows['address_line1']); ?><?php echo $rows['street_number']; ?></h4>
+                                            <h4><?php echo ucfirst($rows['city']); ?>
+                                                , <?php echo $rows['postal_code']; ?></h4>
                                         </div>
                                     </div>
                                     <?php
@@ -109,26 +116,25 @@ $resultAddressWODef = getUserAddressDataWODef($conn);
                         </div>
                     </section>
                     <section class="checkout_section checkout_delivery">
-                        <div class="checkout_delivery_grid_wrapper">
-                            <div class="checkout_delivery_grid_container">
-                                <div class="delivery_container">
-                                    <input type="radio" id="---ID GOES HERE---" name="delivery_buttons" value="---ID GOES HERE---">
-                                    <div class="addressitem_container">
-                                        <h2>DHL Lieferung</h2>
-                                        <h4>Lieferdauer: 3-5 Tage</h4>
-                                        <h4>Lieferkosten: 2.50 €</h4>
-                                    </div>
+                        <div class="checkout_data_grid_wrapper">
+                            <div class="checkout_grid_container">
+                                <input type="radio" id="---ID GOES HERE---" name="delivery_buttons"
+                                       value="---ID GOES HERE---">
+                                <div class="addressitem_container">
+                                    <h2>DHL Lieferung</h2>
+                                    <h4>Lieferdauer: 3-5 Tage</h4>
+                                    <h4>Lieferkosten: 2.50 €</h4>
                                 </div>
                             </div>
                         </div>
                     </section>
                     <section class="checkout_section checkout_payment">
-                        <div class="checkout_payment_grid_wrapper">
+                        <div class="checkout_data_grid_wrapper">
 
                         </div>
                     </section>
                     <section class="checkout_section checkout_overview">
-                        <div class="checkout_overview_grid_wrapper">
+                        <div class="checkout_data_grid_wrapper">
 
                         </div>
                     </section>
