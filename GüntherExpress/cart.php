@@ -3,12 +3,18 @@
 
 <?php
 include_once 'header.php';
+include_once 'includes/product_include.php';
+include_once 'includes/cart_include.php';
 global $conn;
 
 if (!isset($_SESSION["useruid"])) {
     header('Location: login.php');
     die();
 }
+$shoppingCart = getShoppingCartItems($conn,$_SESSION["userid"]);
+$wholeQty = getWholeQty($shoppingCart);
+$shoppingCart = getShoppingCartItems($conn,$_SESSION["userid"]);
+$fullPrice = 0;
 ?>
 
 <head>
@@ -25,7 +31,7 @@ if (!isset($_SESSION["useruid"])) {
 <div class="cart_header_wrapper">
     <div class="cart_header_container">
         <h1>Dein Einkaufswagen</h1>
-        <h4>Du hast 2 Artikel im Wagen!</h4>
+        <h4>Du hast <?php echo $wholeQty?> Artikel im Wagen!</h4>
     </div>
     <div class="cart_header_image">
         <img src="img/cookies.png" alt="">
@@ -38,118 +44,50 @@ if (!isset($_SESSION["useruid"])) {
                 <h4>Deine Artikel</h4>
             </div>
             <div class="cart_products_grid_wrapper">
+                
+                <?php
+            if ($shoppingCart->num_rows == 0) {
+                ?>
+        <h1 style='text-align: center;'>Es befinden sich zurzeit keine Artikel im Warenkorb</h1>
+        #TODO
+        <?php
+    }
+    while ($row = $shoppingCart->fetch_assoc()) {
+        $product = getProductData($conn, $row['product_id']);
+        $price = $row['qty'] * $product['price'];
+        $fullPrice = $fullPrice + $price;
+        ?>
                 <!-- NEW PRODUCT STARTING HERE -->
                 <div class="cart_products_grid_container">
                     <div class="cart_product_wrapper">
                         <div class="cart_product_data_image">
-                            <img src="img/macaronProduct.png" alt="">
+                            <img src="<?php echo $product['product_image']?>" alt="">
                         </div>
                         <div id="mainItemDescription" class="cart_product_data_description flexCol">
-                            <h3>Macaron Product</h3>
-                            <h4>Kategorie</h4>
+                            <h3><?php echo $product['product_name']?></h3>
+                            <h4>#TODO Kategorie</h4>
                         </div>
                         <div class="cart_product_data_settings">
                             <button class="buttonAmount" id="decreaseAmount" onclick="removeFromAmount()">
-                                <span class="material-icons md40">remove_circle</span>
+                            <a href="cart.php?decrease=<?php echo $row['product_id']?> "><span class="material-icons md40">remove_circle</span></a>
                             </button>
-                            <h4 id="amount">1</h4>
+                            <h4 id="amount"><?php echo $row['qty']?></h4>
                             <button class="buttonAmount" id="increaseAmount" onclick="addToAmount()">
-                                <span class="material-icons md40">add_circle</span>
+                            <a href="cart.php?increase=<?php echo $row['product_id']?> "><span class="material-icons md40">add_circle</span></a>
                             </button>
                         </div>
                         <div class="cart_product_data_description smallerDiv">
-                            <h3>420,69 €</h3>
+                            <h3><?php echo $price ?></h3>
                         </div>
                         <div class="cart_product_data_settings soloPadding">
-                            <a><span class="material-symbols-outlined">remove_shopping_cart</span></a>
+                            <a href="cart.php?delete=<?php echo $row['product_id']?> "><span class="material-symbols-outlined">remove_shopping_cart</span></a>
                         </div>
                     </div>
                 </div>
                 <!-- PRODUCT ENDS HERE -->
-                <!-- NEW PRODUCT STARTING HERE -->
-                <div class="cart_products_grid_container">
-                    <div class="cart_product_wrapper">
-                        <div class="cart_product_data_image">
-                            <img src="img/macaronProduct.png" alt="">
-                        </div>
-                        <div id="mainItemDescription" class="cart_product_data_description flexCol">
-                            <h3>Macaron Product</h3>
-                            <h4>Kategorie</h4>
-                        </div>
-                        <div class="cart_product_data_settings">
-                            <button class="buttonAmount" id="decreaseAmount" onclick="removeFromAmount()">
-                                <span class="material-icons md40">remove_circle</span>
-                            </button>
-                            <h4 id="amount">1</h4>
-                            <button class="buttonAmount" id="increaseAmount" onclick="addToAmount()">
-                                <span class="material-icons md40">add_circle</span>
-                            </button>
-                        </div>
-                        <div class="cart_product_data_description smallerDiv">
-                            <h3>420,69 €</h3>
-                        </div>
-                        <div class="cart_product_data_settings soloPadding">
-                            <a><span class="material-symbols-outlined">remove_shopping_cart</span></a>
-                        </div>
-                    </div>
-                </div>
-                <!-- PRODUCT ENDS HERE -->
-                <!-- NEW PRODUCT STARTING HERE -->
-                <div class="cart_products_grid_container">
-                    <div class="cart_product_wrapper">
-                        <div class="cart_product_data_image">
-                            <img src="img/macaronProduct.png" alt="">
-                        </div>
-                        <div id="mainItemDescription" class="cart_product_data_description flexCol">
-                            <h3>Macaron Product</h3>
-                            <h4>Kategorie</h4>
-                        </div>
-                        <div class="cart_product_data_settings">
-                            <button class="buttonAmount" id="decreaseAmount" onclick="removeFromAmount()">
-                                <span class="material-icons md40">remove_circle</span>
-                            </button>
-                            <h4 id="amount">1</h4>
-                            <button class="buttonAmount" id="increaseAmount" onclick="addToAmount()">
-                                <span class="material-icons md40">add_circle</span>
-                            </button>
-                        </div>
-                        <div class="cart_product_data_description smallerDiv">
-                            <h3>420,69 €</h3>
-                        </div>
-                        <div class="cart_product_data_settings soloPadding">
-                            <a><span class="material-symbols-outlined">remove_shopping_cart</span></a>
-                        </div>
-                    </div>
-                </div>
-                <!-- PRODUCT ENDS HERE -->
-                <!-- NEW PRODUCT STARTING HERE -->
-                <div class="cart_products_grid_container">
-                    <div class="cart_product_wrapper">
-                        <div class="cart_product_data_image">
-                            <img src="img/macaronProduct.png" alt="">
-                        </div>
-                        <div id="mainItemDescription" class="cart_product_data_description flexCol">
-                            <h3>Macaron Product</h3>
-                            <h4>Kategorie</h4>
-                        </div>
-                        <div class="cart_product_data_settings">
-                            <button class="buttonAmount" id="decreaseAmount" onclick="removeFromAmount()">
-                                <span class="material-icons md40">remove_circle</span>
-                            </button>
-                            <h4 id="amount">1</h4>
-                            <button class="buttonAmount" id="increaseAmount" onclick="addToAmount()">
-                                <span class="material-icons md40">add_circle</span>
-                            </button>
-                        </div>
-                        <div class="cart_product_data_description smallerDiv">
-                            <h3>420,69 €</h3>
-                        </div>
-                        <div class="cart_product_data_settings soloPadding">
-                            <a><span class="material-symbols-outlined">remove_shopping_cart</span></a>
-                        </div>
-                    </div>
-                </div>
-                <!-- PRODUCT ENDS HERE -->
+                <?php 
+                    }
+                ?>
             </div>
         </div>
         <div class="cart_grid_container limited_height">
@@ -159,11 +97,11 @@ if (!isset($_SESSION["useruid"])) {
             <div class="cart_products_checkout_wrapper">
                 <div class="cart_checkout_info dashBorder">
                     <h3>Anzahl Artikel</h3>
-                    <h3>2</h3>
+                    <h3><?php echo $wholeQty ?></h3>
                 </div>
                 <div class="cart_checkout_info">
                     <h3>Kosten Artikel</h3>
-                    <h3>420.69 €</h3>
+                    <h3><?php echo $fullPrice ?> €</h3>
                 </div>
                 <div class="cart_checkout_info">
                     <h3>Lieferkosten</h3>
@@ -171,7 +109,7 @@ if (!isset($_SESSION["useruid"])) {
                 </div>
                 <div class="cart_checkout_info">
                     <h3>Gesamt Kosten</h3>
-                    <h3>420.69 €</h3>
+                    <h3><?php echo $fullPrice ?> €</h3>
                 </div>
                 <div class="cart_checkout_buttons">
                     <button type="submit" name="checkout_button">Zur Kasse</button>
