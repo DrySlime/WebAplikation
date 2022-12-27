@@ -15,7 +15,7 @@ include_once 'includes/functions_include.php';
         mysqli_stmt_close($stmt);
     }
 
-    if (isset($_GET["#TODO"])) {
+    if (isset($_GET["checkout_button"])) {
         $sql = "DELETE FROM shopping_cart WHERE user_id = ?  AND qty = 0";
         $stmt = mysqli_stmt_init($conn);
 
@@ -24,6 +24,9 @@ include_once 'includes/functions_include.php';
         mysqli_stmt_bind_param($stmt, "ss", $_SESSION['userid']);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
+
+        header("location: ../checkout.php?error=none");
+        exit();
     }
 
     if(isset($_GET["increase"])){
@@ -56,9 +59,8 @@ include_once 'includes/functions_include.php';
     }
 
     function getWholeQty($cart) {
-        $wholeQty = 0;
+        $_SESSION['wholeQty'] = 0;
         while ($row = $cart->fetch_assoc()) {
-            $wholeQty = $row['qty']+$wholeQty;
+            $_SESSION['wholeQty'] = $row['qty']+$_SESSION['wholeQty'];
         }
-        return $wholeQty;
     }

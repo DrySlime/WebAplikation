@@ -13,6 +13,11 @@ body {
     background-color: #f9d4dc;
 }
 
+.buttonAmount a {
+    text-decoration: none;
+    color: #101010;
+}
+
 .cart_header_wrapper {
     display: flex;
     position: relative;

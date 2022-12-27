@@ -12,9 +12,10 @@ if (!isset($_SESSION["useruid"])) {
     die();
 }
 $shoppingCart = getShoppingCartItems($conn,$_SESSION["userid"]);
-$wholeQty = getWholeQty($shoppingCart);
+getWholeQty($shoppingCart);
 $shoppingCart = getShoppingCartItems($conn,$_SESSION["userid"]);
-$fullPrice = 0;
+$_SESSION['fullPrice'] = 0;
+
 ?>
 
 <head>
@@ -31,7 +32,7 @@ $fullPrice = 0;
 <div class="cart_header_wrapper">
     <div class="cart_header_container">
         <h1>Dein Einkaufswagen</h1>
-        <h4>Du hast <?php echo $wholeQty?> Artikel im Wagen!</h4>
+        <h4>Du hast <?php echo $_SESSION['wholeQty']?> Artikel im Wagen!</h4>
     </div>
     <div class="cart_header_image">
         <img src="img/cookies.png" alt="">
@@ -55,7 +56,7 @@ $fullPrice = 0;
     while ($row = $shoppingCart->fetch_assoc()) {
         $product = getProductData($conn, $row['product_id']);
         $price = $row['qty'] * $product['price'];
-        $fullPrice = $fullPrice + $price;
+        $_SESSION['fullPrice'] = $_SESSION['fullPrice'] + $price;
         ?>
                 <!-- NEW PRODUCT STARTING HERE -->
                 <div class="cart_products_grid_container">
@@ -65,21 +66,21 @@ $fullPrice = 0;
                         </div>
                         <div id="mainItemDescription" class="cart_product_data_description flexCol">
                             <h3><?php echo $product['product_name']?></h3>
-                            <h4>#TODO Kategorie</h4>
+                            <h4><?php echo convertIdToCategoryName($conn,$product['product_category_id'])?></h4>
                         </div>
                         <div class="cart_product_data_settings">
-                            <button class="buttonAmount" id="decreaseAmount" onclick="removeFromAmount()">
+                            <div class="buttonAmount">
                             <a href="cart.php?decrease=<?php echo $row['product_id']?> "><span class="material-icons md40">remove_circle</span></a>
-                            </button>
+                            </div>
                             <h4 id="amount"><?php echo $row['qty']?></h4>
-                            <button class="buttonAmount" id="increaseAmount" onclick="addToAmount()">
+                            <div class="buttonAmount">
                             <a href="cart.php?increase=<?php echo $row['product_id']?> "><span class="material-icons md40">add_circle</span></a>
-                            </button>
+                            </div>
                         </div>
                         <div class="cart_product_data_description smallerDiv">
-                            <h3><?php echo $price ?></h3>
+                            <h3><?php echo $price ?>€</h3>
                         </div>
-                        <div class="cart_product_data_settings soloPadding">
+                        <div class="cart_product_data_settings soloPadding buttonAmount">
                             <a href="cart.php?delete=<?php echo $row['product_id']?> "><span class="material-symbols-outlined">remove_shopping_cart</span></a>
                         </div>
                     </div>
@@ -97,11 +98,11 @@ $fullPrice = 0;
             <div class="cart_products_checkout_wrapper">
                 <div class="cart_checkout_info dashBorder">
                     <h3>Anzahl Artikel</h3>
-                    <h3><?php echo $wholeQty ?></h3>
+                    <h3><?php echo $_SESSION['wholeQty']  ?></h3>
                 </div>
                 <div class="cart_checkout_info">
                     <h3>Kosten Artikel</h3>
-                    <h3><?php echo $fullPrice ?> €</h3>
+                    <h3><?php echo $_SESSION['fullPrice'] ?> €</h3>
                 </div>
                 <div class="cart_checkout_info">
                     <h3>Lieferkosten</h3>
@@ -109,7 +110,7 @@ $fullPrice = 0;
                 </div>
                 <div class="cart_checkout_info">
                     <h3>Gesamt Kosten</h3>
-                    <h3><?php echo $fullPrice ?> €</h3>
+                    <h3><?php echo $_SESSION['fullPrice'] ?> €</h3>
                 </div>
                 <div class="cart_checkout_buttons">
                     <button type="submit" name="checkout_button">Zur Kasse</button>

@@ -17,6 +17,7 @@ require_once 'includes/functions_include.php';
 $resultAccount = getAccountData($conn);
 $resultDefAddress = getDefUserAddressData($conn);
 $resultAddressWODef = getUserAddressDataWODef($conn);
+$shippingCost = 3;
 ?>
 
 <head>
@@ -87,10 +88,9 @@ $resultAddressWODef = getUserAddressDataWODef($conn);
                                     <input type="radio" id="---ID GOES HERE---" name="address_buttons"
                                            value="---ID GOES HERE---" checked="checked">
                                     <div class="grid_container">
-                                        <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
-                                        <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?><?php echo $resultDefAddress['street_number']; ?></h4>
-                                        <h4><?php echo ucfirst($resultDefAddress['city']); ?>
-                                            , <?php echo $resultDefAddress['postal_code']; ?></h4>
+                                        <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                                        <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?> <?php echo $resultDefAddress['street_number']; ?></h4>
+                                        <h4><?php echo ucfirst($resultDefAddress['city']); ?>, <?php echo $resultDefAddress['postal_code']; ?></h4>
                                         <a class="defaultText">Standard Adresse</a>
                                     </div>
                                 </div>
@@ -104,10 +104,9 @@ $resultAddressWODef = getUserAddressDataWODef($conn);
                                         <input type="radio" id="---ID GOES HERE---" name="address_buttons"
                                                value="---ID GOES HERE---">
                                         <div class="grid_container">
-                                            <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
-                                            <h4><?php echo ucfirst($rows['address_line1']); ?><?php echo $rows['street_number']; ?></h4>
-                                            <h4><?php echo ucfirst($rows['city']); ?>
-                                                , <?php echo $rows['postal_code']; ?></h4>
+                                            <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                                            <h4><?php echo ucfirst($rows['address_line1']); ?> <?php echo $rows['street_number']; ?></h4>
+                                            <h4><?php echo ucfirst($rows['city']); ?>, <?php echo $rows['postal_code']; ?></h4>
                                         </div>
                                     </div>
                                     <?php
@@ -152,19 +151,28 @@ $resultAddressWODef = getUserAddressDataWODef($conn);
             <div class="cart_products_checkout_wrapper">
                 <div class="cart_checkout_info dashBorder">
                     <h3>Anzahl Artikel</h3>
-                    <h3>2</h3>
+                    <h3><?php echo $_SESSION['wholeQty']?></h3>
                 </div>
                 <div class="cart_checkout_info">
                     <h3>Kosten Artikel</h3>
-                    <h3>420.69 €</h3>
+                    <h3><?php echo $_SESSION['fullPrice']?> €</h3>
                 </div>
                 <div class="cart_checkout_info">
                     <h3>Lieferkosten</h3>
+                    <?php if ($shippingCost > 0) { ?>
+                        <h3><?php echo $shippingCost ?>€</h3>
+                    <?php
+                    }else { 
+                    ?>
                     <h3 id="lieferkosten">Wird im nächsten Schritt Berechnet</h3>
+                    <?php 
+                    }
+                    ?>
+                    
                 </div>
                 <div class="cart_checkout_info">
                     <h3>Gesamt Kosten</h3>
-                    <h3>420.69 €</h3>
+                    <h3><?php echo ($_SESSION['fullPrice']+$shippingCost)?> €</h3>
                 </div>
                 <div class="cart_checkout_buttons">
                     <button type="submit" disabled name="checkout_button">Kostenpflichtig Bestellen</button>
