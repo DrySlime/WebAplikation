@@ -17,7 +17,9 @@ require_once 'includes/functions_include.php';
 $resultAccount = getAccountData($conn);
 $resultDefAddress = getDefUserAddressData($conn);
 $resultAddressWODef = getUserAddressDataWODef($conn);
-$shippingCost = 3;
+$addressId = null;
+$shippingMethodId = null;
+$paymentMethodId = null;
 ?>
 
 <head>
@@ -85,8 +87,8 @@ $shippingCost = 3;
                             if ($resultDefAddress !== null) {
                                 ?>
                                 <div class="checkout_grid_container">
-                                    <input type="radio" id="---ID GOES HERE---" name="address_buttons"
-                                           value="---ID GOES HERE---" checked="checked">
+                                    <input type="radio" id="<?php echo $resultDefAddress['id']?>" name="address_buttons"
+                                           value="<?php echo $resultDefAddress['id']?>" checked="checked">
                                     <div class="grid_container">
                                         <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
                                         <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?> <?php echo $resultDefAddress['street_number']; ?></h4>
@@ -101,8 +103,8 @@ $shippingCost = 3;
                                 while ($rows = $resultAddressWODef->fetch_assoc()) {
                                     ?>
                                     <div class="checkout_grid_container">
-                                        <input type="radio" id="---ID GOES HERE---" name="address_buttons"
-                                               value="---ID GOES HERE---">
+                                        <input type="radio" id="<?php echo $rows['id']?>" name="address_buttons"
+                                               value="<?php echo $rows['id']?>">
                                         <div class="grid_container">
                                             <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
                                             <h4><?php echo ucfirst($rows['address_line1']); ?> <?php echo $rows['street_number']; ?></h4>
