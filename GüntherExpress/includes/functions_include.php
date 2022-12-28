@@ -1310,3 +1310,17 @@ function deactivateUser($conn)
     mysqli_stmt_close($stmt);
 }
 
+function getShippingMethodData($conn){
+ 
+    $sql = "SELECT * FROM shipping_method";
+    $stmt = mysqli_stmt_init($conn);
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    mysqli_stmt_close($stmt);
+
+    return $resultData;
+}

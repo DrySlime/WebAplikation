@@ -12,14 +12,17 @@ if (!isset($_SESSION["useruid"])) {
 
 
 require_once 'includes/dbh_include.php';
-require_once 'includes/account_include.php';
 require_once 'includes/functions_include.php';
+require_once 'includes/account_include.php';
+//require_once 'includes/check_out_include_new.php';
 $resultAccount = getAccountData($conn);
 $resultDefAddress = getDefUserAddressData($conn);
 $resultAddressWODef = getUserAddressDataWODef($conn);
-$addressId = null;
-$shippingMethodId = null;
-$paymentMethodId = null;
+$resultShippingMeth = getShippingMethodData($conn);
+$address = null;
+$shippingMethod = null;
+$paymentMethod = null;
+$endCosts = $_SESSION['fullPrice'];
 ?>
 
 <head>
@@ -38,7 +41,7 @@ $paymentMethodId = null;
 <body>
 <div class="cart_header_wrapper">
     <div class="cart_header_container">
-        <h1>Deine Bestellung</h1>
+        <h1>Deine Bestellung </h1>
         <h4>Wohin dürfen wir sie versenden?</h4>
     </div>
     <div class="cart_header_image">
@@ -118,15 +121,21 @@ $paymentMethodId = null;
                     </section>
                     <section class="checkout_section checkout_delivery">
                         <div class="checkout_data_grid_wrapper">
+                            <?php 
+                            while ($schippingRos = $resultShippingMeth->fetch_assoc()) {
+                            ?>
                             <div class="checkout_grid_container">
-                                <input type="radio" id="---ID GOES HERE---" name="delivery_buttons"
-                                       value="---ID GOES HERE---">
+                                <input type="radio" id="<?php echo $schippingRos['id'] ?>" name="delivery_buttons"
+                                       value="<?php echo $schippingRos['id'] ?>">
                                 <div class="addressitem_container">
-                                    <h2>DHL Lieferung</h2>
+                                    <h2><?php echo $schippingRos['shipping_name']?></h2>
                                     <h4>Lieferdauer: 3-5 Tage</h4>
-                                    <h4>Lieferkosten: 2.50 €</h4>
+                                    <h4>Lieferkosten: <?php echo $schippingRos['shipping_price']?> €</h4>
                                 </div>
                             </div>
+                            <?php
+                                }
+                            ?>
                         </div>
                     </section>
                     <section class="checkout_section checkout_payment">
@@ -161,8 +170,11 @@ $paymentMethodId = null;
                 </div>
                 <div class="cart_checkout_info">
                     <h3>Lieferkosten</h3>
-                    <?php if ($shippingCost > 0) { ?>
-                        <h3><?php echo $shippingCost ?>€</h3>
+                    <?php if ($shippingMethod != null) { 
+                        $endCosts = $endCosts + $shippingMethod['price'];
+                        ?>
+                        
+                        <h3><?php echo $shippingMethod['price'] ?>€</h3>
                     <?php
                     }else { 
                     ?>
@@ -174,7 +186,7 @@ $paymentMethodId = null;
                 </div>
                 <div class="cart_checkout_info">
                     <h3>Gesamt Kosten</h3>
-                    <h3><?php echo ($_SESSION['fullPrice']+$shippingCost)?> €</h3>
+                    <h3><?php echo $endCosts?> €</h3>
                 </div>
                 <div class="cart_checkout_buttons">
                     <button type="submit" disabled name="checkout_button">Kostenpflichtig Bestellen</button>
