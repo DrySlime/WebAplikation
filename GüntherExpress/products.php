@@ -7,51 +7,54 @@ include_once 'includes/products_function.php';
 global $conn;
 ?>
 
-
 <head>
+    <link rel="stylesheet" href="CSS/searchbar_header.css">
     <link rel="stylesheet" href="CSS/products.css">
     <meta charset="UTF-8" http-equiv="X-UA-Compatible" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0"/>
     <title></title>
 </head>
 
-
 <?php
-if(isset($_POST["priceSearch"])){
-
-    $name=$_GET["name"];
-    $min=$_POST["min"];
-    $max=$_POST["max"];
-    if($min>$max){
-        $error="Eingabe überprufen!!";
+if (isset($_POST["priceSearch"])) {
+    $name = $_GET["name"];
+    $min = $_POST["min"];
+    $max = $_POST["max"];
+    if ($min > $max) {
+        $error = "Eingabe überprufen!!";
         echo "<body onload='scrollToElement()'></body>";
         goto next;
     }
-    $items= searchByPrice($conn,$name,$min,$max);
-}elseif (!isset($_POST["search"])) {
-
+    $items = searchByPrice($conn, $name, $min, $max);
+} elseif (!isset($_POST["search"])) {
     next:
     $name = $_GET["name"];
     $items = getAllFromCategory($conn, $name, totalAmount($conn, $name));
-
-
 } else {
     $name = $_POST["search"];
     $items = searchProduct($conn, $_POST["search"]);
 }
-
-
 ?>
 
-
 <body>
-<div class="products_page_wrapper">
-    <div class="products_page_header">
+<div class="page_header_wrapper">
+    <div class="page_page_header">
         <h1><?php echo $name ?></h1>
-        <img src="img/cadbury.png" alt="">
+        <?php
+        if ($name == "Cerealien") {
+            echo '<img src = "img/cereals.png" alt = "Andre Caputo">';
+        } else if ($name == "Fruchtgummi") {
+            echo '<img src = "img/gummies.png" alt = "3DJustincase">';
+        } else if ($name == "Kekse") {
+            echo '<img src = "img/cookieSnap.png" alt = "Andre Caputo">';
+        } else if ($name == "Backwaren") {
+            echo '<img src = "img/macarons.png" alt = "Andre Caputo">';
+        } else {
+            echo '<img src = "img/cadbury.png" alt = "Andre Caputo">';
+        }
+        ?>
     </div>
     <div class="searchbar_wrapper">
         <form action="products.php" method="post">
@@ -71,10 +74,17 @@ if(isset($_POST["priceSearch"])){
                     <h4>Kategorien</h4>
                 </div>
                 <div class="sidebar_options_settings">
-                    <?php foreach (getCategoryList($conn) as $key => $value) { ?>
-                        <?php echo "
+                    <?php foreach (getCategoryList($conn) as $key => $value) {
+                        if ($value == $name) {
+                            echo "
+                            <a href='products.php?name=" . $value . "'><h4 style='color: #fc466b'>" . $value ."</h4></a>
+                            ";
+                        } else {
+                            echo "
                           <a href='products.php?name=" . $value . "'><h4>" . $value . "</h4></a>
-                        " ?><?php } ?>
+                        ";
+                        }
+                    } ?>
                 </div>
                 <div class="sidebar_options_header">
                     <h4>Preis</h4>
@@ -91,16 +101,20 @@ if(isset($_POST["priceSearch"])){
                             <div class="settings_button">
                                 <button type="submit" name="applyfilter">Anwenden</button>
                             </div>
-                            <?php if(isset($error)){echo "<h3 style='color: #D4045F'>".$error."</h3>";} ?>
+                            <?php if (isset($error)) {
+                                echo "<h3 style='color: #D4045F'>" . $error . "</h3>";
+                            } ?>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
         <div class="products_items">
-            <div class="products_grid_wrapper">
-                <?php
-                if ($items != null) {
+            <?php
+            if ($items != null) {
+                ?>
+                <div class="products_grid_wrapper">
+                    <?php
                     for ($i = 0; $i < count($items); $i++) {
                         echo '
                         <div class="product_container">
@@ -115,24 +129,29 @@ if(isset($_POST["priceSearch"])){
                                 </a>
                                 <h4>' . $items[$i]["price"] . ' €</h4>
                             </div>
-                            <div class="product_add_to_cart" id="'. $items[$i]["id"] .'" onclick="add(this.id)">
+                            <div class="product_add_to_cart" id="' . $items[$i]["id"] . '" onclick="add(this.id)">
                                 <span class="material-symbols-outlined">local_mall</span>
                             </div>
                         </div>
                     ';
                     }
-                } else {
-                    echo "<h3 style='color: #fc466b'>Dieses produkt ist nicht bekannt!</h3>";
-
-                }
-
+                    ?>
+                    <script>
+                        function add(id) {
+                            window.location = "shopping_cart_insert.php?pID=" + id + "&quantaty=1";
+                        }
+                    </script>
+                </div>
+                <?php
+            } else {
                 ?>
-                <script>
-                    function add(id){
-                        window.location = "shopping_cart_insert.php?pID="+id+"&quantaty=1";
-                    }
-                </script>
-            </div>
+                <div class="products_no_item_wrapper">
+                    <img src="img/backdrop.png" alt="Andre Caputo">
+                    <h4>The Confectioner kennt diesen Artikel leider nicht...</h4>
+                    <p>Vielleicht findest du aber etwas anderes leckeres!</p>
+                </div>
+            <?php }
+            ?>
         </div>
     </div>
 </div>

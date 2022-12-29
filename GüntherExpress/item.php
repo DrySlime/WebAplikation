@@ -17,6 +17,7 @@ $stars = getAvrgRating($conn, $product[0]["id"]);
 ?>
 
 <head>
+    <link rel="stylesheet" href="CSS/searchbar_header.css">
     <link rel="stylesheet" href="CSS/item.css">
     <link rel="stylesheet" href="CSS/swiper.css">
     <link rel="stylesheet"
@@ -29,8 +30,8 @@ $stars = getAvrgRating($conn, $product[0]["id"]);
 </head>
 
 <body>
-<div class="items_header_wrapper">
-    <div class="items_page_header">
+<div class="page_header_wrapper">
+    <div class="page_page_header">
         <h1><?php echo $categoryName ?></h1>
         <img src="img/cadbury.png" alt="">
     </div>

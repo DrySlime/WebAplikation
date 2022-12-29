@@ -11,9 +11,9 @@ if (!isset($_SESSION["useruid"])) {
     header('Location: login.php');
     die();
 }
-$shoppingCart = getShoppingCartItems($conn,$_SESSION["userid"]);
+$shoppingCart = getShoppingCartItems($conn, $_SESSION["userid"]);
 getWholeQty($shoppingCart);
-$shoppingCart = getShoppingCartItems($conn,$_SESSION["userid"]);
+$shoppingCart = getShoppingCartItems($conn, $_SESSION["userid"]);
 $_SESSION['fullPrice'] = 0;
 
 ?>
@@ -32,7 +32,7 @@ $_SESSION['fullPrice'] = 0;
 <div class="cart_header_wrapper">
     <div class="cart_header_container">
         <h1>Dein Einkaufswagen</h1>
-        <h4>Du hast <?php echo $_SESSION['wholeQty']?> Artikel im Wagen!</h4>
+        <h4>Du hast <?php echo $_SESSION['wholeQty'] ?> Artikel im Wagen!</h4>
     </div>
     <div class="cart_header_image">
         <img src="img/cookies.png" alt="">
@@ -44,52 +44,58 @@ $_SESSION['fullPrice'] = 0;
             <div class="cart_grid_container_header">
                 <h4>Deine Artikel</h4>
             </div>
-            <div class="cart_products_grid_wrapper">
-                
-                <?php
+            <?php
             if ($shoppingCart->num_rows == 0) {
                 ?>
-        <h1 style='text-align: center;'>Es befinden sich zurzeit keine Artikel im Warenkorb</h1>
-        #TODO
-        <?php
-    }
-    while ($row = $shoppingCart->fetch_assoc()) {
-        $product = getProductData($conn, $row['product_id']);
-        $price = $row['qty'] * $product['price'];
-        $_SESSION['fullPrice'] = $_SESSION['fullPrice'] + $price;
-        ?>
-                <!-- NEW PRODUCT STARTING HERE -->
-                <div class="cart_products_grid_container">
-                    <div class="cart_product_wrapper">
-                        <div class="cart_product_data_image">
-                            <img src="<?php echo $product['product_image']?>" alt="">
-                        </div>
-                        <div id="mainItemDescription" class="cart_product_data_description flexCol">
-                            <h3><?php echo $product['product_name']?></h3>
-                            <h4><?php echo convertIdToCategoryName($conn,$product['product_category_id'])?></h4>
-                        </div>
-                        <div class="cart_product_data_settings">
-                            <div class="buttonAmount">
-                            <a href="cart.php?decrease=<?php echo $row['product_id']?> "><span class="material-icons md40">remove_circle</span></a>
-                            </div>
-                            <h4 id="amount"><?php echo $row['qty']?></h4>
-                            <div class="buttonAmount">
-                            <a href="cart.php?increase=<?php echo $row['product_id']?> "><span class="material-icons md40">add_circle</span></a>
-                            </div>
-                        </div>
-                        <div class="cart_product_data_description smallerDiv">
-                            <h3><?php echo $price ?>€</h3>
-                        </div>
-                        <div class="cart_product_data_settings soloPadding buttonAmount">
-                            <a href="cart.php?delete=<?php echo $row['product_id']?> "><span class="material-symbols-outlined">remove_shopping_cart</span></a>
-                        </div>
-                    </div>
+                <div class="products_no_item_wrapper">
+                    <img src="img/backdrop.png" alt="Andre Caputo">
+                    <h4>Du hast noch keine Artikel im Warenkorb!</h4>
+                    <p>Such dir leckere Produkte aus unserem Sortiment aus und füge sie hinzu!</p>
+                    <a href='index.php'>Zum Laden</a>
                 </div>
-                <!-- PRODUCT ENDS HERE -->
-                <?php 
+                <?php
+            } else { ?>
+                <div class="cart_products_grid_wrapper">
+                    <?php
+                    while ($row = $shoppingCart->fetch_assoc()) {
+                        $product = getProductData($conn, $row['product_id']);
+                        $price = $row['qty'] * $product['price'];
+                        $_SESSION['fullPrice'] = $_SESSION['fullPrice'] + $price;
+                        ?>
+                        <!-- NEW PRODUCT STARTING HERE -->
+                        <div class="cart_products_grid_container">
+                            <div class="cart_product_wrapper">
+                                <div class="cart_product_data_image">
+                                    <img src="<?php echo $product['product_image'] ?>" alt="">
+                                </div>
+                                <div id="mainItemDescription" class="cart_product_data_description flexCol">
+                                    <h3><?php echo $product['product_name'] ?></h3>
+                                    <h4><?php echo convertIdToCategoryName($conn, $product['product_category_id']) ?></h4>
+                                </div>
+                                <div class="cart_product_data_settings">
+                                    <div class="buttonAmount">
+                                        <a href="cart.php?decrease=<?php echo $row['product_id'] ?> "><span class="material-icons md40">remove_circle</span></a>
+                                    </div>
+                                    <h4 id="amount"><?php echo $row['qty'] ?></h4>
+                                    <div class="buttonAmount">
+                                        <a href="cart.php?increase=<?php echo $row['product_id'] ?> "><span class="material-icons md40">add_circle</span></a>
+                                    </div>
+                                </div>
+                                <div class="cart_product_data_description smallerDiv">
+                                    <h3><?php echo $price ?>€</h3>
+                                </div>
+                                <div class="cart_product_data_settings soloPadding buttonAmount">
+                                    <a href="cart.php?delete=<?php echo $row['product_id'] ?> "><span class="material-symbols-outlined">remove_shopping_cart</span></a>
+                                </div>
+                            </div>
+                        </div><!-- PRODUCT ENDS HERE -->
+                        <?php
                     }
-                ?>
-            </div>
+                    ?>
+                </div>
+                <?php
+            }
+            ?>
         </div>
         <div class="cart_grid_container limited_height">
             <div class="cart_grid_container_header">
@@ -98,7 +104,7 @@ $_SESSION['fullPrice'] = 0;
             <div class="cart_products_checkout_wrapper">
                 <div class="cart_checkout_info dashBorder">
                     <h3>Anzahl Artikel</h3>
-                    <h3><?php echo $_SESSION['wholeQty']  ?></h3>
+                    <h3><?php echo $_SESSION['wholeQty'] ?></h3>
                 </div>
                 <div class="cart_checkout_info">
                     <h3>Kosten Artikel</h3>
@@ -113,7 +119,11 @@ $_SESSION['fullPrice'] = 0;
                     <h3><?php echo $_SESSION['fullPrice'] ?> €</h3>
                 </div>
                 <div class="cart_checkout_buttons">
-                    <button type="submit" name="checkout_button">Zur Kasse</button>
+                    <?php if ($shoppingCart->num_rows == 0) { ?>
+                        <button class="disabled" type="submit" name="checkout_button">Zur Kasse</button>
+                    <?php } else { ?>
+                        <button class="enabled" type="submit" name="checkout_button">Zur Kasse</button>
+                    <?php } ?>
                 </div>
             </div>
         </div>

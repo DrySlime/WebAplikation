@@ -22,9 +22,9 @@ button[disabled] {
     background-color: #888888;
 }
 
-.cart_grid_container {
+.cart_grid_container:not(:nth-last-child(1)) {
     height: 100%;
-    min-height: 60vh;
+    min-height: 70vh;
 }
 
 .checkout_wrapper {
@@ -45,6 +45,11 @@ button[disabled] {
     color: #FFFFFF;
     transform: scale(1.00);
     cursor: not-allowed;
+}
+
+#lieferkosten {
+    font-weight: 600 !important;
+    font-size: 2vmin !important;
 }
 
 .checkout_section {
@@ -172,10 +177,10 @@ button[disabled] {
     border-radius: 1vmin;
 }
 
-.addressitem_container .defaultText {
+.grid_container .defaultText {
     position: absolute;
     top: 5.5vmin;
-    font-size: 1.25vmin;
+    font-size: 1.8vmin;
     font-weight: 400;
 }
 
@@ -247,11 +252,11 @@ button[disabled] {
 }
 
 .checkout_data_buttons .disable {
-    background-color: #888888;
+    background-color: #888888 !important;
 }
 
 .checkout_data_buttons .disable:hover {
-    color: #FFFFFF;
-    transform: scale(1.00);
-    cursor: not-allowed;
+    color: #FFFFFF !important;
+    transform: scale(1.00) !important;
+    cursor: not-allowed !important;
 }

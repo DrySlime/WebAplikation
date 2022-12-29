@@ -31,8 +31,7 @@ $endCosts = $_SESSION['fullPrice'];
     <meta charset="UTF-8" http-equiv="X-UA-Compatible" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <title></title>
@@ -62,7 +61,7 @@ $endCosts = $_SESSION['fullPrice'];
                     <section class="checkout_section checkout_address active">
                         <div class="checkout_data_grid_wrapper">
                             <?php
-                            if ($resultAddressWODef->num_rows < 5) {
+                            if ($resultAddressWODef->num_rows < 6) {
                                 ?>
                                 <div class="checkout_grid_container addAddressContainer">
                                     <div class="grid_container add_address">
@@ -70,15 +69,13 @@ $endCosts = $_SESSION['fullPrice'];
                                         <form id="addAddress" action="#" method="post">
                                             <div class="add_address_oneline">
                                                 <input type="text" name="addStreet" id="addStreet" placeholder="Straße">
-                                                <input type="text" name="addHausnummer" id="addHausnummer"
-                                                       placeholder="No.">
+                                                <input type="text" name="addHausnummer" id="addHausnummer" placeholder="No.">
                                             </div>
                                             <input type="text" name="addStadt" id="addStadt" placeholder="Stadt">
                                             <input type="text" name="postal-code" id="postal-code" placeholder="PLZ">
                                         </form>
                                         <div class="addressitem_addbutton">
-                                            <button id="add_Address" form="addAddress" type="submit"
-                                                    name="add_address_button">
+                                            <button id="add_Address" form="addAddress" type="submit" name="add_address_button">
                                                 Hinzufügen
                                             </button>
                                         </div>
@@ -89,28 +86,25 @@ $endCosts = $_SESSION['fullPrice'];
                             <?php
                             if ($resultDefAddress !== null) {
                                 ?>
-                                <div class="checkout_grid_container">
-                                    <input type="radio" id="<?php echo $resultDefAddress['id']?>" name="address_buttons"
-                                           value="<?php echo $resultDefAddress['id']?>" checked="checked">
+                                <div class="checkout_grid_container address_container">
+                                    <input class="radioButton" type="radio" id="<?php echo $resultDefAddress['id'] ?>" name="address_buttons" value="<?php echo $resultDefAddress['id'] ?>" checked="checked">
                                     <div class="grid_container">
-                                        <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
-                                        <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?> <?php echo $resultDefAddress['street_number']; ?></h4>
+                                        <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                                        <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?><?php echo $resultDefAddress['street_number']; ?></h4>
                                         <h4><?php echo ucfirst($resultDefAddress['city']); ?>, <?php echo $resultDefAddress['postal_code']; ?></h4>
                                         <a class="defaultText">Standard Adresse</a>
                                     </div>
                                 </div>
                                 <?php
                             }
-
                             if ($resultAddressWODef !== null) {
                                 while ($rows = $resultAddressWODef->fetch_assoc()) {
                                     ?>
-                                    <div class="checkout_grid_container">
-                                        <input type="radio" id="<?php echo $rows['id']?>" name="address_buttons"
-                                               value="<?php echo $rows['id']?>">
+                                    <div class="checkout_grid_container address_container">
+                                        <input class="radioButton" type="radio" id="<?php echo $rows['id'] ?>" name="address_buttons" value="<?php echo $rows['id'] ?>">
                                         <div class="grid_container">
-                                            <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
-                                            <h4><?php echo ucfirst($rows['address_line1']); ?> <?php echo $rows['street_number']; ?></h4>
+                                            <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                                            <h4><?php echo ucfirst($rows['address_line1']); ?><?php echo $rows['street_number']; ?></h4>
                                             <h4><?php echo ucfirst($rows['city']); ?>, <?php echo $rows['postal_code']; ?></h4>
                                         </div>
                                     </div>
@@ -121,20 +115,19 @@ $endCosts = $_SESSION['fullPrice'];
                     </section>
                     <section class="checkout_section checkout_delivery">
                         <div class="checkout_data_grid_wrapper">
-                            <?php 
-                            while ($schippingRos = $resultShippingMeth->fetch_assoc()) {
-                            ?>
-                            <div class="checkout_grid_container">
-                                <input type="radio" id="<?php echo $schippingRos['id'] ?>" name="delivery_buttons"
-                                       value="<?php echo $schippingRos['id'] ?>">
-                                <div class="addressitem_container">
-                                    <h2><?php echo $schippingRos['shipping_name']?></h2>
-                                    <h4>Lieferdauer: 3-5 Tage</h4>
-                                    <h4>Lieferkosten: <?php echo $schippingRos['shipping_price']?> €</h4>
-                                </div>
-                            </div>
                             <?php
-                                }
+                            while ($schippingRos = $resultShippingMeth->fetch_assoc()) {
+                                ?>
+                                <div class="checkout_grid_container delivery_container">
+                                    <input class="radioButton" type="radio" id="<?php echo $schippingRos['id'] ?>" name="delivery_buttons" value="<?php echo $schippingRos['shipping_price'] ?>">
+                                    <div class="addressitem_container">
+                                        <h2><?php echo $schippingRos['shipping_name'] ?></h2>
+                                        <h4>Lieferdauer: 3-5 Tage</h4>
+                                        <h4>Lieferkosten: <?php echo $schippingRos['shipping_price'] ?>.00 €</h4>
+                                    </div>
+                                </div>
+                                <?php
+                            }
                             ?>
                         </div>
                     </section>
@@ -162,31 +155,19 @@ $endCosts = $_SESSION['fullPrice'];
             <div class="cart_products_checkout_wrapper">
                 <div class="cart_checkout_info dashBorder">
                     <h3>Anzahl Artikel</h3>
-                    <h3><?php echo $_SESSION['wholeQty']?></h3>
+                    <h3><?php echo $_SESSION['wholeQty'] ?></h3>
                 </div>
                 <div class="cart_checkout_info">
                     <h3>Kosten Artikel</h3>
-                    <h3><?php echo $_SESSION['fullPrice']?> €</h3>
+                    <h3 id=""><?php echo $_SESSION['fullPrice'] ?> €</h3>
                 </div>
                 <div class="cart_checkout_info">
                     <h3>Lieferkosten</h3>
-                    <?php if ($shippingMethod != null) { 
-                        $endCosts = $endCosts + $shippingMethod['price'];
-                        ?>
-                        
-                        <h3><?php echo $shippingMethod['price'] ?>€</h3>
-                    <?php
-                    }else { 
-                    ?>
-                    <h3 id="lieferkosten">Wird im nächsten Schritt Berechnet</h3>
-                    <?php 
-                    }
-                    ?>
-                    
+                    <h3 id="lieferkosten">- - -</h3>
                 </div>
                 <div class="cart_checkout_info">
                     <h3>Gesamt Kosten</h3>
-                    <h3><?php echo $endCosts?> €</h3>
+                    <h3 id="finalprice"><?php echo $endCosts ?> €</h3>
                 </div>
                 <div class="cart_checkout_buttons">
                     <button type="submit" disabled name="checkout_button">Kostenpflichtig Bestellen</button>
