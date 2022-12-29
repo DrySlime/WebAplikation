@@ -123,6 +123,7 @@ $(document).on('click', '.checkout_grid_container', function () {
                     let finalElement = $('#finalprice');
                     let final = calculatePrice(delData.split("/")[2], delData.split("/")[1]);
                     finalElement.html(final);
+                    $('#final_ship').html($('#ship_'+id).html());
                     $.ajax({
                         url: "checkout.php",
                         method: "POST",
@@ -134,21 +135,26 @@ $(document).on('click', '.checkout_grid_container', function () {
             $.ajax({
                 url: "checkout.php",
                 method: "POST",
-                data: {address: id}
+                data: {address: id},
+                success: function () {
+                    $('#final_address').html($('#address_'+id).html());
+                }
             });
         } else if(radioButton.attr("name") === "payment_buttons") {
             $.ajax({
                 url: "checkout.php",
                 method: "POST",
-                data: {payment: id}
+                data: {payment: id},
+                success: function () {
+                    $('#final_payment').html($('#payment_'+id).html());
+                }
             });
         }
         if($('input[name="payment_buttons"]').is(':checked') && $('input[name="address_buttons"]').is(':checked') && $('input[name="delivery_buttons"]').is(':checked')) {
             $('#checkoutButton').removeAttr("disabled");
         }
     }
-})
-;
+});
 
 jQuery.ajaxSetup({
     async: true

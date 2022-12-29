@@ -44,7 +44,7 @@ include_once 'includes/functions_include.php';
     }
 
     if(isset($_GET["decrease"])){
-        $sql = "UPDATE shopping_cart SET qty=qty-1 WHERE user_id = ?  AND product_id = ? AND qty > 0";
+        $sql = "UPDATE shopping_cart SET qty=qty-1 WHERE user_id = ?  AND product_id = ? AND qty > 1";
         $stmt = mysqli_stmt_init($conn);
 
 

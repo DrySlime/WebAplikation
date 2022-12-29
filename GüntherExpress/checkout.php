@@ -56,7 +56,7 @@ $endCosts = $_SESSION['fullPrice'];
                 <ul class="checkout_data_header">
                     <li id="0" onclick="goToTab(this.id)" class="active">Lieferadresse</li>
                     <li id="1" onclick="goToTab(this.id)">Versand</li>
-                    <li id="2" onclick="goToTab(this.id)">Bezahlmöglichkeit</li>
+                    <li id="2" onclick="goToTab(this.id)">Zahlungsart</li>
                     <li id="3" onclick="goToTab(this.id)">Übersicht</li>
                 </ul>
                 <div class="checkout_data_container">
@@ -94,7 +94,7 @@ $endCosts = $_SESSION['fullPrice'];
                                 ?>
                                 <div class="checkout_grid_container address_container">
                                     <input class="radioButton" type="radio" id="<?php echo $resultDefAddress['id'] ?>" name="address_buttons" value="<?php echo $resultDefAddress['id'] ?>" checked="checked">
-                                    <div class="grid_container">
+                                    <div id="address_<?php echo $resultDefAddress['id']?>" class="grid_container">
                                         <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
                                         <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?> <?php echo $resultDefAddress['street_number']; ?></h4>
                                         <h4><?php echo ucfirst($resultDefAddress['city']); ?>, <?php echo $resultDefAddress['postal_code']; ?></h4>
@@ -108,7 +108,7 @@ $endCosts = $_SESSION['fullPrice'];
                                     ?>
                                     <div class="checkout_grid_container address_container">
                                         <input class="radioButton" type="radio" id="<?php echo $rows['id'] ?>" name="address_buttons" value="<?php echo $rows['id'] ?>">
-                                        <div class="grid_container">
+                                        <div id="address_<?php echo $rows['id']?>" class="grid_container">
                                             <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
                                             <h4><?php echo ucfirst($rows['address_line1']); ?> <?php echo $rows['street_number']; ?></h4>
                                             <h4><?php echo ucfirst($rows['city']); ?>, <?php echo $rows['postal_code']; ?></h4>
@@ -130,7 +130,7 @@ $endCosts = $_SESSION['fullPrice'];
                                 ?>
                                 <div class="checkout_grid_container delivery_container">
                                     <input class="radioButton" type="radio" id="<?php echo $schippingRos['id'] ?>" name="delivery_buttons" value="<?php echo $schippingRos['shipping_price'] ?>">
-                                    <div class="grid_container">
+                                    <div id="ship_<?php echo $schippingRos['id']?>" class="grid_container">
                                         <h2><?php echo $schippingRos['shipping_name'] ?></h2>
                                         <h4>Lieferdauer: 3-5 Tage</h4>
                                         <h4>Lieferkosten: <?php echo $schippingRos['shipping_price'] ?>.00 €</h4>
@@ -143,14 +143,14 @@ $endCosts = $_SESSION['fullPrice'];
                     </section>
                     <section class="checkout_section checkout_payment">
                         <div class="checkout_section_header">
-                            <h3>Bezahlmethode</h3>
-                            <h4>Wähle hier deine bevorzugte Zahlmethode aus.</h4>
+                            <h3>Zahlungsart</h3>
+                            <h4>Wähle hier deine bevorzugte Zahlungsart aus.</h4>
                         </div>
                         <div class="checkout_data_grid_wrapper">
                             <!-- GROUP STARTS HERE -->
                             <div class="checkout_grid_container payment_container">
                                 <input class="radioButton" type="radio" id="ID GOES HERE" name="payment_buttons" value="ID GOES HERE">
-                                <div class="grid_container">
+                                <div id="payment_ID GOES HERE" class="grid_container">
                                     <h2>Max Mustermann</h2>
                                     <h4>Comdirect</h4>
                                     <h4>XXXX XXXX XXXX 1213</h4>
@@ -167,25 +167,25 @@ $endCosts = $_SESSION['fullPrice'];
                         </div>
                         <div class="checkout_overview_grid_wrapper">
                             <div id="address_overview" class="checkout_grid_container exclude">
-                                <div class="grid_container">
-                                    <h2>Max Mustermann</h2>
-                                    <h4>SKIDIDIDIDIPPPAAAAAPAPA 2</h4>
-                                    <h4>42069 LazyTown</h4>
+                                <div id="final_address" class="grid_container">
+                                    <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                                    <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?> <?php echo $resultDefAddress['street_number']; ?></h4>
+                                    <h4><?php echo ucfirst($resultDefAddress['city']); ?>, <?php echo $resultDefAddress['postal_code']; ?></h4>
                                 </div>
                             </div>
                             <div id="shipping_overview" class="checkout_grid_container exclude">
-                                <div class="grid_container">
-                                    <h2>DHL Expressssss</h2>
-                                    <h4>Lieferdauer: 3-5 Tage</h4>
-                                    <h4>Lieferkosten: EÜRO.00 €</h4>
+                                <div id="final_ship" class="grid_container">
+                                    <h2>Bitte auswählen</h2>
+                                    <h4>Lieferdauer: - - -</h4>
+                                    <h4>Lieferkosten: - - -</h4>
                                 </div>
                             </div>
                             <div id="payment_overview" class="checkout_grid_container exclude">
-                                <div class="grid_container">
-                                    <h2>Max Mustermann</h2>
-                                    <h4>Comdirect</h4>
-                                    <h4>XXXX XXXX XXXX 1213</h4>
-                                    <h4>Gültig bis: 02/25</h4>
+                                <div id="final_payment" class="grid_container">
+                                    <h2>Bitte auswählen</h2>
+                                    <h4></h4>
+                                    <h4></h4>
+                                    <h4></h4>
                                 </div>
                             </div>
                         </div>
