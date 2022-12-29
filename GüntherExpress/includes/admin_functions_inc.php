@@ -481,7 +481,7 @@ function getAllShippingMethods($conn){
     return $sMethodArr;
 }
 function deleteSale($conn, $promotionID){
-    $sql = "DELETE FROM promotion WHERE id=?";
+    $sql = "UPDATE promotion SET active = 0 WHERE id=?";
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt,$sql)){
@@ -497,7 +497,7 @@ function deleteSale($conn, $promotionID){
 
 }
 function deleteCategory($conn, $categoryID){
-    $sql = "DELETE FROM product_category WHERE id=?";
+    $sql = "UPDATE product_category SET active = 0 WHERE id=?";
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt,$sql)){
@@ -512,7 +512,7 @@ function deleteCategory($conn, $categoryID){
     header("location: ../category_admin.php");
 }
 function deleteProduct($conn, $productID){
-    $sql = "DELETE FROM product WHERE id=?";
+    $sql = "UPDATE product SET active = 0 WHERE id=?";
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt,$sql)){
@@ -528,7 +528,7 @@ function deleteProduct($conn, $productID){
 
 }
 function deleteSMethod($conn, $sMethodID){
-    $sql = "DELETE FROM shipping_method WHERE id=?";
+    $sql = "UPDATE shipping_method SET active = 0 WHERE id=?";
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt,$sql)){
