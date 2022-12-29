@@ -1324,3 +1324,155 @@ function getShippingMethodData($conn){
 
     return $resultData;
 }
+
+
+function bindPaymentToUser($conn, $street, $houseno, $city, $postalCode)
+{
+    $userid = $_SESSION['userid'];
+    $addressid = $address['id'];
+    if (getPaymentIDByData($user_id,$payment_type_id, $provider, $account_number, $expiry_date) != null) {
+        header("location: ../account.php?error=none");
+        exit();
+    } else {
+        $sql = "INSERT INTO user_payment_method (user_id,payment_type_id, provider, account_number, expiry_date) VALUES (?,?,?,?);";
+        $stmt = mysqli_stmt_init($conn);
+
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            header("location: ../account.php?error=stmtfailed");
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "sssss", $_SESSION['userid'],$payment_type_id, $provider, $account_number, $expiry_date);
+        mysqli_stmt_execute($stmt);
+
+        mysqli_stmt_close($stmt);
+
+
+        header("location: ../account.php?error=none");
+        exit();
+    }
+
+}
+
+function setDefaultPayment($conn, $paymentId)
+{
+    $userid = $_SESSION['userid'];
+
+    $sql = "UPDATE user_payment_method SET is_default_pay_method = 0 WHERE user_id = ?";
+    $stmt = mysqli_stmt_init($conn);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ../account.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "s", $userid);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+
+    $sql = "UPDATE user_payment_method SET is_default_pay_method = 1 WHERE user_id = ? AND id = ?";
+    $stmt = mysqli_stmt_init($conn);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ../account.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "ss", $userid, $addressid);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+    header("location: ../account.php?error=none");
+    exit();
+}
+
+function unbindPayment($conn, $paymentid)
+{
+    $userid = $_SESSION['userid'];
+
+    $sql = "DELETE FROM user_payment_method WHERE user_id = ? AND id = ?";
+    $stmt = mysqli_stmt_init($conn);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ../account.php?error=stmtfailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "ss", $userid, $paymentid);
+    mysqli_stmt_execute($stmt);
+
+    mysqli_stmt_close($stmt);
+
+
+    header("location: ../account.php?error=none");
+    exit();
+}
+
+function getPaymentIDByData($conn, $user_id,$payment_type_id, $provider, $account_number, $expiry_date)
+{
+    $sql = "SELECT * FROM user_payment_method WHERE user_id = ? AND payment_type_id = ? AND provider = ? AND account_number = ? AND expiry_date = ?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    mysqli_stmt_prepare($stmt, $sql);
+    mysqli_stmt_bind_param($stmt, "sssss", $user_id,$payment_type_id, $provider, $account_number, $expiry_date);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    mysqli_stmt_close($stmt);
+
+    return $resultData->fetch_assoc();
+}
+
+function getPaymentMethods($conn)
+{
+    $sql = "SELECT * FROM payment_type;"; #TODO active
+    $stmt = mysqli_stmt_init($conn);
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    mysqli_stmt_close($stmt);
+
+    return $resultData;
+}
+
+function getDefUserPaymentData($conn)
+{
+
+    $userid = $_SESSION['userid'];
+
+
+    $sql = "SELECT * FROM user_payment_method WHERE is_default_pay_method = 1 AND user_id = ?";
+    $stmt = mysqli_stmt_init($conn);
+
+    mysqli_stmt_prepare($stmt, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $userid);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    mysqli_stmt_close($stmt);
+
+    return mysqli_fetch_assoc($resultData);
+}
+
+function getUserPaymentDataWODef($conn)
+{
+
+    $userid = $_SESSION['userid'];
+
+
+    $sql = "SELECT * FROM user_payment_method WHERE is_default_pay_method = 0 AND user_id = ?";
+    $stmt = mysqli_stmt_init($conn);
+
+    mysqli_stmt_prepare($stmt, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $userid);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    mysqli_stmt_close($stmt);
+
+    return $resultData;
+}

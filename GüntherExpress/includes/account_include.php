@@ -94,6 +94,42 @@ if (isset($_POST['delete_Account'])) {
     }
 }
 
+if (isset($_GET['edit_payment'])) {
+    session_start();
+    $PaymentID = $_GET['edit_payment'];
+
+    setDefaultAddress($conn, $PaymentID);
+    header("location: ../account.php?error=none");
+    exit();
+
+}
+
+if (isset($_GET['delete_payment'])) {
+    session_start();
+    $deletePaymentID = $_GET['delete_payment'];
+
+    unbindAddress($conn, $deletePaymentID);
+    header("location: ../account.php?error=none");
+    exit();
+
+}
+
+
+if (isset($_POST['add_payment_button'])) {
+    $streetAdd = $_POST['addStreet'];
+    $housenoAdd = $_POST['addHausnummer'];
+    $cityAdd = $_POST['addStadt'];
+    $postalCodeAdd = $_POST['postal-code'];
+    $addressExists = getAddressIDByData($conn, $streetAdd, $housenoAdd, $cityAdd, $postalCodeAdd);
+    if ($addressExists['id'] == null) {
+        addAddress($conn, $streetAdd, $housenoAdd, $cityAdd, $postalCodeAdd);
+        exit();
+    } else {
+        bindAddressToUser($conn, $streetAdd, $housenoAdd, $cityAdd, $postalCodeAdd);
+    }
+
+}
+
     
     
 

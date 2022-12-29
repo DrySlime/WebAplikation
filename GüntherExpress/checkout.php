@@ -14,11 +14,15 @@ if (!isset($_SESSION["useruid"])) {
 require_once 'includes/dbh_include.php';
 require_once 'includes/functions_include.php';
 require_once 'includes/account_include.php';
+include_once 'includes/cart_include.php';
 //require_once 'includes/check_out_include_new.php';
 $resultAccount = getAccountData($conn);
 $resultDefAddress = getDefUserAddressData($conn);
+$resultDefPayment = getDefUserPaymentData($conn);
 $resultAddressWODef = getUserAddressDataWODef($conn);
+$resultPaymentWODef = getUserPaymentDataWODef($conn);
 $resultShippingMeth = getShippingMethodData($conn);
+$shoppingCart = getShoppingCartItems($conn, $_SESSION["userid"]);
 $address = null;
 $shippingMethod = null;
 $paymentMethod = null;
@@ -54,7 +58,7 @@ $endCosts = $_SESSION['fullPrice'];
                 <ul class="checkout_data_header">
                     <li id="0" onclick="goToTab(this.id)" class="active">Lieferadresse</li>
                     <li id="1" onclick="goToTab(this.id)">Versand</li>
-                    <li id="2" onclick="goToTab(this.id)">Bezahlmöglichkeit</li>
+                    <li id="2" onclick="goToTab(this.id)">Zahlungsart</li>
                     <li id="3" onclick="goToTab(this.id)">Übersicht</li>
                 </ul>
                 <div class="checkout_data_container">
@@ -92,9 +96,9 @@ $endCosts = $_SESSION['fullPrice'];
                                 ?>
                                 <div class="checkout_grid_container address_container">
                                     <input class="radioButton" type="radio" id="<?php echo $resultDefAddress['id'] ?>" name="address_buttons" value="<?php echo $resultDefAddress['id'] ?>" checked="checked">
-                                    <div class="grid_container">
-                                        <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
-                                        <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?><?php echo $resultDefAddress['street_number']; ?></h4>
+                                    <div id="address_<?php echo $resultDefAddress['id']?>" class="grid_container">
+                                        <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                                        <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?> <?php echo $resultDefAddress['street_number']; ?></h4>
                                         <h4><?php echo ucfirst($resultDefAddress['city']); ?>, <?php echo $resultDefAddress['postal_code']; ?></h4>
                                         <a class="defaultText">Standard Adresse</a>
                                     </div>
@@ -106,9 +110,9 @@ $endCosts = $_SESSION['fullPrice'];
                                     ?>
                                     <div class="checkout_grid_container address_container">
                                         <input class="radioButton" type="radio" id="<?php echo $rows['id'] ?>" name="address_buttons" value="<?php echo $rows['id'] ?>">
-                                        <div class="grid_container">
-                                            <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
-                                            <h4><?php echo ucfirst($rows['address_line1']); ?><?php echo $rows['street_number']; ?></h4>
+                                        <div id="address_<?php echo $rows['id']?>" class="grid_container">
+                                            <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                                            <h4><?php echo ucfirst($rows['address_line1']); ?> <?php echo $rows['street_number']; ?></h4>
                                             <h4><?php echo ucfirst($rows['city']); ?>, <?php echo $rows['postal_code']; ?></h4>
                                         </div>
                                     </div>
@@ -128,7 +132,7 @@ $endCosts = $_SESSION['fullPrice'];
                                 ?>
                                 <div class="checkout_grid_container delivery_container">
                                     <input class="radioButton" type="radio" id="<?php echo $schippingRos['id'] ?>" name="delivery_buttons" value="<?php echo $schippingRos['shipping_price'] ?>">
-                                    <div class="grid_container">
+                                    <div id="ship_<?php echo $schippingRos['id']?>" class="grid_container">
                                         <h2><?php echo $schippingRos['shipping_name'] ?></h2>
                                         <h4>Lieferdauer: 3-5 Tage</h4>
                                         <h4>Lieferkosten: <?php echo $schippingRos['shipping_price'] ?>.00 €</h4>
@@ -141,26 +145,128 @@ $endCosts = $_SESSION['fullPrice'];
                     </section>
                     <section class="checkout_section checkout_payment">
                         <div class="checkout_section_header">
-                            <h3>Bezahlmethode</h3>
-                            <h4>Wähle hier deine bevorzugte Zahlmethode aus.</h4>
+                            <h3>Zahlungsart</h3>
+                            <h4>Wähle hier deine bevorzugte Zahlungsart aus.</h4>
                         </div>
                         <div class="checkout_data_grid_wrapper">
-                            <!-- GROUP STARTS HERE -->
-                            <div class="checkout_grid_container payment_container">
-                                <input class="radioButton" type="radio" id="ID GOES HERE" name="payment_buttons" value="ID GOES HERE">
-                                <div class="grid_container">
-                                    <h2>Max Mustermann</h2>
-                                    <h4>Comdirect</h4>
-                                    <h4>XXXX XXXX XXXX 1213</h4>
-                                    <h4>Gültig bis: 02/25</h4>
+                        <?php
+                            if ($resultPaymentWODef->num_rows < 6) {
+                                ?>
+                                <div class="checkout_grid_container addAddressContainer">
+                                    <div class="grid_container add_address">
+                                        <h2>Neue Zahlungsart</h2>
+                                        <form id="add" action="#" method="post">
+                                            <select name ="paymentMethod" id = "paymentMethod">
+                                                <option value="">Wähle den Zahlungstypen</option>
+                                            <?php 
+                                                $meth = getPaymentMethods($conn);
+                                                while ( $paymentRows= $meth->fetch_assoc()){
+                                                    ?>
+                                                    <option value="<?php echo $paymentRows['value']?>"><?php echo $paymentRows['value']?></option>
+                                                <?php
+                                                }
+                                                ?>
+                                            
+                                            <input type="text" name="addProvider" id="addProvider" placeholder="Dein Provider">
+                                            <input type="date" name="expiry_date" id="expiry_date" placeholder="Ablaufdatum">
+                                        </form>
+                                        <div class="addressitem_addbutton">
+                                            <button id="add_Payment" form="addPayment" type="submit" name="add_Payment_button">
+                                                Hinzufügen
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php
+                            } ?>
+                            <?php
+                            if ($resultDefPayment !== null) {
+                                ?>
+                                <div class="checkout_grid_container payment_container">
+                                <input class="radioButton" type="radio" id="<?php echo $resultDefPayment['id'] ?>" name="payment_buttons" value="<?php echo $resultDefPayment['id'] ?>" checked="checked">
+                                <div id="payment_<?php echo $resultDefPayment['id'] ?>" class="grid_container">
+                                    <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                                    <h4><?php echo $resultDefPayment['provider']?></h4>
+                                    <h4><?php echo $resultDefPayment['account_number']?></h4>
+                                    <h4>Gültig bis: <?php echo $resultDefPayment['expiry_date']?></h4>
                                 </div>
                             </div>
-                            <!-- GROUP ENDS HERE -->
+                                <?php
+                            }
+                            if ($resultPaymentWODef !== null) {
+                                while ($rows = $resultPaymentWODef->fetch_assoc()) {
+                                    ?>
+                                    <div class="checkout_grid_container payment_container">
+                                <input class="radioButton" type="radio" id="<?php echo $resultPaymentWODef['id'] ?>" name="payment_buttons" value="<?php echo $resultPaymentWODef['id'] ?>">
+                                <div id="payment_<?php echo $resultPaymentWODef['id'] ?>" class="grid_container">
+                                <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                                    <h4><?php echo $resultDefPayment['provider']?></h4>
+                                    <h4><?php echo $resultDefPayment['account_number']?></h4>
+                                    <h4>Gültig bis: <?php echo $resultDefPayment['expiry_date']?></h4>
+                                </div>
+                            </div>
+                                    <?php
+                                }
+                            } ?>
                         </div>
                     </section>
                     <section class="checkout_section checkout_overview">
-                        <div class="checkout_data_grid_wrapper">
-
+                        <div class="checkout_section_header">
+                            <h3>Übersicht</h3>
+                            <h4>Deine letzte Kontrolle bevor wie die Süßwaren an dich schicken!</h4>
+                        </div>
+                        <div class="checkout_overview_grid_wrapper">
+                            <div id="address_overview" class="checkout_grid_container exclude">
+                                <div id="final_address" class="grid_container">
+                                    <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                                    <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?> <?php echo $resultDefAddress['street_number']; ?></h4>
+                                    <h4><?php echo ucfirst($resultDefAddress['city']); ?>, <?php echo $resultDefAddress['postal_code']; ?></h4>
+                                </div>
+                            </div>
+                            <div id="shipping_overview" class="checkout_grid_container exclude">
+                                <div id="final_ship" class="grid_container">
+                                    <h2>Bitte auswählen</h2>
+                                    <h4>Lieferdauer: - - -</h4>
+                                    <h4>Lieferkosten: - - -</h4>
+                                </div>
+                            </div>
+                            <div id="payment_overview" class="checkout_grid_container exclude">
+                                <div id="final_payment" class="grid_container">
+                                    <h2>Bitte auswählen</h2>
+                                    <h4></h4>
+                                    <h4></h4>
+                                    <h4></h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="cart_overview" class="final_cart">
+                            <div class="final_cart_products_grid_wrapper">
+                                <?php
+                                while ($row = $shoppingCart->fetch_assoc()) {
+                                    $product = getProductData($conn, $row['product_id']);
+                                    $price = $row['qty'] * $product['price'];
+                                    ?>
+                                    <div class="final_cart_products_grid_container">
+                                        <div class="final_cart_product_wrapper">
+                                            <div class="final_cart_product_data_image">
+                                                <img src="<?php echo $product['product_image'] ?>" alt="">
+                                            </div>
+                                            <div id="mainItemDescription" class="final_cart_product_data_description flexCol">
+                                                <h3><?php echo $product['product_name'] ?></h3>
+                                                <h4><?php echo convertIdToCategoryName($conn, $product['product_category_id']) ?></h4>
+                                            </div>
+                                            <div class="final_cart_product_data_description">
+                                                <h3 id="amount"><?php echo $row['qty'] ?>x</h3>
+                                            </div>
+                                            <div class="final_cart_product_data_description smallerDiv">
+                                                <h3><?php echo $price ?>€</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
+                            </div>
                         </div>
                     </section>
                 </div>

@@ -1,0 +1,31 @@
+.cart_header_container a {
+    font-weight: 500;
+    width: auto;
+    text-align: center;
+    font-size: 1.5vmin;
+    color: #FFFFFF;
+    text-decoration: none;
+    border-radius: 3vmin;
+    background-color: #101010;
+    padding: 1.7vmin;
+    transition: 0.3s;
+    border-style: none;
+    outline-style: none;
+}
+
+.cart_header_container h4 {
+    padding-bottom: 2vmin;
+    width: 75%;
+}
+
+.cart_header_container a:hover {
+    color: #fc466b;
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.cart_header_container {
+    z-index: 2000;
+    margin-left: 28vmin;
+    padding-left: 2vmin;
+}
