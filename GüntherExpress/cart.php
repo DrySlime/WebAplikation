@@ -62,7 +62,6 @@ $_SESSION['fullPrice'] = 0;
                         $price = $row['qty'] * $product['price'];
                         $_SESSION['fullPrice'] = $_SESSION['fullPrice'] + $price;
                         ?>
-                        <!-- NEW PRODUCT STARTING HERE -->
                         <div class="cart_products_grid_container">
                             <div class="cart_product_wrapper">
                                 <div class="cart_product_data_image">
@@ -88,7 +87,7 @@ $_SESSION['fullPrice'] = 0;
                                     <a href="cart.php?delete=<?php echo $row['product_id'] ?> "><span class="material-symbols-outlined">remove_shopping_cart</span></a>
                                 </div>
                             </div>
-                        </div><!-- PRODUCT ENDS HERE -->
+                        </div>
                         <?php
                     }
                     ?>

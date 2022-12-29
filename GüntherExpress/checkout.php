@@ -159,8 +159,19 @@ $endCosts = $_SESSION['fullPrice'];
                         </div>
                     </section>
                     <section class="checkout_section checkout_overview">
-                        <div class="checkout_data_grid_wrapper">
+                        <div class="checkout_overview_grid_wrapper">
+                            <div id="address_overview" class="checkout_grid_container">
 
+                            </div>
+                            <div id="shipping_overview" class="checkout_grid_container">
+
+                            </div>
+                            <div id="payment_overview" class="checkout_grid_container">
+
+                            </div>
+                            <div id="cart_overview" class="checkout_grid_container">
+
+                            </div>
                         </div>
                     </section>
                 </div>
