@@ -147,7 +147,7 @@ include_once 'header.php';
                     <button class="btn" type="submit" name="change_address_btn" >Adresse ändern</button>
                 </form>
             </div>
-            <div #TEST class="add_address">
+            <div #TEST class="add_data">
                 <div class="headline">Adresse hinzufügen</div>
 
                 <form action="includes/profile_include.php" method="post">

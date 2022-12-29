@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     method: "POST",
                     data: {address: id},
                     success: function () {
-                        $('#final_address').html($('#address_'+id).html());
+                        $('#final_address').html($('#address_'+id).html().remove($('a')));
                     }
                 });
             } else if(radioButton.getAttribute("name") === "payment_buttons") {
@@ -157,7 +157,7 @@ $(document).on('click', '.checkout_grid_container', function () {
                 method: "POST",
                 data: {address: id},
                 success: function () {
-                    $('#final_address').html($('#address_'+id).html());
+                    $('#final_address').html($('#address_'+id).html().remove($('a')));
                 }
             });
         } else if(radioButton.attr("name") === "payment_buttons") {

@@ -135,7 +135,7 @@ button[disabled] {
     word-wrap: break-word;
 }
 
-.add_address {
+.add_data {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -143,7 +143,7 @@ button[disabled] {
     justify-content: center;
 }
 
-#addAddress {
+.add_data form {
     width: 75%;
     display: flex;
     flex-direction: column;
@@ -153,16 +153,18 @@ button[disabled] {
     height: auto;
 }
 
-.add_address_oneline {
+.add_data_oneline {
     display: flex;
     flex-direction: row;
 }
 
-.add_address h2 {
+.add_data h2 {
     padding-bottom: .5vmin;
+    margin-left: -2vmin;
 }
 
-.add_address form input {
+.add_data form input,
+.add_data form select {
     margin-bottom: .5vmin;
     width: 100%;
     font-size: 1.5vmin;
@@ -177,6 +179,19 @@ button[disabled] {
     border-radius: 1vmin;
 }
 
+.add_data form select {
+    appearance: menulist-button;
+}
+
+.add_data form select:hover {
+    appearance: menulist-button;
+    cursor: pointer;
+}
+
+input[type=month]:hover {
+    cursor: pointer;
+}
+
 .grid_container .defaultText {
     position: absolute;
     top: 5.5vmin;
@@ -184,12 +199,16 @@ button[disabled] {
     font-weight: 400;
 }
 
-.add_address_oneline input:last-child {
+.add_data_oneline input:last-child {
     width: 30%;
-    margin-left: 1vmin;
+    margin-left: .5vmin;
 }
 
-.addressitem_addbutton {
+.payments input:last-child {
+    width: fit-content;
+}
+
+.dataitem_addbutton {
     display: flex;
     padding-top: 1vmin;
     width: 100%;
@@ -198,7 +217,7 @@ button[disabled] {
     align-items: flex-end;
 }
 
-.addressitem_addbutton button {
+.dataitem_addbutton button {
     font-weight: 500;
     width: auto;
     text-align: center;
@@ -245,7 +264,8 @@ button[disabled] {
     outline-style: none;
 }
 
-.checkout_data_buttons button:hover {
+.checkout_data_buttons button:hover,
+.dataitem_addbutton button:hover{
     color: #fc466b;
     transform: scale(1.05);
     cursor: pointer;
