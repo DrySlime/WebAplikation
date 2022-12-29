@@ -98,7 +98,27 @@ document.addEventListener("DOMContentLoaded", function () {
     for (let i = 0; i < radiobuttons.length; i++) {
         if (radiobuttons[i].getAttribute("checked") === "checked") {
             radiobuttons[i].parentElement.style.borderColor = "#fc466b";
-            return
+            let radioButton = radiobuttons[i];
+            let id = radioButton.getAttribute('id');
+            if(radioButton.getAttribute("name") === "address_buttons") {
+                $.ajax({
+                    url: "checkout.php",
+                    method: "POST",
+                    data: {address: id},
+                    success: function () {
+                        $('#final_address').html($('#address_'+id).html());
+                    }
+                });
+            } else if(radioButton.getAttribute("name") === "payment_buttons") {
+                $.ajax({
+                    url: "checkout.php",
+                    method: "POST",
+                    data: {payment: id},
+                    success: function () {
+                        $('#final_payment').html($('#payment_'+id).html());
+                    }
+                });
+            }
         }
     }
 });

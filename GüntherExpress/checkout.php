@@ -183,8 +183,8 @@ $endCosts = $_SESSION['fullPrice'];
                             if ($resultDefPayment !== null) {
                                 ?>
                                 <div class="checkout_grid_container payment_container">
-                                <input class="radioButton" type="radio" id="<?php echo $resultDefPayment['id'] ?>" name="payment_buttons" value="<?php echo $resultDefPayment['id'] ?>">
-                                <div id="<?php echo $resultDefPayment['id'] ?>" class="grid_container">
+                                <input class="radioButton" type="radio" id="<?php echo $resultDefPayment['id'] ?>" name="payment_buttons" value="<?php echo $resultDefPayment['id'] ?>" checked="checked">
+                                <div id="payment_<?php echo $resultDefPayment['id'] ?>" class="grid_container">
                                     <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
                                     <h4><?php echo $resultDefPayment['provider']?></h4>
                                     <h4><?php echo $resultDefPayment['account_number']?></h4>
@@ -198,7 +198,7 @@ $endCosts = $_SESSION['fullPrice'];
                                     ?>
                                     <div class="checkout_grid_container payment_container">
                                 <input class="radioButton" type="radio" id="<?php echo $resultPaymentWODef['id'] ?>" name="payment_buttons" value="<?php echo $resultPaymentWODef['id'] ?>">
-                                <div id="<?php echo $resultPaymentWODef['id'] ?>" class="grid_container">
+                                <div id="payment_<?php echo $resultPaymentWODef['id'] ?>" class="grid_container">
                                 <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
                                     <h4><?php echo $resultDefPayment['provider']?></h4>
                                     <h4><?php echo $resultDefPayment['account_number']?></h4>
