@@ -72,7 +72,7 @@ for (let i = 0; i < radiobuttons.length; i++) {
 }
 
 function changeBorderContainer() {
-    if (this.classList.contains("addAddressContainer")) {
+    if (this.classList.contains("addAddressContainer") || this.classList.contains("exclude")) {
         return;
     }
     let radButton = $(this).find('input[type=radio]');
@@ -130,13 +130,13 @@ $(document).on('click', '.checkout_grid_container', function () {
                     });
                 }
             });
-        } else if(radioButton.attr("name") === "payment_buttons") {
+        } else if(radioButton.attr("name") === "address_buttons") {
             $.ajax({
                 url: "checkout.php",
                 method: "POST",
                 data: {address: id}
             });
-        } else {
+        } else if(radioButton.attr("name") === "payment_buttons") {
             $.ajax({
                 url: "checkout.php",
                 method: "POST",

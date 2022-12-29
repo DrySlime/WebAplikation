@@ -14,11 +14,13 @@ if (!isset($_SESSION["useruid"])) {
 require_once 'includes/dbh_include.php';
 require_once 'includes/functions_include.php';
 require_once 'includes/account_include.php';
+include_once 'includes/cart_include.php';
 //require_once 'includes/check_out_include_new.php';
 $resultAccount = getAccountData($conn);
 $resultDefAddress = getDefUserAddressData($conn);
 $resultAddressWODef = getUserAddressDataWODef($conn);
 $resultShippingMeth = getShippingMethodData($conn);
+$shoppingCart = getShoppingCartItems($conn, $_SESSION["userid"]);
 $address = null;
 $shippingMethod = null;
 $paymentMethod = null;
@@ -93,8 +95,8 @@ $endCosts = $_SESSION['fullPrice'];
                                 <div class="checkout_grid_container address_container">
                                     <input class="radioButton" type="radio" id="<?php echo $resultDefAddress['id'] ?>" name="address_buttons" value="<?php echo $resultDefAddress['id'] ?>" checked="checked">
                                     <div class="grid_container">
-                                        <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
-                                        <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?><?php echo $resultDefAddress['street_number']; ?></h4>
+                                        <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                                        <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?> <?php echo $resultDefAddress['street_number']; ?></h4>
                                         <h4><?php echo ucfirst($resultDefAddress['city']); ?>, <?php echo $resultDefAddress['postal_code']; ?></h4>
                                         <a class="defaultText">Standard Adresse</a>
                                     </div>
@@ -107,8 +109,8 @@ $endCosts = $_SESSION['fullPrice'];
                                     <div class="checkout_grid_container address_container">
                                         <input class="radioButton" type="radio" id="<?php echo $rows['id'] ?>" name="address_buttons" value="<?php echo $rows['id'] ?>">
                                         <div class="grid_container">
-                                            <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
-                                            <h4><?php echo ucfirst($rows['address_line1']); ?><?php echo $rows['street_number']; ?></h4>
+                                            <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                                            <h4><?php echo ucfirst($rows['address_line1']); ?> <?php echo $rows['street_number']; ?></h4>
                                             <h4><?php echo ucfirst($rows['city']); ?>, <?php echo $rows['postal_code']; ?></h4>
                                         </div>
                                     </div>
@@ -159,18 +161,61 @@ $endCosts = $_SESSION['fullPrice'];
                         </div>
                     </section>
                     <section class="checkout_section checkout_overview">
+                        <div class="checkout_section_header">
+                            <h3>Übersicht</h3>
+                            <h4>Deine letzte Kontrolle bevor wie die Süßwaren an dich schicken!</h4>
+                        </div>
                         <div class="checkout_overview_grid_wrapper">
-                            <div id="address_overview" class="checkout_grid_container">
-
+                            <div id="address_overview" class="checkout_grid_container exclude">
+                                <div class="grid_container">
+                                    <h2>Max Mustermann</h2>
+                                    <h4>SKIDIDIDIDIPPPAAAAAPAPA 2</h4>
+                                    <h4>42069 LazyTown</h4>
+                                </div>
                             </div>
-                            <div id="shipping_overview" class="checkout_grid_container">
-
+                            <div id="shipping_overview" class="checkout_grid_container exclude">
+                                <div class="grid_container">
+                                    <h2>DHL Expressssss</h2>
+                                    <h4>Lieferdauer: 3-5 Tage</h4>
+                                    <h4>Lieferkosten: EÜRO.00 €</h4>
+                                </div>
                             </div>
-                            <div id="payment_overview" class="checkout_grid_container">
-
+                            <div id="payment_overview" class="checkout_grid_container exclude">
+                                <div class="grid_container">
+                                    <h2>Max Mustermann</h2>
+                                    <h4>Comdirect</h4>
+                                    <h4>XXXX XXXX XXXX 1213</h4>
+                                    <h4>Gültig bis: 02/25</h4>
+                                </div>
                             </div>
-                            <div id="cart_overview" class="checkout_grid_container">
-
+                        </div>
+                        <div id="cart_overview" class="final_cart">
+                            <div class="final_cart_products_grid_wrapper">
+                                <?php
+                                while ($row = $shoppingCart->fetch_assoc()) {
+                                    $product = getProductData($conn, $row['product_id']);
+                                    $price = $row['qty'] * $product['price'];
+                                    ?>
+                                    <div class="final_cart_products_grid_container">
+                                        <div class="final_cart_product_wrapper">
+                                            <div class="final_cart_product_data_image">
+                                                <img src="<?php echo $product['product_image'] ?>" alt="">
+                                            </div>
+                                            <div id="mainItemDescription" class="final_cart_product_data_description flexCol">
+                                                <h3><?php echo $product['product_name'] ?></h3>
+                                                <h4><?php echo convertIdToCategoryName($conn, $product['product_category_id']) ?></h4>
+                                            </div>
+                                            <div class="final_cart_product_data_description">
+                                                <h3 id="amount"><?php echo $row['qty'] ?>x</h3>
+                                            </div>
+                                            <div class="final_cart_product_data_description smallerDiv">
+                                                <h3><?php echo $price ?>€</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
                             </div>
                         </div>
                     </section>
