@@ -59,6 +59,10 @@ $endCosts = $_SESSION['fullPrice'];
                 </ul>
                 <div class="checkout_data_container">
                     <section class="checkout_section checkout_address active">
+                        <div class="checkout_section_header">
+                            <h3>Lieferadresse</h3>
+                            <h4>Wähle hier deine Lieferadresse aus, oder füge noch schnell eine hinzu.</h4>
+                        </div>
                         <div class="checkout_data_grid_wrapper">
                             <?php
                             if ($resultAddressWODef->num_rows < 6) {
@@ -114,13 +118,17 @@ $endCosts = $_SESSION['fullPrice'];
                         </div>
                     </section>
                     <section class="checkout_section checkout_delivery">
+                        <div class="checkout_section_header">
+                            <h3>Versandmethode</h3>
+                            <h4>Wähle hier einen Versand aus.</h4>
+                        </div>
                         <div class="checkout_data_grid_wrapper">
                             <?php
                             while ($schippingRos = $resultShippingMeth->fetch_assoc()) {
                                 ?>
                                 <div class="checkout_grid_container delivery_container">
                                     <input class="radioButton" type="radio" id="<?php echo $schippingRos['id'] ?>" name="delivery_buttons" value="<?php echo $schippingRos['shipping_price'] ?>">
-                                    <div class="addressitem_container">
+                                    <div class="grid_container">
                                         <h2><?php echo $schippingRos['shipping_name'] ?></h2>
                                         <h4>Lieferdauer: 3-5 Tage</h4>
                                         <h4>Lieferkosten: <?php echo $schippingRos['shipping_price'] ?>.00 €</h4>
@@ -132,8 +140,22 @@ $endCosts = $_SESSION['fullPrice'];
                         </div>
                     </section>
                     <section class="checkout_section checkout_payment">
+                        <div class="checkout_section_header">
+                            <h3>Bezahlmethode</h3>
+                            <h4>Wähle hier deine bevorzugte Zahlmethode aus.</h4>
+                        </div>
                         <div class="checkout_data_grid_wrapper">
-
+                            <!-- GROUP STARTS HERE -->
+                            <div class="checkout_grid_container payment_container">
+                                <input class="radioButton" type="radio" id="ID GOES HERE" name="payment_buttons" value="ID GOES HERE">
+                                <div class="grid_container">
+                                    <h2>Max Mustermann</h2>
+                                    <h4>Comdirect</h4>
+                                    <h4>XXXX XXXX XXXX 1213</h4>
+                                    <h4>Gültig bis: 02/25</h4>
+                                </div>
+                            </div>
+                            <!-- GROUP ENDS HERE -->
                         </div>
                     </section>
                     <section class="checkout_section checkout_overview">
@@ -170,7 +192,7 @@ $endCosts = $_SESSION['fullPrice'];
                     <h3 id="finalprice"><?php echo $endCosts ?> €</h3>
                 </div>
                 <div class="cart_checkout_buttons">
-                    <button type="submit" disabled name="checkout_button">Kostenpflichtig Bestellen</button>
+                    <button id="checkoutButton" type="submit" disabled name="checkout_button">Kostenpflichtig Bestellen</button>
                 </div>
             </div>
         </div>

@@ -170,7 +170,7 @@ if (!isset($_SESSION["useruid"])) {
                                 <h4>Comdirect</h4>
                             </div>
                             <div class="card_middle card_info">
-                                <h4>5525 5614 6731 2095</h4>
+                                <h4>XXXX XXXX XXXX 2095</h4>
                             </div>
                             <div class="card_bottom card_info">
                                 <h4>Stuart Eichler</h4>

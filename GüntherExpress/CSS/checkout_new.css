@@ -58,6 +58,7 @@ button[disabled] {
 
 .checkout_section.active {
     display: flex;
+    flex-direction: column;
 }
 
 .checkout_data_header {
@@ -95,7 +96,6 @@ button[disabled] {
 .checkout_section {
     width: 100%;
     height: 100%;
-    padding-top: 2vmin;
 }
 
 .checkout_data_grid_wrapper {
@@ -259,4 +259,20 @@ button[disabled] {
     color: #FFFFFF !important;
     transform: scale(1.00) !important;
     cursor: not-allowed !important;
+}
+
+.checkout_section_header {
+    width: 100%;
+    height: auto;
+}
+
+.checkout_section_header h3 {
+    font-size: 2vmin;
+    font-weight: 700;
+}
+
+.checkout_section_header h4 {
+    font-size: 1.5vmin;
+    font-weight: 600;
+    padding-bottom: 2vmin;
 }

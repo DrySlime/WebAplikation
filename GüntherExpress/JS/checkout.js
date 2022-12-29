@@ -18,7 +18,7 @@ const toggleSections = () => {
 }
 
 const togglePrev = () => {
-    if (current == 0) {
+    if (parseInt(current) === 0) {
         prevButton.classList.add('disable');
     } else {
         prevButton.classList.remove('disable');
@@ -26,7 +26,7 @@ const togglePrev = () => {
 }
 
 const toggleNext = () => {
-    if (current == headers.length - 1) {
+    if (parseInt(current) === headers.length - 1) {
         nextButton.classList.add('disable');
     } else {
         nextButton.classList.remove('disable');
@@ -34,7 +34,7 @@ const toggleNext = () => {
 }
 
 const goNext = () => {
-    if (current < headers.length - 1) {
+    if (parseInt(current) < headers.length - 1) {
         current++
     }
     toggleTabs();
@@ -54,7 +54,7 @@ const goBack = () => {
 }
 
 const goToTab = (clicked) => {
-    current = clicked;
+    current = parseInt(clicked);
     toggleTabs();
     toggleSections();
     toggleNext();
@@ -130,12 +130,21 @@ $(document).on('click', '.checkout_grid_container', function () {
                     });
                 }
             });
-        } else {
+        } else if(radioButton.attr("name") === "payment_buttons") {
             $.ajax({
                 url: "checkout.php",
                 method: "POST",
                 data: {address: id}
             });
+        } else {
+            $.ajax({
+                url: "checkout.php",
+                method: "POST",
+                data: {payment: id}
+            });
+        }
+        if($('input[name="payment_buttons"]').is(':checked') && $('input[name="address_buttons"]').is(':checked') && $('input[name="delivery_buttons"]').is(':checked')) {
+            $('#checkoutButton').removeAttr("disabled");
         }
     }
 })
