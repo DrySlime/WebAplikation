@@ -1387,7 +1387,7 @@ function setDefaultPayment($conn, $paymentId)
     exit();
 }
 
-function unbindAddress($conn, $paymentid)
+function unbindPayment($conn, $paymentid)
 {
     $userid = $_SESSION['userid'];
 
