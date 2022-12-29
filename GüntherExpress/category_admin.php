@@ -9,7 +9,9 @@ global $conn;
 <?php
 if (isset($_GET["error"])){
     if($_GET["error"]=="IllegalDelete"){
-        echo "<br><h1 style='color: red'>You are not allowed to delete this category</h1><br>";
+        ?>
+        <br><h1 style='color: red'>You are not allowed to delete this category</h1><br>
+        <?php 
     }
 }
 
@@ -29,9 +31,9 @@ if (isset($_GET["error"])){
             $cateArr=getAllCategories($conn);
             var_dump($cateArr);
             for ($i=0;$i<count($cateArr);$i++){
-                echo "
+            ?>
                     <option value=".$cateArr[$i]["id"].">".$cateArr[$i]["category_name"]."</option>
-                ";
+            <?php
             }
 
             ?>
@@ -46,7 +48,7 @@ if (isset($_GET["error"])){
 
 
 if($cateArr!=null){
-    echo"
+    ?>
         <div class='all'>
             <div class='table'>
                 <table>
@@ -59,7 +61,7 @@ if($cateArr!=null){
                             <th>DELETE</th>
                         </tr>
                     
-                        ";
+                <?php
                 for($i=0;$i<count($cateArr);$i++) {
 
                     echo "
@@ -107,5 +109,5 @@ if (isset($_GET["change"])){
     </div>
     ';
 }
-
+include_once "footer.php";
 ?>

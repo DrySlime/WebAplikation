@@ -18,7 +18,9 @@ include_once 'includes/cart_include.php';
 //require_once 'includes/check_out_include_new.php';
 $resultAccount = getAccountData($conn);
 $resultDefAddress = getDefUserAddressData($conn);
+$resultDefPayment = getDefUserPaymentData($conn);
 $resultAddressWODef = getUserAddressDataWODef($conn);
+$resultPaymentWODef = getUserPaymentDataWODef($conn);
 $resultShippingMeth = getShippingMethodData($conn);
 $shoppingCart = getShoppingCartItems($conn, $_SESSION["userid"]);
 $address = null;
@@ -147,17 +149,65 @@ $endCosts = $_SESSION['fullPrice'];
                             <h4>Wähle hier deine bevorzugte Zahlungsart aus.</h4>
                         </div>
                         <div class="checkout_data_grid_wrapper">
-                            <!-- GROUP STARTS HERE -->
-                            <div class="checkout_grid_container payment_container">
-                                <input class="radioButton" type="radio" id="ID GOES HERE" name="payment_buttons" value="ID GOES HERE">
-                                <div id="payment_ID GOES HERE" class="grid_container">
-                                    <h2>Max Mustermann</h2>
-                                    <h4>Comdirect</h4>
-                                    <h4>XXXX XXXX XXXX 1213</h4>
-                                    <h4>Gültig bis: 02/25</h4>
+                        <?php
+                            if ($resultPaymentWODef->num_rows < 6) {
+                                ?>
+                                <div class="checkout_grid_container addAddressContainer">
+                                    <div class="grid_container add_address">
+                                        <h2>Neue Zahlungsart</h2>
+                                        <form id="add" action="#" method="post">
+                                            <select name ="paymentMethod" id = "paymentMethod">
+                                                <option value="">Wähle den Zahlungstypen</option>
+                                            <?php 
+                                                $meth = getPaymentMethods($conn);
+                                                while ( $paymentRows= $meth->fetch_assoc()){
+                                                    ?>
+                                                    <option value="<?php echo $paymentRows['value']?>"><?php echo $paymentRows['value']?></option>
+                                                <?php
+                                                }
+                                                ?>
+                                            
+                                            <input type="text" name="addProvider" id="addProvider" placeholder="Dein Provider">
+                                            <input type="date" name="expiry_date" id="expiry_date" placeholder="Ablaufdatum">
+                                        </form>
+                                        <div class="addressitem_addbutton">
+                                            <button id="add_Payment" form="addPayment" type="submit" name="add_Payment_button">
+                                                Hinzufügen
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php
+                            } ?>
+                            <?php
+                            if ($resultDefPayment !== null) {
+                                ?>
+                                <div class="checkout_grid_container payment_container">
+                                <input class="radioButton" type="radio" id="<?php echo $resultDefPayment['id'] ?>" name="payment_buttons" value="<?php echo $resultDefPayment['id'] ?>">
+                                <div id="<?php echo $resultDefPayment['id'] ?>" class="grid_container">
+                                    <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                                    <h4><?php echo $resultDefPayment['provider']?></h4>
+                                    <h4><?php echo $resultDefPayment['account_number']?></h4>
+                                    <h4>Gültig bis: <?php echo $resultDefPayment['expiry_date']?></h4>
                                 </div>
                             </div>
-                            <!-- GROUP ENDS HERE -->
+                                <?php
+                            }
+                            if ($resultPaymentWODef !== null) {
+                                while ($rows = $resultPaymentWODef->fetch_assoc()) {
+                                    ?>
+                                    <div class="checkout_grid_container payment_container">
+                                <input class="radioButton" type="radio" id="<?php echo $resultPaymentWODef['id'] ?>" name="payment_buttons" value="<?php echo $resultPaymentWODef['id'] ?>">
+                                <div id="<?php echo $resultPaymentWODef['id'] ?>" class="grid_container">
+                                <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                                    <h4><?php echo $resultDefPayment['provider']?></h4>
+                                    <h4><?php echo $resultDefPayment['account_number']?></h4>
+                                    <h4>Gültig bis: <?php echo $resultDefPayment['expiry_date']?></h4>
+                                </div>
+                            </div>
+                                    <?php
+                                }
+                            } ?>
                         </div>
                     </section>
                     <section class="checkout_section checkout_overview">

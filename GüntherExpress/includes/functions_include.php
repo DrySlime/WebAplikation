@@ -1426,11 +1426,49 @@ function getPaymentIDByData($conn, $user_id,$payment_type_id, $provider, $accoun
 
 function getPaymentMethods($conn)
 {
-    $sql = "SELECT * FROM user_payment_method WHERE;"; #TODO active
+    $sql = "SELECT * FROM payment_type;"; #TODO active
+    $stmt = mysqli_stmt_init($conn);
+
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    mysqli_stmt_close($stmt);
+
+    return $resultData;
+}
+
+function getDefUserPaymentData($conn)
+{
+
+    $userid = $_SESSION['userid'];
+
+
+    $sql = "SELECT * FROM user_payment_method WHERE is_default_pay_method = 1 AND user_id = ?";
     $stmt = mysqli_stmt_init($conn);
 
     mysqli_stmt_prepare($stmt, $sql);
-    mysqli_stmt_bind_param($stmt, "sssss");
+    mysqli_stmt_bind_param($stmt, "s", $userid);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    mysqli_stmt_close($stmt);
+
+    return mysqli_fetch_assoc($resultData);
+}
+
+function getUserPaymentDataWODef($conn)
+{
+
+    $userid = $_SESSION['userid'];
+
+
+    $sql = "SELECT * FROM user_payment_method WHERE is_default_pay_method = 0 AND user_id = ?";
+    $stmt = mysqli_stmt_init($conn);
+
+    mysqli_stmt_prepare($stmt, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $userid);
     mysqli_stmt_execute($stmt);
 
     $resultData = mysqli_stmt_get_result($stmt);
