@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap');
+
+.cart_added_container {
+    display: flex;
+    border-radius: 5vmin;
+    width: 80%;
+    height: 100%;
+    position: relative;
+    top: -10vmin;
+    background: #FFFFFF;
+    box-shadow: 0 0 10px #888888;
+    padding: 3vmin;
+    margin-bottom: 10vmin;
+}

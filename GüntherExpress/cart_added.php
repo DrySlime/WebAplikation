@@ -13,7 +13,7 @@ if (!isset($_SESSION["useruid"])) {
 
 <head>
     <link rel="stylesheet" href="CSS/cart.css">
-    <link rel="stylesheet" href="CSS/checkout_complete.css">
+    <link rel="stylesheet" href="CSS/cart_added.css">
     <meta charset="UTF-8" http-equiv="X-UA-Compatible" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
@@ -22,14 +22,17 @@ if (!isset($_SESSION["useruid"])) {
 </head>
 
 <body>
-<div id="finalPurchase" class="cart_header_wrapper">
+<div class="cart_header_wrapper">
     <div class="cart_header_container">
-        <h1>Vielen Dank!</h1>
-        <h4>Deine Bestellung wird vorbereitet und ist im Handumdrehen bei dir! Frohes nashen!</h4>
-        <a href="index.php">Zurück zum Confectioner</a>
+        <h1>Zum Einkaufswagen hinzugefügt!</h1>
+        <h4>Du hast folgenden Artikel hinzugefügt:</h4>
     </div>
     <div class="cart_header_image">
         <img src="img/cookies.png" alt="">
+    </div>
+</div>
+<div class="cart_wrapper">
+    <div class="cart_added_container">
     </div>
 </div>
 </body>

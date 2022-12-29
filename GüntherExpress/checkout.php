@@ -220,21 +220,21 @@ $endCosts = $_SESSION['fullPrice'];
                         <div class="checkout_overview_grid_wrapper">
                             <div id="address_overview" class="checkout_grid_container exclude">
                                 <div id="final_address" class="grid_container">
-                                    <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
-                                    <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?> <?php echo $resultDefAddress['street_number']; ?></h4>
-                                    <h4><?php echo ucfirst($resultDefAddress['city']); ?>, <?php echo $resultDefAddress['postal_code']; ?></h4>
+                                    <h2>Adresse auswählen</h2>
+                                    <h4></h4>
+                                    <h4></h4>
                                 </div>
                             </div>
                             <div id="shipping_overview" class="checkout_grid_container exclude">
                                 <div id="final_ship" class="grid_container">
-                                    <h2>Bitte auswählen</h2>
-                                    <h4>Lieferdauer: - - -</h4>
-                                    <h4>Lieferkosten: - - -</h4>
+                                    <h2>Versand auswählen</h2>
+                                    <h4></h4>
+                                    <h4></h4>
                                 </div>
                             </div>
                             <div id="payment_overview" class="checkout_grid_container exclude">
                                 <div id="final_payment" class="grid_container">
-                                    <h2>Bitte auswählen</h2>
+                                    <h2>Zahlungsart auswählen</h2>
                                     <h4></h4>
                                     <h4></h4>
                                     <h4></h4>

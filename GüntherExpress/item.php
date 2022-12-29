@@ -13,15 +13,13 @@ $product = getAllFromProductID($conn, $id);
 $categoryName = convertIdToCategoryName($conn, $product[0]["product_category_id"]);
 $moreProducts = getAllFromCategory($conn, $categoryName, 10);
 $stars = getAvrgRating($conn, $product[0]["id"]);
-
 ?>
 
 <head>
     <link rel="stylesheet" href="CSS/searchbar_header.css">
     <link rel="stylesheet" href="CSS/item.css">
     <link rel="stylesheet" href="CSS/swiper.css">
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <meta charset="UTF-8" http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -61,7 +59,6 @@ $stars = getAvrgRating($conn, $product[0]["id"]);
                 </div>
                 <div class="item_data_rating">
                     <h4>Bewertungen</h4>
-
                     <div class="item_rating_stars">
                         <?php
                         for ($i = 0; $i < 5; $i++) {
@@ -84,23 +81,20 @@ $stars = getAvrgRating($conn, $product[0]["id"]);
                 </div>
                 <div class="item_data_settings">
                     <div class="item_amount_settings">
-                        <button class="buttonAmount" id="decreaseAmount" onclick="removeFromAmount()"><span
-                                    class="material-icons md48">remove_circle</span></button>
+                        <button class="buttonAmount" id="decreaseAmount" onclick="removeFromAmount()"><span class="material-icons md48">remove_circle</span>
+                        </button>
                         <h4 id="amount">1</h4>
-                        <button class="buttonAmount" id="increaseAmount" onclick="addToAmount()"><span
-                                    class="material-icons md48">add_circle</span></button>
+                        <button class="buttonAmount" id="increaseAmount" onclick="addToAmount()"><span class="material-icons md48">add_circle</span>
+                        </button>
                     </div>
-
                     <button class="item_add_settings" id="addToCart" onclick="addToCart()">
                         <h4>Hinzufügen</h4>
                         <i class="material-symbols-outlined" style="pointer-events: none;">add_shopping_cart</i>
                     </button>
-
                     <script>
-
                         function addToCart() {
                             var amount = getSelectValue();
-                            window.location = "shopping_cart_insert.php?pID=" + "<?php echo $product[0]['id'] ?>" + "&quantaty=" + amount;
+                            window.location = "shopping_cart_insert.php?pID=" + "<?php echo $product[0]['id'] ?>" + "&quantity=" + amount;
                         }
 
                         function getSelectValue() {
