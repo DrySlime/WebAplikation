@@ -24,6 +24,7 @@ $stars = getAvrgRating($conn, $product[0]["id"]);
     <meta charset="UTF-8" http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <title></title>
 </head>
 
@@ -81,10 +82,12 @@ $stars = getAvrgRating($conn, $product[0]["id"]);
                 </div>
                 <div class="item_data_settings">
                     <div class="item_amount_settings">
-                        <button class="buttonAmount" id="decreaseAmount" onclick="removeFromAmount()"><span class="material-icons md48">remove_circle</span>
+                        <button class="buttonAmount" id="decreaseAmount" onclick="removeFromAmount()">
+                            <span class="material-icons md48">remove_circle</span>
                         </button>
                         <h4 id="amount">1</h4>
-                        <button class="buttonAmount" id="increaseAmount" onclick="addToAmount()"><span class="material-icons md48">add_circle</span>
+                        <button class="buttonAmount" id="increaseAmount" onclick="addToAmount()">
+                            <span class="material-icons md48">add_circle</span>
                         </button>
                     </div>
                     <button class="item_add_settings" id="addToCart" onclick="addToCart()">
@@ -94,7 +97,7 @@ $stars = getAvrgRating($conn, $product[0]["id"]);
                     <script>
                         function addToCart() {
                             var amount = getSelectValue();
-                            window.location = "shopping_cart_insert.php?pID=" + "<?php echo $product[0]['id'] ?>" + "&quantity=" + amount;
+                            window.location = "cart_added.php?pID=" + "<?php echo $product[0]['id'] ?>" + "&quantity=" + amount;
                         }
 
                         function getSelectValue() {
@@ -131,7 +134,7 @@ $stars = getAvrgRating($conn, $product[0]["id"]);
                 echo "
                     <div class='swiper-slide'>
                         <div class='image_wrapper'>
-                            <a href='item.php?id=" . $moreProducts[$i]["id"] . "'><img src=" . $moreProducts[$i]["product_image"] . " alt=''></a>
+                            <a href='item.js?id=" . $moreProducts[$i]["id"] . "'><img src=" . $moreProducts[$i]["product_image"] . " alt=''></a>
                         </div>
                     </div>
                  ";

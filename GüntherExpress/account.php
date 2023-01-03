@@ -27,6 +27,8 @@ if (!isset($_SESSION["useruid"])) {
     $resultAddressWODef = getUserAddressDataWODef($conn);
     $resultOrderIDs = getPersonalOrderIDsDescending($conn);
     $reOrderIDs = getPersonalOrderIDsDescending($conn);
+    $resultDefPayment = getDefUserPaymentData($conn);
+    $resultPaymentWODef = getUserPaymentDataWODef($conn);
     ?>
 </head>
 
@@ -161,7 +163,7 @@ if (!isset($_SESSION["useruid"])) {
                 </div>
                 <div class="grid_container flex_display">
                     <div class="grid_header underline_grid">
-                        <h1>Bezahlmethode</h1>
+                        <h1>Zahlungsarten</h1>
                     </div>
                     <div class="standard_payment_wrapper">
                         <div class="payment_card">
@@ -226,7 +228,7 @@ if (!isset($_SESSION["useruid"])) {
                     ?>
                     <div class="modal_address_grid_container">
                         <div class="addressitem_container add_address">
-                            <h2>Neue Adresse</h2>
+                            <h2>Hinzufügen</h2>
                             <form id="addAddress" action="#" method="post">
                                 <div class="add_address_oneline">
                                     <input type="text" name="addStreet" id="addStreet" placeholder="Straße">
@@ -361,6 +363,92 @@ if (!isset($_SESSION["useruid"])) {
             </div>
             <div class="modal_buttons">
                 <button id="close_orders_modal">Schließen</button>
+            </div>
+        </div>
+    </div>
+    <div class="account_modal" id="payment-modal">
+        <div class="modal_container modal_container_address">
+            <div class="modal_text" id="address_text_shadow">
+                <div class="modal_header">
+                    <span class="material-symbols-outlined">credit_card</span>
+                    <h3>Deine Zahlungsarten</h3>
+                </div>
+                <p>Hier kannst du deine gespeicherten Zahlungsarten einsehen, bearbeiten, oder weitere hinzufügen.</p>
+            </div>
+            <div class="modal_address_grid_wrapper">
+                <?php
+                if ($resultPaymentWODef->num_rows < 6) {
+                    ?>
+                    <div class="modal_address_grid_container">
+                        <div class="addressitem_container add_address">
+                            <h2>Hinzufügen</h2>
+                            <form id="addPayment" action="#" method="post">
+                                <select name="paymentMethod" id="paymentMethod" required>
+                                    <option disabled selected hidden value="">Zahlungstyp</option>
+                                    <?php
+                                    $meth = getPaymentMethods($conn);
+                                    while ($paymentRows = $meth->fetch_assoc()) {
+                                        ?>
+                                        <option value="<?php echo $paymentRows['value'] ?>"><?php echo $paymentRows['value'] ?></option>
+                                        <?php
+                                    }
+                                    ?>
+                                    <input type="text" name="addNum" id="addNumber" required placeholder="Kartennummer">
+                                    <div class="add_data_oneline payments">
+                                        <input type="text" name="addProvider" id="addProvider" required placeholder="Provider">
+                                        <input type="month" pattern="[0-1]{1}[0-9]{1}/[0-9]{2}" name="expiry_date" id="expiry_date" required placeholder="Ablaufdatum">
+                                    </div>
+                            </form>
+                            <div class="addressitem_addbutton">
+                                <button id="add_Payment" form="addPayment" type="submit" name="add_Payment_button">
+                                    Hinzufügen
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                } ?>
+                <?php
+                if ($resultDefPayment !== null) {
+                    ?>
+                    <div class="modal_address_grid_container">
+                        <div class="addressitem_container">
+                            <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                            <h4><?php echo $resultDefPayment['provider'] ?></h4>
+                            <h4><?php echo $resultDefPayment['account_number'] ?></h4>
+                            <h4>Gültig bis: <?php echo $resultDefPayment['expiry_date'] ?></h4>
+                            <a class="defaultText">Standard Zahlungsart</a>
+                            <div class="address_setting_container">
+                                <a href="account.php?delete=<?php echo $resultDefPayment['id'] ?>">
+                                    <span id="addressicon" class="material-symbols-outlined" title="Zahlungsart Löschen">delete</span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                }
+                if ($resultPaymentWODef !== null) {
+                    while ($rows = $resultPaymentWODef->fetch_assoc()) {
+                        ?>
+                        <div class="modal_address_grid_container">
+                            <div class="addressitem_container">
+                                <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                                <h4><?php echo $resultDefPayment['provider'] ?></h4>
+                                <h4><?php echo $resultDefPayment['account_number'] ?></h4>
+                                <h4>Gültig bis: <?php echo $resultDefPayment['expiry_date'] ?></h4>
+                                <div class="address_setting_container">
+                                    <a href="account.php?edit=<?php echo $rows['id'] ?>">
+                                        <span id="addressicon" class="material-symbols-outlined" title="Als Standard Setzen">edit_location</span></a>
+                                    <a href="account.php?delete=<?php echo $rows['id'] ?>">
+                                        <span id="addressicon" class="material-symbols-outlined" title="Zahlungsart Löschen">delete</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                } ?>
+            </div>
+            <div class="modal_buttons">
+                <button id="close_payment_modal">Schließen</button>
             </div>
         </div>
     </div>

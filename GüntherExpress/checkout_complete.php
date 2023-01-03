@@ -3,7 +3,10 @@
 
 <?php
 include_once 'header.php';
+include_once 'includes/checkout_complete_inc.php';
 global $conn;
+
+runCheckoutProcess();
 
 if (!isset($_SESSION["useruid"])) {
     header('Location: login.php');

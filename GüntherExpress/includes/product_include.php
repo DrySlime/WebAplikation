@@ -101,7 +101,7 @@ function showShoppingCartImage($conn, $productID){
 
     echo 
     '
-    <a  href='.'item.php?'.'id='.''.$productData["id"].'> <img class='.'image'.' src='.$image.''.'> </a> <br>
+    <a  href='.'item.js?'.'id='.''.$productData["id"].'> <img class='.'image'.' src='.$image.''.'> </a> <br>
     ';
 }
 

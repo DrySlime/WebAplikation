@@ -22,15 +22,12 @@ function showAddress($address){
 }
 
 function showPaymentMethod($conn, $payment){
-
     $paymentType = getPaymentType($conn, $payment["payment_type_id"]);
-        
+
     echo "<p>"."Zahlungsart: ".$paymentType["value"]."</p>";
     echo "<p>"."Anbieter: ".$payment["provider"]."</p>";
     echo "<p>"."Kontonummer: ".$payment["account_number"]."</p>";
-    echo "<p>"."Ablaufdatum: ".$payment["expiry_date"]."</p>";       
-
-
+    echo "<p>"."Ablaufdatum: ".$payment["expiry_date"]."</p>";
 }
 
 function getPaymentType($conn, $id){
@@ -42,15 +39,4 @@ function getPaymentType($conn, $id){
     mysqli_stmt_execute($stmt);
 
     return mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
-
 }
-
-function showShippingMethod($method){
-
-    echo "<p>"."Versand: ".$method["shipping_name"]."</p>";
-    echo "<p>"."Kosten: ".$method["shipping_price"]." Euro</p>";
-    
-
-}
-
-?>

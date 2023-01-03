@@ -3,7 +3,7 @@ function getAllOrderedProducts($conn)
     #return an array filled with all data you could get from an order which is ordered descending!
 {
     $allItems=null;
-    $sql = "SELECT * FROM shop_order ORDER BY order_date DESC ;";
+    $sql = "SELECT * FROM shop_order ORDER BY order_date ASC ;";
     $stmt = mysqli_stmt_init($conn);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {

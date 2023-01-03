@@ -941,3 +941,45 @@ body {
     border-style: none;
     outline-style: none;
 }
+
+input[type=month]:hover {
+    cursor: pointer;
+}
+
+.add_data_oneline {
+    display: flex;
+    flex-direction: row;
+}
+
+.payments input:last-child {
+    width: 20%;
+    margin-left: .5vmin;
+}
+
+.payments input:last-child {
+    width: fit-content;
+}
+
+#addPayment select {
+    margin-bottom: .5vmin;
+    width: 100%;
+    font-size: 1.5vmin;
+    color: #101010;
+    border: none;
+    outline: none;
+    font-weight: 500;
+    text-indent: 2px;
+    appearance: none;
+    padding: .5vmin;
+    background: #f1f1f1;
+    border-radius: 1vmin;
+}
+
+#addPayment select {
+    appearance: menulist-button;
+}
+
+#addPayment select:hover {
+    appearance: menulist-button;
+    cursor: pointer;
+}

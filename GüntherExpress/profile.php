@@ -16,11 +16,7 @@ include_once 'header.php';
         ?>
 </head>
 
-
-
 <body>
-    
-
     <div class="container">
         <div class="icon" >
             <div class="profile" onclick="showProfile()">

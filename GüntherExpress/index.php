@@ -39,7 +39,7 @@ global $conn;
                             <div class='swiper-slide'>
                                 
                                 <div class='image_wrapper'>
-                                    <a href=item.php?id=" . $newItems[$i]["id"] . ">
+                                    <a href=item.js?id=" . $newItems[$i]["id"] . ">
                                         <img src=" . $newItems[$i]["product_image"] . " alt=''>
                                     </a>
                                 </div>
@@ -73,7 +73,7 @@ global $conn;
                 echo "                        
                             <div class='swiper-slide'>
                                 <div class='image_wrapper'>
-                                    <a href=item.php?id=" . $arr[$i] . ">
+                                    <a href=item.js?id=" . $arr[$i] . ">
                                         <img src=" . getImage($conn, $arr[$i]) . " alt=''>
                                     </a>
                                 </div>

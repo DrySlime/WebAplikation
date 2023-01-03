@@ -1310,12 +1310,13 @@ function deactivateUser($conn)
     mysqli_stmt_close($stmt);
 }
 
-function getShippingMethodData($conn){
- 
+function getShippingMethodData($conn)
+{
+
     $sql = "SELECT * FROM shipping_method";
     $stmt = mysqli_stmt_init($conn);
 
-    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_prepare($stmt, $sql);
     mysqli_stmt_execute($stmt);
 
     $resultData = mysqli_stmt_get_result($stmt);
@@ -1330,7 +1331,7 @@ function bindPaymentToUser($conn, $street, $houseno, $city, $postalCode)
 {
     $userid = $_SESSION['userid'];
     $addressid = $address['id'];
-    if (getPaymentIDByData($user_id,$payment_type_id, $provider, $account_number, $expiry_date) != null) {
+    if (getPaymentIDByData($user_id, $payment_type_id, $provider, $account_number, $expiry_date) != null) {
         header("location: ../account.php?error=none");
         exit();
     } else {
@@ -1342,7 +1343,7 @@ function bindPaymentToUser($conn, $street, $houseno, $city, $postalCode)
             exit();
         }
 
-        mysqli_stmt_bind_param($stmt, "sssss", $_SESSION['userid'],$payment_type_id, $provider, $account_number, $expiry_date);
+        mysqli_stmt_bind_param($stmt, "sssss", $_SESSION['userid'], $payment_type_id, $provider, $account_number, $expiry_date);
         mysqli_stmt_execute($stmt);
 
         mysqli_stmt_close($stmt);
@@ -1409,13 +1410,13 @@ function unbindPayment($conn, $paymentid)
     exit();
 }
 
-function getPaymentIDByData($conn, $user_id,$payment_type_id, $provider, $account_number, $expiry_date)
+function getPaymentIDByData($conn, $user_id, $payment_type_id, $provider, $account_number, $expiry_date)
 {
     $sql = "SELECT * FROM user_payment_method WHERE user_id = ? AND payment_type_id = ? AND provider = ? AND account_number = ? AND expiry_date = ?;";
     $stmt = mysqli_stmt_init($conn);
 
     mysqli_stmt_prepare($stmt, $sql);
-    mysqli_stmt_bind_param($stmt, "sssss", $user_id,$payment_type_id, $provider, $account_number, $expiry_date);
+    mysqli_stmt_bind_param($stmt, "sssss", $user_id, $payment_type_id, $provider, $account_number, $expiry_date);
     mysqli_stmt_execute($stmt);
 
     $resultData = mysqli_stmt_get_result($stmt);
@@ -1429,7 +1430,7 @@ function getPaymentMethods($conn)
     $sql = "SELECT * FROM payment_type;"; #TODO active
     $stmt = mysqli_stmt_init($conn);
 
-    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_prepare($stmt, $sql);
     mysqli_stmt_execute($stmt);
 
     $resultData = mysqli_stmt_get_result($stmt);

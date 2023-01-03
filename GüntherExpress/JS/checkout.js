@@ -101,24 +101,11 @@ document.addEventListener("DOMContentLoaded", function () {
             let radioButton = radiobuttons[i];
             let id = radioButton.getAttribute('id');
             if (radioButton.getAttribute("name") === "address_buttons") {
-                $.ajax({
-                    url: "checkout.php",
-                    method: "POST",
-                    data: {address: id},
-                    success: function () {
-                        $('#final_address').html($('#address_' + id).html());
-                        $('#final_address').children('a').remove();
-                    }
-                });
+                let button = $('#final_address')
+                button.html($('#address_' + id).html());
+                button.children('a').remove();
             } else if (radioButton.getAttribute("name") === "payment_buttons") {
-                $.ajax({
-                    url: "checkout.php",
-                    method: "POST",
-                    data: {payment: id},
-                    success: function () {
-                        $('#final_payment').html($('#payment_' + id).html());
-                    }
-                });
+                $('#final_payment').html($('#payment_' + id).html());
             }
         }
     }
@@ -137,7 +124,7 @@ $(document).on('click', '.checkout_grid_container', function () {
         if (radioButton.attr("name") === "delivery_buttons") {
             $.ajax({
                 url: "/includes/ajaxCheckout.php",
-                method: "POST",
+                type: "POST",
                 data: {delivery: id, price: value},
                 success: function (delData) {
                     $('#lieferkosten').html(delData.split("/")[1] + ".00 €");
@@ -145,36 +132,24 @@ $(document).on('click', '.checkout_grid_container', function () {
                     let final = calculatePrice(delData.split("/")[2], delData.split("/")[1]);
                     finalElement.html(final);
                     $('#final_ship').html($('#ship_' + id).html());
-                    $.ajax({
-                        url: "checkout.php",
-                        method: "POST",
-                        data: {finalPrice: final}
-                    });
                 }
             });
         } else if (radioButton.attr("name") === "address_buttons") {
-            $.ajax({
-                url: "checkout.php",
-                method: "POST",
-                data: {address: id},
-                success: function () {
-                    $('#final_address').html($('#address_' + id).html().remove($('a')));
-                }
-            });
+            let div = $('#final_address');
+            div.html($('#address_' + id).html());
+            div.children('a').remove();
         } else if (radioButton.attr("name") === "payment_buttons") {
-            $.ajax({
-                url: "checkout.php",
-                method: "POST",
-                data: {payment: id},
-                success: function () {
-                    $('#final_payment').html($('#payment_' + id).html());
-                }
-            });
+            $('#final_payment').html($('#payment_' + id).html());
         }
         if ($('input[name="payment_buttons"]').is(':checked') && $('input[name="address_buttons"]').is(':checked') && $('input[name="delivery_buttons"]').is(':checked')) {
-            $('#checkoutButton').removeAttr("disabled");
+            let button = $('#checkoutButton');
+            button.removeAttr("disabled");
         }
     }
+});
+
+$('#checkoutButton').click(function () {
+    window.location.replace("../checkout_complete.php");
 });
 
 jQuery.ajaxSetup({
@@ -183,4 +158,14 @@ jQuery.ajaxSetup({
 
 function calculatePrice(price, shipping) {
     return parseFloat(price) + parseFloat(shipping);
+}
+
+function createCookie(name, value, days) {
+    let expires = "";
+    if (days) {
+        let date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
 }

@@ -1,7 +1,7 @@
 <?php
-include_once 'includes/dbh_include.php';
-include_once 'includes/product_include.php';
-include_once 'includes/functions_include.php';
+include_once 'dbh_include.php';
+include_once 'product_include.php';
+include_once 'functions_include.php';
 
 
     if (isset($_GET["delete"])) {

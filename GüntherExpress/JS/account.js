@@ -19,6 +19,11 @@ function closeDeleteModal() {
     deleteModal.style.visibility = 'hidden';
 }
 
+/*
+-----------------------------
+Address Modal
+-----------------------------
+ */
 
 const addressModal = document.getElementById('address-modal');
 const addressModalOpen = document.getElementById('address');
@@ -55,6 +60,11 @@ function closeAddressModal() {
     addressModal.style.visibility = 'hidden';
 }
 
+/*
+-----------------------------
+Order Modal
+-----------------------------
+ */
 
 const orderModal = document.getElementById('orders-modal');
 const orderModalOpen = document.getElementById('orders');
@@ -85,8 +95,6 @@ function closeOrderModal() {
     orderModal.style.visibility = 'hidden';
 }
 
-
-
 var openOrderProducts = document.getElementsByClassName('order_button');
 
 for (var i = 0; i < openOrderProducts.length; i++) {
@@ -113,4 +121,45 @@ function showData(id) {
     } else {
         orderGroup.classList.add("open");
     }
+}
+
+/*
+-----------------------------
+Payment Modal
+-----------------------------
+ */
+
+const paymentModal = document.getElementById('payment-modal');
+const paymentModalOpen = document.getElementById('payments');
+const PaymentModalClose = document.getElementById('close_payment_modal');
+
+paymentModalOpen.addEventListener('click', openPaymentModal);
+PaymentModalClose.addEventListener('click', closePaymentModal)
+
+function openPaymentModal() {
+    document.getElementById('close_payment_modal').style.transition = 'ease-in-out 0.3s';
+    document.getElementById('add_Payment').style.transition = 'ease-in-out 0.3s';
+    const buttons = document.querySelectorAll('.dataitem_addbutton button');
+    buttons.forEach(button => {
+        button.style.transition = 'ease-in-out 0.3s'
+    });
+    const icons = document.querySelectorAll('.address_setting_container span');
+    icons.forEach(icon => {
+        icon.style.transition = 'ease-in-out 0.3s'
+    });
+    paymentModal.style.visibility = 'visible';
+}
+
+function closePaymentModal() {
+    document.getElementById('close_payment_modal').style.transition = 'none';
+    document.getElementById('add_Payment').style.transition = 'none';
+    const buttons = document.querySelectorAll('.dataitem_addbutton button');
+    buttons.forEach(button => {
+        button.style.transition = 'none'
+    });
+    const icons = document.querySelectorAll('.address_setting_container span');
+    icons.forEach(icon => {
+        icon.style.transition = 'none'
+    })
+    paymentModal.style.visibility = 'hidden';
 }

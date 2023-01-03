@@ -22,6 +22,12 @@ if (isset($_POST["priceSearch"])) {
     $name = $_GET["name"];
     $min = $_POST["min"];
     $max = $_POST["max"];
+    if (!is_numeric($min) || $min < 0) {
+        $min = 0;
+    }
+    if (!is_numeric($max)) {
+        $max = 9999;
+    }
     if ($min > $max) {
         $error = "Eingabe überprufen!!";
         echo "<body onload='scrollToElement()'></body>";
@@ -42,19 +48,7 @@ if (isset($_POST["priceSearch"])) {
 <div class="page_header_wrapper">
     <div class="page_page_header">
         <h1><?php echo $name ?></h1>
-        <?php
-        if ($name == "Cerealien") {
-            echo '<img src = "img/cereals.png" alt = "Andre Caputo">';
-        } else if ($name == "Fruchtgummi") {
-            echo '<img src = "img/gummies.png" alt = "3DJustincase">';
-        } else if ($name == "Kekse") {
-            echo '<img src = "img/cookieSnap.png" alt = "Andre Caputo">';
-        } else if ($name == "Backwaren") {
-            echo '<img src = "img/macarons.png" alt = "Andre Caputo">';
-        } else {
-            echo '<img src = "img/cadbury.png" alt = "Andre Caputo">';
-        }
-        ?>
+        <img src="img/cookieSnap.png" alt="Andre Caputo">
     </div>
     <div class="searchbar_wrapper">
         <form action="products.php" method="post">
@@ -77,7 +71,7 @@ if (isset($_POST["priceSearch"])) {
                     <?php foreach (getCategoryList($conn) as $key => $value) {
                         if ($value == $name) {
                             echo "
-                            <a href='products.php?name=" . $value . "'><h4 style='color: #fc466b'>" . $value ."</h4></a>
+                            <a href='products.php?name=" . $value . "'><h4 style='color: #fc466b'>" . $value . "</h4></a>
                             ";
                         } else {
                             echo "
@@ -119,9 +113,9 @@ if (isset($_POST["priceSearch"])) {
                         echo '
                         <div class="product_container">
                             <div class="product_img">
-                            <a href="item.php?id=' . $items[$i]["id"] . '">
-                                <img src=' . $items[$i]["product_image"] . ' width="265px" alt="" height="200px">
-                            </a>
+                                <a href="item.php?id=' . $items[$i]["id"] . '">
+                                    <img src=' . $items[$i]["product_image"] . ' width="265px" alt="" height="200px">
+                                </a>
                             </div>
                             <div class="product_description">
                                 <a href="item.php?id=' . $items[$i]["id"] . '">
@@ -138,7 +132,7 @@ if (isset($_POST["priceSearch"])) {
                     ?>
                     <script>
                         function add(id) {
-                            window.location = "shopping_cart_insert.php?pID=" + id + "&quantaty=1";
+                            window.location = "cart_added.php?pID=" + id + "&quantity=1";
                         }
                     </script>
                 </div>
