@@ -14,13 +14,6 @@
                 </button>
             </a>
         </div>
-        <div class="Sale">
-            <a href="sale_admin.php">
-                <button class="button">
-                    Sale
-                </button>
-            </a>
-        </div>
         <div class="Kategorien">
             <a href="category_admin.php">
                 <button class="button">

@@ -25,11 +25,20 @@ if(isset($_POST["priceSearch"])){
     $name=$_GET["name"];
     $min=$_POST["min"];
     $max=$_POST["max"];
+
+
+    if(!is_numeric($min) || $min<0 ){
+        $min=0;
+    }
+    if(!is_numeric($max)){
+        $max=9999;
+    }
     if($min>$max){
         $error="Eingabe überprufen!!";
         echo "<body onload='scrollToElement()'></body>";
         goto next;
     }
+
     $items= searchByPrice($conn,$name,$min,$max);
 }elseif (!isset($_POST["search"])) {
 
