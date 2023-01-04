@@ -68,7 +68,7 @@ if (isset($_POST['add_address_button'])) {
     $cityAdd = $_POST['addStadt'];
     $postalCodeAdd = $_POST['postal-code'];
     $addressExists =  mysqli_fetch_assoc(getAddressIDByData($conn, $streetAdd, $housenoAdd, $cityAdd, $postalCodeAdd));
-    if ($addressExists['id'] == null) {
+    if ($addressExists == null) {
         addAddress($conn, $streetAdd, $housenoAdd, $cityAdd, $postalCodeAdd);
         exit();
     } else {

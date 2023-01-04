@@ -1133,8 +1133,6 @@ function bindAddressToUser($conn, $street, $houseno, $city, $postalCode)
     $address = getAddressIDByData($conn, $street, $houseno, $city, $postalCode)->fetch_assoc();
     $addressid = $address['id'];
     if (alreadyBindAddress($conn, $addressid, $userid)) {
-        header("location: ../account.php?error=none");
-        exit();
     } else {
         $sql = "INSERT INTO user_address (user_id, address_id) VALUES (?,?);";
         $stmt = mysqli_stmt_init($conn);
@@ -1148,7 +1146,6 @@ function bindAddressToUser($conn, $street, $houseno, $city, $postalCode)
         mysqli_stmt_execute($stmt);
 
         mysqli_stmt_close($stmt);
-        exit();
     }
 
 }
@@ -1322,8 +1319,6 @@ function bindPaymentToUser($conn, $payment_type_id, $provider, $account_number, 
 {
     $userid = $_SESSION['userid'];
     if (getPaymentIDByData($user_id, $payment_type_id, $provider, $account_number, $expiry_date) != null) {
-        header("location: ../account.php?error=none");
-        exit();
     } else {
         $sql = "INSERT INTO user_payment_method (user_id,payment_type_id, provider, account_number, expiry_date) VALUES (?,?,?,?,?);";
         $stmt = mysqli_stmt_init($conn);
