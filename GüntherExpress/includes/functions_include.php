@@ -518,10 +518,12 @@ function convertCategoryNameToID($conn,$categoryName){
     $resultData = mysqli_stmt_get_result($stmt);
     if(mysqli_num_rows($resultData)>0){
         $row =mysqli_fetch_assoc($resultData);
-        $categoryName=$row["id"];
+        $categoryID=$row["id"];
+    }else{
+        $categoryID=null;
     }
     mysqli_stmt_close($stmt);
-    return $categoryName;
+    return $categoryID;
 
 }
 
