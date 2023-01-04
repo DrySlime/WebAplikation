@@ -119,7 +119,7 @@ $endCosts = $_SESSION['fullPrice'];
                             <?php
                             if ($resultDefAddress !== null) {
                                 ?>
-                                <div class="checkout_grid_container address_container" onclick='setData("addressId", <?php echo $resultDefPayment['id'] ?>)'>
+                                <div class="checkout_grid_container address_container" onclick='setData("addressId", <?php echo $resultDefAddress['id'] ?>)'>
                                     <input class="radioButton" type="radio" id="<?php echo $resultDefAddress['id'] ?>" name="address_buttons" value="<?php echo $resultDefAddress['id'] ?>" checked="checked">
                                     <div id="address_<?php echo $resultDefAddress['id'] ?>" class="grid_container">
                                         <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
@@ -133,7 +133,7 @@ $endCosts = $_SESSION['fullPrice'];
                             if ($resultAddressWODef !== null) {
                                 while ($rows = $resultAddressWODef->fetch_assoc()) {
                                     ?>
-                                    <div class="checkout_grid_container address_container" onclick='setData("addressId", <?php echo $resultDefPayment['id'] ?>)'>
+                                    <div class="checkout_grid_container address_container" onclick='setData("addressId", <?php echo $rows['id'] ?>)'>
                                         <input class="radioButton" type="radio" id="<?php echo $rows['id'] ?>" name="address_buttons" value="<?php echo $rows['id'] ?>">
                                         <div id="address_<?php echo $rows['id'] ?>" class="grid_container">
                                             <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
@@ -155,12 +155,12 @@ $endCosts = $_SESSION['fullPrice'];
                             <?php
                             while ($schippingRos = $resultShippingMeth->fetch_assoc()) {
                                 ?>
-                                <div class="checkout_grid_container delivery_container" onclick='setData("shippingId", <?php echo $resultDefPayment['id'] ?>)'>
+                                <div class="checkout_grid_container delivery_container" onclick='setData("shippingId", <?php echo $schippingRos['id'] ?>)'>
                                     <input class="radioButton" type="radio" id="<?php echo $schippingRos['id'] ?>" name="delivery_buttons" value="<?php echo $schippingRos['shipping_price'] ?>">
                                     <div id="ship_<?php echo $schippingRos['id'] ?>" class="grid_container">
                                         <h2><?php echo $schippingRos['shipping_name'] ?></h2>
                                         <h4>Lieferdauer: 3-5 Tage</h4>
-                                        <h4>Lieferkosten: <?php echo $schippingRos['shipping_price'] ?>.00 €</h4>
+                                        <h4>Lieferkosten: <?php echo $schippingRos['shipping_price'] ?> €</h4>
                                     </div>
                                 </div>
                                 <?php
@@ -223,13 +223,13 @@ $endCosts = $_SESSION['fullPrice'];
                             if ($resultPaymentWODef !== null) {
                                 while ($rows = $resultPaymentWODef->fetch_assoc()) {
                                     ?>
-                                    <div class="checkout_grid_container payment_container" onclick='setData("paymentId", <?php echo $resultDefPayment['id'] ?>)'>
-                                        <input class="radioButton" type="radio" id="<?php echo $resultPaymentWODef['id'] ?>" name="payment_buttons" value="<?php echo $resultPaymentWODef['id'] ?>">
-                                        <div id="payment_<?php echo $resultPaymentWODef['id'] ?>" class="grid_container">
+                                    <div class="checkout_grid_container payment_container" onclick='setData("paymentId", <?php echo $rows['id'] ?>)'>
+                                        <input class="radioButton" type="radio" id="<?php echo $rows['id'] ?>" name="payment_buttons" value="<?php echo $resultPaymentWODef['id'] ?>">
+                                        <div id="payment_<?php echo $rows['id'] ?>" class="grid_container">
                                             <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
-                                            <h4><?php echo $resultDefPayment['provider'] ?></h4>
-                                            <h4><?php echo $resultDefPayment['account_number'] ?></h4>
-                                            <h4>Gültig bis: <?php echo $resultDefPayment['expiry_date'] ?></h4>
+                                            <h4><?php echo $rows['provider'] ?></h4>
+                                            <h4><?php echo $rows['account_number'] ?></h4>
+                                            <h4>Gültig bis: <?php echo $rows['expiry_date'] ?></h4>
                                         </div>
                                     </div>
                                     <?php

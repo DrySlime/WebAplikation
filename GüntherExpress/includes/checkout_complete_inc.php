@@ -2,7 +2,6 @@
 include_once 'dbh_include.php';
 include_once 'functions_include.php';
 include_once 'product_include.php';
-include_once 'check_out_include.php';
 
 function runCheckoutProcess()
 {
@@ -51,7 +50,7 @@ function doOrder($conn, $userId)
     $addressId = $_COOKIE["addressId"];
     $paymentId = $_COOKIE["paymentId"];
     $shippingId = $_COOKIE["shippingId"];
-    echo '<p>', $addressId, '</p>';
+    echo $_COOKIE["shippingId"];
     date_default_timezone_set('Europe/Berlin');
     $date = date("Y-m-d H:i:s");
     $sum = getShoppingCartSum($conn, $userId);

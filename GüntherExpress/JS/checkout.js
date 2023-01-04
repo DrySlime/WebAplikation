@@ -127,9 +127,9 @@ $(document).on('click', '.checkout_grid_container', function () {
                 type: "POST",
                 data: {delivery: id, price: value},
                 success: function (delData) {
-                    $('#lieferkosten').html(delData.split("/")[1] + ".00 €");
+                    $('#lieferkosten').html((Math.ceil(delData.split("/")[1] * 100) / 100) + " €");
                     let finalElement = $('#finalprice');
-                    let final = calculatePrice(delData.split("/")[2], delData.split("/")[1]);
+                    let final = (Math.ceil(calculatePrice(delData.split("/")[2], delData.split("/")[1]) * 100) / 100) + " €";
                     finalElement.html(final);
                     $('#final_ship').html($('#ship_' + id).html());
                 }
