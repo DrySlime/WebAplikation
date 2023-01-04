@@ -388,21 +388,22 @@ if (!isset($_SESSION["useruid"])) {
                     <div class="modal_address_grid_container">
                         <div class="addressitem_container add_address">
                             <h2>Hinzufügen</h2>
-                            <form id="addPayment" action="#" method="post">
+                            <form id="addPayment" method="post">
                                 <select name="paymentMethod" id="paymentMethod" required>
                                     <option disabled selected hidden value="">Zahlungstyp</option>
                                     <?php
                                     $meth = getPaymentMethods($conn);
                                     while ($paymentRows = $meth->fetch_assoc()) {
                                         ?>
-                                        <option value="<?php echo $paymentRows['value'] ?>"><?php echo $paymentRows['value'] ?></option>
+                                        <option value="<?php echo $paymentRows['id'] ?>"><?php echo $paymentRows['value'] ?></option>
                                         <?php
                                     }
                                     ?>
-                                    <input type="text" name="addNum" id="addNumber" required placeholder="Kartennummer">
+                                </select>
+                                    <input type="text" name="addNumber" id="addNumber" required placeholder="Kartennummer">
                                     <div class="add_data_oneline payments">
                                         <input type="text" name="addProvider" id="addProvider" required placeholder="Provider">
-                                        <input type="month" pattern="[0-1]{1}[0-9]{1}/[0-9]{2}" name="expiry_date" id="expiry_date" required placeholder="Ablaufdatum">
+                                        <input type="month" pattern="[0-1]{1}[0-9]{1}/[0-9]{2}/[0-9]{2}" name="expiry_date" id="expiry_date" required placeholder="Ablaufdatum">
                                     </div>
                             </form>
                             <div class="addressitem_addbutton">

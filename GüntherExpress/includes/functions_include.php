@@ -525,10 +525,12 @@ function convertIdToCategoryName($conn, $id)
     $resultData = mysqli_stmt_get_result($stmt);
     if (mysqli_num_rows($resultData) > 0) {
         $row = mysqli_fetch_assoc($resultData);
-        $categoryName = $row["category_name"];
+        $categoryID=$row["id"];
+    }else{
+        $categoryID=null;
     }
     mysqli_stmt_close($stmt);
-    return $categoryName;
+    return $categoryID;
 
 }
 
@@ -1317,8 +1319,9 @@ function getShippingMethodData($conn)
 
 function bindPaymentToUser($conn, $payment_type_id, $provider, $account_number, $expiry_date)
 {
-    $userid = $_SESSION['userid'];
-    if (getPaymentIDByData($user_id, $payment_type_id, $provider, $account_number, $expiry_date) != null) {
+    $user_id = $_SESSION['userid'];
+    $expiry_date.="-12";
+    if (getPaymentIDByData($conn,$user_id, $payment_type_id, $provider, $account_number, $expiry_date) != null) {
     } else {
         $sql = "INSERT INTO user_payment_method (user_id,payment_type_id, provider, account_number, expiry_date) VALUES (?,?,?,?,?);";
         $stmt = mysqli_stmt_init($conn);
@@ -1453,3 +1456,5 @@ function getUserPaymentDataWODef($conn)
 
     return $resultData;
 }
+
+

@@ -100,7 +100,7 @@ if (isset($_GET['deleteP'])) {
 }
 
 
-if (isset($_POST['add_payment_button'])) {
+if (isset($_POST['add_Payment_button'])) {
     $payment_type_id = $_POST['paymentMethod'];
     $provider = $_POST['addProvider'];
     $account_number = $_POST['addNumber'];

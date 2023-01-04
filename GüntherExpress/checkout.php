@@ -191,14 +191,14 @@ $endCosts = $_SESSION['fullPrice'];
                                                     <?php
                                                 }
                                                 ?>
-                                                <input type="text" name="addNum" id="addNumber" required placeholder="Kartennummer">
+                                                <input type="text" name="addNumber" id="addNumber" required placeholder="Kartennummer">
                                                 <div class="add_data_oneline payments">
                                                     <input type="text" name="addProvider" id="addProvider" required placeholder="Provider">
                                                     <input type="month" pattern="[0-1]{1}[0-9]{1}/[0-9]{2}" name="expiry_date" id="expiry_date" required placeholder="Ablaufdatum">
                                                 </div>
                                         </form>
                                         <div class="dataitem_addbutton">
-                                            <button id="add_Payment" form="addPayment" type="submit" name="add_Payment_button">
+                                            <button id="add_Payment" form="addPayment" type="submit" name="add_payment_button">
                                                 Hinzufügen
                                             </button>
                                         </div>
