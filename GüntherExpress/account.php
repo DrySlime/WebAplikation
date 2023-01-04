@@ -166,22 +166,28 @@ if (!isset($_SESSION["useruid"])) {
                         <h1>Zahlungsarten</h1>
                     </div>
                     <div class="standard_payment_wrapper">
-                        <div class="payment_card">
+                        <?php 
+                        if($resultDefPayment !== null){
+                        ?>
+                            <div class="payment_card">
                             <div class="card_top card_info">
                                 <i class="material-symbols-outlined" style="pointer-events: none; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;">credit_card</i>
-                                <h4>Comdirect</h4>
+                                <h4><?php echo $resultDefPayment['provider'] ?></h4>
                             </div>
                             <div class="card_middle card_info">
-                                <h4>XXXX XXXX XXXX 2095</h4>
+                                <h4><?php echo $resultDefPayment['account_number'] ?></h4>
                             </div>
                             <div class="card_bottom card_info">
-                                <h4>Stuart Eichler</h4>
+                                <h4><?php echo $resultAccount['firstname']; ?>  <?php echo $resultAccount['lastname']; ?></h4>
                                 <div class="card_date">
                                     <h5>Gültig bis:</h5>
-                                    <h4>02/25</h4>
+                                    <h4><?php echo $resultDefPayment['expiry_date'] ?></h4>
                                 </div>
                             </div>
                         </div>
+                        <?php }else{ #TODO?>
+                        <h4 id="noEmail">Du hast noch keine Standard Zahlungsart beim Confectioner hinterlegt!</h4>
+                        <?php } ?>
                     </div>
                     <div class="account_subsection_button">
                         <a id="payments">Verwalten</a>
@@ -419,7 +425,7 @@ if (!isset($_SESSION["useruid"])) {
                             <h4>Gültig bis: <?php echo $resultDefPayment['expiry_date'] ?></h4>
                             <a class="defaultText">Standard Zahlungsart</a>
                             <div class="address_setting_container">
-                                <a href="account.php?delete=<?php echo $resultDefPayment['id'] ?>">
+                                <a href="account.php?deleteP=<?php echo $resultDefPayment['id'] ?>">
                                     <span id="addressicon" class="material-symbols-outlined" title="Zahlungsart Löschen">delete</span></a>
                             </div>
                         </div>
@@ -432,13 +438,13 @@ if (!isset($_SESSION["useruid"])) {
                         <div class="modal_address_grid_container">
                             <div class="addressitem_container">
                                 <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
-                                <h4><?php echo $resultDefPayment['provider'] ?></h4>
-                                <h4><?php echo $resultDefPayment['account_number'] ?></h4>
-                                <h4>Gültig bis: <?php echo $resultDefPayment['expiry_date'] ?></h4>
+                                <h4><?php echo $rows['provider'] ?></h4>
+                                <h4><?php echo $rows['account_number'] ?></h4>
+                                <h4>Gültig bis: <?php echo $rows['expiry_date'] ?></h4>
                                 <div class="address_setting_container">
-                                    <a href="account.php?edit=<?php echo $rows['id'] ?>">
+                                    <a href="account.php?editP=<?php echo $rows['id'] ?>">
                                         <span id="addressicon" class="material-symbols-outlined" title="Als Standard Setzen">edit_location</span></a>
-                                    <a href="account.php?delete=<?php echo $rows['id'] ?>">
+                                    <a href="account.php?deleteP=<?php echo $rows['id'] ?>">
                                         <span id="addressicon" class="material-symbols-outlined" title="Zahlungsart Löschen">delete</span></a>
                                 </div>
                             </div>

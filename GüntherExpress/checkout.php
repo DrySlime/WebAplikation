@@ -13,7 +13,7 @@ if (!isset($_SESSION["useruid"])) {
 
 require_once 'includes/dbh_include.php';
 require_once 'includes/functions_include.php';
-require_once 'includes/account_include.php';
+require_once 'includes/checkout_include.php';
 include_once 'includes/cart_include.php';
 include_once 'includes/checkout_complete_inc.php';
 $resultAccount = getAccountData($conn);

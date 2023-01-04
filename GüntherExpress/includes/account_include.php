@@ -44,7 +44,6 @@ if (isset($_POST['register_button'])) {
 
 
 if (isset($_GET['edit'])) {
-    session_start();
     $AddressID = $_GET['edit'];
 
     setDefaultAddress($conn, $AddressID);
@@ -54,7 +53,6 @@ if (isset($_GET['edit'])) {
 }
 
 if (isset($_GET['delete'])) {
-    session_start();
     $deleteAddressID = $_GET['delete'];
 
     unbindAddress($conn, $deleteAddressID);
@@ -69,14 +67,48 @@ if (isset($_POST['add_address_button'])) {
     $housenoAdd = $_POST['addHausnummer'];
     $cityAdd = $_POST['addStadt'];
     $postalCodeAdd = $_POST['postal-code'];
-    $addressExists = getAddressIDByData($conn, $streetAdd, $housenoAdd, $cityAdd, $postalCodeAdd);
+    $addressExists =  mysqli_fetch_assoc(getAddressIDByData($conn, $streetAdd, $housenoAdd, $cityAdd, $postalCodeAdd));
     if ($addressExists['id'] == null) {
         addAddress($conn, $streetAdd, $housenoAdd, $cityAdd, $postalCodeAdd);
         exit();
     } else {
         bindAddressToUser($conn, $streetAdd, $housenoAdd, $cityAdd, $postalCodeAdd);
     }
+    header("location: ../account.php?error=none");
+    exit();
 
+}
+
+
+
+if (isset($_GET['editP'])) {
+    $PaymentID = $_GET['editP'];
+
+    setDefaultPayment($conn, $PaymentID);
+    header("location: ../account.php?error=none");
+    exit();
+
+}
+
+if (isset($_GET['deleteP'])) {
+    $deletePaymentID = $_GET['deleteP'];
+
+    unbindPayment($conn, $deletePaymentID);
+    header("location: ../account.php?error=none");
+    exit();
+
+}
+
+
+if (isset($_POST['add_payment_button'])) {
+    $payment_type_id = $_POST['paymentMethod'];
+    $provider = $_POST['addProvider'];
+    $account_number = $_POST['addNumber'];
+    $expiry_date = $_POST['expiry_date'];
+
+    bindPaymentToUser($conn, $payment_type_id, $provider, $account_number, $expiry_date);
+    header("location: ../account.php?error=none");
+    exit();
 }
 
 if (isset($_POST['delete_Account'])) {
@@ -93,43 +125,6 @@ if (isset($_POST['delete_Account'])) {
         header("location: ../account.php?error=deletionfailed");
     }
 }
-
-if (isset($_GET['edit_payment'])) {
-    session_start();
-    $PaymentID = $_GET['edit_payment'];
-
-    setDefaultAddress($conn, $PaymentID);
-    header("location: ../account.php?error=none");
-    exit();
-
-}
-
-if (isset($_GET['delete_payment'])) {
-    session_start();
-    $deletePaymentID = $_GET['delete_payment'];
-
-    unbindAddress($conn, $deletePaymentID);
-    header("location: ../account.php?error=none");
-    exit();
-
-}
-
-
-if (isset($_POST['add_payment_button'])) {
-    $streetAdd = $_POST['addStreet'];
-    $housenoAdd = $_POST['addHausnummer'];
-    $cityAdd = $_POST['addStadt'];
-    $postalCodeAdd = $_POST['postal-code'];
-    $addressExists = getAddressIDByData($conn, $streetAdd, $housenoAdd, $cityAdd, $postalCodeAdd);
-    if ($addressExists['id'] == null) {
-        addAddress($conn, $streetAdd, $housenoAdd, $cityAdd, $postalCodeAdd);
-        exit();
-    } else {
-        bindAddressToUser($conn, $streetAdd, $housenoAdd, $cityAdd, $postalCodeAdd);
-    }
-
-}
-
     
     
 

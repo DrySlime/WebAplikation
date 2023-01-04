@@ -1130,7 +1130,7 @@ function addAddress($conn, $street, $houseno, $city, $postalCode)
 function bindAddressToUser($conn, $street, $houseno, $city, $postalCode)
 {
     $userid = $_SESSION['userid'];
-    $address = getAddressIDByData($conn, $street, $houseno, $city, $postalCode);
+    $address = getAddressIDByData($conn, $street, $houseno, $city, $postalCode)->fetch_assoc();
     $addressid = $address['id'];
     if (alreadyBindAddress($conn, $addressid, $userid)) {
         header("location: ../account.php?error=none");
@@ -1148,9 +1148,6 @@ function bindAddressToUser($conn, $street, $houseno, $city, $postalCode)
         mysqli_stmt_execute($stmt);
 
         mysqli_stmt_close($stmt);
-
-
-        header("location: ../account.php?error=none");
         exit();
     }
 
@@ -1185,8 +1182,6 @@ function setDefaultAddress($conn, $addressid)
     mysqli_stmt_execute($stmt);
 
     mysqli_stmt_close($stmt);
-    header("location: ../account.php?error=none");
-    exit();
 }
 
 function unbindAddress($conn, $addressid)
@@ -1205,10 +1200,6 @@ function unbindAddress($conn, $addressid)
     mysqli_stmt_execute($stmt);
 
     mysqli_stmt_close($stmt);
-
-
-    header("location: ../account.php?error=none");
-    exit();
 }
 
 function alreadyBindAddress($conn, $addressid, $userid)
@@ -1247,7 +1238,7 @@ function getAddressIDByData($conn, $street, $houseno, $city, $postalCode)
     $resultData = mysqli_stmt_get_result($stmt);
     mysqli_stmt_close($stmt);
 
-    return $resultData->fetch_assoc();
+    return $resultData;
 }
 
 function getPersonalOrderIDsDescending($conn)
@@ -1327,15 +1318,14 @@ function getShippingMethodData($conn)
 }
 
 
-function bindPaymentToUser($conn, $street, $houseno, $city, $postalCode)
+function bindPaymentToUser($conn, $payment_type_id, $provider, $account_number, $expiry_date)
 {
     $userid = $_SESSION['userid'];
-    $addressid = $address['id'];
     if (getPaymentIDByData($user_id, $payment_type_id, $provider, $account_number, $expiry_date) != null) {
         header("location: ../account.php?error=none");
         exit();
     } else {
-        $sql = "INSERT INTO user_payment_method (user_id,payment_type_id, provider, account_number, expiry_date) VALUES (?,?,?,?);";
+        $sql = "INSERT INTO user_payment_method (user_id,payment_type_id, provider, account_number, expiry_date) VALUES (?,?,?,?,?);";
         $stmt = mysqli_stmt_init($conn);
 
         if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -1348,9 +1338,6 @@ function bindPaymentToUser($conn, $street, $houseno, $city, $postalCode)
 
         mysqli_stmt_close($stmt);
 
-
-        header("location: ../account.php?error=none");
-        exit();
     }
 
 }
@@ -1380,12 +1367,10 @@ function setDefaultPayment($conn, $paymentId)
         exit();
     }
 
-    mysqli_stmt_bind_param($stmt, "ss", $userid, $addressid);
+    mysqli_stmt_bind_param($stmt, "ss", $userid, $paymentId);
     mysqli_stmt_execute($stmt);
 
     mysqli_stmt_close($stmt);
-    header("location: ../account.php?error=none");
-    exit();
 }
 
 function unbindPayment($conn, $paymentid)
@@ -1404,10 +1389,6 @@ function unbindPayment($conn, $paymentid)
     mysqli_stmt_execute($stmt);
 
     mysqli_stmt_close($stmt);
-
-
-    header("location: ../account.php?error=none");
-    exit();
 }
 
 function getPaymentIDByData($conn, $user_id, $payment_type_id, $provider, $account_number, $expiry_date)
