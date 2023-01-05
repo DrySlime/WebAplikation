@@ -81,7 +81,7 @@ function createUser($conn,$email,$password,$firstname,$lastname,$username){
 
     mysqli_stmt_close($stmt);
 
-    header("location: ../signup.php?error=none");
+    header("location: ../login.php?error=none");
     exit();
 }
 function loginUser($conn,$password,$username){

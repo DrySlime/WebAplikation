@@ -108,11 +108,14 @@ if(isset($_POST["priceSearch"])){
         </div>
         <div class="products_items">
             <div class="products_grid_wrapper">
+
                 <?php
                 if ($items != null) {
                     for ($i = 0; $i < count($items); $i++) {
                         echo '
-                        <div class="product_container">
+                        
+                        <div class="product_container ">
+                            
                             <div class="product_img">
                             <a href="item.php?id=' . $items[$i]["id"] . '">
                                 <img src=' . $items[$i]["product_image"] . ' width="265px" alt="" height="200px">
@@ -127,7 +130,9 @@ if(isset($_POST["priceSearch"])){
                             <div class="product_add_to_cart" id="'. $items[$i]["id"] .'" onclick="add(this.id)">
                                 <span class="material-symbols-outlined">local_mall</span>
                             </div>
+                           
                         </div>
+                        
                     ';
                     }
                 } else {

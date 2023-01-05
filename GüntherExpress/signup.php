@@ -24,8 +24,33 @@ include_once 'header.php';
                 haben!</h4>
             <img src="img/gummibears.jpg" alt="">
         </div>
-        <div class="right_container">
+        <div class="right_container"><?php
+
+            if(isset($_GET["error"])){
+                if($_GET["error"]=="emptyinput"){
+                    $errorMSG = "Manche Felder sind leer!";
+
+                }else  if($_GET["error"]=="invaliduid"){
+                    $errorMSG = "Username beinhaltete nicht unterstützte Zeichen!";
+
+                }else  if($_GET["error"]=="invalidemail"){
+                    $errorMSG = "Emailadresse ist Fehlerhaft";
+
+                }else  if($_GET["error"]=="passwordsdontmatch"){
+                    $errorMSG = "Passwörter stimmen nicht überein!";
+
+                }else  if($_GET["error"]=="uidexists"){
+
+                }if($_GET["error"]=="none"){
+                    $errorMSG = "Sie haben sich erfolgreich registriert!";
+                }
+                echo "<p style='color: #d21c43;border-color: #b79ea5; font-size: 35px; font-weight: bold; border-style: solid; border-radius: 15px; background-color: #f9d4dc; left: -160px;top: -30px; position: relative'>$errorMSG</p>";
+
+            }
+
+            ?>
             <div class="loginregister_wrapper">
+
                 <h1>Registrieren</h1>
                 <form action="includes/signup_include.php" method="post">
                     <div class="form_container">
@@ -44,28 +69,9 @@ include_once 'header.php';
                 </form>
             </div>
         </div>
-    </div>
-    <?php
 
-    if(isset($_GET["error"])){
-        if($_GET["error"]=="emptyinput"){
-            $errorMSG = "Manche Felder sind leer!";
-            echo "<p>$errorMSG</p>";
-        }else  if($_GET["error"]=="invaliduid"){
-            $errorMSG = "Username beinhaltete nicht unterstützte Zeichen!";
-            echo "<p>$errorMSG</p>";
-        }else  if($_GET["error"]=="invalidemail"){
-            $errorMSG = "Email wird bereits verwendet";
-            echo "<p>$errorMSG</p>";
-        }else  if($_GET["error"]=="passwordsdontmatch"){
-            $errorMSG = "Passwörter stimmen nicht überein!";
-            echo "<p>$errorMSG</p>";
-        }else  if($_GET["error"]=="uidexists"){
-            $errorMSG = "Username wird bereits verwendet!";
-            echo "<p>$errorMSG</p>";
-        }
-    }
-    ?>
+    </div>
+
 </body>
 
 </html>
