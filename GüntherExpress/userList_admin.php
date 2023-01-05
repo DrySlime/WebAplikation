@@ -30,7 +30,7 @@ if(isset($_POST["search"])&&$_POST["search"]!=null){
         $userid=getUserID($conn,$userid);
     }
     $userArray=getAllFromUser($conn,$userid);
-    echo"
+    ?>
                 
                 <table>
                     <tr>
@@ -45,48 +45,51 @@ if(isset($_POST["search"])&&$_POST["search"]!=null){
                         <th>Postal Code</th>
                     </tr>
             
-                    ";
+    <?php 
     if($userArray!=null){
         for($i=0;$i<count($userArray);$i++) {
 
-            echo "
+    ?>
                         <tr>
-                                <td > ".$userArray[$i]["id"]." </td >
-                                <td > ".$userArray[$i]["firstname"]." </td >
-                                <td > ".$userArray[$i]["lastname"]." </td >
-                                <td > ".$userArray[$i]["email"]." </td >
-                                <td > ".$userArray[$i]["username"]." </td >                                             
-                            ";
+                                <td > <?php echo $userArray[$i]["id"]?> </td >
+                                <td > <?php echo $userArray[$i]["firstname"]?> </td >
+                                <td > <?php echo $userArray[$i]["lastname"]?> </td >
+                                <td > <?php echo $userArray[$i]["email"]?></td >
+                                <td > <?php echo $userArray[$i]["username"]?> </td >                                             
+            <?php 
             $address=getAdressFromUserID($conn,$userArray[$i]["id"]);
             if($address!=null){
-                echo"
-                                <td > ".$address[0]["address_line"]." </td >
-                                <td > ".$address[0]["street_number"]." </td >                                   
-                                <td > ".$address[0]["city"]." </td >  
-                                <td > ".$address[0]["postal_code"]." </td >  
-                    ";
+            ?>
+                                <td > <?php echo $address[0]["address_line"]?> </td >
+                                <td > <?php echo $address[0]["street_number"]?> </td >                                   
+                                <td > <?php echo $address[0]["city"]?> </td >  
+                                <td > <?php echo $address[0]["postal_code"]?> </td >  
+            <?php 
             }else{
-                echo"
+            ?>
                                 <td > Not Given </td >  
                                 <td > Not Given </td >  
                                 <td > Not Given </td >  
                                 <td > Not Given </td >  
                                 
-                    ";
+            <?php 
             }
-            echo"        </tr >";
+            ?>
+            </tr >
+    <?php
         }
 
     }else{
-
-        echo "<h1>Keinen Nutzer unter dieser ID/Username</h1>";
+        ?>
+        <h1>Keinen Nutzer unter dieser ID/Username</h1>
+    <?php 
     }
 
 
 }else{
     $userArray=getAllUser($conn);
 
-    echo"
+    ?>
                 <h1>Alle Nutzer</h1>
                 <table>
                     <tr>
@@ -101,36 +104,37 @@ if(isset($_POST["search"])&&$_POST["search"]!=null){
                         <th>Postal Code</th>
                     </tr>
             
-                    ";
+    <?php 
     if($userArray!=null){
         for($i=0;$i<count($userArray);$i++) {
-
-            echo "
+        ?>
                         <tr>
-                                <td > ".$userArray[$i]["id"]." </td >
-                                <td > ".$userArray[$i]["firstname"]." </td >
-                                <td > ".$userArray[$i]["lastname"]." </td >
-                                <td > ".$userArray[$i]["email"]."Euro </td >
-                                <td > ".$userArray[$i]["username"]." </td >                                             
-                            ";
+                                <td > <?php echo $userArray[$i]["id"]?> </td >
+                                <td > <?php echo $userArray[$i]["firstname"]?> </td >
+                                <td > <?php echo $userArray[$i]["lastname"]?> </td >
+                                <td > <?php echo $userArray[$i]["email"]?>Euro </td >
+                                <td > <?php echo $userArray[$i]["username"]?> </td >                                             
+            <?php 
             $address=getAdressFromUserID($conn,$userArray[$i]["id"]);
             if($address!=null){
-                echo"
-                                <td > ".$address[0]["address_line"]." </td >
-                                <td > ".$address[0]["street_number"]." </td >                                   
-                                <td > ".$address[0]["city"]." </td >  
-                                <td > ".$address[0]["postal_code"]." </td >  
-                    ";
+            ?>
+                                <td > <?php echo $address[0]["address_line"]?> </td >
+                                <td > <?php echo $address[0]["street_number"]?> </td >                                   
+                                <td > <?php echo $address[0]["city"]?> </td >  
+                                <td > <?php echo $address[0]["postal_code"]?></td >  
+            <?php 
             }else{
-                echo"
+            ?>
                                 <td > Not Given </td >  
                                 <td > Not Given </td >  
                                 <td > Not Given </td >  
                                 <td > Not Given </td >  
                                 
-                    ";
+            <?php 
             }
-            echo"        </tr >";
+            ?>
+            </tr >
+            <?php 
         }
 
     }

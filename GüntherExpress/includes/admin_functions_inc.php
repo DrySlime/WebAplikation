@@ -172,7 +172,8 @@ function getUsername($conn,$userID){
 function getPaymentMethod($conn,$paymentmethodID){
     #returns a String value of a $paymentmethodID
 
-    $sql = "SELECT value FROM payment_type WHERE id=? ;";
+
+    $sql = "SELECT payment_type_id FROM user_payment_method WHERE id=? ;";
     $stmt = mysqli_stmt_init($conn);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -181,6 +182,22 @@ function getPaymentMethod($conn,$paymentmethodID){
     }
     mysqli_stmt_prepare($stmt, $sql);
     mysqli_stmt_bind_param($stmt, "s", $paymentmethodID);
+    mysqli_stmt_execute($stmt);
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    $row = mysqli_fetch_assoc($resultData);
+    $paymentmethodType = $row["payment_type_id"];
+
+
+    $sql = "SELECT value FROM payment_type WHERE id=? ;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ../index.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_prepare($stmt, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $paymentmethodType);
     mysqli_stmt_execute($stmt);
     $resultData = mysqli_stmt_get_result($stmt);
 

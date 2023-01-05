@@ -64,41 +64,42 @@ if($cateArr!=null){
                 <?php
                 for($i=0;$i<count($cateArr);$i++) {
 
-                    echo "
+                ?>
                 <tr>
-                    <td > ".$cateArr[$i]["id"]." </td >
-                    <td > ".$cateArr[$i]["parent_category_id"]." </td >
-                    <td > ".$cateArr[$i]["category_name"]." </td >
-                    <td > <a href='category_admin.php?change=1&id=".$cateArr[$i]["id"]."&parentID=".$cateArr[$i]["parent_category_id"]."&categoryName=".$cateArr[$i]["category_name"]."'><button>CHANGE</button></a> </td >
-                    <td > <form action='includes/deleteCategory_inc.php' method='post'><input type='submit' name='delButton' value='DELETE'><input name='categoryID' value=".$cateArr[$i]["id"]." hidden> </form></td >
+                    <td > "<?php echo $cateArr[$i]["id"]?>" </td >
+                    <td > "<?php echo $cateArr[$i]["parent_category_id"]?>" </td >
+                    <td > "<?php echo $cateArr[$i]["category_name"]?>" </td >
+                    <td > <a href='category_admin.php?change=1&id=<?php echo $cateArr[$i]["id"]?>&parentID=<?php echo $cateArr[$i]["parent_category_id"]?>&categoryName=<?php echo$cateArr[$i]["category_name"]?>'><button>CHANGE</button></a> </td >
+                    <td > <form action='includes/deleteCategory_inc.php' method='post'><input type='submit' name='delButton' value='DELETE'><input name='categoryID' value="<?php echo $cateArr[$i]["id"]?>" hidden> </form></td >
                 </tr >
         
-    ";
+    <?php
     }
-    echo "</table></div>";
-}
-?>
+    ?>
+    </table></div>
 <?php
+}
+
 if (isset($_GET["change"])){
-    echo'
+?>
     <div class="changeForm">
         <div class="changeFormBox">
-            <h1>UPDATE FORM ID-'.$_GET["id"].': </h1>
+            <h1>UPDATE FORM ID-<?php echo $_GET["id"]?>: </h1>
             <hr style="height: 5px;background-color: #101010"><br>
                 <form action="includes/updateCategory_inc.php" method="post">
-                     New Category Name: <input type="text" name="category_name"  value="'.$_GET["categoryName"].'" required><br>
+                     New Category Name: <input type="text" name="category_name"  value="<?php echo $_GET["categoryName"]?>" required><br>
         
                     <label for="category">Choose a new Parent Category:</label>
                     <select  name="parent_category_id" size="4" required>
-                    ';
+            <?php
             for ($i=0;$i<count($cateArr);$i++){
-                echo "
-                                    <option value=".$cateArr[$i]["id"].">".$cateArr[$i]["category_name"]."</option>
-                                ";
+            ?>
+                                    <option value="<?php echo $cateArr[$i]["id"]?>"><?php echo $cateArr[$i]["category_name"]?></option>
+            <?php 
             }
-            echo '
+            ?>
                     </select><br>
-                    <input type="text" name="id"  value='.$_GET["id"].' hidden>
+                    <input type="text" name="id"  value='<?php echo $_GET["id"]?>' hidden>
           
                     <input type="submit" name="send_form" value="UPDATE">
                     <a href="category_admin.php"><button formnovalidate>CANCEL</button></a>
@@ -107,7 +108,7 @@ if (isset($_GET["change"])){
         </div>
         
     </div>
-    ';
+<?php
 }
 include_once "footer.php";
 ?>

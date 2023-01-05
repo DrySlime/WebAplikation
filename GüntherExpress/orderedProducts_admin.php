@@ -31,7 +31,8 @@ $amount = 3;
         $productArray=getAllOrderedProductsFromOrderID($conn,$userid);
 
         if($productArray!=null){
-            echo"<h1>Alle Besttelungen von ".getUsername($conn,$productArray[0]["siteuser_id"])."</h1>
+        ?>
+            <h1>Alle Besttelungen von <?php echo getUsername($conn,$productArray[0]["siteuser_id"])?></h1>
                 <table>
                     <tr>
                         <th>Order_id </th>
@@ -46,33 +47,35 @@ $amount = 3;
                         <th>Change Status</th>
                     </tr>
             
-                    ";
+                    <?php
                     for($i=0;$i<count($productArray);$i++) {
                         $order=getOrderLine($conn,$productArray[$i]["order_id"]);
-                        echo "
+                    ?>
                         <tr>
-                                <td > ".$productArray[$i]["order_id"]." </td >
-                                <td > ".getUsername($conn,$productArray[$i]["siteuser_id"])." </td >
-                                <td > ".$productArray[$i]["order_date"]." </td >
-                                <td > ".getPaymentMethod($conn,$productArray[$i]["payment_method_id"])." </td >
-                                <td > ".getShippingAdress($conn,$productArray[$i]["shipping_address_id"])." </td >
-                                <td > ".getShippingMethod($conn,$productArray[$i]["shipping_method_id"])." </td >
-                                <td > ".$productArray[$i]["order_total"]."Euro </td >
-                                <td > ".getOrderStatus($conn,$productArray[$i]["order_status_id"])." </td >   
-                                <td > ".orderlineToTEXT($conn,$order)." </td > 
-                                <td><a href='orderedProducts_admin.php?change=1&orderid=".$productArray[$i]['order_id']."&username=".getUsername($conn,$productArray[$i]['siteuser_id'])."&date=".$productArray[$i]['order_date']."&payMethod=".getPaymentMethod($conn,$productArray[$i]["payment_method_id"])."&adress=".getShippingAdress($conn,$productArray[$i]["shipping_address_id"])." &shipMethod=".getShippingMethod($conn,$productArray[$i]["shipping_method_id"])."&total=".$productArray[$i]["order_total"]."&orderStatus=".getOrderStatus($conn,$productArray[$i]["order_status_id"])."&orderContent=".orderlineToTEXT($conn,$order)."'><button>CHANGE</button></a></td>  
-                            </tr >";
+                                <td > <?php echo $productArray[$i]["order_id"]?> </td >
+                                <td > <?php echo getUsername($conn,$productArray[$i]["siteuser_id"])?> </td >
+                                <td > <?php echo $productArray[$i]["order_date"]?> </td >
+                                <td > <?php echo getPaymentMethod($conn,$productArray[$i]["payment_method_id"])?></td >
+                                <td > <?php echo getShippingAdress($conn,$productArray[$i]["shipping_address_id"])?> </td >
+                                <td > <?php echo getShippingMethod($conn,$productArray[$i]["shipping_method_id"])?> </td >
+                                <td > <?php $productArray[$i]["order_total"]?>Euro </td >
+                                <td > <?php getOrderStatus($conn,$productArray[$i]["order_status_id"])?> </td >   
+                                <td > <?php orderlineToTEXT($conn,$order)?> </td > 
+                                <td><a href='orderedProducts_admin.php?change=1&orderid=<?php $productArray[$i]['order_id']?>&username=<?php echo getUsername($conn,$productArray[$i]['siteuser_id'])?>&date=<?php echo $productArray[$i]['order_date']?>&payMethod=<?php echo getPaymentMethod($conn,$productArray[$i]["payment_method_id"])?>&adress=<?php echo getShippingAdress($conn,$productArray[$i]["shipping_address_id"])?>&shipMethod=<?php echo getShippingMethod($conn,$productArray[$i]["shipping_method_id"])?>&total=<?php echo $productArray[$i]["order_total"]?>&orderStatus=<?php echo getOrderStatus($conn,$productArray[$i]["order_status_id"])?>&orderContent=<?php echo orderlineToTEXT($conn,$order)?>'><button>CHANGE</button></a></td>  
+                            </tr >
+        <?php
             }
         }else{
-
-            echo "<h1>No Order under this ID</h1>";
+        ?>
+            <h1>No Order under this ID</h1>
+        <?php
         }
 
 
     }else{
         $productArray=getAllOrderedProducts($conn);
 
-        echo"
+    ?>
                 <h1>Alle Besttelungen</h1>
                 <table>
                     <tr>
@@ -88,57 +91,56 @@ $amount = 3;
                         <th>Change Status</th>
                     </tr>
             
-                    ";
+        <?php 
         if($productArray!=null){
             for($i=0;$i<count($productArray);$i++) {
                 $order=getOrderLine($conn,$productArray[$i]["order_id"]);
-                echo "
+                ?>
                         <tr>
-                                <td > ".$productArray[$i]["order_id"]." </td >
-                                <td > ".getUsername($conn,$productArray[$i]["siteuser_id"])." </td >
-                                <td > ".$productArray[$i]["order_date"]." </td >
-                                <td > ".getPaymentMethod($conn,$productArray[$i]["payment_method_id"])." </td >
-                                <td > ".getShippingAdress($conn,$productArray[$i]["shipping_address_id"])." </td >
-                                <td > ".getShippingMethod($conn,$productArray[$i]["shipping_method_id"])." </td >
-                                <td > ".$productArray[$i]["order_total"]."Euro </td >
-                                <td > ".getOrderStatus($conn,$productArray[$i]["order_status_id"])." </td >   
-                                <td > ".orderlineToTEXT($conn,$order)." </td >   
-                                <td><a href='orderedProducts_admin.php?change=1&orderid=".$productArray[$i]['order_id']."&username=".getUsername($conn,$productArray[$i]['siteuser_id'])."&date=".$productArray[$i]['order_date']."&payMethod=".getPaymentMethod($conn,$productArray[$i]["payment_method_id"])."&adress=".getShippingAdress($conn,$productArray[$i]["shipping_address_id"])." &shipMethod=".getShippingMethod($conn,$productArray[$i]["shipping_method_id"])."&total=".$productArray[$i]["order_total"]."&orderStatus=".getOrderStatus($conn,$productArray[$i]["order_status_id"])."&orderContent=".orderlineToTEXT($conn,$order)."'><button>CHANGE</button></a></td>  
+                                <td > <?php echo $productArray[$i]["order_id"]?> </td >
+                                <td > <?php echo getUsername($conn,$productArray[$i]["siteuser_id"])?> </td >
+                                <td > <?php echo $productArray[$i]["order_date"]?> </td >
+                                <td > <?php echo getPaymentMethod($conn,$productArray[$i]["payment_method_id"])?></td >
+                                <td > <?php echo getShippingAdress($conn,$productArray[$i]["shipping_address_id"])?> </td >
+                                <td > <?php echo getShippingMethod($conn,$productArray[$i]["shipping_method_id"])?> </td >
+                                <td > <?php echo $productArray[$i]["order_total"]?> Euro </td >
+                                <td > <?php echo getOrderStatus($conn,$productArray[$i]["order_status_id"])?> </td >   
+                                <td > <?php echo orderlineToTEXT($conn,$order)?> </td >   
+                                <td><a href='orderedProducts_admin.php?change=1&orderid=<?php echo $productArray[$i]['order_id']?>&username=<?php echo getUsername($conn,$productArray[$i]['siteuser_id'])?>&date=<?php echo $productArray[$i]['order_date']?>&payMethod=<?php echo getPaymentMethod($conn,$productArray[$i]["payment_method_id"])?>&adress=<?php echo getShippingAdress($conn,$productArray[$i]["shipping_address_id"])?>&shipMethod=<?php echo getShippingMethod($conn,$productArray[$i]["shipping_method_id"])?>&total=<?php echo $productArray[$i]["order_total"]?>&orderStatus=<?php echo getOrderStatus($conn,$productArray[$i]["order_status_id"])?>&orderContent=<?php echo orderlineToTEXT($conn,$order)?>'><button>CHANGE</button></a></td>  
                
-                            </tr >";
+                            </tr >
+                            <?php
             }
         }
 
     }
-    
-    ?>
-<?php
+
 $status=getAllOrderStatus($conn);
 
 if (isset($_GET["change"])){
-    echo'
+?>
     <div class="changeForm">
     <h1>UPDATE FORM: </h1>
         <form action="includes/updateOrderedProduct_inc.php" method="post">           
-            OrderID: '.$_GET["orderid"].'<br>
-            Username: '.$_GET["username"].'<br>
+            OrderID: <?php echo $_GET["orderid"]?><br>
+            Username: <?php echo $_GET["username"]?><br>
             <select  name="statusID" size="4"  required>            
-            ';
+    <?php
     for ($i=0;$i<count($status);$i++){
-        echo "
-                            <option value=".$status[$i]["id"].">".$status[$i]["status"]."</option>
-                        ";
-    };
-    echo '
+    ?>
+                            <option value="<?php echo $status[$i]["id"]?>"><?php echo $status[$i]["status"]?></option>
+    <?php 
+    }
+    ?>
             </select><br>
-            <input type="text" name="orderID" value='.$_GET["orderid"].' hidden>
+            <input type="text" name="orderID" value='<?php echo $_GET["orderid"]?>' hidden>
             <input type="submit" name="send_form" value="UPDATE">
             
             <button formnovalidate><a href="orderedProducts_admin.php" >Cancel</a></button>
     
         </form>
     </div>
-    ';
+    <?php
 }
 
 ?>
