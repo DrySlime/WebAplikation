@@ -11,6 +11,15 @@ body {
     overflow-x: hidden;
 }
 
+::-moz-selection {
+    background-color: transparent;
+    color: #000;
+}
+
+::selection {
+    background-color: transparent;
+}
+
 .header {
     display: flex;
     height: auto;

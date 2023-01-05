@@ -983,3 +983,48 @@ input[type=month]:hover {
     appearance: menulist-button;
     cursor: pointer;
 }
+
+.rating_group {
+    float: left;
+}
+
+.rating_group:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+    visibility: hidden;
+    clip:rect(0,0,0,0);
+}
+
+.rating_group:not(:checked) > label {
+    float:right;
+    width:1em;
+    padding:0 .1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:200%;
+    line-height:1.2;
+}
+
+.rating_group > input:checked ~ label {
+    color:orange;
+}
+
+.rating_group:not(:checked) > label:hover,
+.rating_group:not(:checked) > label:hover ~ label {
+    color:orange;
+}
+
+.rating_group > input:checked + label:hover,
+.rating_group > input:checked + label:hover ~ label,
+.rating_group > input:checked ~ label:hover,
+.rating_group > input:checked ~ label:hover ~ label,
+.rating_group > label:hover ~ input:checked ~ label {
+    color:orange;
+}
+
+.rating_group > label:active {
+    position:relative;
+    top:2px;
+    left:2px;
+}

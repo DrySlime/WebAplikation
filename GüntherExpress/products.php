@@ -48,7 +48,7 @@ if (isset($_POST["priceSearch"])) {
 <div class="page_header_wrapper">
     <div class="page_page_header">
         <h1><?php echo $name ?></h1>
-        <img src="img/cookieSnap.png" alt="Andre Caputo">
+        <img src="img/cadbury.png" alt="Andre Caputo">
     </div>
     <div class="searchbar_wrapper">
         <form action="products.php" method="post">

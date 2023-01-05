@@ -17,11 +17,14 @@ if (!isset($_SESSION["useruid"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script type="text/javascript" src="JS/accountFunctions.js"></script>
     <title></title>
     <?php
     require_once 'includes/dbh_include.php';
     require_once 'includes/account_include.php';
     require_once 'includes/functions_include.php';
+    require_once 'includes/rating_functions_inc.php';
     $resultAccount = getAccountData($conn);
     $resultDefAddress = getDefUserAddressData($conn);
     $resultAddressWODef = getUserAddressDataWODef($conn);
@@ -104,8 +107,8 @@ if (!isset($_SESSION["useruid"])) {
                             <?php
                             if ($resultDefAddress !== null) {
                                 ?>
-                                <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
-                                <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?> <?php echo $resultDefAddress['street_number']; ?></h4>
+                                <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                                <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?><?php echo $resultDefAddress['street_number']; ?></h4>
                                 <h4><?php echo ucfirst($resultDefAddress['city']); ?>, <?php echo $resultDefAddress['postal_code']; ?></h4>
                                 <?php
                             } else {
@@ -145,7 +148,7 @@ if (!isset($_SESSION["useruid"])) {
                                 <h4>Anzahl Artikel: 2</h4>
                                 <h4>
                                     Lieferadresse: <?php echo ucfirst($DataRows['address_line1']) ?> <?php echo $DataRows['street_number'] ?>, <?php echo $DataRows['postal_code'] ?>, <?php echo ucfirst($DataRows['city']) ?></h4>
-                                <h4>Bezahlmethode: <?php echo $DataRows['value'] ?></h4>
+                                <h4>Zahlungsart: <?php echo mysqli_fetch_assoc(getPaymentTypeValueFromID($conn, $DataRows['payment_type_id']))["value"] ?></h4>
                                 <h4>Summe: <?php echo $DataRows['order_total'] ?>€</h4>
                             </div>
                         </div>
@@ -166,27 +169,28 @@ if (!isset($_SESSION["useruid"])) {
                         <h1>Zahlungsarten</h1>
                     </div>
                     <div class="standard_payment_wrapper">
-                        <?php 
-                        if($resultDefPayment !== null){
-                        ?>
+                        <?php
+                        if ($resultDefPayment !== null) {
+                            ?>
                             <div class="payment_card">
-                            <div class="card_top card_info">
-                                <i class="material-symbols-outlined" style="pointer-events: none; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;">credit_card</i>
-                                <h4><?php echo $resultDefPayment['provider'] ?></h4>
-                            </div>
-                            <div class="card_middle card_info">
-                                <h4><?php echo $resultDefPayment['account_number'] ?></h4>
-                            </div>
-                            <div class="card_bottom card_info">
-                                <h4><?php echo $resultAccount['firstname']; ?>  <?php echo $resultAccount['lastname']; ?></h4>
-                                <div class="card_date">
-                                    <h5>Gültig bis:</h5>
-                                    <h4><?php echo $resultDefPayment['expiry_date'] ?></h4>
+                                <div class="card_top card_info">
+                                    <i class="material-symbols-outlined" style="pointer-events: none; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;">credit_card</i>
+                                    <h4><?php echo $resultDefPayment['provider'] ?></h4>
+                                </div>
+                                <div class="card_middle card_info">
+                                    <h4><?php echo $resultDefPayment['account_number'] ?></h4>
+                                </div>
+                                <div class="card_bottom card_info">
+                                    <h4><?php echo $resultAccount['firstname']; ?><?php echo $resultAccount['lastname']; ?></h4>
+                                    <div class="card_date">
+                                        <h5>Gültig bis:</h5>
+                                        <h4><?php echo $resultDefPayment['expiry_date'] ?></h4>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <?php }else{ #TODO?>
-                        <h4 id="noEmail">Du hast noch keine Standard Zahlungsart beim Confectioner hinterlegt!</h4>
+                        <?php } else { #TODO
+                            ?>
+                            <h4 id="noEmail">Du hast noch keine Standard Zahlungsart beim Confectioner hinterlegt!</h4>
                         <?php } ?>
                     </div>
                     <div class="account_subsection_button">
@@ -257,8 +261,8 @@ if (!isset($_SESSION["useruid"])) {
                     ?>
                     <div class="modal_address_grid_container">
                         <div class="addressitem_container">
-                            <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
-                            <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?> <?php echo $resultDefAddress['street_number']; ?></h4>
+                            <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                            <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?><?php echo $resultDefAddress['street_number']; ?></h4>
                             <h4><?php echo ucfirst($resultDefAddress['city']); ?>, <?php echo $resultDefAddress['postal_code']; ?></h4>
                             <a class="defaultText">Standard Adresse</a>
                             <div class="address_setting_container">
@@ -275,8 +279,8 @@ if (!isset($_SESSION["useruid"])) {
                         ?>
                         <div class="modal_address_grid_container">
                             <div class="addressitem_container">
-                                <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
-                                <h4><?php echo ucfirst($rows['address_line1']); ?> <?php echo $rows['street_number']; ?></h4>
+                                <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                                <h4><?php echo ucfirst($rows['address_line1']); ?><?php echo $rows['street_number']; ?></h4>
                                 <h4><?php echo ucfirst($rows['city']); ?>, <?php echo $rows['postal_code']; ?></h4>
                                 <div class="address_setting_container">
                                     <a href="account.php?edit=<?php echo $rows['id'] ?>">
@@ -323,11 +327,10 @@ if (!isset($_SESSION["useruid"])) {
                                     <h2>Datum: <?php echo $DataRows['order_date'] ?></h2>
                                 </div>
                                 <h4>Anzahl Artikel: 2</h4>
-                                <h4>
-                                    Lieferadresse: <?php echo ucfirst($DataRows['address_line1']) ?> <?php echo $DataRows['street_number'] ?>
+                                <h4>Lieferadresse: <?php echo ucfirst($DataRows['address_line1']) ?> <?php echo $DataRows['street_number'] ?>
                                     , <?php echo $DataRows['postal_code'] ?>
                                     , <?php echo ucfirst($DataRows['city']) ?></h4>
-                                <h4>Bezahlmethode: <?php echo $DataRows['value'] ?></h4>
+                                <h4>Zahlungsart: <?php echo mysqli_fetch_assoc(getPaymentTypeValueFromID($conn, $DataRows['payment_type_id']))["value"] ?></h4>
                                 <h4>Summe: <?php echo $DataRows['order_total'] ?>€</h4>
                             </div>
                             <div class="orders_products_button">
@@ -348,12 +351,26 @@ if (!isset($_SESSION["useruid"])) {
                                             <h2><?php echo $OrderRow['product_name'] ?></h2>
                                             <h4>Menge: <?php echo $OrderRow['qty'] ?></h4>
                                             <h4>Preis: <?php echo($OrderRow['qty'] * $OrderRow['price']) ?>€</h4>
+                                            <h4>Bewerten:</h4>
                                             <div class="order_product_review">
-                                                <span class="material-symbols-outlined" id="star1">star</span>
-                                                <span class="material-symbols-outlined" id="star2">star</span>
-                                                <span class="material-symbols-outlined" id="star3">star</span>
-                                                <span class="material-symbols-outlined" id="star4">star</span>
-                                                <span class="material-symbols-outlined" id="star5">star</span>
+                                                <form class="rating_group" id="form_<?php echo $rows['id'] ?>_<?php echo $OrderRow['product_item_id'] ?>">
+                                                    <input type="radio" id="5_<?php echo $rows['id'] ?>_<?php echo $OrderRow['product_item_id'] ?>" name="rating_<?php echo $rows['id'] ?>_<?php echo $OrderRow['product_item_id'] ?>" value="5"/><label for="5_<?php echo $rows['id'] ?>_<?php echo $OrderRow['product_item_id'] ?>"><span class="material-symbols-outlined">star</span></label>
+                                                    <input type="radio" id="4_<?php echo $rows['id'] ?>_<?php echo $OrderRow['product_item_id'] ?>" name="rating_<?php echo $rows['id'] ?>_<?php echo $OrderRow['product_item_id'] ?>" value="4"/><label for="4_<?php echo $rows['id'] ?>_<?php echo $OrderRow['product_item_id'] ?>"><span class="material-symbols-outlined">star</span></label>
+                                                    <input type="radio" id="3_<?php echo $rows['id'] ?>_<?php echo $OrderRow['product_item_id'] ?>" name="rating_<?php echo $rows['id'] ?>_<?php echo $OrderRow['product_item_id'] ?>" value="3"/><label for="3_<?php echo $rows['id'] ?>_<?php echo $OrderRow['product_item_id'] ?>"><span class="material-symbols-outlined">star</span></label>
+                                                    <input type="radio" id="2_<?php echo $rows['id'] ?>_<?php echo $OrderRow['product_item_id'] ?>" name="rating_<?php echo $rows['id'] ?>_<?php echo $OrderRow['product_item_id'] ?>" value="2"/><label for="2_<?php echo $rows['id'] ?>_<?php echo $OrderRow['product_item_id'] ?>"><span class="material-symbols-outlined">star</span></label>
+                                                    <input type="radio" id="1_<?php echo $rows['id'] ?>_<?php echo $OrderRow['product_item_id'] ?>" name="rating_<?php echo $rows['id'] ?>_<?php echo $OrderRow['product_item_id'] ?>" value="1"/><label for="1_<?php echo $rows['id'] ?>_<?php echo $OrderRow['product_item_id'] ?>"><span class="material-symbols-outlined">star</span></label>
+
+                                                    <?php
+                                                    $reviewData = getProductBasedReview($conn, $OrderRow['product_item_id']);
+                                                    if ($reviewData) {
+                                                        ?>
+                                                        <script>
+                                                            fillData(<?php echo $reviewData["rating_value"]?>, <?php echo $rows['id']?>, <?php echo $OrderRow["product_item_id"]?>);
+                                                        </script>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -400,11 +417,11 @@ if (!isset($_SESSION["useruid"])) {
                                     }
                                     ?>
                                 </select>
-                                    <input type="text" name="addNumber" id="addNumber" required placeholder="Kartennummer">
-                                    <div class="add_data_oneline payments">
-                                        <input type="text" name="addProvider" id="addProvider" required placeholder="Provider">
-                                        <input type="month" pattern="[0-1]{1}[0-9]{1}/[0-9]{2}/[0-9]{2}" name="expiry_date" id="expiry_date" required placeholder="Ablaufdatum">
-                                    </div>
+                                <input type="text" name="addNumber" id="addNumber" required placeholder="Kartennummer">
+                                <div class="add_data_oneline payments">
+                                    <input type="text" name="addProvider" id="addProvider" required placeholder="Provider">
+                                    <input type="month" pattern="[0-1]{1}[0-9]{1}/[0-9]{2}/[0-9]{2}" name="expiry_date" id="expiry_date" required placeholder="Ablaufdatum">
+                                </div>
                             </form>
                             <div class="addressitem_addbutton">
                                 <button id="add_Payment" form="addPayment" type="submit" name="add_Payment_button">
@@ -482,7 +499,7 @@ if (!isset($_SESSION["useruid"])) {
             </div>
         </div>
     </div>
-    <script src="JS/account.js"></script>
+    <script type="text/javascript" src="JS/account.js"></script>
 <?php } ?>
 </body>
 

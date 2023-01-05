@@ -69,9 +69,7 @@ $stars = getAvrgRating($conn, $product[0]["id"]);
                                 echo '<span class="material-symbols-outlined" id="star' . $i . '">star</span>';
                             }
                         }
-                        echo "<span> " . $stars . " Sterne </span>";
                         ?>
-
                     </div>
                 </div>
                 <div class="item_data_description">
@@ -134,7 +132,7 @@ $stars = getAvrgRating($conn, $product[0]["id"]);
                 echo "
                     <div class='swiper-slide'>
                         <div class='image_wrapper'>
-                            <a href='item.js?id=" . $moreProducts[$i]["id"] . "'><img src=" . $moreProducts[$i]["product_image"] . " alt=''></a>
+                            <a href='item.php?id=" . $moreProducts[$i]["id"] . "'><img src=" . $moreProducts[$i]["product_image"] . " alt=''></a>
                         </div>
                     </div>
                  ";
@@ -143,7 +141,6 @@ $stars = getAvrgRating($conn, $product[0]["id"]);
             ?>
 
         </div>
-        <div class="swiper-pagination"></div>
         <div class="swiper-button-prev"></div>
         <div class="swiper-button-next"></div>
     </div>
@@ -164,11 +161,6 @@ $stars = getAvrgRating($conn, $product[0]["id"]);
             delay: 3000,
             pauseOnMouseEnter: true,
             disableOnInteraction: false,
-        },
-        pagination: {
-            el: '.swiper-pagination',
-            type: 'bullets',
-            clickable: true,
         },
         navigation: {
             nextEl: '.swiper-button-next',

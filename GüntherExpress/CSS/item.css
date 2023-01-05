@@ -33,7 +33,7 @@ body {
     width: 120%;
     height: 100%;
     left: 25%;
-    bottom: 1%;
+    top: 5%;
     display: flex;
     position: absolute;
     justify-content: center;

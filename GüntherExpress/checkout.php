@@ -63,6 +63,9 @@ $endCosts = $_SESSION['fullPrice'];
 <script>
     function setData(typ, id) {
         createCookie(typ, id, "0.1");
+        if(typ === "shippingId") {
+            createCookie("total", <?php echo $endCosts; ?>, "0.1");
+        }
     }
 </script>
 
@@ -224,7 +227,7 @@ $endCosts = $_SESSION['fullPrice'];
                                 while ($rows = $resultPaymentWODef->fetch_assoc()) {
                                     ?>
                                     <div class="checkout_grid_container payment_container" onclick='setData("paymentId", <?php echo $rows['id'] ?>)'>
-                                        <input class="radioButton" type="radio" id="<?php echo $rows['id'] ?>" name="payment_buttons" value="<?php echo $resultPaymentWODef['id'] ?>">
+                                        <input class="radioButton" type="radio" id="<?php echo $rows['id'] ?>" name="payment_buttons" value="<?php echo $rows['id'] ?>">
                                         <div id="payment_<?php echo $rows['id'] ?>" class="grid_container">
                                             <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
                                             <h4><?php echo $rows['provider'] ?></h4>

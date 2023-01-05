@@ -53,7 +53,7 @@ function doOrder($conn, $userId)
     echo $_COOKIE["shippingId"];
     date_default_timezone_set('Europe/Berlin');
     $date = date("Y-m-d H:i:s");
-    $sum = getShoppingCartSum($conn, $userId);
+    $sum = $_COOKIE["total"];
 
     $sql = "INSERT INTO shop_order (siteuser_id, order_date, payment_method_id, shipping_address_id, shipping_method_id, order_total, order_status_id) VALUES (?,?,?,?,?,?,?)";
     $stmt = mysqli_stmt_init($conn);

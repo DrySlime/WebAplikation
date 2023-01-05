@@ -37,19 +37,16 @@ global $conn;
             for ($i = 0; $i < count($newItems); $i++) {
                 echo "                        
                             <div class='swiper-slide'>
-                                
                                 <div class='image_wrapper'>
-                                    <a href=item.js?id=" . $newItems[$i]["id"] . ">
+                                    <a href=item.php?id=" . $newItems[$i]["id"] . ">
                                         <img src=" . $newItems[$i]["product_image"] . " alt=''>
                                     </a>
                                 </div>
-                                
                             </div>                                         
                     ";
             }
             ?>
         </div>
-        <div class="swiper-pagination"></div>
         <div class="swiper-button-prev"></div>
         <div class="swiper-button-next"></div>
     </div>
@@ -65,15 +62,12 @@ global $conn;
     <div class="swiper">
         <div class="swiper-wrapper">
             <?php
-
-
             $arr = getBestRatedProducts($conn, 5);
-
             for ($i = 0; $i < count($arr); $i++) {
                 echo "                        
                             <div class='swiper-slide'>
                                 <div class='image_wrapper'>
-                                    <a href=item.js?id=" . $arr[$i] . ">
+                                    <a href=item.php?id=" . $arr[$i] . ">
                                         <img src=" . getImage($conn, $arr[$i]) . " alt=''>
                                     </a>
                                 </div>
@@ -82,7 +76,6 @@ global $conn;
             }
             ?>
         </div>
-        <div class="swiper-pagination"></div>
         <div class="swiper-button-prev"></div>
         <div class="swiper-button-next"></div>
     </div>
@@ -102,11 +95,6 @@ global $conn;
             delay: 3000,
             pauseOnMouseEnter: true,
             disableOnInteraction: false,
-        },
-        pagination: {
-            el: '.swiper-pagination',
-            type: 'bullets',
-            clickable: true,
         },
         navigation: {
             nextEl: '.swiper-button-next',

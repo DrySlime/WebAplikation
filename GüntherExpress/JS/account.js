@@ -79,6 +79,14 @@ function openOrderModal() {
 }
 
 function closeOrderModal() {
+    const orderGroup = document.querySelectorAll('[id^=order_products_]');
+
+    orderGroup.forEach(sectionGroup => {
+        if (sectionGroup.classList.contains("open")) {
+            sectionGroup.classList.remove("open");
+        }
+    });
+
     document.getElementById('close_orders_modal').style.transition = 'none';
     var orderModalContainers = document.getElementsByClassName('open');
     for (var i = 0; i < orderModalContainers.length; i++) {
@@ -163,3 +171,29 @@ function closePaymentModal() {
     })
     paymentModal.style.visibility = 'hidden';
 }
+
+/*
+-----------------------------
+Review System
+-----------------------------
+ */
+
+$(document).ready(function () {
+    $(document).on('click', 'input[type="radio"]', function () {
+        let itemData = $(this).attr('id');
+
+        let itemSingleData = itemData.split("_");
+        let starID = itemSingleData[0];
+        let orderID = itemSingleData[1];
+        let itemID = itemSingleData[2];
+
+        $.ajax({
+            url: "/includes/ajaxReviews.php",
+            type: "POST",
+            data: {starValue: starID, itemID: itemID, orderID: orderID},
+            success: function () {
+
+            }
+        });
+    });
+});

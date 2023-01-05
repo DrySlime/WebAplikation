@@ -4,9 +4,7 @@ function getAvrgRating($conn, $productID)
 {
     #this returns the average rating of the product
     #returns a double value between 1-5 which represents the rating from the $productID
-
     $rating = 0;
-
     $sql = "SELECT id FROM order_line WHERE product_item_id =?;";
     $stmt = mysqli_stmt_init($conn);
 
@@ -26,9 +24,7 @@ function getAvrgRating($conn, $productID)
         $orderLine = null;
     }
     mysqli_stmt_close($stmt);
-
-    if ($orderLine!= null){
-
+    if ($orderLine != null) {
         for ($i = 0; $i < count($orderLine); $i++) {
             $sql = "SELECT rating_value FROM user_review WHERE ordered_product_id =?;";
             $stmt = mysqli_stmt_init($conn);
@@ -42,15 +38,12 @@ function getAvrgRating($conn, $productID)
             mysqli_stmt_execute($stmt);
             $resultData = mysqli_stmt_get_result($stmt);
 
-            if($row = mysqli_fetch_assoc($resultData)){
+            if ($row = mysqli_fetch_assoc($resultData)) {
                 $ratingArr[] = $row["rating_value"];
-            }else{
-                $ratingArr[]=0;
+            } else {
+                $ratingArr[] = 0;
             }
-
-
         }
-
         foreach ($ratingArr as $singleRating) {
             $rating += $singleRating;
         }
@@ -67,7 +60,6 @@ function getReviewableProducts($conn, $uid)
     # die product id und speichern die id dazugehörige orderline id
 
     #returns an array which contains a product id and a orderline_id of all the products a user can review
-
 
     $sql = "SELECT id FROM shop_order WHERE siteuser_id =?;";
     $stmt = mysqli_stmt_init($conn);
@@ -205,7 +197,8 @@ function getUsername($conn, $userID)
         $row = mysqli_fetch_assoc($resultData);
         $username = $row["user_uid"];
 
-    }return $username;
+    }
+    return $username;
 }
 
 function getNewestProducts($conn, $amount)
@@ -232,7 +225,8 @@ function getNewestProducts($conn, $amount)
         }
 
 
-    }return $productArr;
+    }
+    return $productArr;
 }
 
 function getBestRatedProducts($conn, $amount)

@@ -26,6 +26,8 @@
     background-size: cover;
     overflow: hidden;
     height: auto;
+    filter: blur(2px);
+    z-index: -2;
 }
 
 .page_page_header h1 {
@@ -33,7 +35,7 @@
     font-size: 10vmin;
     font-weight: 800;
     color: #fc466b;
-    text-shadow: 0 0 15px #101010;
+    text-shadow: 10px 10px 10px #101010;
 }
 
 .searchbar_wrapper {

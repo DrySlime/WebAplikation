@@ -346,10 +346,7 @@ function getAllFromCategory($conn, $category, $amount)
         $itemArr[] = $itemAttribute;
         unset($itemAttribute);
     }
-
     mysqli_stmt_close($stmt);
-
-
     return $itemArr;
 }
 
@@ -512,26 +509,20 @@ function convertIdToCategoryName($conn, $id)
     //returns a string
     $sql = "SELECT category_name FROM product_category WHERE id=?;";
     $stmt = mysqli_stmt_init($conn);
-
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
+    if(!mysqli_stmt_prepare($stmt,$sql)){
         header("location: ../category.php?error=stmtfailed");
         exit();
     }
-
-    mysqli_stmt_prepare($stmt, $sql);
-    mysqli_stmt_bind_param($stmt, "s", $id);
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$id);
     mysqli_stmt_execute($stmt);
-
     $resultData = mysqli_stmt_get_result($stmt);
-    if (mysqli_num_rows($resultData) > 0) {
-        $row = mysqli_fetch_assoc($resultData);
-        $categoryID=$row["id"];
-    }else{
-        $categoryID=null;
+    if(mysqli_num_rows($resultData)>0){
+        $row =mysqli_fetch_assoc($resultData);
+        $categoryName=$row["category_name"];
     }
     mysqli_stmt_close($stmt);
-    return $categoryID;
-
+    return $categoryName;
 }
 
 function convertCategoryNameToID($conn, $categoryName)
@@ -540,24 +531,22 @@ function convertCategoryNameToID($conn, $categoryName)
     //returns a string
     $sql = "SELECT id FROM product_category WHERE category_name=?;";
     $stmt = mysqli_stmt_init($conn);
-
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
+    if(!mysqli_stmt_prepare($stmt,$sql)){
         header("location: ../category.php?error=stmtfailed");
         exit();
     }
-
-    mysqli_stmt_prepare($stmt, $sql);
-    mysqli_stmt_bind_param($stmt, "s", $categoryName);
+    mysqli_stmt_prepare($stmt,$sql);
+    mysqli_stmt_bind_param($stmt,"s",$categoryName);
     mysqli_stmt_execute($stmt);
-
     $resultData = mysqli_stmt_get_result($stmt);
-    if (mysqli_num_rows($resultData) > 0) {
-        $row = mysqli_fetch_assoc($resultData);
-        $categoryName = $row["id"];
+    if(mysqli_num_rows($resultData)>0){
+        $row =mysqli_fetch_assoc($resultData);
+        $categoryID=$row["id"];
+    }else{
+        $categoryID=null;
     }
     mysqli_stmt_close($stmt);
-    return $categoryName;
-
+    return $categoryID;
 }
 
 function getAllAttributesFromItemViaID($ItemID, $conn)
@@ -1259,7 +1248,7 @@ function getPersonalOrderIDsDescending($conn)
 
 function getPersonalOrderDataByID($conn, $orderID)
 {
-    $sql = "SELECT * FROM shop_order INNER JOIN site_user ON shop_order.siteuser_id = site_user.id INNER JOIN payment_type ON shop_order.payment_method_id = payment_type.id INNER JOIN address ON shop_order.shipping_address_id = address.id  INNER JOIN shipping_method ON shop_order.shipping_method_id = shipping_method.id INNER JOIN order_status ON shop_order.order_status_id = order_status.id  WHERE shop_order.id=?";
+    $sql = "SELECT * FROM shop_order INNER JOIN site_user ON shop_order.siteuser_id = site_user.id INNER JOIN user_payment_method ON shop_order.payment_method_id = user_payment_method.id INNER JOIN address ON shop_order.shipping_address_id = address.id INNER JOIN shipping_method ON shop_order.shipping_method_id = shipping_method.id INNER JOIN order_status ON shop_order.order_status_id = order_status.id WHERE shop_order.id = ?";
     $stmt = mysqli_stmt_init($conn);
 
     mysqli_stmt_prepare($stmt, $sql);
@@ -1274,11 +1263,26 @@ function getPersonalOrderDataByID($conn, $orderID)
 
 function getObjectOrderDataByID($conn, $orderID)
 {
-    $sql = "SELECT product.product_name, product.product_image, order_line.qty, product.price FROM order_line INNER JOIN product ON order_line.product_item_id = product.id WHERE order_line.order_id=?";
+    $sql = "SELECT product.product_name, product.product_image, product_item_id, order_line.qty, product.price FROM order_line INNER JOIN product ON order_line.product_item_id = product.id WHERE order_line.order_id=?";
     $stmt = mysqli_stmt_init($conn);
 
     mysqli_stmt_prepare($stmt, $sql);
     mysqli_stmt_bind_param($stmt, "s", $orderID);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    mysqli_stmt_close($stmt);
+
+    return $resultData;
+}
+
+function getPaymentTypeValueFromID($conn, $paymentID)
+{
+    $sql = "SELECT payment_type.value FROM payment_type WHERE id=?";
+    $stmt = mysqli_stmt_init($conn);
+
+    mysqli_stmt_prepare($stmt, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $paymentID);
     mysqli_stmt_execute($stmt);
 
     $resultData = mysqli_stmt_get_result($stmt);
