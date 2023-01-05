@@ -1324,7 +1324,7 @@ function getShippingMethodData($conn)
 function bindPaymentToUser($conn, $payment_type_id, $provider, $account_number, $expiry_date)
 {
     $user_id = $_SESSION['userid'];
-    $expiry_date.="-12";
+    $expiry_date.="-01";
     if (getPaymentIDByData($conn,$user_id, $payment_type_id, $provider, $account_number, $expiry_date) != null) {
     } else {
         $sql = "INSERT INTO user_payment_method (user_id,payment_type_id, provider, account_number, expiry_date) VALUES (?,?,?,?,?);";
