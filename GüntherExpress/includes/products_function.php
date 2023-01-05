@@ -50,7 +50,7 @@ function searchProduct($conn, $searchTerm)
 {
 
     $searchTerm = "%" . $searchTerm . "%";
-    $sql = "SELECT * FROM product WHERE UPPER(product_name) LIKE UPPER(?);";
+    $sql = "SELECT * FROM product WHERE active = 1 AND UPPER(product_name) LIKE UPPER(?);";
     $stmt = mysqli_stmt_init($conn);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {

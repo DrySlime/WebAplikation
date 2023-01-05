@@ -129,7 +129,7 @@ function get___FromCatergory($conn, $whatYouNeed, $amount, $category, $shuffle)
     //Hier nen Beispiel, du suchst die Bilder von der kategorie Schuhe
     //get___FromCatergory($conn,"product_image","Schuhe")
 
-    $product_id = "SELECT id FROM product_category WHERE category_name = ?;";
+    $product_id = "SELECT id FROM product_category WHERE category_name = ? AND active=1;";
     $stmt = mysqli_stmt_init($conn);
 
     if (!mysqli_stmt_prepare($stmt, $product_id)) {
@@ -202,7 +202,7 @@ function getCategoryList($conn)
 
     //Get all names from the product_category table in an array
 
-    $sql = "SELECT * FROM product_category;";
+    $sql = "SELECT * FROM product_category WHERE active = 1;";
     $stmt = mysqli_stmt_init($conn);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -325,7 +325,7 @@ function getAllFromCategory($conn, $category, $amount)
         return $result;
     }
 
-    $sql = "SELECT * FROM product WHERE id = ?;";
+    $sql = "SELECT * FROM product WHERE id = ? AND active = 1;";
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: ../index.php?error=stmtfailed");
@@ -336,15 +336,16 @@ function getAllFromCategory($conn, $category, $amount)
         mysqli_stmt_execute($stmt);
         $resultData = mysqli_stmt_get_result($stmt);
         $row = mysqli_fetch_assoc($resultData);
-
-        $itemAttribute["id"] = $row["id"];
-        $itemAttribute["product_name"] = $row["product_name"];
-        $itemAttribute["product_image"] = $row["product_image"];
-        $itemAttribute["qty_in_stock"] = $row["qty_in_stock"];
-        $itemAttribute["price"] = $row["price"];
-        $itemAttribute["description"] = $row["description"];
-        $itemArr[] = $itemAttribute;
-        unset($itemAttribute);
+        if($row != null){
+            $itemAttribute["id"] = $row["id"];
+            $itemAttribute["product_name"] = $row["product_name"];
+            $itemAttribute["product_image"] = $row["product_image"];
+            $itemAttribute["qty_in_stock"] = $row["qty_in_stock"];
+            $itemAttribute["price"] = $row["price"];
+            $itemAttribute["description"] = $row["description"];
+            $itemArr[] = $itemAttribute;
+            unset($itemAttribute);
+        }
     }
     mysqli_stmt_close($stmt);
     return $itemArr;
@@ -411,7 +412,7 @@ function searchItemInCategory($searchInput, $conn)
 
     $searchInput = "%" . $searchInput . "%";
 
-    $sql = "SELECT id FROM product_category WHERE UPPER(category_name) LIKE UPPER(?);";
+    $sql = "SELECT id FROM product_category WHERE active = 1 AND UPPER(category_name) LIKE UPPER(?) ;";
     $stmt = mysqli_stmt_init($conn);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -438,7 +439,7 @@ function searchItemInCategory($searchInput, $conn)
 function returnParentIds($conn, $parentCategory)
 {
     //returns all  parent Id in an array
-    $sql = "SELECT parent_category_id FROM product_category WHERE category_name=?;";
+    $sql = "SELECT parent_category_id FROM product_category WHERE category_name=? AND active = 1;";
     $stmt = mysqli_stmt_init($conn);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -465,7 +466,7 @@ function returnChildrenIds($conn, $parentCategory)
     //returns all  child Ids in an array
     $parentId = returnParentIds($conn, $parentCategory);
 
-    $sql = "SELECT id FROM product_category WHERE parent_category_id=?;";
+    $sql = "SELECT id FROM product_category WHERE parent_category_id=? AND active = 1;";
     $stmt = mysqli_stmt_init($conn);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -507,7 +508,7 @@ function convertIdToCategoryName($conn, $id)
 {
     //converts an id into a categoryname
     //returns a string
-    $sql = "SELECT category_name FROM product_category WHERE id=?;";
+    $sql = "SELECT category_name FROM product_category WHERE id=? AND active = 1;";
     $stmt = mysqli_stmt_init($conn);
     if(!mysqli_stmt_prepare($stmt,$sql)){
         header("location: ../category.php?error=stmtfailed");
@@ -529,7 +530,7 @@ function convertCategoryNameToID($conn, $categoryName)
 {
     //converts an categoryName into an id
     //returns a string
-    $sql = "SELECT id FROM product_category WHERE category_name=?;";
+    $sql = "SELECT id FROM product_category WHERE category_name=? AND active = 1;";
     $stmt = mysqli_stmt_init($conn);
     if(!mysqli_stmt_prepare($stmt,$sql)){
         header("location: ../category.php?error=stmtfailed");
@@ -551,7 +552,7 @@ function convertCategoryNameToID($conn, $categoryName)
 
 function getAllAttributesFromItemViaID($ItemID, $conn)
 {
-    $sql = "SELECT * FROM product WHERE id=?;";
+    $sql = "SELECT * FROM product WHERE id=? AND active = 1;";
     $stmt = mysqli_stmt_init($conn);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -578,7 +579,7 @@ function getItemIdsFromCategory($conn, $CategoryID, $amount)
 {
     #returns $amount many ProductIds in an array from a categoryID
 
-    $sql = "SELECT id FROM product WHERE product_category_id = ? ORDER BY rand() LIMIT  ?;";
+    $sql = "SELECT id FROM product WHERE active = 1 AND product_category_id = ? ORDER BY rand() LIMIT  ?;";
 
     $stmt = mysqli_stmt_init($conn);
 
@@ -627,7 +628,7 @@ function getImage($conn, $productID)
 
 function getRandomItems($conn, $amount)
 {
-    $sql = "SELECT * FROM product ORDER BY rand() LIMIT ?;";
+    $sql = "SELECT * FROM product WHERE active = 1 ORDER BY rand() LIMIT ?;";
     $stmt = mysqli_stmt_init($conn);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -661,7 +662,7 @@ function parentCategoryAmount($conn, $var)
     $bool = true;
     $count = 0;
     while ($bool) {
-        $sql = "SELECT * FROM product_category WHERE id = ? AND parent_category_id = ?;";
+        $sql = "SELECT * FROM product_category WHERE id = ? AND parent_category_id = ? AND active = 1;";
         $stmt = mysqli_stmt_init($conn);
 
         if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -689,7 +690,7 @@ function parentCategoryAmount($conn, $var)
 function getUserIdFromUserName($conn, $userName)
 {
 
-    $sql = "SELECT * FROM site_user WHERE user_uid = ?;";
+    $sql = "SELECT * FROM site_user WHERE user_uid = ? AND active = 1;";
     $stmt = mysqli_stmt_init($conn);
 
     mysqli_stmt_prepare($stmt, $sql);
@@ -982,7 +983,7 @@ function getaccountData($conn)
 
     $userid = $_SESSION['userid'];
 
-    $sql = "SELECT user_uid, firstname, lastname, email, user_password FROM site_user WHERE id = ?;";
+    $sql = "SELECT user_uid, firstname, lastname, email, user_password FROM site_user WHERE id = ? AND active = 1;";
     $stmt = mysqli_stmt_init($conn);
 
     mysqli_stmt_prepare($stmt, $sql);
@@ -1427,7 +1428,7 @@ function getPaymentIDByData($conn, $user_id, $payment_type_id, $provider, $accou
 
 function getPaymentMethods($conn)
 {
-    $sql = "SELECT * FROM payment_type;"; #TODO active
+    $sql = "SELECT * FROM payment_type WHERE active = 1;" ;
     $stmt = mysqli_stmt_init($conn);
 
     mysqli_stmt_prepare($stmt, $sql);
