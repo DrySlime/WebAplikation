@@ -1116,6 +1116,7 @@ function addAddress($conn, $street, $houseno, $city, $postalCode)
 
 
     mysqli_stmt_close($stmt);
+    exit();
 }
 
 function bindAddressToUser($conn, $street, $houseno, $city, $postalCode)
@@ -1325,9 +1326,25 @@ function bindPaymentToUser($conn, $payment_type_id, $provider, $account_number, 
 {
     $user_id = $_SESSION['userid'];
     $expiry_date.="-01";
-    if (getPaymentIDByData($conn,$user_id, $payment_type_id, $provider, $account_number, $expiry_date) != null) {
+    $payID = getPaymentIDByData($conn,$user_id, $payment_type_id, $provider, $account_number, $expiry_date); 
+    if ($payID != null) {
+        $userid = $_SESSION['userid'];
+
+        $sql = "UPDATE user_payment_method SET active = 0 WHERE user_id = ? AND id = ?";
+        $stmt = mysqli_stmt_init($conn);
+
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            header("location: ../account.php?error=stmtfailed");
+            exit();
+        }
+
+        mysqli_stmt_bind_param($stmt, "ss", $userid, $payID);
+        mysqli_stmt_execute($stmt);
+
+        mysqli_stmt_close($stmt);
+
     } else {
-        $sql = "INSERT INTO user_payment_method (user_id,payment_type_id, provider, account_number, expiry_date) VALUES (?,?,?,?,?);";
+        $sql = "INSERT INTO user_payment_method (user_id,payment_type_id, provider, account_number, expiry_date,active) VALUES (?,?,?,?,?,1);";
         $stmt = mysqli_stmt_init($conn);
 
         if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -1379,7 +1396,7 @@ function unbindPayment($conn, $paymentid)
 {
     $userid = $_SESSION['userid'];
 
-    $sql = "DELETE FROM user_payment_method WHERE user_id = ? AND id = ?";
+    $sql = "UPDATE user_payment_method SET active = 0 WHERE user_id = ? AND id = ?";
     $stmt = mysqli_stmt_init($conn);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -1429,7 +1446,7 @@ function getDefUserPaymentData($conn)
     $userid = $_SESSION['userid'];
 
 
-    $sql = "SELECT * FROM user_payment_method WHERE is_default_pay_method = 1 AND user_id = ?";
+    $sql = "SELECT * FROM user_payment_method WHERE is_default_pay_method = 1 AND user_id = ? AND active = 1";
     $stmt = mysqli_stmt_init($conn);
 
     mysqli_stmt_prepare($stmt, $sql);
@@ -1448,7 +1465,7 @@ function getUserPaymentDataWODef($conn)
     $userid = $_SESSION['userid'];
 
 
-    $sql = "SELECT * FROM user_payment_method WHERE is_default_pay_method = 0 AND user_id = ?";
+    $sql = "SELECT * FROM user_payment_method WHERE is_default_pay_method = 0 AND user_id = ? AND active = 1";
     $stmt = mysqli_stmt_init($conn);
 
     mysqli_stmt_prepare($stmt, $sql);

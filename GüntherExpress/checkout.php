@@ -102,7 +102,7 @@ $endCosts = $_SESSION['fullPrice'];
                                 <div class="checkout_grid_container addAddressContainer">
                                     <div class="grid_container add_data">
                                         <h2>Neue Adresse</h2>
-                                        <form id="addAddress" action="#" method="post">
+                                        <form id="addAddress" action="" method="post">
                                             <div class="add_data_oneline">
                                                 <input type="text" name="addStreet" id="addStreet" placeholder="Straße">
                                                 <input type="text" name="addHausnummer" id="addHausnummer" placeholder="No.">
