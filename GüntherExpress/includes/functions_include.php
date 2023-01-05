@@ -42,7 +42,7 @@ function passwordMatch($password, $passwordRepeat)
 
 function uidExists($conn, $username, $email)
 {
-    $sql = "SELECT * FROM site_user WHERE user_uid = ? OR email = ?;";
+    $sql = "SELECT * FROM site_user WHERE active = 1 AND user_uid = ? OR email = ?;";
     $stmt = mysqli_stmt_init($conn);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
