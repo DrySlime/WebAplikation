@@ -29,12 +29,12 @@ include_once 'header.php';
             <?php
             if(isset($_GET["error"])){
                 if($_GET["error"]=="wronginput"){
-                    echo "<h3 style='color: #ff0736'>Anmeldedaten stimmen nicht überein!</h3>";
+                    $errorMSG = "Anmeldedaten stimmen nicht überein!";
                 }
-                if($_GET["error"]=="none"){
+                else if($_GET["error"]=="none"){
                     $errorMSG = "Sie haben sich erfolgreich registriert!";
                 }
-                echo "<p style='color: #d21c43;border-color: #b79ea5; font-size: 35px; font-weight: bold; border-style: solid; border-radius: 15px; background-color: #f9d4dc; left: -65px;top: -30px; position: relative'>$errorMSG</p>";
+                echo "<h3 style='color: #ff0736; left: -60px; position: relative'>".$errorMSG."</h3> <br>";
 
             }
             ?>

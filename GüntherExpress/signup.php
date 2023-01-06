@@ -40,9 +40,7 @@ include_once 'header.php';
                     $errorMSG = "Passwörter stimmen nicht überein!";
 
                 }else  if($_GET["error"]=="uidexists"){
-
-                }if($_GET["error"]=="none"){
-                    $errorMSG = "Sie haben sich erfolgreich registriert!";
+                    $errorMSG = "Username und oder Benutzername werden bereits verwendet!";
                 }
                 echo "<p style='color: #d21c43;border-color: #b79ea5; font-size: 35px; font-weight: bold; border-style: solid; border-radius: 15px; background-color: #f9d4dc; left: -160px;top: -30px; position: relative'>$errorMSG</p>";
 
