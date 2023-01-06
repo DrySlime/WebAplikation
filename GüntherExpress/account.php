@@ -340,7 +340,7 @@ if (!isset($_SESSION["useruid"])) {
                                     <h2>Bestellung #<?php echo $rows['id'] ?></h2>
                                     <h2>Datum: <?php echo $DataRows['order_date'] ?></h2>
                                 </div>
-                                <h4>Anzahl Artikel: <?php // TODO: Add Function?></h4>
+                                <h4>Anzahl Artikel: <?php echo getFullQTYofOrder($conn, $rows['id'])?></h4>
                                 <h4>Lieferadresse: <?php echo ucfirst($DataRows['address_line1']) ?> <?php echo $DataRows['street_number'] ?>
                                     , <?php echo $DataRows['postal_code'] ?>
                                     , <?php echo ucfirst($DataRows['city']) ?></h4>

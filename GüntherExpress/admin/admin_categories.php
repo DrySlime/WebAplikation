@@ -1,7 +1,7 @@
 <?php
 include_once "includes/admin_functions_inc.php";
-include_once "includes/dbh_include.php";
-include_once "header.php";
+include_once "../includes/dbh_include.php";
+include_once "../header.php";
 
 global $conn;
 ?>
@@ -110,5 +110,5 @@ if (isset($_GET["change"])){
     </div>
 <?php
 }
-include_once "footer.php";
+include_once "../footer.php";
 ?>

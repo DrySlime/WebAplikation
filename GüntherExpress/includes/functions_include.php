@@ -1426,3 +1426,22 @@ function getCategorieValueFromID($conn, $id) {
     return $resultData;
 }
 
+function getFullQTYofOrder($conn, $orderID) {
+
+    $sql = "SELECT * FROM order_line WHERE order_id=?";
+    $stmt = mysqli_stmt_init($conn);
+
+    mysqli_stmt_prepare($stmt, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $orderID);
+    mysqli_stmt_execute($stmt);
+
+    $orderedProducts = mysqli_stmt_get_result($stmt);
+    mysqli_stmt_close($stmt);
+    $fullQTY = 0;
+
+    while ($row = $orderedProducts-> fetch_assoc()) {
+        $fullQTY = $fullQTY + $row['qty'];
+    }
+    return $fullQTY;
+
+}

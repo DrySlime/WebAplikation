@@ -173,7 +173,7 @@ if (!isset($_SESSION["useruid"])) {
                                             <div class="admin_orders_info_description">
                                                 <h2>Bestellung #<?php echo $orderArray['id'] ?></h2>
                                                 <h4>Datum: <?php echo $orderArray['order_date'] ?></h4>
-                                                <h4>Anzahl Artikel: <?php // TODO: Add Function?></h4>
+                                                <h4>Anzahl Artikel: <?php echo getFullQTYofOrder($conn,$orderArray['id'])?></h4>
                                                 <h4>Zahlungsart: <?php echo getPaymentTypeFromOrder($conn, $orderArray['siteuser_id'], $orderArray['id'])['value'] ?></h4>
                                                 <h4>Summe: <?php echo $orderArray['order_total'] ?>€</h4>
                                             </div>
