@@ -19,7 +19,7 @@ function showErrorMsgEmail() {
 function showErrorMsgUsername() {
     const errorText = document.getElementById('errorText');
     const errorContent = document.getElementById('errorTextContent');
-    errorContent.innerText = 'Dieser Benutzername existiert schon!';
+    errorContent.innerText = 'Dieser Benutzername und oder Email existiert schon!';
     errorText.style.visibility = 'visible'
 }
 function showErrorMsgPasswords() {
