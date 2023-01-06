@@ -255,7 +255,7 @@ if (!isset($_SESSION["useruid"])) {
                     <div class="modal_address_grid_container">
                         <div class="addressitem_container add_address">
                             <h2>Hinzufügen</h2>
-                            <form id="addAddress" action="#" method="post">
+                            <form id="addAddress" method="post">
                                 <div class="add_address_oneline">
                                     <label for="addStreet"></label><input type="text" name="addStreet" id="addStreet" placeholder="Straße">
                                     <label for="addHausnummer"></label><input type="text" name="addHausnummer" id="addHausnummer" placeholder="No.">

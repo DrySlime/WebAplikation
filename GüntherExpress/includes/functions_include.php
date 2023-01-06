@@ -1107,6 +1107,8 @@ function setDefaultAddress($conn, $addressid)
     mysqli_stmt_execute($stmt);
 
     mysqli_stmt_close($stmt);
+
+    
 }
 
 function unbindAddress($conn, $addressid)
@@ -1125,6 +1127,12 @@ function unbindAddress($conn, $addressid)
     mysqli_stmt_execute($stmt);
 
     mysqli_stmt_close($stmt);
+
+    $newAddressDEF = getUserAddressDataWODef($conn);
+    if($newAddressDEF != null){
+        $row = $newAddressDEF-> fetch_assoc();
+        setDefaultAddress($conn,$row['id']);
+    }
 }
 
 function alreadyBindAddress($conn, $addressid, $userid)
@@ -1346,6 +1354,12 @@ function unbindPayment($conn, $paymentid)
     mysqli_stmt_execute($stmt);
 
     mysqli_stmt_close($stmt);
+
+    $newPaymentDEF = getUserPaymentDataWODef($conn);
+    if($newPaymentDEF != null){
+        $row = $newPaymentDEF-> fetch_assoc();
+        setDefaultPayment($conn,$row['id']);
+    }
 }
 
 function getPaymentIDByData($conn, $user_id, $payment_type_id, $provider, $account_number, $expiry_date)
