@@ -61,7 +61,7 @@ $amount = 3;
                                 <td > <?php $productArray[$i]["order_total"]?>Euro </td >
                                 <td > <?php getOrderStatus($conn,$productArray[$i]["order_status_id"])?> </td >   
                                 <td > <?php orderlineToTEXT($conn,$order)?> </td > 
-                                <td><a href='admin_orders.php?change=1&orderid=<?php $productArray[$i]['><button>CHANGE</button></a></td>  
+                                <td><a href='admin_orders.php?change=1&orderid=<?php $productArray[$i][]'><button>CHANGE</button></a></td>  
                             </tr >
         <?php
             }
