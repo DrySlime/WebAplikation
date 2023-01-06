@@ -15,23 +15,23 @@ if(isset($_POST["register_button"])){
     require_once 'functions_include.php';
 
     if(emptyInputSignup($email,$password,$passwordRepeat,$firstname,$lastname,$username)!==false){
-        header("location: ../signup.php?error=emptyinput");
+        header("location: ../signup.php?error=emptyinput&post&uid=".$username."&pre=".$firstname."&sur=".$lastname."&mail=".$email);
         exit();
     }
     if(invalidUid($username)!==false){
-        header("location: ../signup.php?error=invaliduid");
+        header("location: ../signup.php?error=invaliduid&post&uid=".$username."&pre=".$firstname."&sur=".$lastname."&mail=".$email);
         exit();
     }
     if(invalidEmail($email)!==false){
-        header("location: ../signup.php?error=invalidemail");
+        header("location: ../signup.php?error=invalidemail&post&uid=".$username."&pre=".$firstname."&sur=".$lastname."&mail=".$email);
         exit();
     }
     if(passwordMatch($password,$passwordRepeat)!==false){
-        header("location: ../signup.php?error=passwordsdontmatch");
+        header("location: ../signup.php?error=passwordsdontmatch&post&uid=".$username."&pre=".$firstname."&sur=".$lastname."&mail=".$email);
         exit();
     }
     if(uidExists($conn, $username,$email)!==false){
-        header("location: ../signup.php?error=uidexists");
+        header("location: ../signup.php?error=uidexists&post&uid=".$username."&pre=".$firstname."&sur=".$lastname."&mail=".$email);
         exit();
     }
 

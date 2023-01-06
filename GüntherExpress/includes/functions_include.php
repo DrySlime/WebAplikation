@@ -1059,7 +1059,7 @@ function bindAddressToUser($conn, $street, $houseno, $city, $postalCode)
     $userid = $_SESSION['userid'];
     $address = getAddressIDByData($conn, $street, $houseno, $city, $postalCode)->fetch_assoc();
     $addressid = $address['id'];
-    if (alreadyBindAddress($conn, $addressid, $userid)) {
+    if(alreadyBindAddress($conn, $addressid, $userid)){
     } else {
         $sql = "INSERT INTO user_address (user_id, address_id) VALUES (?,?);";
         $stmt = mysqli_stmt_init($conn);
@@ -1142,11 +1142,13 @@ function alreadyBindAddress($conn, $addressid, $userid)
     $resultData = mysqli_stmt_get_result($stmt);
 
     if ($row = mysqli_fetch_assoc($resultData)) {
+        mysqli_stmt_close($stmt);
         return true;
     } else {
+        mysqli_stmt_close($stmt);
         return false;
     }
-    mysqli_stmt_close($stmt);
+
 
 }
 
