@@ -8,6 +8,9 @@ function showErrorMsg(bool, err) {
         const errorText = document.getElementById('accountError');
         errorText.style.visibility = 'visible'
         switch (err) {
+            case 'none':
+                errorText.innerText = "Änderungen erfolgreich gespeichert!";
+                break;
             case 'invaliduid':
                 errorText.innerText = "Der Benutzername kann nicht verwendet werden!";
                 break;
@@ -22,6 +25,9 @@ function showErrorMsg(bool, err) {
                 break;
             case 'deletionfailed':
                 errorText.innerText = "Wir könnten deinen Account nicht löschen!";
+                break;
+            case 'passworddontmatch':
+                errorText.innerText = "Die neuen Passwörter stimmen nicht überein!";
                 break;
         }
     } else {

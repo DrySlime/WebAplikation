@@ -83,23 +83,25 @@ if (!isset($_SESSION["useruid"])) {
                             <label for="email"></label><input required type="text" name="email" id="email" value="<?php echo $resultAccount['email']; ?>" placeholder="Email">
                             <div class="dash_label_headers account_double_container">
                                 <h4>Neues Passwort:</h4>
-                                <h4>Altes Passwort:</h4>
+                                <h4>Wiederhole Passwort:</h4>
                             </div>
                             <div class="account_double_container">
                                 <label for="newpassword"></label><input type="password" name="newpassword" id="newpassword" placeholder="Neues Passwort">
+                                <label for="newpasswordconfirm"></label><input required type="password" name="newpasswordconfirm" id="newpasswordconfirm" placeholder="Wiederhole Passwort">
+                            </div>
+                            <div class="dash_label_headers">
+                                <h4>Altes Password</h4>
+                            </div>
+                            <div>
                                 <label for="oldpassword"></label><input required type="password" name="oldpassword" id="oldpassword" placeholder="Altes Passwort">
                             </div>
                             <div class="account_error_container">
                                 <h4 id="accountError">Print submit response here!</h4>
                                 <?php
                                 if (isset($_GET["error"])) {
-                                if ($_GET["error"] === "none") {
                                     ?>
-                                    <script type="text/javascript">showErrorMsg(false, "none");</script><?php
-                                } else {
-                                ?>
-                                    <script type="text/javascript">showErrorMsg(true, <?php echo json_encode($_GET["error"])?>);</script><?php
-                                }
+                                        <script type="text/javascript">showErrorMsg(true, <?php echo json_encode($_GET["error"])?>);</script><?php
+
                                 } else { ?>
                                     <script type="text/javascript">showErrorMsg(false, "none");</script>
                                     <?php
@@ -255,11 +257,11 @@ if (!isset($_SESSION["useruid"])) {
                             <h2>Hinzufügen</h2>
                             <form id="addAddress" action="#" method="post">
                                 <div class="add_address_oneline">
-                                    <input type="text" name="addStreet" id="addStreet" placeholder="Straße">
-                                    <input type="text" name="addHausnummer" id="addHausnummer" placeholder="No.">
+                                    <label for="addStreet"></label><input type="text" name="addStreet" id="addStreet" placeholder="Straße">
+                                    <label for="addHausnummer"></label><input type="text" name="addHausnummer" id="addHausnummer" placeholder="No.">
                                 </div>
-                                <input type="text" name="addStadt" id="addStadt" placeholder="Stadt">
-                                <input type="text" name="postal-code" id="postal-code" placeholder="PLZ">
+                                <label for="addStadt"></label><input type="text" name="addStadt" id="addStadt" placeholder="Stadt">
+                                <label for="postal-code"></label><input type="text" name="postal-code" id="postal-code" placeholder="PLZ">
                             </form>
                             <div class="addressitem_addbutton">
                                 <button id="add_Address" form="addAddress" type="submit" name="add_address_button">
@@ -420,7 +422,7 @@ if (!isset($_SESSION["useruid"])) {
                         <div class="addressitem_container add_address">
                             <h2>Hinzufügen</h2>
                             <form id="addPayment" method="post">
-                                <select name="paymentMethod" id="paymentMethod" required>
+                                <label for="paymentMethod"></label><select name="paymentMethod" id="paymentMethod" required>
                                     <option disabled selected hidden value="">Zahlungstyp</option>
                                     <?php
                                     $meth = getPaymentMethods($conn);
@@ -431,10 +433,10 @@ if (!isset($_SESSION["useruid"])) {
                                     }
                                     ?>
                                 </select>
-                                <input type="text" name="addNumber" id="addNumber" required placeholder="Kartennummer">
+                                <label for="addNumber"></label><input type="text" name="addNumber" id="addNumber" required placeholder="Kartennummer">
                                 <div class="add_data_oneline payments">
-                                    <input type="text" name="addProvider" id="addProvider" required placeholder="Provider">
-                                    <input type="month" pattern="[0-1]{1}[0-9]{1}/[0-9]{2}/[0-9]{2}" name="expiry_date" id="expiry_date" required placeholder="Ablaufdatum">
+                                    <label for="addProvider"></label><input type="text" name="addProvider" id="addProvider" required placeholder="Provider">
+                                    <label for="expiry_date"></label><input type="month" pattern="[0-1]{1}[0-9]{1}/[0-9]{2}/[0-9]{2}" name="expiry_date" id="expiry_date" required placeholder="Ablaufdatum">
                                 </div>
                             </form>
                             <div class="addressitem_addbutton">

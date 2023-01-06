@@ -11,14 +11,20 @@ if (isset($_POST['register_button'])) {
     $surnameChange = $_POST['surname'];
     $emailChange = $_POST['email'];
     $newPassword = $_POST['newpassword'];
+    $confirmPassword = $_POST['newpasswordconfirm'];
     $oldPassword = $_POST['oldpassword'];
 
 
     if (invalidUid($usernameChange) !== false) {
         header("location: ../account.php?error=invaliduid");
         exit();
-    } else if (invalidEmail($emailChange) !== false) {
+    }
+    if (invalidEmail($emailChange) !== false) {
         header("location: ../account.php?error=invalidemail");
+        exit();
+    }
+    if(passwordMatch($newPassword,$confirmPassword)!==false){
+        header("location: ../account.php?error=passworddontmatch");
         exit();
     }
     if (rightPassword($conn, $oldPassword)) {
