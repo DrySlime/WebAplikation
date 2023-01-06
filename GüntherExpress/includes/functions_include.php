@@ -1060,6 +1060,7 @@ function bindAddressToUser($conn, $street, $houseno, $city, $postalCode)
     $address = getAddressIDByData($conn, $street, $houseno, $city, $postalCode)->fetch_assoc();
     $addressid = $address['id'];
     if(alreadyBindAddress($conn, $addressid, $userid)){
+        $easteregg=2;
     } else {
         $sql = "INSERT INTO user_address (user_id, address_id) VALUES (?,?);";
         $stmt = mysqli_stmt_init($conn);
