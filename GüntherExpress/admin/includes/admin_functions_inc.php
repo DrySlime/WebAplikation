@@ -1,4 +1,6 @@
 <?php
+
+require_once "../includes/dbh_include.php";
 function getAllOrderedProducts($conn)
     #return an array filled with all data you could get from an order which is ordered descending!
 {
@@ -400,11 +402,11 @@ function orderlineToTEXT($conn, $order)
     return $string;
 }
 
-function getAllCategories($conn,)
+function getAllCategories($conn)
 {
     #returns all necessary information of all categories
 
-    $sql = "SELECT id, category_name, parent_category_id FROM product_category ";
+    $sql = "SELECT id, category_name, parent_category_id FROM product_category;";
     $stmt = mysqli_stmt_init($conn);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {

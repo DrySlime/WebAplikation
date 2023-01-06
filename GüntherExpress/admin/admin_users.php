@@ -117,7 +117,7 @@ $userArray = getAllFromUser($conn, $userid);
                     <td> <?php echo $userArray[$i]["id"] ?> </td>
                     <td> <?php echo $userArray[$i]["firstname"] ?> </td>
                     <td> <?php echo $userArray[$i]["lastname"] ?> </td>
-                    <td> <?php echo $userArray[$i]["email"] ?>Euro</td>
+                    <td> <?php echo $userArray[$i]["email"] ?></td>
                     <td> <?php echo $userArray[$i]["username"] ?> </td>
                     <?php
                     $address = getAdressFromUserID($conn, $userArray[$i]["id"]);

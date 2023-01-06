@@ -1,5 +1,5 @@
 <?php
-require_once "admin_header.php";
+    require_once "admin_header.php";
     require_once "includes/admin_functions_inc.php";
     global $conn;
     $categories=getAllCategories($conn);
@@ -117,7 +117,6 @@ if (isset($_GET["change"])){
     </div>
 <?php
 }
- #TODO
 if (isset($_GET["error"])){
     if($_GET["error"]=="invalidDiscount"){
         ?>

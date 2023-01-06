@@ -1,7 +1,7 @@
 <?php
 include_once "includes/admin_functions_inc.php";
 include_once "../includes/dbh_include.php";
-include_once "../header.php";
+include_once "admin_header.php";
 
 global $conn;
 ?>
@@ -42,9 +42,7 @@ if (isset($_GET["error"])){
         <input type="submit" name="send_form">
 
     </form>
-</body>
-
-<?php
+    <?php
 
 
 if($cateArr!=null){
@@ -110,5 +108,9 @@ if (isset($_GET["change"])){
     </div>
 <?php
 }
-include_once "../footer.php";
+?>
+</body>
+
+<?php
+include_once "admin_footer.php";
 ?>

@@ -1,6 +1,7 @@
 <?php
     require_once "admin_header.php";
     require_once "includes/admin_functions_inc.php";
+    require_once "admin_header.php";
     global $conn;
 ?>
 <head>
@@ -61,7 +62,7 @@ $amount = 3;
                                 <td > <?php $productArray[$i]["order_total"]?>Euro </td >
                                 <td > <?php getOrderStatus($conn,$productArray[$i]["order_status_id"])?> </td >   
                                 <td > <?php orderlineToTEXT($conn,$order)?> </td > 
-                                <td><a href='admin_orders.php?change=1&orderid=<?php $productArray[$i][]'><button>CHANGE</button></a></td>  
+                                <td><a href='admin_orders.php?change=1&orderid=<?php $productArray[$i]['order_id']?>'><button>CHANGE</button></a></td>  
                             </tr >
         <?php
             }
@@ -106,7 +107,7 @@ $amount = 3;
                                 <td > <?php echo $productArray[$i]["order_total"]?> Euro </td >
                                 <td > <?php echo getOrderStatus($conn,$productArray[$i]["order_status_id"])?> </td >   
                                 <td > <?php echo orderlineToTEXT($conn,$order)?> </td >   
-                                <td><a href='admin_orders.php?change=1&orderid=<?php echo $productArray[$i]['><button>CHANGE</button></a></td>  
+                                <td><a href='admin_orders.php?change=1&orderid=<?php echo $productArray[$i]['order_id']?>><button>CHANGE</button></a></td>  
                
                             </tr >
                             <?php
