@@ -22,7 +22,7 @@ if (isset($_GET["error"])){
 </head>
 <body>
 <h1>Erstelle eine neue Kategorie:</h1>
-    <form action="includes/createCategory_inc.php" method="post">
+    <form action="../includes/createCategory_inc.php" method="post">
         Category Name: <label>
             <input type="text" name="title"  placeholder="Category Title" required>
         </label><br>
@@ -69,8 +69,8 @@ if($cateArr!=null){
                     <td > "<?php echo $cateArr[$i]["id"]?>" </td >
                     <td > "<?php echo $cateArr[$i]["parent_category_id"]?>" </td >
                     <td > "<?php echo $cateArr[$i]["category_name"]?>" </td >
-                    <td > <a href='category_admin.php?change=1&id=<?php echo $cateArr[$i]["id"]?>&parentID=<?php echo $cateArr[$i]["parent_category_id"]?>&categoryName=<?php echo$cateArr[$i]["category_name"]?>'><button>CHANGE</button></a> </td >
-                    <td > <form action='includes/deleteCategory_inc.php' method='post'><input type='submit' name='delButton' value='DELETE'><input name='categoryID' value="<?php echo $cateArr[$i]["id"]?>" hidden> </form></td >
+                    <td > <a href='admin_categories.php?change=1&id=<?php echo $cateArr[$i]["id"]?>&parentID=<?php echo $cateArr[$i]["parent_category_id"]?>&categoryName=<?php echo$cateArr[$i]["category_name"]?>'><button>CHANGE</button></a> </td >
+                    <td > <form action='../includes/deleteCategory_inc.php' method='post'><input type='submit' name='delButton' value='DELETE'><input name='categoryID' value="<?php echo $cateArr[$i]["id"]?>" hidden> </form></td >
                 </tr >
         
     <?php
@@ -86,7 +86,7 @@ if (isset($_GET["change"])){
         <div class="changeFormBox">
             <h1>UPDATE FORM ID-<?php echo $_GET["id"]?>: </h1>
             <hr style="height: 5px;background-color: #101010"><br>
-                <form action="includes/updateCategory_inc.php" method="post">
+                <form action="../includes/updateCategory_inc.php" method="post">
                      New Category Name: <input type="text" name="category_name"  value="<?php echo $_GET["categoryName"]?>" required><br>
         
                     <label for="category">Choose a new Parent Category:</label>
@@ -102,7 +102,7 @@ if (isset($_GET["change"])){
                     <input type="text" name="id"  value='<?php echo $_GET["id"]?>' hidden>
           
                     <input type="submit" name="send_form" value="UPDATE">
-                    <a href="category_admin.php"><button formnovalidate>CANCEL</button></a>
+                    <a href="admin_categories.php"><button formnovalidate>CANCEL</button></a>
 
                 </form>
         </div>

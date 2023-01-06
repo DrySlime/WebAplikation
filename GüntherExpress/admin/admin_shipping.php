@@ -1,5 +1,5 @@
 <?php
-    include_once "header.php";
+require_once "admin_header.php";
     require_once "includes/admin_functions_inc.php";
     global $conn;
     $categories=getAllCategories($conn);
@@ -10,7 +10,7 @@
 </head>
     <div><br><br><br><br></div>
 <h1>Create a Shipping Method</h1>
-<form action="includes/createShippingMethod_inc.php" method="post">
+<form action="../includes/createShippingMethod_inc.php" method="post">
 
     Shipping Name: <label>
         <input type="text" name="name"  placeholder="Shipping Method" required>
@@ -51,8 +51,8 @@ if($SMethodArr!=null){
         <td > <?php echo $SMethodArr[$i]["id"]?></td>
         <td > <?php echo $SMethodArr[$i]["shipping_name"]?> </td >
         <td > <?php echo $SMethodArr[$i]["shipping_price"]?> </td >
-        <td > <a href='shippingmethod_admin.php?change=1&methodID=<?php echo $SMethodArr[$i]["id"]?>&methodName=<?php echo $SMethodArr[$i]["shipping_name"]?>&shippingPrice=<?php echo $SMethodArr[$i]["shipping_price"]?>'><button>CHANGE</button></a> </td >
-        <td > <form action='includes/deleteShippingMethod_inc.php' method='post'><input type='submit' name='delButton' value='DELETE'><input name='shippingMethodID' value="<?php echo $SMethodArr[$i]["id"]?>" hidden> </form></td >
+        <td > <a href='admin_shipping.php?change=1&methodID=<?php echo $SMethodArr[$i]["id"]?>&methodName=<?php echo $SMethodArr[$i]["shipping_name"]?>&shippingPrice=<?php echo $SMethodArr[$i]["shipping_price"]?>'><button>CHANGE</button></a> </td >
+        <td > <form action='../includes/deleteShippingMethod_inc.php' method='post'><input type='submit' name='delButton' value='DELETE'><input name='shippingMethodID' value="<?php echo $SMethodArr[$i]["id"]?>" hidden> </form></td >
     </tr >
     
     <?php
@@ -66,7 +66,7 @@ if (isset($_GET["change"])){
 ?>
     <div class="changeForm">
     <h1>UPDATE FORM: </h1>
-        <form action="includes/updateShippingMethod_inc.php" method="post">
+        <form action="../includes/updateShippingMethod_inc.php" method="post">
             </select><br>
             Shipping Name: <input type="text" name="name"  value="<?php echo $_GET["methodName"]?>" required><br>
             Shipping Price : <input type="text" name="price" value=<?php echo $_GET["shippingPrice"]?>' required><br>

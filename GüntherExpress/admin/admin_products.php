@@ -1,5 +1,5 @@
 <?php
-    include_once "header.php";
+require_once "admin_header.php";
     require_once "includes/admin_functions_inc.php";
     global $conn;
     $categories=getAllCategories($conn);
@@ -10,7 +10,7 @@
 </head>
     <div><br><br><br><br></div>
 <h1>Create a PRODUCT</h1>
-<form action="includes/createProduct_inc.php" method="post">
+<form action="../includes/createProduct_inc.php" method="post">
     <label for="category">Choose a category:</label>
     <label for="cars"></label><select id="cars" name="category_id" size="4" required>
         <?php
@@ -79,8 +79,8 @@ if($productArr!=null){
         <td > <?php  $productArr[$i]["price"] ?></td >
         <td > <?php $productArr[$i]["qty_in_stock"]?> </td >
         
-        <td > <a href='product_admin.php?change=1&productID=<?php echo $productArr[$i]["id"]?>&productName=<?php echo $productArr[$i]["product_name"] ?>&productImage=<?php $productArr[$i]["product_image"] ?>&description=<?php echo $productArr[$i]["description"]?>&price=<?php echo $productArr[$i]["price"] ?>&qtyInStock=<?php echo $productArr[$i]["qty_in_stock"]?>'><button>CHANGE</button></a> </td >
-        <td > <form action='includes/deleteProduct_inc.php' method='post'><input type='submit' name='delButton' value='DELETE'><input name='productID' value="<?php echo$productArr[$i]["id"]?>" hidden> </form></td >
+        <td > <a href='admin_products.php?change=1&productID=<?php echo $productArr[$i]["id"]?>&productName=<?php echo $productArr[$i]["product_name"] ?>&productImage=<?php $productArr[$i]["product_image"] ?>&description=<?php echo $productArr[$i]["description"]?>&price=<?php echo $productArr[$i]["price"] ?>&qtyInStock=<?php echo $productArr[$i]["qty_in_stock"]?>'><button>CHANGE</button></a> </td >
+        <td > <form action='../includes/deleteProduct_inc.php' method='post'><input type='submit' name='delButton' value='DELETE'><input name='productID' value="<?php echo$productArr[$i]["id"]?>" hidden> </form></td >
     </tr >
     
     
@@ -92,7 +92,7 @@ if (isset($_GET["change"])){
     ?>
     <div class="changeForm">
     <h1>UPDATE FORM: </h1>
-        <form action="includes/updateProduct_inc.php" method="post">
+        <form action="../includes/updateProduct_inc.php" method="post">
             <label for="category">Choose a category:</label>
             <select  name="category_id" size="4"  required>
             <?php

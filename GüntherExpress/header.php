@@ -44,7 +44,7 @@ session_start();
                     <?php } ?>
                     <?php if (isset($_SESSION["useruid"])) {
                         if ($_SESSION["userid"]==1){?>
-                        <li><a href="admin.php">Admin</a></li>
+                        <li><a href="/admin/admin.php">Admin</a></li>
                     <?php }} ?>
                     <li><button class="dropbtn" onclick="window.location.href = 'cart.php';"> <i class="material-symbols-outlined" style="pointer-events: none;">shopping_cart</i></button></li>
                 </ul>

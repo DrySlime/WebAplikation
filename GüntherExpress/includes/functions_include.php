@@ -702,72 +702,6 @@ function getUserIdFromUserName($conn, $userName)
     return mysqli_fetch_assoc($resultData)["id"];
 }
 
-function invalidDiscountrate($discount)
-{
-    if (strlen($discount) > 2 || !preg_match("/^[0-9]*$/", $discount)) {
-        echo strlen($discount);
-        return true;
-    }
-    return false;
-}
-
-function createSale($conn, $categoryID, $title, $description, $discount, $startDate, $endDate)
-{
-    #create promotion, create promotion category
-    if (saleTitleExists($conn, $title)) {
-        header("location: ../sale_admin.php?error=titleExists");
-        exit();
-    }
-    $sql = "INSERT INTO promotion (promotion_name, description, discount_rate, star_date, end_date) VALUES (?,?,?,?,?);";
-    $stmt = mysqli_stmt_init($conn);
-
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../signup.php?error=stmtfailed");
-        exit();
-    }
-
-
-    mysqli_stmt_bind_param($stmt, "sssss", $title, $description, $discount, $startDate, $endDate);
-    mysqli_stmt_execute($stmt);
-
-    mysqli_stmt_close($stmt);
-
-    $sql = "SELECT id FROM promotion WHERE promotion_name=?";
-    $stmt = mysqli_stmt_init($conn);
-
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../signup.php?error=stmtfailed");
-        exit();
-    }
-    mysqli_stmt_prepare($stmt, $sql);
-    mysqli_stmt_bind_param($stmt, "s", $title);
-    mysqli_stmt_execute($stmt);
-
-    $resultData = mysqli_stmt_get_result($stmt);
-
-    $promotionID = mysqli_fetch_assoc($resultData)["id"];
-
-    mysqli_stmt_close($stmt);
-
-
-    $sql = "INSERT INTO promotion_category (category_id,promotion_id) VALUES (?,?);";
-    $stmt = mysqli_stmt_init($conn);
-
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../signup.php?error=stmtfailed");
-        exit();
-    }
-    mysqli_stmt_prepare($stmt, $sql);
-    mysqli_stmt_bind_param($stmt, "ss", $categoryID, $promotionID);
-
-    mysqli_stmt_execute($stmt);
-
-    mysqli_stmt_close($stmt);
-
-    header("location: ../sale_admin.php?error=none");
-    exit();
-}
-
 function createCategory($conn, $title, $parentID)
 {
 
@@ -1465,7 +1399,6 @@ function getUserPaymentDataWODef($conn)
 
     $userid = $_SESSION['userid'];
 
-
     $sql = "SELECT * FROM user_payment_method WHERE is_default_pay_method = 0 AND user_id = ? AND active = 1";
     $stmt = mysqli_stmt_init($conn);
 
@@ -1479,4 +1412,17 @@ function getUserPaymentDataWODef($conn)
     return $resultData;
 }
 
+function getCategorieValueFromID($conn, $id) {
+    $sql = "SELECT category_name FROM product_category WHERE id = ?;";
+    $stmt = mysqli_stmt_init($conn);
+
+    mysqli_stmt_prepare($stmt, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $id);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    mysqli_stmt_close($stmt);
+
+    return $resultData;
+}
 

@@ -103,7 +103,7 @@ $stars = getAvrgRating($conn, $product[0]["id"]);
                         }
 
                         function removeFromAmount() {
-                            if (Number(document.getElementById("amount").innerHTML) != 0) {
+                            if (Number(document.getElementById("amount").innerHTML) > 1) {
                                 document.getElementById("amount").innerHTML = Number(document.getElementById("amount").innerHTML) - 1;
                             }
                         }

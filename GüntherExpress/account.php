@@ -90,7 +90,21 @@ if (!isset($_SESSION["useruid"])) {
                                 <label for="oldpassword"></label><input required type="password" name="oldpassword" id="oldpassword" placeholder="Altes Passwort">
                             </div>
                             <div class="account_error_container">
-                                <h4>Print submit response here!</h4>
+                                <h4 id="accountError">Print submit response here!</h4>
+                                <?php
+                                if (isset($_GET["error"])) {
+                                if ($_GET["error"] === "none") {
+                                    ?>
+                                    <script type="text/javascript">showErrorMsg(false, "none");</script><?php
+                                } else {
+                                ?>
+                                    <script type="text/javascript">showErrorMsg(true, <?php echo json_encode($_GET["error"])?>);</script><?php
+                                }
+                                } else { ?>
+                                    <script type="text/javascript">showErrorMsg(false, "none");</script>
+                                    <?php
+                                }
+                                ?>
                             </div>
                         </form>
                     </div>
@@ -188,9 +202,9 @@ if (!isset($_SESSION["useruid"])) {
                                     </div>
                                 </div>
                             </div>
-                        <?php } else { #TODO
+                        <?php } else {
                             ?>
-                            <h4 id="noEmail">Du hast noch keine Standard Zahlungsart beim Confectioner hinterlegt!</h4>
+                            <h4 id="noPayment">Du hast noch keine Standard Zahlungsart beim Confectioner hinterlegt!</h4>
                         <?php } ?>
                     </div>
                     <div class="account_subsection_button">
@@ -326,7 +340,7 @@ if (!isset($_SESSION["useruid"])) {
                                     <h2>Bestellung #<?php echo $rows['id'] ?></h2>
                                     <h2>Datum: <?php echo $DataRows['order_date'] ?></h2>
                                 </div>
-                                <h4>Anzahl Artikel: 2</h4>
+                                <h4>Anzahl Artikel: <?php // TODO: Add Function?></h4>
                                 <h4>Lieferadresse: <?php echo ucfirst($DataRows['address_line1']) ?> <?php echo $DataRows['street_number'] ?>
                                     , <?php echo $DataRows['postal_code'] ?>
                                     , <?php echo ucfirst($DataRows['city']) ?></h4>

@@ -33,7 +33,7 @@ if (isset($_POST['register_button'])) {
             }
         } else {
             changeAccount($conn, $usernameChange, $nameChange, $surnameChange, $emailChange, $newPassword);
-            header("location: ../account.php?error=kms");
+            header("location: ../account.php?error=none");
             exit();
         }
     } else {
