@@ -25,7 +25,7 @@ if (isset($_POST['add_address_button'])) {
     $postalCodeAdd = $_POST['postal-code'];
     $addressExists =  getAddressIDByData($conn, $streetAdd, $housenoAdd, $cityAdd, $postalCodeAdd)-> fetch_assoc();
     if ($addressExists == null) {
-        addAddress($conn, $streetAdd, $housenoAdd, $cityAdd, $postalCodeAdd);
+        addAddress($conn, $streetAdd, $housenoAdd, $cityAdd, $postalCodeAdd,1);
     } else {
         bindAddressToUser($conn, $streetAdd, $housenoAdd, $cityAdd, $postalCodeAdd);
     }

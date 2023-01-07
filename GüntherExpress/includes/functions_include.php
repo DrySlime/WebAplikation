@@ -1035,7 +1035,7 @@ function rightEmail($conn, $email)
     return $checkEmail == $email;
 }
 
-function addAddress($conn, $street, $houseno, $city, $postalCode)
+function addAddress($conn, $street, $houseno, $city, $postalCode,$site)
 {
     $sql = " INSERT INTO address (street_number, address_line1, city, postal_code) VALUES (?,?,?,?);";
     $stmt = mysqli_stmt_init($conn);
@@ -1051,7 +1051,14 @@ function addAddress($conn, $street, $houseno, $city, $postalCode)
 
 
     mysqli_stmt_close($stmt);
-    exit();
+
+    if($site == 1){
+        header("location: ../checkout.php?error=none");
+        exit();
+    }else {
+        header("location: ../account.php?error=none");
+        exit();
+    }
 }
 
 function bindAddressToUser($conn, $street, $houseno, $city, $postalCode)
