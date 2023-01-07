@@ -29,11 +29,12 @@ if (isset($_GET["error"])){
         Parent Category: <label for="cars"></label><select id="cars" name="parentID" size="4" required>
             <?php
             $cateArr=getAllCategories($conn);
-            var_dump($cateArr);
+
+
             for ($i=0;$i<count($cateArr);$i++){
-            ?>
-                    <option value=".$cateArr[$i]["id"].">".$cateArr[$i]["category_name"]."</option>
-            <?php
+
+                 echo'   <option value="'.$cateArr[$i]["id"].'>'.$cateArr[$i]["category_name"].'"</option>';
+
             }
 
             ?>

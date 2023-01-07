@@ -18,6 +18,6 @@ if(isset($_POST["send_form"])){
 
     updateCategory($conn,$parentID,$title,$iD);
 }else{
-    header("location: ../category_admin.php");
+    header("location: ../admin/admin_categories.php");
     exit(  );
 }

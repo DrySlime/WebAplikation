@@ -20,6 +20,6 @@ if(isset($_POST["send_form"])){
 
 
 }else{
-    header("location: ../product_admin.php");
+    header("location: ../admin/admin_products.php");
     exit(  );
 }
