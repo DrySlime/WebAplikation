@@ -3,6 +3,7 @@
     require_once "includes/admin_functions_inc.php";
     global $conn;
     $categories=getAllCategories($conn);
+
 ?>
 <head>
     <link rel="stylesheet" href="CSS/sale_admin.css">
@@ -111,7 +112,7 @@ if (isset($_GET["change"])){
             
             <input name="productID" value="<?php echo $_GET["productID"]?>" hidden>
             <input type="submit" name="send_form" value="UPDATE">
-            <a href="sale_admin.php" ><button formnovalidate>Cancel</button></a>
+            <a href="admin_products.php" ><button formnovalidate>Cancel</button></a>
     
         </form>
     </div>

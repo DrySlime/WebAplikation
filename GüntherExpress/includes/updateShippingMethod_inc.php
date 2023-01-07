@@ -17,6 +17,6 @@ if(isset($_POST["send_form"])){
 
 
 }else{
-    header("location: ../shippingMethod_admin.php");
+    header("location: ../admin/admin_shipping.php");
     exit(  );
 }
