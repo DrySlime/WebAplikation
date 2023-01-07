@@ -35,15 +35,15 @@ global $conn;
 
             $newItems = getNewestProducts($conn, 9);
             for ($i = 0; $i < count($newItems); $i++) {
-                echo "                        
+            ?>                    
                             <div class='swiper-slide'>
                                 <div class='image_wrapper'>
                                     <a href=item.php?id=" . $newItems[$i]["id"] . ">
-                                        <img src=" . $newItems[$i]["product_image"] . " alt=''>
+                                        <img src="<?php echo $newItems[$i]["product_image"]?>" alt=''>
                                     </a>
                                 </div>
                             </div>                                         
-                    ";
+            <?php 
             }
             ?>
         </div>
@@ -64,15 +64,15 @@ global $conn;
             <?php
             $arr = getBestRatedProducts($conn, 5);
             for ($i = 0; $i < count($arr); $i++) {
-                echo "                        
+                ?>                       
                             <div class='swiper-slide'>
                                 <div class='image_wrapper'>
                                     <a href=item.php?id=" . $arr[$i] . ">
-                                        <img src=" . getImage($conn, $arr[$i]) . " alt=''>
+                                        <img src="<?php echo getImage($conn, $arr[$i])?>" alt=''>
                                     </a>
                                 </div>
                             </div>                                         
-                    ";
+            <?php 
             }
             ?>
         </div>
