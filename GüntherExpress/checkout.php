@@ -102,7 +102,7 @@ $endCosts = $_SESSION['fullPrice'];
                                 <div class="checkout_grid_container addAddressContainer">
                                     <div class="grid_container add_data">
                                         <h2>Neue Adresse</h2>
-                                        <form id="addAddress" action="" method="post">
+                                        <form id="addAddress" method="post">
                                             <div class="add_data_oneline">
                                                 <input type="text" name="addStreet" id="addStreet" placeholder="Straße">
                                                 <input type="text" name="addHausnummer" id="addHausnummer" placeholder="No.">
@@ -183,14 +183,14 @@ $endCosts = $_SESSION['fullPrice'];
                                 <div class="checkout_grid_container addAddressContainer">
                                     <div class="grid_container add_data">
                                         <h2>Neue Zahlungsart</h2>
-                                        <form id="addPayment" action="#" method="post">
+                                        <form id="addPayment" method="post">
                                             <select name="paymentMethod" id="paymentMethod" required>
                                                 <option disabled selected hidden value="">Zahlungstyp</option>
                                                 <?php
                                                 $meth = getPaymentMethods($conn);
                                                 while ($paymentRows = $meth->fetch_assoc()) {
                                                     ?>
-                                                    <option value="<?php echo $paymentRows['value'] ?>"><?php echo $paymentRows['value'] ?></option>
+                                                    <option value="<?php echo $paymentRows['id'] ?>"><?php echo $paymentRows['value'] ?></option>
                                                     <?php
                                                 }
                                                 ?>

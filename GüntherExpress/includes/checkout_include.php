@@ -26,12 +26,15 @@ if (isset($_POST['add_address_button'])) {
     $addressExists =  getAddressIDByData($conn, $streetAdd, $housenoAdd, $cityAdd, $postalCodeAdd)-> fetch_assoc();
     if ($addressExists == null) {
         addAddress($conn, $streetAdd, $housenoAdd, $cityAdd, $postalCodeAdd);
+        header("location: ../checkout.php?error=none");
         exit();
     } else {
         bindAddressToUser($conn, $streetAdd, $housenoAdd, $cityAdd, $postalCodeAdd);
+        header("location: ../checkout.php?error=none");
+        exit();
     }
-    header("location: ../checkout.php?error=none");
-    exit();
+
+    
 
 }
 
