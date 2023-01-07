@@ -38,7 +38,7 @@ global $conn;
             ?>                    
                             <div class='swiper-slide'>
                                 <div class='image_wrapper'>
-                                    <a href=item.php?id=" . $newItems[$i]["id"] . ">
+                                    <a href="item.php?id=<?php echo $newItems[$i]["id"] ?> ">
                                         <img src="<?php echo $newItems[$i]["product_image"]?>" alt=''>
                                     </a>
                                 </div>
@@ -67,7 +67,7 @@ global $conn;
                 ?>                       
                             <div class='swiper-slide'>
                                 <div class='image_wrapper'>
-                                    <a href=item.php?id=" . $arr[$i] . ">
+                                    <a href="item.php?id=<?php echo $arr[$i] ?> ">
                                         <img src="<?php echo getImage($conn, $arr[$i])?>" alt=''>
                                     </a>
                                 </div>
