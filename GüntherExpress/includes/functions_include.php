@@ -1379,7 +1379,7 @@ function getPaymentIDByData($conn, $user_id, $payment_type_id, $provider, $accou
 
 function getPaymentMethods($conn)
 {
-    $sql = "SELECT * FROM payment_type;" ; #TODO active
+    $sql = "SELECT * FROM payment_type WHERE active = 1;" ;
     $stmt = mysqli_stmt_init($conn);
 
     mysqli_stmt_prepare($stmt, $sql);
