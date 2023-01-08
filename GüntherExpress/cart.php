@@ -74,7 +74,7 @@ $_SESSION['fullPrice'] = 0;
                                 </div>
                                 <div class="cart_product_data_settings">
                                     <div class="buttonAmount">
-                                        <a href="cart.php?decrease=<?php echo $row['product_id'] ?>" ><span class="material-icons md40">remove_circle</span></a>
+                                        <a href="cart.php?decrease=<?php echo $row['product_id'] ?>"><span class="material-icons md40">remove_circle</span></a>
                                     </div>
                                     <h4 id="amount"><?php echo $row['qty'] ?></h4>
                                     <div class="buttonAmount">

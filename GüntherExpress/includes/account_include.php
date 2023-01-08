@@ -11,7 +11,6 @@ if (isset($_POST['register_button'])) {
     $surnameChange = $_POST['surname'];
     $emailChange = $_POST['email'];
     $newPassword = $_POST['newpassword'];
-    $confirmPassword = $_POST['newpasswordconfirm'];
     $oldPassword = $_POST['oldpassword'];
 
 
@@ -21,10 +20,6 @@ if (isset($_POST['register_button'])) {
     }
     if (invalidEmail($emailChange) !== false) {
         header("location: ../account.php?error=invalidemail");
-        exit();
-    }
-    if(passwordMatch($newPassword,$confirmPassword)!==false){
-        header("location: ../account.php?error=passworddontmatch");
         exit();
     }
     if (rightPassword($conn, $oldPassword)) {
@@ -80,7 +75,7 @@ if (isset($_POST['add_address_button'])) {
     } else {
         bindAddressToUser($conn, $streetAdd, $housenoAdd, $cityAdd, $postalCodeAdd);
     }
-    header("location: ../account.php?error=none");
+    header("location: ../account.php");
     exit();
 
 }

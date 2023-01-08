@@ -97,21 +97,17 @@ $stars = getAvrgRating($conn, $product[0]["id"]);
                             var amount = getSelectValue();
                             window.location = "cart_added.php?pID=" + "<?php echo $product[0]['id'] ?>" + "&quantity=" + amount;
                         }
-
                         function getSelectValue() {
                             return document.getElementById("amount").innerHTML;
                         }
-
                         function removeFromAmount() {
                             if (Number(document.getElementById("amount").innerHTML) > 1) {
                                 document.getElementById("amount").innerHTML = Number(document.getElementById("amount").innerHTML) - 1;
                             }
                         }
-
                         function addToAmount() {
                             if (Number(document.getElementById("amount").innerHTML) < <?php echo $product[0]['qty_in_stock'] ?>)
                                 document.getElementById("amount").innerHTML = Number(document.getElementById("amount").innerHTML) + 1;
-
                         }
                     </script>
                 </div>
@@ -119,7 +115,6 @@ $stars = getAvrgRating($conn, $product[0]["id"]);
         </div>
     </div>
 </div>
-
 <div class="related_items_wrapper">
     <div class="related_items_header">
         <h1>Ähnliche Artikel</h1>
@@ -136,10 +131,8 @@ $stars = getAvrgRating($conn, $product[0]["id"]);
                         </div>
                     </div>
                  ";
-
             }
             ?>
-
         </div>
         <div class="swiper-button-prev"></div>
         <div class="swiper-button-next"></div>
@@ -150,7 +143,6 @@ $stars = getAvrgRating($conn, $product[0]["id"]);
 
 <script type="module">
     import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.esm.browser.min.js'
-
     const swiper = new Swiper('.swiper', {
         spaceBetween: 25,
         slidesPerView: 5,
@@ -169,7 +161,6 @@ $stars = getAvrgRating($conn, $product[0]["id"]);
     });
 </script>
 </body>
-
 </html>
 
 <?php

@@ -125,12 +125,12 @@ $(document).on('click', '.checkout_grid_container', function () {
             $.ajax({
                 url: "/includes/ajaxCheckout.php",
                 type: "POST",
-                data: {delivery: id, price: value},
-                success: function (delData) {
-                    $('#lieferkosten').html((Math.ceil(delData.split("/")[1] * 100) / 100) + " €");
+                success: function (data) {
+                    $('#lieferkosten').html((Math.ceil(value * 100) / 100) + " €");
                     let finalElement = $('#finalprice');
-                    let final = (Math.ceil(calculatePrice(delData.split("/")[2], delData.split("/")[1]) * 100) / 100) + " €";
+                    let final = (Math.ceil(calculatePrice(data, value) * 100) / 100) + " €";
                     finalElement.html(final);
+                    createCookie("total", final, "0.1");
                     $('#final_ship').html($('#ship_' + id).html());
                 }
             });
@@ -164,8 +164,8 @@ function createCookie(name, value, days) {
     let expires = "";
     if (days) {
         let date = new Date();
-        date.setTime(date.getTime() + (days*24*60*60*1000));
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
         expires = "; expires=" + date.toUTCString();
     }
-    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }

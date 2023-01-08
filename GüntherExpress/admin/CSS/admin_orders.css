@@ -1,0 +1,20 @@
+.admin_data_wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    column-gap: 5vmin;
+    border-radius: 5vmin;
+    width: 90%;
+    height: 100%;
+    padding-top: 5vmin;
+    position: relative;
+}
+
+.admin_data_search {
+    width: 72% ;
+}
+
+td {
+    padding-top: 2vmin;
+    padding-bottom: 2vmin;
+}

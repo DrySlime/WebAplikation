@@ -24,10 +24,7 @@ function showErrorMsg(bool, err) {
                 errorText.innerText = "Dein Passwort stimmt nicht überein!";
                 break;
             case 'deletionfailed':
-                errorText.innerText = "Wir könnten deinen Account nicht löschen!";
-                break;
-            case 'passworddontmatch':
-                errorText.innerText = "Die neuen Passwörter stimmen nicht überein!";
+                errorText.innerText = "Wir konnten deinen Account nicht löschen!";
                 break;
         }
     } else {

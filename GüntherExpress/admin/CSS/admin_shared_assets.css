@@ -1,0 +1,378 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    min-font-size: 16px !important;
+}
+
+body {
+    line-height: 1.5;
+    background-color: #f9d4dc;
+}
+
+.admin_dashboard_header_wrapper {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.admin_dashboard_header_container {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;;
+    align-items: flex-start;
+    justify-content: center;
+    align-content: center;
+    position: relative;
+    width: 70%;
+    height: 40vh;
+    margin-left: 30vmin;
+    background-color: transparent;
+    z-index: -1;
+}
+
+.admin_dashboard_header_image {
+    display: flex;
+    overflow: visible;
+    flex-direction: column;;
+    align-items: flex-end;
+    justify-content: center;
+    align-content: center;
+    position: relative;
+    height: 40vh;
+    width: 30%;
+    z-index: -1;
+}
+
+.admin_dashboard_header_image img {
+    margin-top: 15vmin;
+    background-size: contain;
+    max-width: 125%;
+}
+
+.admin_dashboard_wrapper {
+    background: #FFFFFF;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    padding-bottom: 10vmin;
+    width: 100%;
+    height: 100%
+}
+
+.admin_dashboard_container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.admin_data_wrapper {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: auto;
+    column-gap: 5vmin;
+    border-radius: 5vmin;
+    width: 90%;
+    height: 100%;
+    padding-top: 5vmin;
+    position: relative;
+}
+
+.admin_data_container {
+    background: #FFFFFF;
+    border-radius: 3vmin;
+    box-shadow: 0 0 10px #888888;
+    padding: 3vmin;
+    margin-bottom: 2vmin;
+    width: auto;
+    height: 100%;
+}
+
+.admin_data_container h4 {
+    font-weight: 500;
+    font-size: 2.5vmin;
+    padding-bottom: 2vmin;
+}
+
+.admin_data_container h4::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 3px;
+    background: #fc466b;
+}
+
+.admin_data_search {
+    width: 100%;
+    height: fit-content;
+    padding-bottom: 5vmin;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin_data_search form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin_data_container form input,
+.admin_data_container form textarea {
+    margin-bottom: .5vmin;
+    width: 30%;
+    font-size: 1.5vmin;
+    color: #101010;
+    border: none;
+    outline: none;
+    font-weight: 500;
+    text-indent: 2px;
+    appearance: none;
+    padding: .5vmin;
+    background: #f1f1f1;
+    border-radius: 1vmin;
+}
+
+.admin_data_container form select {
+    margin-bottom: .5vmin;
+    width: 30%;
+    font-size: 1.5vmin;
+    color: #101010;
+    border: none;
+    outline: none;
+    font-weight: 500;
+    text-indent: 2px;
+    appearance: menulist-button;
+    padding: .5vmin;
+    background: #f1f1f1;
+    border-radius: 1vmin;
+}
+
+.admin_data_container form #itemidSelect {
+    width: 40%;
+}
+
+.admin_data_search_buttons {
+    display: flex;
+    padding-top: 1vmin;
+    justify-content: space-between;
+    width: 30%;
+}
+
+.admin_data_search_buttons button,
+#addData button,
+#editData button {
+    font-weight: 500;
+    width: auto;
+    text-align: center;
+    font-size: 1.3vmin;
+    color: #FFFFFF;
+    text-decoration: none;
+    border-radius: 3vmin;
+    background-color: #101010;
+    padding: 1.7vmin;
+    transition: ease-in-out 0.3s;
+    border-style: none;
+    outline-style: none;
+}
+
+#resetForm,
+.data_edit_button {
+    width: auto;
+    text-align: left;
+    padding: 0;
+    color: #101010;
+    margin-left: 2px;
+    text-decoration: none;
+    background-color: transparent;
+    border: none;
+    display: inline-flex;
+    align-items: flex-start;
+    transition: ease-in-out 0.3s;
+}
+
+#resetForm {
+    height: fit-content;
+}
+
+.data_edit_button {
+    color: #fc466b;
+}
+
+.admin_data_search_buttons button:hover,
+#addData button:hover,
+#editData button:hover,
+.data_edit_button:hover {
+    color: #fc466b !important;
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+table td img {
+    max-width: 100px;
+    max-height: 100px;
+    width: 100px;
+    height: 100px;
+}
+
+table th {
+    text-align: left;
+    font-size: 2vmin;
+    font-weight: 500;
+}
+
+table td {
+    text-align: left;
+    font-size: 1.8vmin;
+    font-weight: 400;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table tr {
+    height: fit-content;
+    border-bottom-color: #888888;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}
+
+table {
+    width: 100%;
+}
+
+table td,
+table th {
+    padding-left: 2vmin;
+    padding-right: 2vmin;
+}
+
+td {
+    padding-top: 2vmin;
+    padding-bottom: 2vmin;
+}
+
+table th {
+    padding-bottom: 0;
+    padding-top: 0;
+}
+
+#addData form input,
+#addData form textarea,
+#editData form input,
+#editData form textarea {
+    width: 100%;
+}
+
+#addData form select,
+#editData form select {
+    width: 50%;
+}
+
+#addData form #description,
+#editData form #description {
+    height: 50% !important;
+}
+
+#addData form,
+#editData form {
+    width: 100%;
+    height: fit-content;
+}
+
+#admin_data_subcontainer {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    height: 100vh;
+}
+
+#editData {
+    grid-row: 2/span 2;
+}
+
+.admin_data_side_spacer {
+    width: 100%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.data_Double_Container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+}
+
+.data_Double_Container input {
+    width: 49% !important;
+}
+
+.admin_data_submit_button {
+    display: flex;
+    justify-content: flex-end;
+}
+
+#editData .deleteButton {
+    font-weight: 500;
+    width: auto;
+    height: auto;
+    text-align: center;
+    font-size: 1.3vmin;
+    color: #fc466b;
+    text-decoration: none;
+    border: none;
+    background-color: transparent;
+    transition: ease-in-out 0.3s;
+    outline-style: none;
+}
+
+label {
+    font-size: 1.5vmin;
+    font-weight: 400;
+}
+
+.alignRight {
+    text-align: right;
+}
+
+.admin_data_side_spacer form {
+    display: flex;
+    flex-direction: column;
+}
+
+.data_Double_Container select {
+    width: 49% !important;
+}
+
+.data_double_label input,
+.data_double_label select {
+    width: 100% !important;
+}
+
+.data_double_label {
+    display: flex;
+    flex-direction: column;
+    width: 49%;
+}
+
+#addData,
+#editData {
+    max-height: 55vh;
+}
+
+.disabled_0 {
+    color: #f0594d;
+}

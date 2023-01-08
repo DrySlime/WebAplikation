@@ -1,5 +1,6 @@
 <?php
 require_once "functions_include.php";
+
 function searchByPrice($conn, $category, $min, $max)
 {
     $categoryID = convertCategoryNameToID($conn, $category);
@@ -44,11 +45,8 @@ function searchByPrice($conn, $category, $min, $max)
     return $itemArr;
 }
 
-;
-
 function searchProduct($conn, $searchTerm)
 {
-
     $searchTerm = "%" . $searchTerm . "%";
     $sql = "SELECT * FROM product WHERE active = 1 AND UPPER(product_name) LIKE UPPER(?);";
     $stmt = mysqli_stmt_init($conn);
@@ -78,6 +76,4 @@ function searchProduct($conn, $searchTerm)
     }
     mysqli_stmt_close($stmt);
     return $itemArr;
-
-
 }

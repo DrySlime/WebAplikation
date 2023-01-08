@@ -1,152 +1,129 @@
 <?php
-
-require_once "admin_header.php";
-require_once "includes/admin_functions_inc.php";
+include_once "admin_header.php";
+include_once "includes/admin_functions_inc.php";
 include_once "../includes/dbh_include.php";
 global $conn;
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="CSS/orderedProducts.css">
+    <link rel="stylesheet" href="CSS/admin_shared_assets.css">
+    <link rel="stylesheet" href="CSS/admin_small_assets.css">
+    <link rel="stylesheet" href="CSS/admin_users.css">
+    <meta charset="UTF-8" http-equiv="X-UA-Compatible" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../img/favicon.ico">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <title></title>
-
 </head>
 <body>
-<div><br><br><br><br></div>
-
-<div class="orderedProductList">
-    <form action="admin_users.php" method="post">
-        <label>
-            <input type="text" name="search" placeholder="UserID/Username" required>
-        </label>
-        <button type="submit">Suche</button>
-        <a href="admin_users.php">
-            <button formnovalidate>Reset</button>
-        </a>
-    </form>
+<div class="admin_dashboard_header_wrapper">
+    <div class="admin_dashboard_header_container">
+        <h1>Account Übersicht</h1>
+        <h4>Hier werden alle Accounts auf The Confectioner aufgelistet!</h4>
+    </div>
+    <div class="admin_dashboard_header_image">
+        <img src="../img/gummies.png" alt="">
+    </div>
 </div>
-<?php
-
-if (isset($_POST["search"]) && $_POST["search"] != null){
-
-$userid = $_POST["search"];
-if (strlen($userid) > 3) {
-    $userid = getUserID($conn, $userid);
-}
-$userArray = getAllFromUser($conn, $userid);
-?>
-
-<table>
-    <tr>
-        <th>id</th>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
-        <th>Username</th>
-        <th>Adressline</th>
-        <th>Street Number</th>
-        <th>City</th>
-        <th>Postal Code</th>
-    </tr>
-
-    <?php
-    if ($userArray != null) {
-        for ($i = 0; $i < count($userArray); $i++) {
-
-            ?>
-            <tr>
-                <td> <?php echo $userArray[$i]["id"] ?> </td>
-                <td> <?php echo $userArray[$i]["firstname"] ?> </td>
-                <td> <?php echo $userArray[$i]["lastname"] ?> </td>
-                <td> <?php echo $userArray[$i]["email"] ?></td>
-                <td> <?php echo $userArray[$i]["username"] ?> </td>
-                <?php
-                $address = getAdressFromUserID($conn, $userArray[$i]["id"]);
-                if ($address != null) {
-                    ?>
-                    <td> <?php echo $address[0]["address_line"] ?> </td>
-                    <td> <?php echo $address[0]["street_number"] ?> </td>
-                    <td> <?php echo $address[0]["city"] ?> </td>
-                    <td> <?php echo $address[0]["postal_code"] ?> </td>
+<div class="admin_dashboard_wrapper">
+    <div class="admin_dashboard_container">
+        <div class="admin_data_wrapper">
+            <div class="admin_data_container">
+                <h4>Nutzer Suchen</h4>
+                <div class="admin_data_search">
                     <?php
-                } else {
-                    ?>
-                    <td> Not Given</td>
-                    <td> Not Given</td>
-                    <td> Not Given</td>
-                    <td> Not Given</td>
-
-                    <?php
-                }
-                ?>
-            </tr>
-            <?php
-        }
-
-    } else {
-        ?>
-        <h1>Keinen Nutzer unter dieser ID/Username</h1>
-        <?php
-    }
-
-
-    }else{
-    $userArray = getAllUser($conn);
-
-    ?>
-    <h1>Alle Nutzer</h1>
-    <table>
-        <tr>
-            <th>id</th>
-            <th>Firstname</th>
-            <th>Lastname</th>
-            <th>Email</th>
-            <th>Username</th>
-            <th>Adressline</th>
-            <th>Street Number</th>
-            <th>City</th>
-            <th>Postal Code</th>
-        </tr>
-
-        <?php
-        if ($userArray != null) {
-            for ($i = 0; $i < count($userArray); $i++) {
-                ?>
-                <tr>
-                    <td> <?php echo $userArray[$i]["id"] ?> </td>
-                    <td> <?php echo $userArray[$i]["firstname"] ?> </td>
-                    <td> <?php echo $userArray[$i]["lastname"] ?> </td>
-                    <td> <?php echo $userArray[$i]["email"] ?></td>
-                    <td> <?php echo $userArray[$i]["username"] ?> </td>
-                    <?php
-                    $address = getAdressFromUserID($conn, $userArray[$i]["id"]);
-                    if ($address != null) {
-                        ?>
-                        <td> <?php echo $address[0]["address_line"] ?> </td>
-                        <td> <?php echo $address[0]["street_number"] ?> </td>
-                        <td> <?php echo $address[0]["city"] ?> </td>
-                        <td> <?php echo $address[0]["postal_code"] ?></td>
-                        <?php
-                    } else {
-                        ?>
-                        <td> Not Given</td>
-                        <td> Not Given</td>
-                        <td> Not Given</td>
-                        <td> Not Given</td>
-
-                        <?php
+                    $name = null;
+                    $id = null;
+                    $email = null;
+                    if (isset($_POST["usernameSearch"])) {
+                        $name = $_POST["usernameSearch"];
+                    }
+                    if (isset($_POST["uidSearch"])) {
+                        $id = $_POST["uidSearch"];
+                    }
+                    if (isset($_POST["emailSearch"])) {
+                        $email = $_POST["emailSearch"];
                     }
                     ?>
-                </tr>
-                <?php
-            }
+                    <form class="admin_data_search_form" id="searchUserForm" action="admin_users.php" method="post">
+                        <label for="usernameSearch">Nutzername:</label><input type="text" id="usernameSearch" name="usernameSearch" value="<?php echo $name ?>" placeholder="Nutzername">
+                        <label for="uidSearch">Nutzer ID:</label><input type="text" id="uidSearch" name="uidSearch" value="<?php echo $id ?>" placeholder="Nutzer ID">
+                        <label for="emailSearch">Email:</label><input type="text" id="emailSearch" name="emailSearch" value="<?php echo $email ?>" placeholder="Email">
+                    </form>
+                    <div class="admin_data_search_buttons">
+                        <button class="reset_searchUserForm" id="resetForm" formnovalidate>Zurücksetzen</button>
+                        <button type="submit" form="searchUserForm">Suchen</button>
+                    </div>
+                </div>
+                <div class="admin_data_table">
+                    <?php
+                    $userArray = getUserData($conn, $name, $id, $email);
+                    ?>
+                    <table>
+                        <tr>
+                            <th>ID</th>
+                            <th>Vorname</th>
+                            <th>Nachname</th>
+                            <th>Email</th>
+                            <th>Nutzername</th>
+                            <th>Straße</th>
+                            <th>Hausnummer</th>
+                            <th>Stadt</th>
+                            <th>Postleitzahl</th>
+                        </tr>
+                        <?php
+                        if ($userArray != null) {
+                            for ($i = 0; $i < count($userArray); $i++) {
+                                ?>
+                                <tr>
+                                    <td> <?php echo $userArray[$i]["id"] ?> </td>
+                                    <td> <?php echo $userArray[$i]["firstname"] ?> </td>
+                                    <td> <?php echo $userArray[$i]["lastname"] ?> </td>
+                                    <td> <?php echo $userArray[$i]["email"] ?></td>
+                                    <td> <?php echo $userArray[$i]["username"] ?> </td>
+                                    <?php
+                                    $address = getAdressFromUserID($conn, $userArray[$i]["id"]);
+                                    if ($address != null) {
+                                        ?>
+                                        <td> <?php echo $address[0]["address_line"] ?> </td>
+                                        <td> <?php echo $address[0]["street_number"] ?> </td>
+                                        <td> <?php echo $address[0]["city"] ?> </td>
+                                        <td> <?php echo $address[0]["postal_code"] ?> </td>
+                                        <?php
+                                    } else {
+                                        ?>
+                                        <td>-/-</td>
+                                        <td>-/-</td>
+                                        <td>-/-</td>
+                                        <td>-/-</td>
+                                        <?php
+                                    }
+                                    ?>
+                                </tr>
+                                <?php
+                            }
+                        } else {
+                            ?>
+                            <td>-/-</td>
+                            <td>-/-</td>
+                            <td>-/-</td>
+                            <td>-/-</td>
+                            <td>-/-</td>
+                            <td>-/-</td>
+                            <td>-/-</td>
+                            <td>-/-</td>
+                            <td>-/-</td>
+                            <?php
+                        } ?>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="JS/adminForms.js"></script>
 
-        }
-
-        }
-
-        ?>
 </body>
 </html>
 <?php require_once "admin_footer.php" ?>

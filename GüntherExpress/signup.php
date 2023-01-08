@@ -10,8 +10,7 @@ include_once 'header.php';
     <meta charset="UTF-8" http-equiv="X-UA-Compatible" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0"/>
     <title>The Confectioner</title>
     <script src="JS/signup.js"></script>
 </head>
@@ -27,18 +26,18 @@ include_once 'header.php';
     </div>
 
     <?php
-        if(isset($_GET["post"])){
-            echo'<div class="right_container">
+    if (isset($_GET["post"])) {
+        echo '<div class="right_container">
                     <div class="loginregister_wrapper">
                         <h1>Registrieren</h1>
                         <form action="includes/signup_include.php" method="post">
                             <div class="form_container">
                                 <label for="username"></label><input type="text" name="username" id="username"
-                                                                     placeholder="Benutzername" value="'.$_GET["uid"].'" required>
-                                <label for="name"></label><input type="text" name="name" id="name" placeholder="Vorname" value="'.$_GET["pre"].'" required>
-                                <label for="surname"></label><input type="text" name="surname" id="surname" placeholder="Nachname" value="'.$_GET["sur"].'"
+                                                                     placeholder="Benutzername" value="' . $_GET["uid"] . '" required>
+                                <label for="name"></label><input type="text" name="name" id="name" placeholder="Vorname" value="' . $_GET["pre"] . '" required>
+                                <label for="surname"></label><input type="text" name="surname" id="surname" placeholder="Nachname" value="' . $_GET["sur"] . '"
                                                                     required>
-                                <label for="email"></label><input type="text" name="email" id="email" placeholder="Email" value="'.$_GET["mail"].'" required>
+                                <label for="email"></label><input type="text" name="email" id="email" placeholder="Email" value="' . $_GET["mail"] . '" required>
                                 <label for="password"></label><input type="password" name="password" id="password"
                                                                      placeholder="Passwort" required>
                                 <label for="passwordrepeat"></label><input type="password" name="passwordrepeat" id="passwordrepeat"
@@ -55,8 +54,8 @@ include_once 'header.php';
                         </form>
                     </div>
                 </div>';
-        }else{
-            echo'<div class="right_container">
+    } else {
+        echo '<div class="right_container">
                         <div class="loginregister_wrapper">
                             <h1>Registrieren</h1>
                             <form action="includes/signup_include.php" method="post">
@@ -83,14 +82,11 @@ include_once 'header.php';
                             </form>
                         </div>
                     </div>';
-        }
+    }
     ?>
 
 </div>
 <?php
-if(isset($_GET["post"])){
-    echo"sadasdsasd";
-}
 if (isset($_GET["error"])) {
     if ($_GET["error"] == "emptyinput") {
         echo '<script type="text/javascript">',
@@ -116,7 +112,6 @@ if (isset($_GET["error"])) {
 }
 ?>
 </body>
-
 </html>
 
 <?php

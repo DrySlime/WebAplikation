@@ -94,16 +94,16 @@ body {
 }
 
 .checked {
-    color:orange;
+    color: orange;
 }
 
-.item_data_description p{
+.item_data_description p {
     font-weight: 400;
     font-size: .9rem;
     padding-bottom: 2vmin;
 }
 
-.item_data_price h4{
+.item_data_price h4 {
     font-weight: 700;
     font-size: 2rem;
     color: #fc466b;
@@ -153,7 +153,8 @@ body {
 }
 
 .material-icons.md48 {
-    font-size: 48px; !important;
+    font-size: 48px;
+!important;
     transition: .3s;
 }
 

@@ -52,12 +52,12 @@ $userUID = $_SESSION["useruid"];
             <div class="cart_added_right">
                 <div class="cart_added_data_container">
                     <div class="cart_added_data">
-                        <h5><?php echo convertIdToCategoryName($conn, $product[0]["product_category_id"])?></h5>
-                        <h3><?php echo $product[0]["product_name"]?></h3>
+                        <h5><?php echo convertIdToCategoryName($conn, $product[0]["product_category_id"]) ?></h5>
+                        <h3><?php echo $product[0]["product_name"] ?></h3>
                         <h4>Menge: <?php echo $_GET["quantity"]; ?>x</h4>
                     </div>
                     <div class="cart_added_buttons">
-                        <a href="products.php?name=<?php echo convertIdToCategoryName($conn, $product[0]["product_category_id"])?>">Weiter einkaufen</a>
+                        <a href="products.php?name=<?php echo convertIdToCategoryName($conn, $product[0]["product_category_id"]) ?>">Weiter einkaufen</a>
                         <a href="cart.php">Zum Einkaufswagen</a>
                     </div>
                 </div>

@@ -83,16 +83,10 @@ if (!isset($_SESSION["useruid"])) {
                             <label for="email"></label><input required type="text" name="email" id="email" value="<?php echo $resultAccount['email']; ?>" placeholder="Email">
                             <div class="dash_label_headers account_double_container">
                                 <h4>Neues Passwort:</h4>
-                                <h4>Wiederhole Passwort:</h4>
+                                <h4>Altes Password</h4>
                             </div>
                             <div class="account_double_container">
                                 <label for="newpassword"></label><input type="password" name="newpassword" id="newpassword" placeholder="Neues Passwort">
-                                <label for="newpasswordconfirm"></label><input required type="password" name="newpasswordconfirm" id="newpasswordconfirm" placeholder="Wiederhole Passwort">
-                            </div>
-                            <div class="dash_label_headers">
-                                <h4>Altes Password</h4>
-                            </div>
-                            <div>
                                 <label for="oldpassword"></label><input required type="password" name="oldpassword" id="oldpassword" placeholder="Altes Passwort">
                             </div>
                             <div class="account_error_container">
@@ -123,8 +117,8 @@ if (!isset($_SESSION["useruid"])) {
                             <?php
                             if ($resultDefAddress !== null) {
                                 ?>
-                                <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
-                                <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?><?php echo $resultDefAddress['street_number']; ?></h4>
+                                <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                                <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?> <?php echo $resultDefAddress['street_number']; ?></h4>
                                 <h4><?php echo ucfirst($resultDefAddress['city']); ?>, <?php echo $resultDefAddress['postal_code']; ?></h4>
                                 <?php
                             } else {
@@ -197,7 +191,7 @@ if (!isset($_SESSION["useruid"])) {
                                     <h4><?php echo $resultDefPayment['account_number'] ?></h4>
                                 </div>
                                 <div class="card_bottom card_info">
-                                    <h4><?php echo $resultAccount['firstname']; ?><?php echo $resultAccount['lastname']; ?></h4>
+                                    <h4><?php echo $resultAccount['firstname']; ?> <?php echo $resultAccount['lastname']; ?></h4>
                                     <div class="card_date">
                                         <h5>Gültig bis:</h5>
                                         <h4><?php echo $resultDefPayment['expiry_date'] ?></h4>
@@ -277,8 +271,8 @@ if (!isset($_SESSION["useruid"])) {
                     ?>
                     <div class="modal_address_grid_container">
                         <div class="addressitem_container">
-                            <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
-                            <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?><?php echo $resultDefAddress['street_number']; ?></h4>
+                            <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                            <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?> <?php echo $resultDefAddress['street_number']; ?></h4>
                             <h4><?php echo ucfirst($resultDefAddress['city']); ?>, <?php echo $resultDefAddress['postal_code']; ?></h4>
                             <a class="defaultText">Standard Adresse</a>
                             <div class="address_setting_container">
@@ -295,8 +289,8 @@ if (!isset($_SESSION["useruid"])) {
                         ?>
                         <div class="modal_address_grid_container">
                             <div class="addressitem_container">
-                                <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
-                                <h4><?php echo ucfirst($rows['address_line1']); ?><?php echo $rows['street_number']; ?></h4>
+                                <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                                <h4><?php echo ucfirst($rows['address_line1']); ?> <?php echo $rows['street_number']; ?></h4>
                                 <h4><?php echo ucfirst($rows['city']); ?>, <?php echo $rows['postal_code']; ?></h4>
                                 <div class="address_setting_container">
                                     <a href="account.php?edit=<?php echo $rows['id'] ?>">
@@ -453,7 +447,7 @@ if (!isset($_SESSION["useruid"])) {
                     ?>
                     <div class="modal_address_grid_container">
                         <div class="addressitem_container">
-                            <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                            <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
                             <h4><?php echo $resultDefPayment['provider'] ?></h4>
                             <h4><?php echo $resultDefPayment['account_number'] ?></h4>
                             <h4>Gültig bis: <?php echo $resultDefPayment['expiry_date'] ?></h4>
@@ -471,7 +465,7 @@ if (!isset($_SESSION["useruid"])) {
                         ?>
                         <div class="modal_address_grid_container">
                             <div class="addressitem_container">
-                                <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                                <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
                                 <h4><?php echo $rows['provider'] ?></h4>
                                 <h4><?php echo $rows['account_number'] ?></h4>
                                 <h4>Gültig bis: <?php echo $rows['expiry_date'] ?></h4>

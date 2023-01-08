@@ -1,82 +1,165 @@
 <?php
-require_once "admin_header.php";
-    require_once "includes/admin_functions_inc.php";
-    global $conn;
-    $categories=getAllCategories($conn);
-?>
-<head>
-    <link rel="stylesheet" href="CSS/sale_admin.css">
-    <title></title>
-</head>
-    <div><br><br><br><br></div>
-<h1>Create a Shipping Method</h1>
-<form action="../includes/createShippingMethod_inc.php" method="post">
+include_once "includes/admin_functions_inc.php";
+include_once "../includes/dbh_include.php";
+include_once "admin_header.php";
+global $conn;
 
-    Shipping Name: <label>
-        <input type="text" name="name"  placeholder="Shipping Method" required>
-    </label><br>
-    Shipping Price: <label>
-        <input type="text" name="price" placeholder="Price" required>
-    </label><br>
-    <input type="submit" name="send_form">
-
-</form>
-
-
-
-
-
-<?php
-$SMethodArr=getAllShippingMethods($conn);
-
-if($SMethodArr!=null){
-?>
-        <div class='all'>
-        <div class='table'>
-        <table>
-        <h1>All Shipping Methods</h1>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Shipping Costs</th>
-                <th>CHANGE</th>
-                <th>DELETE</th>
-            </tr>
-        
-<?php
-    for($i=0;$i<count($SMethodArr);$i++) {
+$allShippingMethods = getShippingMethodDataAdmin($conn, null);
 
 ?>
-    <tr>
-        <td > <?php echo $SMethodArr[$i]["id"]?></td>
-        <td > <?php echo $SMethodArr[$i]["shipping_name"]?> </td >
-        <td > <?php echo $SMethodArr[$i]["shipping_price"]?> </td >
-        <td > <a href='admin_shipping.php?change=1&methodID=<?php echo $SMethodArr[$i]["id"]?>&methodName=<?php echo $SMethodArr[$i]["shipping_name"]?>&shippingPrice=<?php echo $SMethodArr[$i]["shipping_price"]?>'><button>CHANGE</button></a> </td >
-        <td > <form action='../includes/deleteShippingMethod_inc.php' method='post'><input type='submit' name='delButton' value='DELETE'><input name='shippingMethodID' value="<?php echo $SMethodArr[$i]["id"]?>" hidden> </form></td >
-    </tr >
-    
-    <?php
-    }
-    ?>
-    </table></div>
-    <?php
-    }
-
-if (isset($_GET["change"])){
-?>
-    <div class="changeForm">
-    <h1>UPDATE FORM: </h1>
-        <form action="../includes/updateShippingMethod_inc.php" method="post">
-            </select><br>
-            Shipping Name: <input type="text" name="name"  value="<?php echo $_GET["methodName"]?>" required><br>
-            Shipping Price : <input type="text" name="price" value=<?php echo $_GET["shippingPrice"]?>' required><br>
-            <input name="methodID" value='<?php echo $_GET["methodID"]?>' hidden>
-            <input type="submit" name="send_form" value="UPDATE">
-            <a href="sale_admin.php" ><button formnovalidate>Cancel</button></a>
-    
-        </form>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <link rel="stylesheet" href="CSS/admin_small_assets.css">
+        <link rel="stylesheet" href="CSS/admin_shared_assets.css">
+        <link rel="stylesheet" href="CSS/admin_shipping.css">
+        <meta charset="UTF-8" http-equiv="X-UA-Compatible" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="../img/favicon.ico">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <title></title>
+    </head>
+    <body>
+    <div class="admin_dashboard_header_wrapper">
+        <div class="admin_dashboard_header_container">
+            <h1>Versand Übersicht</h1>
+            <h4>Hier werden alle Versand Möglichkeiten auf The Confectioner aufgelistet!</h4>
+        </div>
+        <div class="admin_dashboard_header_image">
+            <img src="../img/gummies.png" alt="">
+        </div>
     </div>
-<?php
-}
+    <div class="admin_dashboard_wrapper">
+        <div class="admin_dashboard_container">
+            <div class="admin_data_wrapper">
+                <div class="admin_data_container">
+                    <h4>Versand Suchen</h4>
+                    <div class="admin_data_search">
+                        <?php
+                        $id = null;
+                        if (isset($_POST["vidSearch"])) {
+                            $id = $_POST["vidSearch"];
+                        }
+                        if (isset($_POST["shippingSearch"])) {
+                            $id = $_POST["shippingSearch"];
+                        }
+                        ?>
+                        <form class="admin_data_search_form" id="searchShippingForm" action="admin_shipping.php" method="post">
+                            <label for="vidSearch">Versand ID:</label><input type="text" value="<?php echo $id ?>" id="vidSearch" name="vidSearch" placeholder="Versand ID">
+                            <label for="shippingSearch">Versand Name:</label><select id="shippingSearch" name="shippingSearch">
+                                <option disabled selected hidden value="">Versand Suchen</option>
+                                <?php
+                                for ($i = 0; $i < count($allShippingMethods); $i++) {
+                                    if ($id !== null && $allShippingMethods[$i]["id"] == $id) { ?>
+                                        <option selected="selected" value="<?php echo $allShippingMethods[$i]["id"] ?>"><?php echo $allShippingMethods[$i]["shipping_name"] ?></option>
+                                        <?php
+                                    } else {
+                                        ?>
+                                        <option value="<?php echo $allShippingMethods[$i]["id"] ?>"><?php echo $allShippingMethods[$i]["shipping_name"] ?></option>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </form>
+                        <div class="admin_data_search_buttons">
+                            <button class="reset_searchShippingForm" id="resetForm">Zurücksetzen</button>
+                            <button type="submit" id="searchShippingForm" form="searchShippingForm">Suchen</button>
+                        </div>
+                    </div>
+                    <div class="admin_data_table">
+                        <?php
+                        $SMethodArr = getShippingMethodDataAdmin($conn, $id);
+                        ?>
+                        <table>
+                            <tr>
+                                <th>ID</th>
+                                <th>Versand</th>
+                                <th>Versandkosten</th>
+                                <th></th>
+                            </tr>
+                            <?php
+                            if ($SMethodArr == null) {
+                                ?>
+                                <tr>
+                                    <td>-/-</td>
+                                    <td>-/-</td>
+                                    <td>-/-</td>
+                                </tr>
+                                <?php
+                            } else {
+                                for ($i = 0; $i < count($SMethodArr); $i++) {
+                                    ?>
+                                    <tr>
+                                        <td><?php echo $SMethodArr[$i]["id"] ?></td>
+                                        <td><?php echo $SMethodArr[$i]["shipping_name"] ?></td>
+                                        <td><?php echo $SMethodArr[$i]["shipping_price"] ?> €</td>
+                                        <td class="alignRight">
+                                            <button class="data_edit_button" id="editShipping_<?php echo $SMethodArr[$i]["id"] ?>">Bearbeiten</button>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </table>
+                    </div>
+                </div>
+                <div class="admin_data_subcontainer">
+                    <div id="addData" class="admin_data_container">
+                        <h4>Versand Hinzufügen</h4>
+                        <div class="admin_data_side_spacer">
+                            <form id="addShipping" action="includes/shippingManager_inc.php" method="post">
+                                <label for="createname">Versand Name</label><input required type="text" name="createname" id="createname" placeholder="Name">
+                                <label for="createprice">Versand Kosten</label><input required type="text" name="createprice" id="createprice" placeholder="Versandkosten">
+                            </form>
+                            <div class="admin_data_submit_button">
+                                <button form="addShipping" type="submit" name="saveShippingNew">Hinzufügen</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="editData" class="admin_data_container">
+                        <h4>Versand Bearbeiten</h4>
+                        <div class="admin_data_side_spacer">
+                            <form id="editShip" action="includes/shippingManager_inc.php" method="post">
+                                <div class="data_Double_Container">
+                                    <div class="data_double_label">
 
+                                        <label for="editshipping">Versand</label><select required id="editshipping" name="editshipping">
+                                            <option disabled selected hidden value="">Versand Wählen</option>
+                                            <?php
+                                            for ($i = 0; $i < count($allShippingMethods); $i++) {
+                                                ?>
+                                                <option value="<?php echo $allShippingMethods[$i]["id"] ?>"><?php echo $allShippingMethods[$i]["shipping_name"] ?></option>
+                                                <?php
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="data_double_label">
+                                        <label for="editactive">De-/Aktivieren:</label><select required id="editactive" name="editactive">
+                                            <option value="1">Aktiviert</option>
+                                            <option value="0">Deaktiviert</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <label for="editname">Versand Name</label><input required type="text" name="editname" id="editname" placeholder="Name">
+                                <label for="editprice">Lieferkosten</label><input required type="text" name="editprice" id="editprice" placeholder="Versandkosten">
+                            </form>
+                            <div class="admin_data_submit_button">
+                                <button form="editShip" type="submit" name="saveShippingEdit">Speichern</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="JS/adminForms.js"></script>
+    <script src="JS/adminShipping.js"></script>
+    </body>
+    </html>
+
+<?php
+include_once "admin_footer.php";
 ?>

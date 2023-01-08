@@ -11,9 +11,9 @@ if (!isset($_SESSION["useruid"])) {
     die();
 }
 
-require_once 'includes/dbh_include.php';
-require_once 'includes/functions_include.php';
-require_once 'includes/checkout_include.php';
+include_once 'includes/dbh_include.php';
+include_once 'includes/functions_include.php';
+include_once 'includes/checkout_include.php';
 include_once 'includes/cart_include.php';
 include_once 'includes/checkout_complete_inc.php';
 $resultAccount = getAccountData($conn);
@@ -63,9 +63,6 @@ $endCosts = $_SESSION['fullPrice'];
 <script>
     function setData(typ, id) {
         createCookie(typ, id, "0.1");
-        if(typ === "shippingId") {
-            createCookie("total", <?php echo $endCosts; ?>, "0.1");
-        }
     }
 </script>
 
@@ -73,7 +70,7 @@ $endCosts = $_SESSION['fullPrice'];
 <div class="cart_header_wrapper">
     <div class="cart_header_container">
         <h1>Deine Bestellung </h1>
-        <h4>Wohin dürfen wir sie versenden?</h4>
+        <h4>Wohin dürfen wir es versenden?</h4>
     </div>
     <div class="cart_header_image">
         <img src="img/cookies.png" alt="">
@@ -125,8 +122,8 @@ $endCosts = $_SESSION['fullPrice'];
                                 <div class="checkout_grid_container address_container" onclick='setData("addressId", <?php echo $resultDefAddress['id'] ?>)'>
                                     <input class="radioButton" type="radio" id="<?php echo $resultDefAddress['id'] ?>" name="address_buttons" value="<?php echo $resultDefAddress['id'] ?>" checked="checked">
                                     <div id="address_<?php echo $resultDefAddress['id'] ?>" class="grid_container">
-                                        <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
-                                        <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?><?php echo $resultDefAddress['street_number']; ?></h4>
+                                        <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                                        <h4><?php echo ucfirst($resultDefAddress['address_line1']); ?> <?php echo $resultDefAddress['street_number']; ?></h4>
                                         <h4><?php echo ucfirst($resultDefAddress['city']); ?>, <?php echo $resultDefAddress['postal_code']; ?></h4>
                                         <a class="defaultText">Standard Adresse</a>
                                     </div>
@@ -139,8 +136,8 @@ $endCosts = $_SESSION['fullPrice'];
                                     <div class="checkout_grid_container address_container" onclick='setData("addressId", <?php echo $rows['id'] ?>)'>
                                         <input class="radioButton" type="radio" id="<?php echo $rows['id'] ?>" name="address_buttons" value="<?php echo $rows['id'] ?>">
                                         <div id="address_<?php echo $rows['id'] ?>" class="grid_container">
-                                            <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
-                                            <h4><?php echo ucfirst($rows['address_line1']); ?><?php echo $rows['street_number']; ?></h4>
+                                            <h2><?php echo ucfirst($resultAccount['firstname']); ?>  echo ucfirst($resultAccount['lastname']); ?></h2>
+                                            <h4><?php echo ucfirst($rows['address_line1']); ?> <?php echo $rows['street_number']; ?></h4>
                                             <h4><?php echo ucfirst($rows['city']); ?>, <?php echo $rows['postal_code']; ?></h4>
                                         </div>
                                     </div>
@@ -215,7 +212,7 @@ $endCosts = $_SESSION['fullPrice'];
                                 <div class="checkout_grid_container payment_container" onclick='setData("paymentId", <?php echo $resultDefPayment['id'] ?>)'>
                                     <input class="radioButton" type="radio" id="<?php echo $resultDefPayment['id'] ?>" name="payment_buttons" value="<?php echo $resultDefPayment['id'] ?>" checked="checked">
                                     <div id="payment_<?php echo $resultDefPayment['id'] ?>" class="grid_container">
-                                        <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                                        <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
                                         <h4><?php echo $resultDefPayment['provider'] ?></h4>
                                         <h4><?php echo $resultDefPayment['account_number'] ?></h4>
                                         <h4>Gültig bis: <?php echo $resultDefPayment['expiry_date'] ?></h4>
@@ -229,7 +226,7 @@ $endCosts = $_SESSION['fullPrice'];
                                     <div class="checkout_grid_container payment_container" onclick='setData("paymentId", <?php echo $rows['id'] ?>)'>
                                         <input class="radioButton" type="radio" id="<?php echo $rows['id'] ?>" name="payment_buttons" value="<?php echo $rows['id'] ?>">
                                         <div id="payment_<?php echo $rows['id'] ?>" class="grid_container">
-                                            <h2><?php echo ucfirst($resultAccount['firstname']); ?><?php echo ucfirst($resultAccount['lastname']); ?></h2>
+                                            <h2><?php echo ucfirst($resultAccount['firstname']); ?> <?php echo ucfirst($resultAccount['lastname']); ?></h2>
                                             <h4><?php echo $rows['provider'] ?></h4>
                                             <h4><?php echo $rows['account_number'] ?></h4>
                                             <h4>Gültig bis: <?php echo $rows['expiry_date'] ?></h4>

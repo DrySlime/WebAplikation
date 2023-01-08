@@ -1,22 +1,26 @@
 <?php
 
-require_once "../includes/dbh_include.php";
-function getAllOrderedProducts($conn)
-    #return an array filled with all data you could get from an order which is ordered descending!
+#return an array filled with all data you could get from an order which is ordered descending!
+function getOrderData($conn, $username, $bid)
 {
     $allItems = null;
-    $sql = "SELECT * FROM shop_order ORDER BY order_date ASC ;";
+    $data = false;
+    if ($username == null && $bid == null) {
+        $sql = "SELECT * FROM shop_order ORDER BY order_date ASC;";
+    } else {
+        $sql = "SELECT * FROM shop_order WHERE id = ? OR siteuser_id = ? ORDER BY order_date ASC;";
+        $data = true;
+    }
     $stmt = mysqli_stmt_init($conn);
-
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: ../index.php?error=stmtfailed");
         exit();
     }
-//    mysqli_stmt_prepare($stmt, $sql);
-//    mysqli_stmt_bind_param($stmt, "s", $amount);
+    if ($data) {
+        mysqli_stmt_bind_param($stmt, "ss", $bid, $username);
+    }
     mysqli_stmt_execute($stmt);
     $resultData = mysqli_stmt_get_result($stmt);
-
     while ($row = mysqli_fetch_assoc($resultData)) {
         $array["order_id"] = $row["id"];
         $array["siteuser_id"] = $row["siteuser_id"];
@@ -26,26 +30,34 @@ function getAllOrderedProducts($conn)
         $array["shipping_method_id"] = $row["shipping_method_id"];
         $array["order_total"] = $row["order_total"];
         $array["order_status_id"] = $row["order_status_id"];
-
         $allItems[] = $array;
         unset($array);
     }
     return $allItems;
 }
 
-function getAllUser($conn)
-    #return an array filled with all USER data you could get from the Database
+#return an array filled with all USER data you could get from the Database
+function getUserData($conn, $name, $id, $email)
 {
     $allItems = null;
-    $sql = "SELECT * FROM site_user ;";
+    $data = false;
+    if ($name == null && $id == null && $email == null) {
+        $sql = "SELECT * FROM site_user;";
+    } else {
+        $sql = "SELECT * FROM site_user WHERE id = ? OR user_uid = ? OR email = ?;";
+        $data = true;
+    }
     $stmt = mysqli_stmt_init($conn);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: ../index.php?error=stmtfailed");
         exit();
     }
-//    mysqli_stmt_prepare($stmt, $sql);
-//    mysqli_stmt_bind_param($stmt, "s", $amount);
+
+    if ($data) {
+        mysqli_stmt_bind_param($stmt, "sss", $id, $name, $email);
+    }
+
     mysqli_stmt_execute($stmt);
     $resultData = mysqli_stmt_get_result($stmt);
 
@@ -58,42 +70,12 @@ function getAllUser($conn)
         $allItems[] = $array;
         unset($array);
     }
-
     return $allItems;
 }
 
-function getAllFromUser($conn, $userid)
-    #returns an array with all USER Data from $userid
-{
-    $allItems = null;
-    $sql = "SELECT * FROM site_user WHERE id=?;";
-    $stmt = mysqli_stmt_init($conn);
-
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../index.php?error=stmtfailed");
-        exit();
-    }
-    mysqli_stmt_prepare($stmt, $sql);
-    mysqli_stmt_bind_param($stmt, "s", $userid);
-    mysqli_stmt_execute($stmt);
-    $resultData = mysqli_stmt_get_result($stmt);
-
-    while ($row = mysqli_fetch_assoc($resultData)) {
-        $array["id"] = $row["id"];
-        $array["firstname"] = $row["firstname"];
-        $array["lastname"] = $row["lastname"];
-        $array["email"] = $row["email"];
-        $array["username"] = $row["user_uid"];
-        $allItems[] = $array;
-        unset($array);
-    }
-
-    return $allItems;
-}
-
+#returns an array filled with adress information from an $userid
 function getAdressFromUserID($conn, $userID)
 {
-    #returns an array filled with adress information from an $userid
     $allItems = null;
     $sql = "SELECT * FROM address WHERE id=(SELECT address_id FROM user_address WHERE user_id=?);";
     $stmt = mysqli_stmt_init($conn);
@@ -115,45 +97,9 @@ function getAdressFromUserID($conn, $userID)
             unset($array);
         }
     }
-
     return $allItems;
 }
 
-function getAllOrderedProductsFromOrderID($conn, $orderID)
-{
-    #returns an array with all inforamtion about an $orderID
-
-    $allItems = null;
-    $sql = "SELECT * FROM shop_order WHERE id=? ORDER BY order_date DESC ;";
-    $stmt = mysqli_stmt_init($conn);
-
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../index.php?error=stmtfailed");
-        exit();
-    }
-    mysqli_stmt_prepare($stmt, $sql);
-    mysqli_stmt_bind_param($stmt, "s", $orderID);
-    mysqli_stmt_execute($stmt);
-    $resultData = mysqli_stmt_get_result($stmt);
-
-    while ($row = mysqli_fetch_assoc($resultData)) {
-        $array["order_id"] = $row["id"];
-        $array["siteuser_id"] = $row["siteuser_id"];
-        $array["order_date"] = $row["order_date"];
-        $array["payment_method_id"] = $row["payment_method_id"];
-        $array["shipping_address_id"] = $row["shipping_address_id"];
-        $array["shipping_method_id"] = $row["shipping_method_id"];
-        $array["order_total"] = $row["order_total"];
-        $array["order_status_id"] = $row["order_status_id"];
-
-        $allItems[] = $array;
-        unset($array);
-
-    }
-
-    return $allItems;
-
-}
 
 function getUsername($conn, $userID)
 {
@@ -170,10 +116,9 @@ function getUsername($conn, $userID)
     mysqli_stmt_bind_param($stmt, "s", $userID);
     mysqli_stmt_execute($stmt);
     $resultData = mysqli_stmt_get_result($stmt);
-
     $row = mysqli_fetch_assoc($resultData);
-    $username = $row["user_uid"];
 
+    $username = $row["user_uid"];
 
     return $username;
 }
@@ -181,8 +126,6 @@ function getUsername($conn, $userID)
 function getPaymentMethod($conn, $paymentmethodID)
 {
     #returns a String value of a $paymentmethodID
-
-
     $sql = "SELECT payment_type_id FROM user_payment_method WHERE id=? ;";
     $stmt = mysqli_stmt_init($conn);
 
@@ -389,64 +332,67 @@ function getUserID($conn, $username)
 
 }
 
+#a toString method to properly display order details
 function orderlineToTEXT($conn, $order)
 {
-    #a toString method to properly display order details
-
     $string = "";
     for ($k = 0; $k < count($order); $k++) {
-        $so = $order[$k]["qty"] . "x " . getProductName($conn, $order[$k]["product_item_id"]) . " -> " . $order[$k]["price"] . " Euro <br>";
+        $so = $order[$k]["qty"] . "x " . getProductName($conn, $order[$k]["product_item_id"]) . " -> " . $order[$k]["price"] . " € <br>";
         $string = $string . $so;
     }
-
     return $string;
 }
 
-function getAllCategories($conn)
+#returns all necessary information of all categories
+function getCategoryData($conn, $id)
 {
-    #returns all necessary information of all categories
-
-    $sql = "SELECT id, category_name, parent_category_id FROM product_category;";
+    if ($id == null) {
+        $sql = "SELECT * FROM product_category;";
+    } else {
+        $sql = "SELECT * FROM product_category WHERE id = ?;";
+    }
     $stmt = mysqli_stmt_init($conn);
-
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: ../signup.php?error=stmtfailed");
         exit();
     }
-
+    if ($id != null) {
+        mysqli_stmt_bind_param($stmt, "s", $id);
+    }
     mysqli_stmt_execute($stmt);
-
     $resultData = mysqli_stmt_get_result($stmt);
-
     while ($row = mysqli_fetch_assoc($resultData)) {
         $category["id"] = $row["id"];
         $category["category_name"] = $row["category_name"];
-        $category["parent_category_id"] = $row["parent_category_id"];
+        $category["active"] = $row["active"];
         $categoryArr[] = $category;
         unset($category);
     }
-
     mysqli_stmt_close($stmt);
     return $categoryArr;
 }
 
-function getAllProducts($conn)
+#returns all information of all products in an array
+function getProductData($conn, $name, $id, $category)
 {
-    #returns all information of all products in an array
-
     $productArr = null;
-    $sql = "SELECT * FROM product ";
+    $data = false;
+    if ($name == null && $id == null && $category == null) {
+        $sql = "SELECT * FROM product ";
+    } else {
+        $sql = "SELECT * FROM product WHERE product_name = ? OR id = ? OR product_category_id = ?";
+        $data = true;
+    }
     $stmt = mysqli_stmt_init($conn);
-
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: ../product_admin.php?error=stmtfailed");
         exit();
     }
-
+    if ($data) {
+        mysqli_stmt_bind_param($stmt, "sss", $name, $id, $category);
+    }
     mysqli_stmt_execute($stmt);
-
     $resultData = mysqli_stmt_get_result($stmt);
-
     while ($row = mysqli_fetch_assoc($resultData)) {
         $product["id"] = $row["id"];
         $product["product_name"] = $row["product_name"];
@@ -455,36 +401,36 @@ function getAllProducts($conn)
         $product["qty_in_stock"] = $row["qty_in_stock"];
         $product["price"] = $row["price"];
         $product["description"] = $row["description"];
-
-
+        $product["active"] = $row["active"];
         $productArr[] = $product;
         unset($product);
     }
-
     mysqli_stmt_close($stmt);
     return $productArr;
 }
 
-function getAllShippingMethods($conn)
+function getShippingMethodDataAdmin($conn, $id)
 {
     $sMethodArr = null;
-    $sql = "SELECT * FROM  shipping_method";
+    if ($id == null) {
+        $sql = "SELECT * FROM shipping_method";
+    } else {
+        $sql = "SELECT * FROM shipping_method WHERE id = ?";
+    }
     $stmt = mysqli_stmt_init($conn);
-
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: ../shippingmethod_admin.php?error=stmtfailed");
         exit();
     }
-
+    if ($id != null) {
+        mysqli_stmt_bind_param($stmt, "s", $id);
+    }
     mysqli_stmt_execute($stmt);
-
     $resultData = mysqli_stmt_get_result($stmt);
-
     while ($row = mysqli_fetch_assoc($resultData)) {
         $sMethod["id"] = $row["id"];
         $sMethod["shipping_name"] = $row["shipping_name"];
         $sMethod["shipping_price"] = $row["shipping_price"];
-
 
         $sMethodArr[] = $sMethod;
         unset($sMethod);
@@ -492,41 +438,6 @@ function getAllShippingMethods($conn)
 
     mysqli_stmt_close($stmt);
     return $sMethodArr;
-}
-
-function deleteCategory($conn, $categoryID)
-{
-    $sql = "UPDATE product_category SET active = 0 WHERE id=?";
-    $stmt = mysqli_stmt_init($conn);
-
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../category_admin.php?error=stmtfailed");
-        exit();
-    }
-    mysqli_stmt_prepare($stmt, $sql);
-    mysqli_stmt_bind_param($stmt, "s", $categoryID);
-
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-    header("location: ../category_admin.php");
-}
-
-function deleteProduct($conn, $productID)
-{
-    $sql = "UPDATE product SET active = 0 WHERE id=?";
-    $stmt = mysqli_stmt_init($conn);
-
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../product_admin.php?error=stmtfailed");
-        exit();
-    }
-    mysqli_stmt_prepare($stmt, $sql);
-    mysqli_stmt_bind_param($stmt, "s", $productID);
-
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-    header("location: ../product_admin.php");
-
 }
 
 function deleteSMethod($conn, $sMethodID)
@@ -623,15 +534,16 @@ function getSumFromMonth($conn, $date)
     $resultData = mysqli_stmt_get_result($stmt);
     mysqli_stmt_close($stmt);
     $resultData = mysqli_fetch_assoc($resultData);
-    if($resultData['SUM(order_total)'] == null){
+    if ($resultData['SUM(order_total)'] == null) {
         return 0;
     }
     return $resultData['SUM(order_total)'];
 }
 
-function getCount($conn, $countData){
+function getCount($conn, $countData)
+{
     $sql = null;
-    switch ($countData){
+    switch ($countData) {
         case "user":
             $sql = "SELECT COUNT(*) AS count FROM site_user";
             break;
@@ -655,7 +567,8 @@ function getCount($conn, $countData){
     return mysqli_fetch_assoc($resultData)["count"];
 }
 
-function getLastTenOrders($conn) {
+function getLastTenOrders($conn)
+{
     $sql = "SELECT * FROM shop_order ORDER BY id DESC LIMIT 10";
     $stmt = mysqli_stmt_init($conn);
 
@@ -671,7 +584,8 @@ function getLastTenOrders($conn) {
     return $resultData;
 }
 
-function getEmptyProducts($conn) {
+function getEmptyProducts($conn)
+{
     $sql = "SELECT * FROM product WHERE qty_in_stock = 0";
     $stmt = mysqli_stmt_init($conn);
 
@@ -687,7 +601,8 @@ function getEmptyProducts($conn) {
     return $resultData;
 }
 
-function getPaymentTypeFromOrder($conn, $userid, $orderid) {
+function getPaymentTypeFromOrder($conn, $userid, $orderid)
+{
     $sql = "SELECT `user_payment_method`.`payment_type_id`, `shop_order`.`payment_method_id`, `shop_order`.`siteuser_id` FROM `user_payment_method` LEFT JOIN `shop_order` ON `shop_order`.`payment_method_id` = `user_payment_method`.`id` WHERE `shop_order`.`siteuser_id` = ? AND `shop_order`.`id` = ?;";
     $stmt = mysqli_stmt_init($conn);
 
@@ -712,4 +627,46 @@ function getPaymentTypeFromOrder($conn, $userid, $orderid) {
     mysqli_stmt_close($stmt);
 
     return mysqli_fetch_assoc($resultData);
+}
+
+
+/*
+ *
+ *
+ *
+ *
+ *
+ */
+
+function getAllOrderedProductsFromOrderID($conn, $orderID)
+{
+    #returns an array with all inforamtion about an $orderID
+
+    $allItems = null;
+    $sql = "SELECT * FROM shop_order WHERE id=? ORDER BY order_date DESC ;";
+    $stmt = mysqli_stmt_init($conn);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ../index.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_prepare($stmt, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $orderID);
+    mysqli_stmt_execute($stmt);
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    while ($row = mysqli_fetch_assoc($resultData)) {
+        $array["order_id"] = $row["id"];
+        $array["siteuser_id"] = $row["siteuser_id"];
+        $array["order_date"] = $row["order_date"];
+        $array["payment_method_id"] = $row["payment_method_id"];
+        $array["shipping_address_id"] = $row["shipping_address_id"];
+        $array["shipping_method_id"] = $row["shipping_method_id"];
+        $array["order_total"] = $row["order_total"];
+        $array["order_status_id"] = $row["order_status_id"];
+        $allItems[] = $array;
+        unset($array);
+
+    }
+    return $allItems;
 }

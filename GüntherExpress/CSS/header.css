@@ -12,12 +12,12 @@ body {
 }
 
 ::-moz-selection {
-    background-color: transparent;
-    color: #000;
+    background-color: #fc466b;
+    color: #fc466b;
 }
 
 ::selection {
-    background-color: transparent;
+    background-color: #fc466b;
 }
 
 .header {
@@ -34,7 +34,7 @@ body {
     z-index: 1;
 }
 
-.header_wrapper  {
+.header_wrapper {
     width: 100%;
 
     display: flex;
@@ -55,8 +55,8 @@ body {
     padding: 0.5rem;
     font-weight: 700;
     font-size: 1.7rem;
-    background: rgb(63,94,251);
-    background: linear-gradient(204deg, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+    background: rgb(63, 94, 251);
+    background: linear-gradient(204deg, rgba(63, 94, 251, 1) 0%, rgba(252, 70, 107, 1) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }

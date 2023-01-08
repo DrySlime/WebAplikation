@@ -9,14 +9,12 @@ global $conn;
 ?>
 
 <head>
-
     <link rel="stylesheet" href="CSS/index.css">
     <link rel="stylesheet" href="CSS/swiper.css">
     <meta charset="UTF-8" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
     <title>The Confectioner</title>
 </head>
@@ -35,15 +33,15 @@ global $conn;
 
             $newItems = getNewestProducts($conn, 9);
             for ($i = 0; $i < count($newItems); $i++) {
-            ?>                    
-                            <div class='swiper-slide'>
-                                <div class='image_wrapper'>
-                                    <a href="item.php?id=<?php echo $newItems[$i]["id"] ?> ">
-                                        <img src="<?php echo $newItems[$i]["product_image"]?>" alt=''>
-                                    </a>
-                                </div>
-                            </div>                                         
-            <?php 
+                ?>
+                <div class='swiper-slide'>
+                    <div class='image_wrapper'>
+                        <a href="item.php?id=<?php echo $newItems[$i]["id"] ?> ">
+                            <img src="<?php echo $newItems[$i]["product_image"] ?>" alt=''>
+                        </a>
+                    </div>
+                </div>
+                <?php
             }
             ?>
         </div>
@@ -64,15 +62,15 @@ global $conn;
             <?php
             $arr = getBestRatedProducts($conn, 5);
             for ($i = 0; $i < count($arr); $i++) {
-                ?>                       
-                            <div class='swiper-slide'>
-                                <div class='image_wrapper'>
-                                    <a href="item.php?id=<?php echo $arr[$i] ?> ">
-                                        <img src="<?php echo getImage($conn, $arr[$i])?>" alt=''>
-                                    </a>
-                                </div>
-                            </div>                                         
-            <?php 
+                ?>
+                <div class='swiper-slide'>
+                    <div class='image_wrapper'>
+                        <a href="item.php?id=<?php echo $arr[$i] ?> ">
+                            <img src="<?php echo getImage($conn, $arr[$i]) ?>" alt=''>
+                        </a>
+                    </div>
+                </div>
+                <?php
             }
             ?>
         </div>
@@ -102,9 +100,7 @@ global $conn;
         },
     });
 </script>
-
 </body>
-
 </html>
 
 <?php

@@ -265,7 +265,7 @@ input[type=month]:hover {
 }
 
 .checkout_data_buttons button:hover,
-.dataitem_addbutton button:hover{
+.dataitem_addbutton button:hover {
     color: #fc466b;
     transform: scale(1.05);
     cursor: pointer;

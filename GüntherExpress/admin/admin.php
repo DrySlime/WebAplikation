@@ -1,9 +1,9 @@
 <?php
 
-require_once "admin_header.php";
+include_once "admin_header.php";
 include_once "includes/admin_functions_inc.php";
 include_once "../includes/dbh_include.php";
-include_once "../includes/functions_include.php";
+require_once "../includes/functions_include.php";
 global $conn;
 
 if (!isset($_SESSION["useruid"])) {
@@ -15,6 +15,7 @@ if (!isset($_SESSION["useruid"])) {
     <html lang="en">
     <head>
         <link rel="stylesheet" href="CSS/admin.css">
+        <link rel="stylesheet" href="CSS/admin_shared_assets.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0"/>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <meta charset="UTF-8" http-equiv="X-UA-Compatible" content="IE=edge">
@@ -99,7 +100,7 @@ if (!isset($_SESSION["useruid"])) {
             <h1>Admin Dashboard</h1>
             <h4>Willkommen zurück!</h4>
         </div>
-        <div class="account_header_image">
+        <div class="admin_dashboard_header_image">
             <img src="../img/gummies.png" alt="">
         </div>
     </div>
@@ -173,7 +174,7 @@ if (!isset($_SESSION["useruid"])) {
                                             <div class="admin_orders_info_description">
                                                 <h2>Bestellung #<?php echo $orderArray['id'] ?></h2>
                                                 <h4>Datum: <?php echo $orderArray['order_date'] ?></h4>
-                                                <h4>Anzahl Artikel: <?php echo getFullQTYofOrder($conn,$orderArray['id'])?></h4>
+                                                <h4>Anzahl Artikel: <?php echo getFullQTYofOrder($conn, $orderArray['id']) ?></h4>
                                                 <h4>Zahlungsart: <?php echo getPaymentTypeFromOrder($conn, $orderArray['siteuser_id'], $orderArray['id'])['value'] ?></h4>
                                                 <h4>Summe: <?php echo $orderArray['order_total'] ?>€</h4>
                                             </div>

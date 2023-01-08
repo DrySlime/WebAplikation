@@ -1,6 +1,6 @@
 <?php
 include_once "rating_functions_inc.php";
-require_once 'dbh_include.php';
+include_once 'dbh_include.php';
 
 global $conn;
 

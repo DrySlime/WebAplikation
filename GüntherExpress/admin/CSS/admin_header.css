@@ -3,3 +3,12 @@
     border-left-style: solid;
     border-left-width: 2px;
 }
+
+::-moz-selection {
+    background-color: #fc466b;
+    color: #fc466b;
+}
+
+::selection {
+    background-color: #fc466b;
+}

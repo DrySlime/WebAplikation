@@ -1,0 +1,9 @@
+#addData,
+#editData {
+    max-height: 35vh;
+}
+
+#addData button,
+#editData button {
+    margin-bottom: 1vmin;
+}

@@ -150,7 +150,6 @@ if (isset($_POST["priceSearch"])) {
     </div>
 </div>
 </body>
-<script src="JS/products.js"></script>
 </html>
 
 <?php

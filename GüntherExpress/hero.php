@@ -13,7 +13,6 @@ global $conn;
         <link rel="icon" type="image/x-icon" href="img/favicon.ico">
         <title>The Confectioner</title>
     </head>
-
     <body>
     <div class="hero">
         <div class="hero_left">
@@ -39,7 +38,6 @@ global $conn;
     </body>
     </html>
 
-
 <?php
 function getRandomProductName($conn)
 {
@@ -62,5 +60,4 @@ function getRandomProductName($conn)
 
     return json_encode($productArray[rand(0, count($productArray) - 1)]);
 }
-
 ?>

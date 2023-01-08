@@ -1,149 +1,110 @@
 <?php
-    require_once "admin_header.php";
-    require_once "includes/admin_functions_inc.php";
-    require_once "admin_header.php";
-    global $conn;
+include_once "admin_header.php";
+include_once "includes/admin_functions_inc.php";
+include_once "../includes/dbh_include.php";
+
+global $conn;
 ?>
-<head>
-    <link rel="stylesheet" href="CSS/orderedProducts.css">
-    <title></title>
-
-</head>
-<body>
-<div><br><br><br><br></div>
-
-<div class="orderedProductList">
-    <form action="admin_orders.php" method="post">
-        <label>
-            <input type="text" name="search" placeholder="Order ID" required>
-        </label>
-        <button type="submit">Suche</button>
-
-    </form><a href="admin_orders.php"><button formnovalidate>Reset</button></a>
-</div>
-<?php
-$amount = 3;
-    if(isset($_POST["search"])){
-
-        $userid=$_POST["search"];
-        if(strlen($userid)>3){
-            $userid=getUserID($conn,$userid);
-        }
-        $productArray=getAllOrderedProductsFromOrderID($conn,$userid);
-
-        if($productArray!=null){
-        ?>
-            <h1>Alle Besttelungen von <?php echo getUsername($conn,$productArray[0]["siteuser_id"])?></h1>
-                <table>
-                    <tr>
-                        <th>Order_id </th>
-                        <th>Username </th>
-                        <th>Order Date </th>
-                        <th>Payment Method </th>
-                        <th>Shipping Adress</th>
-                        <th>Shipping Method</th>
-                        <th>Order Total </th>
-                        <th>Order Status </th>
-                        <th>Order Content</th>
-                        <th>Change Status</th>
-                    </tr>
-            
-                    <?php
-                    for($i=0;$i<count($productArray);$i++) {
-                        $order=getOrderLine($conn,$productArray[$i]["order_id"]);
-                    ?>
-                        <tr>
-                                <td > <?php echo $productArray[$i]["order_id"]?> </td >
-                                <td > <?php echo getUsername($conn,$productArray[$i]["siteuser_id"])?> </td >
-                                <td > <?php echo $productArray[$i]["order_date"]?> </td >
-                                <td > <?php echo getPaymentMethod($conn,$productArray[$i]["payment_method_id"])?></td >
-                                <td > <?php echo getShippingAdress($conn,$productArray[$i]["shipping_address_id"])?> </td >
-                                <td > <?php echo getShippingMethod($conn,$productArray[$i]["shipping_method_id"])?> </td >
-                                <td > <?php $productArray[$i]["order_total"]?>Euro </td >
-                                <td > <?php getOrderStatus($conn,$productArray[$i]["order_status_id"])?> </td >   
-                                <td > <?php orderlineToTEXT($conn,$order)?> </td > 
-                                <td><a href='admin_orders.php?change=1&orderid=<?php $productArray[$i]['order_id']?>'><button>CHANGE</button></a></td>  
-                            </tr >
-        <?php
-            }
-        }else{
-        ?>
-            <h1>No Order under this ID</h1>
-        <?php
-        }
-
-
-    }else{
-        $productArray=getAllOrderedProducts($conn);
-
-    ?>
-                <h1>Alle Besttelungen</h1>
-                <table>
-                    <tr>
-                        <th>Order_id </th>
-                        <th>Username </th>
-                        <th>Order Date </th>
-                        <th>Payment Method </th>
-                        <th>Shipping Adress</th>
-                        <th>Shipping Method</th>
-                        <th>Order Total </th>
-                        <th>Order Status </th>
-                        <th>Order Content</th>
-                        <th>Change Status</th>
-                    </tr>
-            
-        <?php 
-        if($productArray!=null){
-            for($i=0;$i<count($productArray);$i++) {
-                $order=getOrderLine($conn,$productArray[$i]["order_id"]);
-                ?>
-                        <tr>
-                                <td > <?php echo $productArray[$i]["order_id"]?> </td >
-                                <td > <?php echo getUsername($conn,$productArray[$i]["siteuser_id"])?> </td >
-                                <td > <?php echo $productArray[$i]["order_date"]?> </td >
-                                <td > <?php echo getPaymentMethod($conn,$productArray[$i]["payment_method_id"])?></td >
-                                <td > <?php echo getShippingAdress($conn,$productArray[$i]["shipping_address_id"])?> </td >
-                                <td > <?php echo getShippingMethod($conn,$productArray[$i]["shipping_method_id"])?> </td >
-                                <td > <?php echo $productArray[$i]["order_total"]?> Euro </td >
-                                <td > <?php echo getOrderStatus($conn,$productArray[$i]["order_status_id"])?> </td >   
-                                <td > <?php echo orderlineToTEXT($conn,$order)?> </td >   
-                                <td><a href='admin_orders.php?change=1&orderid=<?php echo $productArray[$i]['order_id']?>><button>CHANGE</button></a></td>  
-               
-                            </tr >
-                            <?php
-            }
-        }
-
-    }
-
-$status=getAllOrderStatus($conn);
-
-if (isset($_GET["change"])){
-?>
-    <div class="changeForm">
-    <h1>UPDATE FORM: </h1>
-        <form action="../includes/updateOrderedProduct_inc.php" method="post">           
-            OrderID: <?php echo $_GET["orderid"]?><br>
-            Username: <?php echo $_GET["username"]?><br>
-            <select  name="statusID" size="4"  required>            
-    <?php
-    for ($i=0;$i<count($status);$i++){
-    ?>
-                            <option value="<?php echo $status[$i]["id"]?>"><?php echo $status[$i]["status"]?></option>
-    <?php 
-    }
-    ?>
-            </select><br>
-            <input type="text" name="orderID" value='<?php echo $_GET["orderid"]?>' hidden>
-            <input type="submit" name="send_form" value="UPDATE">
-            
-            <button formnovalidate><a href="admin_orders.php" >Cancel</a></button>
-    
-        </form>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <link rel="stylesheet" href="CSS/admin_shared_assets.css">
+        <link rel="stylesheet" href="CSS/admin_orders.css">
+        <meta charset="UTF-8" http-equiv="X-UA-Compatible" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="../img/favicon.ico">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <title></title>
+    </head>
+    <body>
+    <div class="admin_dashboard_header_wrapper">
+        <div class="admin_dashboard_header_container">
+            <h1>Bestellungen Übersicht</h1>
+            <h4>Hier werden alle Bestellung, welche auf The Confectioner gemacht wurden, aufgelistet!</h4>
+        </div>
+        <div class="admin_dashboard_header_image">
+            <img src="../img/gummies.png" alt="">
+        </div>
     </div>
-    <?php
-}
-
-?>
-</body>
-
+    <div class="admin_dashboard_wrapper">
+        <div class="admin_dashboard_container">
+            <div class="admin_data_wrapper">
+                <div class="admin_data_container">
+                    <h4>Bestellung Suchen</h4>
+                    <div class="admin_data_search">
+                        <?php
+                        $id = null;
+                        $user = null;
+                        if (isset($_POST["userSearch"])) {
+                            $user = $_POST["userSearch"];
+                        }
+                        if (isset($_POST["bidSearch"])) {
+                            $id = $_POST["bidSearch"];
+                        }
+                        ?>
+                        <form class="admin_data_search_form" id="searchOrderForm" action="admin_orders.php" method="post">
+                            <label for="bidSearch">Bestellungs ID:</label><input type="text" id="bidSearch" value="<?php echo $id ?>" name="bidSearch" placeholder="Bestellungs ID">
+                            <label for="userSearch">Nutzer ID:</label><input type="text" id="userSearch" value="<?php echo $user ?>" name="userSearch" placeholder="Nutzer ID"><label for="userSearch"></label>
+                        </form>
+                        <div class="admin_data_search_buttons">
+                            <button class="reset_searchOrderForm" id="resetForm">Zurücksetzen</button>
+                            <button type="submit" form="searchOrderForm">Suchen</button>
+                        </div>
+                    </div>
+                    <div class="admin_data_table">
+                        <?php
+                        $productArray = getOrderData($conn, $user, $id);
+                        ?>
+                        <table>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nutzer</th>
+                                <th>Datum</th>
+                                <th>Zahlungs</th>
+                                <th>Lieferadresse</th>
+                                <th>Versand</th>
+                                <th>Kosten</th>
+                                <th>Inhalt</th>
+                                <th></th>
+                            </tr>
+                            <?php
+                            if ($productArray == null) {
+                                ?>
+                                <tr>
+                                    <td>-/-</td>
+                                    <td>-/-</td>
+                                    <td>-/-</td>
+                                    <td>-/-</td>
+                                    <td>-/-</td>
+                                    <td>-/-</td>
+                                    <td>-/-</td>
+                                    <td>-/-</td>
+                                </tr>
+                                <?php
+                            } else {
+                                for ($i = 0; $i < count($productArray); $i++) {
+                                    $order = getOrderLine($conn, $productArray[$i]["order_id"]);
+                                    ?>
+                                    <tr>
+                                        <td><?php echo $productArray[$i]["order_id"] ?></td>
+                                        <td><?php echo getUsername($conn, $productArray[$i]["siteuser_id"]) ?></td>
+                                        <td><?php echo $productArray[$i]["order_date"] ?></td>
+                                        <td><?php echo getPaymentMethod($conn, $productArray[$i]["payment_method_id"]) ?></td>
+                                        <td><?php echo getShippingAdress($conn, $productArray[$i]["shipping_address_id"]) ?></td>
+                                        <td><?php echo getShippingMethod($conn, $productArray[$i]["shipping_method_id"]) ?></td>
+                                        <td><?php echo $productArray[$i]["order_total"] ?> €</td>
+                                        <td><?php echo orderlineToTEXT($conn, $order) ?></td>
+                                    </tr>
+                                    <?php
+                                }
+                            } ?>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="JS/adminForms.js"></script>
+    </body>
+    </html>
+<?php require_once "admin_footer.php" ?>

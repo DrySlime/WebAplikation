@@ -1,139 +1,212 @@
 <?php
-    require_once "admin_header.php";
-    require_once "includes/admin_functions_inc.php";
-    global $conn;
-    $categories=getAllCategories($conn);
+include_once "includes/admin_functions_inc.php";
+include_once "../includes/dbh_include.php";
+include_once "admin_header.php";
+global $conn;
 
+$categories = getCategoryData($conn, null);
+$allProducts = getProductData($conn, null, null, null);
 ?>
-<head>
-    <link rel="stylesheet" href="CSS/sale_admin.css">
-    <title></title>
-</head>
-    <div><br><br><br><br></div>
-<h1>Create a PRODUCT</h1>
-<form action="../includes/createProduct_inc.php" method="post">
-    <label for="category">Choose a category:</label>
-    <label for="cars"></label><select id="cars" name="category_id" size="4" required>
-        <?php
-            for ($i=0;$i<count($categories);$i++){
-        ?>
-                    <option value="<?php echo $categories[$i]["id"]?>"><?php echo $categories[$i]["category_name"]?></option>
-        <?php
-            }
-        ?>
-
-    </select><br>
-    Name: <label>
-        <input type="text" name="name"  placeholder="Product Name" required>
-    </label><br>
-    Product Image: <label>
-        <input type="text" name="pImage" required>
-    </label>
-    Description: <label>
-        <textarea name="description" placeholder="Description" rows="1" cols="60" required></textarea>
-    </label><br>
-    Price: <label>
-        <input type="text" name="price" placeholder="Price" required>
-    </label><br>
-    Amount in Stock: <label>
-        <input type="number" name="inStock"  required>
-    </label><br>
-
-    <input type="submit" name="send_form">
-
-</form>
-
-
-
-
-
-<?php
-$productArr=getAllProducts($conn);
-
-if($productArr!=null){
-?>
-        <div class='all'>
-        <div class='table'>
-        <table>
-        <h1>Alle Products</h1>
-            <tr>
-                <th>Category </th>
-                <th>Name </th>
-                <th>Product Image</th>
-                <th>Description </th>
-                <th>Price</th>
-                <th>Amount in Stock</th>
-                
-                <th>CHANGE</th>
-                <th>DELETE</th>
-            </tr>
-        
-<?php
-    for($i=0;$i<count($productArr);$i++) {
-
-?>
-    <tr>
-        <td > <?php echo getCategoryNameViaID($conn,$productArr[$i]["product_category_id"])?></td >
-        <td > <?php echo $productArr[$i]["product_name"]?> </td >
-        <td > <?php $productArr[$i]["product_image"]?> </td >
-        <td > <?php $productArr[$i]["description"]?> </td >
-        <td > <?php  $productArr[$i]["price"] ?></td >
-        <td > <?php $productArr[$i]["qty_in_stock"]?> </td >
-        
-        <td > <a href='admin_products.php?change=1&productID=<?php echo $productArr[$i]["id"]?>&productName=<?php echo $productArr[$i]["product_name"] ?>&productImage=<?php $productArr[$i]["product_image"] ?>&description=<?php echo $productArr[$i]["description"]?>&price=<?php echo $productArr[$i]["price"] ?>&qtyInStock=<?php echo $productArr[$i]["qty_in_stock"]?>'><button>CHANGE</button></a> </td >
-        <td > <form action='../includes/deleteProduct_inc.php' method='post'><input type='submit' name='delButton' value='DELETE'><input name='productID' value="<?php echo$productArr[$i]["id"]?>" hidden> </form></td >
-    </tr >
-    
-    
-    <?php } ?>
-    </table></div>
-    <?php
-    }
-if (isset($_GET["change"])){
-    ?>
-    <div class="changeForm">
-    <h1>UPDATE FORM: </h1>
-        <form action="../includes/updateProduct_inc.php" method="post">
-            <label for="category">Choose a category:</label>
-            <select  name="category_id" size="4"  required>
-            <?php
-            for ($i=0;$i<count($categories);$i++){
-            ?>
-                            <option value=<?php echo $categories[$i]["id"]?>><?php echo $categories[$i]["category_name"]?></option>
-            <?php
-            }
-            ?>
-            </select><br>
-            Name: <input type="text" name="product_name"  value="<?php echo $_GET["productName"]?>" required><br>
-            Description: <textarea name="description"  rows="1" cols="60" required><?php echo $_GET["description"]?></textarea><br>
-            Product Image :<input type="text" name="productImage" value="<?php echo $_GET["productImage"]?>" required><br>
-            Price : <input type="text" name="price" value="<?php echo $_GET["price"]?>" required><br>
-            Amount in Stock : <input type="number" name="qty_in_stock" value="<?php echo $_GET["qtyInStock"]?>"required><br>
-            
-            <input name="productID" value="<?php echo $_GET["productID"]?>" hidden>
-            <input type="submit" name="send_form" value="UPDATE">
-            <a href="admin_products.php" ><button formnovalidate>Cancel</button></a>
-    
-        </form>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <link rel="stylesheet" href="CSS/admin_shared_assets.css">
+        <meta charset="UTF-8" http-equiv="X-UA-Compatible" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="../img/favicon.ico">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <title></title>
+    </head>
+    <body>
+    <div class="admin_dashboard_header_wrapper">
+        <div class="admin_dashboard_header_container">
+            <h1>Produkt Übersicht</h1>
+            <h4>Hier werden alle Produkte auf The Confectioner aufgelistet!</h4>
+        </div>
+        <div class="admin_dashboard_header_image">
+            <img src="../img/gummies.png" alt="">
+        </div>
     </div>
+    <div class="admin_dashboard_wrapper">
+        <div class="admin_dashboard_container">
+            <div class="admin_data_wrapper">
+                <div id="showData" class="admin_data_container">
+                    <h4>Produkt Suchen</h4>
+                    <div class="admin_data_search">
+                        <?php
+                        $name = null;
+                        $id = null;
+                        $category = null;
+                        if (isset($_POST["nameSearch"])) {
+                            $name = $_POST["nameSearch"];
+                        }
+                        if (isset($_POST["pidSearch"])) {
+                            $id = $_POST["pidSearch"];
+                        }
+                        if (isset($_POST["category"])) {
+                            $category = $_POST["category"];
+                        }
+                        ?>
+                        <form class="admin_data_search_form" id="searchProductForm" action="admin_products.php" method="post">
+                            <label for="pidSearch">Produkt ID:</label><input type="text" id="pidSearch" name="pidSearch" value="<?php echo $id ?>" placeholder="Produkt ID">
+                            <label for="nameSearch">Produkt Name:</label><input type="text" id="nameSearch" name="nameSearch" value="<?php echo $name ?>" placeholder="Produkt Name">
+                            <label for="category">Kategorie:</label><select id="category" name="category">
+                                <option disabled selected hidden value="">Kategorie Suchen</option>
+                                <?php
+                                for ($i = 0; $i < count($categories); $i++) {
+                                    if ($category !== null && $categories[$i]["id"] == $category) { ?>
+                                        <option selected="selected" value="<?php echo $categories[$i]["id"] ?>"><?php echo $categories[$i]["category_name"] ?></option>
+                                        <?php
+                                    } else {
+                                        ?>
+                                        <option value="<?php echo $categories[$i]["id"] ?>"><?php echo $categories[$i]["category_name"] ?></option>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </form>
+                        <div class="admin_data_search_buttons">
+                            <button class="reset_searchProductForm" id="resetForm">Zurücksetzen</button>
+                            <button id="searchProductForm" type="submit" form="searchProductForm">Suchen</button>
+                        </div>
+                    </div>
+                    <div class="admin_data_table">
+                        <?php
+                        $productArr = getProductData($conn, $name, $id, $category);
+                        ?>
+                        <table>
+                            <tr>
+                                <th></th>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Kategorie</th>
+                                <th>Preis</th>
+                                <th>Vorrat</th>
+                                <th></th>
+                            </tr>
+                            <?php
+                            if ($productArr == null) {
+                                ?>
+                                <tr>
+                                    <td>-/-</td>
+                                    <td>-/-</td>
+                                    <td>-/-</td>
+                                    <td>-/-</td>
+                                    <td>-/-</td>
+                                    <td>-/-</td>
+                                </tr>
+                                <?php
+                            } else {
+                                for ($i = 0; $i < count($productArr); $i++) {
+                                    ?>
+                                    <tr id="table_row_<?php echo $productArr[$i]["id"] ?>">
+                                        <td><img src="<?php echo $productArr[$i]["product_image"] ?>"></td>
+                                        <td class="disabled_<?php echo $productArr[$i]["active"] ?>"><?php echo $productArr[$i]["id"] ?></td>
+                                        <td class="disabled_<?php echo $productArr[$i]["active"] ?>"><?php echo $productArr[$i]["product_name"] ?></td>
+                                        <td class="disabled_<?php echo $productArr[$i]["active"] ?>"><?php echo getCategoryNameViaID($conn, $productArr[$i]["product_category_id"]) ?></td>
+                                        <td class="disabled_<?php echo $productArr[$i]["active"] ?>"><?php echo $productArr[$i]["price"] ?> €</td>
+                                        <td class="disabled_<?php echo $productArr[$i]["active"] ?>"><?php echo $productArr[$i]["qty_in_stock"] ?></td>
+                                        <td class="alignRight">
+                                            <button class="data_edit_button" id="editProduct_<?php echo $productArr[$i]["id"] ?>">Bearbeiten</button>
+                                        </td>
+                                    </tr>
+                                <?php }
+                            } ?>
+                        </table>
+                    </div>
+                </div>
+                <div class="admin_data_subcontainer">
+                    <div id="addData" class="admin_data_container">
+                        <h4>Artikel Hinzufügen</h4>
+                        <div class="admin_data_side_spacer">
+                            <form id="addProducts" action="includes/productManager_inc.php" method="post">
+                                <label for="category">Kategorie:</label><select required id="createcategory" name="createcategory">
+                                    <option disabled selected hidden value="">Kategorie Wählen</option>
+                                    <?php
+                                    for ($i = 0; $i < count($categories); $i++) {
+                                        ?>
+                                        <option value="<?php echo $categories[$i]["id"] ?>"><?php echo $categories[$i]["category_name"] ?></option>
+                                        <?php
+                                    }
+                                    ?>
+                                </select>
+                                <label for="createname">Name:</label><input required type="text" name="createname" id="createname" placeholder="Name">
+                                <label for="createimage">Produkt Bild:</label><input required type="text" name="createimage" id="createimage" placeholder="Bild URL">
+                                <label for="createdescription">Beschreibung:</label><textarea required type="text" name="createdescription" id="createdescription" placeholder="Beschreibung"></textarea>
+                                <div class="data_Double_Container">
+                                    <div class="data_double_label">
+                                        <label for="createprice">Preis:</label><input required type="text" name="createprice" id="createprice" placeholder="Preis">
+                                    </div>
+                                    <div class="data_double_label">
+                                        <label for="createamount">Vorrat:</label><input required type="text" name="createamount" id="createamount" placeholder="Vorrätige Menge">
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="admin_data_submit_button">
+                                <button form="addProducts" type="submit" id="saveProductNew" name="saveProductNew">Hinzufügen</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="editData" class="admin_data_container">
+                        <h4>Artikel Bearbeiten</h4>
+                        <div class="admin_data_side_spacer">
+                            <form id="editProducts" action="includes/productManager_inc.php" method="post">
+                                <div class="data_Double_Container">
+                                    <div class="data_double_label">
+                                        <label for="itemidSelect">Produkt:</label><select required id="itemidSelect" name="itemidSelect">
+                                            <option disabled selected hidden value="">Produkt Wählen</option>
+                                            <?php
+                                            for ($i = 0; $i < count($allProducts); $i++) {
+                                                ?>
+                                                <option value="<?php echo $allProducts[$i]["id"] ?>"><?php echo $allProducts[$i]["id"] ?></option>
+                                                <?php
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="data_double_label">
+                                        <label for="editcategory">Kategorie:</label><select required id="editcategory" name="editcategory">
+                                            <option disabled selected hidden value="">Kategorie Wählen</option>
+                                            <?php
+                                            for ($i = 0; $i < count($categories); $i++) {
+                                                ?>
+                                                <option value="<?php echo $categories[$i]["id"] ?>"><?php echo $categories[$i]["category_name"] ?></option>
+                                                <?php
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <label for="editactive">De-/Aktivieren:</label><select required id="editactive" name="editactive">
+                                    <option value="1">Aktiviert</option>
+                                    <option value="0">Deaktiviert</option>
+                                </select>
+                                <label for="editname">Name:</label><input required type="text" name="editname" id="editname" placeholder="Name">
+                                <label for="editimage">Produkt Bild:</label><input required type="text" name="editimage" id="editimage" placeholder="Bild URL">
+                                <label for="editdescription">Beschreibung:</label><textarea required type="text" name="editdescription" id="editdescription" placeholder="Beschreibung"></textarea>
+                                <div class="data_Double_Container">
+                                    <div class="data_double_label">
+                                        <label for="editprice">Preis:</label><input required type="text" name="editprice" id="editprice" placeholder="Preis">
+                                    </div>
+                                    <div class="data_double_label">
+                                        <label for="editamount">Vorrat:</label><input required type="text" name="editamount" id="editamount" placeholder="Vorrätige Menge">
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="admin_data_submit_button">
+                                <button form="editProducts" type="submit" id="saveProductEdit" name="saveProductEdit">Speichern</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="JS/adminForms.js"></script>
+    <script src="JS/adminProducts.js"></script>
+    </body>
+    </html>
 <?php
-}
-if (isset($_GET["error"])){
-    if($_GET["error"]=="invalidDiscount"){
-        ?>
-        <br><h1 style='color: red'>Error in your Discountrate. Please enter a value between 1-99! For Example 20</h1><br>
-    <?php
-    }if($_GET["error"]=="invalidDate") {
-    ?>
-        <br><h1 style='color: red'>Error in your Date. Please check your Dates. End Date cant be in the past and or before the start Date!</h1><br>
-    <?php
-    }
-    if($_GET["error"]=="titleExists") {
-    ?>
-        <br><h1 style='color: red'>This Promotion allready exists! Please chose another name!</h1><br>
-    <?php
-    }
-}
-
+include_once "admin_footer.php";
 ?>
-
