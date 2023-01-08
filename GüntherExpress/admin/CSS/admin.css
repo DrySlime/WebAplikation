@@ -119,6 +119,7 @@ body {
     width: 100%;
     row-gap: 1vmin;
     height: 100%;
+    max-height: 45vh;
     position: relative;
     overflow: scroll;
     overflow-x: hidden;
