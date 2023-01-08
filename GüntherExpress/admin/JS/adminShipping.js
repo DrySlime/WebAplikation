@@ -23,12 +23,11 @@ function runShippingSearch(id) {
             let editname = $('#editname');
             let editshipping = $('#editshipping')
             let editprice = $('#editprice');
-            let deleteInput = $('#hiddenInputDelete');
 
+            editname.focus();
             editshipping.val(data[0]["id"]);
             editprice.val(data[0]["shipping_price"])
             editname.val(data[0]["shipping_name"]);
-            deleteInput.val(id);
         }
     });
 }

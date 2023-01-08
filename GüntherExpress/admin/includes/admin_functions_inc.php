@@ -67,6 +67,7 @@ function getUserData($conn, $name, $id, $email)
         $array["lastname"] = $row["lastname"];
         $array["email"] = $row["email"];
         $array["username"] = $row["user_uid"];
+        $array["active"] = $row['active'];
         $allItems[] = $array;
         unset($array);
     }

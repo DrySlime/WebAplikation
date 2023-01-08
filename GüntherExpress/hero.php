@@ -25,7 +25,7 @@ global $conn;
             <div class="hero_search">
                 <form action="products.php" method="post">
                     <div class="searchbar_container">
-                        <label for="search"></label><input type="text" name="search" id="search" placeholder= <?php echo getRandomProductName($conn) ?> required>
+                        <label for="search"></label><input type="text" name="search" id="search" placeholder=<?php echo htmlspecialchars_decode(getRandomProductName($conn)) ?>required>
                         <button type="submit">Suchen</button>
                     </div>
                 </form>

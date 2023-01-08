@@ -208,6 +208,8 @@ a, a:hover {
 
 .product_description > a {
     text-align: center;
+    width: 95%;
+    padding-bottom: 4vmin;
     color: #101010;
 }
 

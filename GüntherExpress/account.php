@@ -325,11 +325,18 @@ if (!isset($_SESSION["useruid"])) {
                 while ($rows = $reOrderIDs->fetch_assoc()) {
                     $DataRows = mysqli_fetch_assoc(getPersonalOrderDataByID($conn, $rows['id']));
                     $OrderArray = getObjectOrderDataByID($conn, $rows['id']);
+                    $productInfo= mysqli_fetch_assoc($OrderArray);
+                    $productImg = $productInfo['product_image'];
+                    $productID = $productInfo['product_item_id'];
+
                     ?>
                     <div class="modal_orders_grid_container">
                         <div class="order_container">
                             <div class="orders_info_image">
-                                <img src="<?php echo mysqli_fetch_assoc($OrderArray)['product_image'] ?>" alt="">
+                                <a href="item.php?id=<?php echo $productID;?>" >
+                                    <?php ;?>
+                                    <img src="<?php echo $productImg ?>" alt="">
+                                </a>
                             </div>
                             <div class="orders_info_description">
                                 <div class="orders_info_title">
@@ -351,11 +358,14 @@ if (!isset($_SESSION["useruid"])) {
                             <?php
                             $OrderArray = getObjectOrderDataByID($conn, $rows['id']);
                             while ($OrderRow = $OrderArray->fetch_assoc()) {
+
                                 ?>
                                 <div class="single_order_grid_container">
                                     <div class="single_order_item_container">
                                         <div class="single_order_product_image">
-                                            <img src="<?php echo $OrderRow['product_image'] ?>" alt="">
+                                            <a href="item.php?id=<?php echo $OrderRow['product_item_id'];?>" >
+                                                <img src="<?php echo $OrderRow['product_image'] ?>" alt="">
+                                            </a>
                                         </div>
                                         <div class="single_order_product_description">
                                             <h2><?php echo $OrderRow['product_name'] ?></h2>

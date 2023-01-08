@@ -77,19 +77,19 @@ global $conn;
                             for ($i = 0; $i < count($userArray); $i++) {
                                 ?>
                                 <tr>
-                                    <td> <?php echo $userArray[$i]["id"] ?> </td>
-                                    <td> <?php echo $userArray[$i]["firstname"] ?> </td>
-                                    <td> <?php echo $userArray[$i]["lastname"] ?> </td>
-                                    <td> <?php echo $userArray[$i]["email"] ?></td>
-                                    <td> <?php echo $userArray[$i]["username"] ?> </td>
+                                    <td class="disabled_<?php echo $userArray[$i]['active']?>"><?php echo $userArray[$i]["id"] ?> </td>
+                                    <td class="disabled_<?php echo $userArray[$i]['active']?>"><?php echo $userArray[$i]["firstname"] ?> </td>
+                                    <td class="disabled_<?php echo $userArray[$i]['active']?>"><?php echo $userArray[$i]["lastname"] ?> </td>
+                                    <td class="disabled_<?php echo $userArray[$i]['active']?>"><?php echo $userArray[$i]["email"] ?></td>
+                                    <td class="disabled_<?php echo $userArray[$i]['active']?>"><?php echo $userArray[$i]["username"] ?> </td>
                                     <?php
                                     $address = getAdressFromUserID($conn, $userArray[$i]["id"]);
                                     if ($address != null) {
                                         ?>
-                                        <td> <?php echo $address[0]["address_line"] ?> </td>
-                                        <td> <?php echo $address[0]["street_number"] ?> </td>
-                                        <td> <?php echo $address[0]["city"] ?> </td>
-                                        <td> <?php echo $address[0]["postal_code"] ?> </td>
+                                        <td class="disabled_<?php echo $userArray[$i]['active']?>"> <?php echo $address[0]["address_line"] ?> </td>
+                                        <td class="disabled_<?php echo $userArray[$i]['active']?>"> <?php echo $address[0]["street_number"] ?> </td>
+                                        <td class="disabled_<?php echo $userArray[$i]['active']?>"> <?php echo $address[0]["city"] ?> </td>
+                                        <td class="disabled_<?php echo $userArray[$i]['active']?>"> <?php echo $address[0]["postal_code"] ?> </td>
                                         <?php
                                     } else {
                                         ?>
