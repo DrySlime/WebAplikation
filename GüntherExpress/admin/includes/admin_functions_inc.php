@@ -382,7 +382,7 @@ function getProductData($conn, $name, $id, $category)
     if ($name == null && $id == null && $category == null) {
         $sql = "SELECT * FROM product ";
     } else {
-        $sql = "SELECT * FROM product WHERE upper(product_name) = upper(?) OR id = ? OR product_category_id = ?";
+        $sql = "SELECT * FROM product WHERE upper(product_name) LIKE upper(?) OR id = ? OR product_category_id = ?";
         $data = true;
 
     }
