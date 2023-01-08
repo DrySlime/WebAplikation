@@ -136,7 +136,7 @@ $endCosts = $_SESSION['fullPrice'];
                                     <div class="checkout_grid_container address_container" onclick='setData("addressId", <?php echo $rows['id'] ?>)'>
                                         <input class="radioButton" type="radio" id="<?php echo $rows['id'] ?>" name="address_buttons" value="<?php echo $rows['id'] ?>">
                                         <div id="address_<?php echo $rows['id'] ?>" class="grid_container">
-                                            <h2><?php echo ucfirst($resultAccount['firstname']); ?>  echo ucfirst($resultAccount['lastname']); ?></h2>
+                                            <h2><?php echo ucfirst($resultAccount['firstname']); ?>  <?php echo ucfirst($resultAccount['lastname']); ?></h2>
                                             <h4><?php echo ucfirst($rows['address_line1']); ?> <?php echo $rows['street_number']; ?></h4>
                                             <h4><?php echo ucfirst($rows['city']); ?>, <?php echo $rows['postal_code']; ?></h4>
                                         </div>
