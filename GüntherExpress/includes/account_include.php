@@ -112,13 +112,10 @@ if (isset($_POST['delete_Account'])) {
 
     if (rightPassword($conn, $password) && rightEmail($conn, $email)) {
         deactivateUser($conn);
-        session_unset();
-        session_destroy();
-        header("location: ../index.php");
-        exit();
     } else {
         header("location: ../account.php?error=deletionfailed");
     }
+    
 }
     
     

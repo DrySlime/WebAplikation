@@ -222,7 +222,7 @@ if (!isset($_SESSION["useruid"])) {
                 <p id="sad_life">Wir werden dich beim Confectioner vermissen!</p>
             </div>
             <div class="modal_input">
-                <form id="deleteAccount" action="includes/account_include.php" method="post">
+                <form id="deleteAccount" method="post">
                     <label for="delemail"></label><input required type="text" name="delemail" id="delemail" placeholder="Email">
                     <label for="delpassword"></label><input required type="password" name="delpassword" id="delpassword" placeholder="Passwort">
                 </form>

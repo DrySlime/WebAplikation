@@ -1031,6 +1031,9 @@ function deactivateUser($conn)
     mysqli_stmt_execute($stmt);
 
     mysqli_stmt_close($stmt);
+    session_start();
+    session_unset();
+    session_destroy();
     header("location: ../index.php");
     exit();
 }
