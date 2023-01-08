@@ -391,9 +391,10 @@ function getProductData($conn, $name, $id, $category)
         exit();
     }
     if ($data) {
-        $name = strtoupper($name);
-        $name ="%".$name."%";
-        echo $name;
+        if($name != null){
+            $name = strtoupper($name);
+            $name ="%".$name."%";
+        }
         mysqli_stmt_bind_param($stmt, "sss", $name, $id, $category);
     }
     mysqli_stmt_execute($stmt);
