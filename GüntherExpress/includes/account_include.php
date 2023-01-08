@@ -117,9 +117,9 @@ if (isset($_POST['delete_Account'])) {
     $email = $_POST['delemail'];
 
     if (rightPassword($conn, $password) && rightEmail($conn, $email)) {
-        deactivateUser($conn);
         session_unset();
         session_destroy();
+        deactivateUser($conn);
         header("location: ../index.php");
         exit();
     } else {
