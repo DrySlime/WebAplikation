@@ -8,7 +8,7 @@ if (isset($_POST['editname'])) {
     $name = $_POST['editname'];
     $description = $_POST['editdescription'];
     $productImage = $_POST['editimage'];
-    $price = $_POST['editprice'];
+    $price = floatval($_POST['editprice']);
     $inStock = $_POST['editamount'];
     $productID = $_POST['itemidSelect'];
     $active = $_POST['editactive'];
