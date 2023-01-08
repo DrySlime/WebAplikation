@@ -27,7 +27,6 @@ function runProductSearch(id) {
             let editdescription = $('#editdescription');
             let editprice = $('#editprice');
             let editamount = $('#editamount');
-            let deleteInput = $('#hiddenInputDelete');
             let active = $('#editactive');
 
             editname.focus();
@@ -39,7 +38,6 @@ function runProductSearch(id) {
             editprice.val(data[0]["price"]);
             editamount.val(data[0]["qty_in_stock"]);
             active.val(data[0]["active"]);
-            deleteInput.val(id);
         }
     });
 }
