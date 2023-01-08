@@ -392,7 +392,7 @@ function getProductData($conn, $name, $id, $category)
         exit();
     }
     if ($data) {
-        $name ='%'.$name.'%';
+        $name ="'%".$name."%'";
         mysqli_stmt_bind_param($stmt, "sss", $name, $id, $category);
     }
     mysqli_stmt_execute($stmt);
