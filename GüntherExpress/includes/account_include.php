@@ -13,7 +13,6 @@ if (isset($_POST['register_button'])) {
     $newPassword = $_POST['newpassword'];
     $oldPassword = $_POST['oldpassword'];
 
-
     if (invalidUid($usernameChange) !== false) {
         header("location: ../account.php?error=invaliduid");
         exit();
@@ -43,7 +42,6 @@ if (isset($_POST['register_button'])) {
     exit();
 }
 
-
 if (isset($_GET['edit'])) {
     $AddressID = $_GET['edit'];
 
@@ -62,7 +60,6 @@ if (isset($_GET['delete'])) {
 
 }
 
-
 if (isset($_POST['add_address_button'])) {
     $streetAdd = $_POST['addStreet'];
     $housenoAdd = $_POST['addHausnummer'];
@@ -79,8 +76,6 @@ if (isset($_POST['add_address_button'])) {
     exit();
 
 }
-
-
 
 if (isset($_GET['editP'])) {
     $PaymentID = $_GET['editP'];
@@ -100,7 +95,6 @@ if (isset($_GET['deleteP'])) {
 
 }
 
-
 if (isset($_POST['add_Payment_button'])) {
     $payment_type_id = $_POST['paymentMethod'];
     $provider = $_POST['addProvider'];
@@ -117,9 +111,9 @@ if (isset($_POST['delete_Account'])) {
     $email = $_POST['delemail'];
 
     if (rightPassword($conn, $password) && rightEmail($conn, $email)) {
+        deactivateUser($conn);
         session_unset();
         session_destroy();
-        deactivateUser($conn);
         header("location: ../index.php");
         exit();
     } else {

@@ -229,7 +229,7 @@ if (!isset($_SESSION["useruid"])) {
             </div>
             <div class="modal_buttons">
                 <button id="close_delete_modal">Ich will bleiben!</button>
-                <button type="submit" form="deleteAccount" id="delete_Account">Account Löschen</button>
+                <button type="submit" name="delete_Account" form="deleteAccount" id="delete_Account">Account Löschen</button>
             </div>
         </div>
     </div>
@@ -493,29 +493,6 @@ if (!isset($_SESSION["useruid"])) {
             </div>
             <div class="modal_buttons">
                 <button id="close_payment_modal">Schließen</button>
-            </div>
-        </div>
-    </div>
-    <div class="account_modal" id="delete-modal">
-        <div class="modal_container">
-            <div class="modal_text">
-                <div class="modal_header">
-                    <span class="material-symbols-outlined">warning</span>
-                    <h3>Account Löschen</h3>
-                </div>
-                <p>Falls du deinen Account für immer löschen möchtest, gib unten deine Daten ein letztes Mal ein und
-                    bestätige das löschen. Denk dran, dass das hier nicht rückgängig gemacht werden kann!</p>
-                <p id="sad_life">Wir werden dich beim Confectioner vermissen!</p>
-            </div>
-            <div class="modal_input">
-                <form id="deleteAccount" method="post">
-                    <label for="delemail"></label><input required type="text" name="delemail" id="delemail" placeholder="Email">
-                    <label for="delpassword"></label><input required type="password" name="delpassword" id="delpassword" placeholder="Passwort">
-                </form>
-            </div>
-            <div class="modal_buttons">
-                <button id="close_modal">Ich will bleiben!</button>
-                <button type="submit" form="deleteAccount" id="delete_Account">Account Löschen</button>
             </div>
         </div>
     </div>
