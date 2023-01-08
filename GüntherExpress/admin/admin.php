@@ -150,7 +150,7 @@ if (!isset($_SESSION["useruid"])) {
                         </div>
                     </div>
                 </div>
-                <div id="lastOrders" class="admin_dashboard_grid_container smallerSize">
+                <div id="lastOrders" class="admin_dashboard_grid_container">
                     <div class="grid_container_wrapper">
                         <div class="grid_container_header">
                             <h4>Letzten Bestellungen</h4>
@@ -199,7 +199,7 @@ if (!isset($_SESSION["useruid"])) {
                         </div>
                     </div>
                 </div>
-                <div id="emptyProducts" class="admin_dashboard_grid_container smallerSize">
+                <div id="emptyProducts" class="admin_dashboard_grid_container">
                     <div class="grid_container_wrapper">
                         <div class="grid_container_header">
                             <h4>Ausverkaufte Ware</h4>

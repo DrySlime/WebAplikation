@@ -33,11 +33,8 @@ body {
     padding: 3vmin;
     margin-bottom: 10vmin;
     width: auto;
-    height: 100%;
-}
-
-.smallerSize {
     max-height: 45vh;
+    height: 100%;
 }
 
 #ordersOverview,
