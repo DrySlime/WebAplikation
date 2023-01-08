@@ -384,7 +384,6 @@ function getProductData($conn, $name, $id, $category)
     } else {
         $sql = "SELECT * FROM product WHERE (UPPER(product_name) LIKE UPPER(?)) OR id = ? OR product_category_id = ?";
         $data = true;
-
     }
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
