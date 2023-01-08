@@ -25,6 +25,7 @@ function runShippingSearch(id) {
             let editprice = $('#editprice');
             let deleteInput = $('#hiddenInputDelete');
 
+            editname.focus();
             editshipping.val(data[0]["id"]);
             editprice.val(data[0]["shipping_price"])
             editname.val(data[0]["shipping_name"]);

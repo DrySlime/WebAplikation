@@ -25,6 +25,7 @@ function runCategorySearch(id) {
             let deleteInput = $('#hiddenInputDelete');
             let active = $('#editactive');
 
+            editname.focus();
             editCategory.val(data[0]["id"]);
             editname.val(data[0]["category_name"]);
             active.val(data[0]["active"]);
