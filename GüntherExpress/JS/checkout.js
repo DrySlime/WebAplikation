@@ -121,7 +121,7 @@ $(document).on('click', '.checkout_grid_container', function () {
         let radioButton = $(this).children().first();
         let id = radioButton.attr('id');
         let value = radioButton.attr('value');
-        if (radioButton.attr("name") === "delivery_buttons") {
+        if ($(this).children().first().attr("name") === "delivery_buttons") {
             $.ajax({
                 url: "/includes/ajaxCheckout.php",
                 type: "POST",
@@ -134,11 +134,11 @@ $(document).on('click', '.checkout_grid_container', function () {
                     $('#final_ship').html($('#ship_' + id).html());
                 }
             });
-        } else if (radioButton.attr("name") === "address_buttons") {
+        } else if ($(this).children().first().attr("name") === "address_buttons") {
             let div = $('#final_address');
             div.html($('#address_' + id).html());
             div.children('a').remove();
-        } else if (radioButton.attr("name") === "payment_buttons") {
+        } else if ($(this).children().first().attr("name") === "payment_buttons") {
             $('#final_payment').html($('#payment_' + id).html());
         }
         if ($('input[name="payment_buttons"]').is(':checked') && $('input[name="address_buttons"]').is(':checked') && $('input[name="delivery_buttons"]').is(':checked')) {
