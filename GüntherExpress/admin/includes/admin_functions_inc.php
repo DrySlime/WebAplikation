@@ -78,7 +78,7 @@ function getUserData($conn, $name, $id, $email)
 function getAdressFromUserID($conn, $userID)
 {
     $allItems = null;
-    $sql = "SELECT * FROM address WHERE id=(SELECT address_id FROM user_address WHERE user_id=?);";
+    $sql = "SELECT * FROM address WHERE id=(SELECT address_id FROM user_address WHERE user_id=? AND is_default_address=1);";
     $stmt = mysqli_stmt_init($conn);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
