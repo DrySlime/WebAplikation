@@ -45,7 +45,7 @@ session_start();
                 <?php if (isset($_SESSION["useruid"])) {
                     if ($_SESSION["userid"] == 1) {
                         ?>
-                        <li><a href="/admin/admin.php">Admin</a></li>
+                        <li><a href="admin/admin.php">Admin</a></li>
                     <?php }
                 } ?>
                 <li>

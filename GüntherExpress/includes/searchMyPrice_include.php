@@ -1,5 +1,5 @@
 <?php
-
+global $conn;
 $category = convertCategoryNameToID($conn, $_GET["name"]);
 $min = $_POST["min"];
 $max = $_POST["max"];

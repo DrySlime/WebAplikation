@@ -90,7 +90,9 @@ if (isset($_POST["priceSearch"])) {
                                 <label for="min"></label><input type="text" name="min" id="min" placeholder="Min">
                                 <h4 class="separator">-</h4>
                                 <label for="max"></label><input type="text" name="max" id="max" placeholder="Max">
-                                <input type="text" name="priceSearch" value="true" hidden>
+                                <label>
+                                    <input type="text" name="priceSearch" value="true" hidden>
+                                </label>
                             </div>
                             <div class="settings_button">
                                 <button type="submit" name="applyfilter">Anwenden</button>

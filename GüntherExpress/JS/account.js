@@ -89,8 +89,8 @@ function closeOrderModal() {
 
     document.getElementById('close_orders_modal').style.transition = 'none';
     var orderModalContainers = document.getElementsByClassName('open');
-    for (var i = 0; i < orderModalContainers.length; i++) {
-        var orderModalContainer = orderModalContainers[i];
+    for (var k = 0; k < orderModalContainers.length;k++) {
+        var orderModalContainer = orderModalContainers[k];
         orderModalContainer.style.transition = 'none';
         orderModalContainer.classList.remove('open')
     }

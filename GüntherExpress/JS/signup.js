@@ -1,3 +1,6 @@
+//Funktionen werden alle in Singup.php benötigt und sind nicht redundant.
+
+
 function showErrorMsgEmpty() {
     const errorText = document.getElementById('errorText');
     const errorContent = document.getElementById('errorTextContent');

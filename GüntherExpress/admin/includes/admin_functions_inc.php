@@ -6,9 +6,9 @@ function getOrderData($conn, $username, $bid)
     $allItems = null;
     $data = false;
     if ($username == null && $bid == null) {
-        $sql = "SELECT * FROM shop_order ORDER BY order_date ASC;";
+        $sql = "SELECT * FROM shop_order ORDER BY order_date;";
     } else {
-        $sql = "SELECT * FROM shop_order WHERE id = ? OR siteuser_id = ? ORDER BY order_date ASC;";
+        $sql = "SELECT * FROM shop_order WHERE id = ? OR siteuser_id = ? ORDER BY order_date;";
         $data = true;
     }
     $stmt = mysqli_stmt_init($conn);
@@ -381,8 +381,9 @@ function getProductData($conn, $name, $id, $category)
     if ($name == null && $id == null && $category == null) {
         $sql = "SELECT * FROM product ";
     } else {
-        $sql = "SELECT * FROM product WHERE product_name = ? OR id = ? OR product_category_id = ?";
+        $sql = "SELECT * FROM product WHERE upper(product_name) LIKE upper(?)OR id = ? OR product_category_id = ?";
         $data = true;
+
     }
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -390,6 +391,7 @@ function getProductData($conn, $name, $id, $category)
         exit();
     }
     if ($data) {
+        $name ="%".$name."%";
         mysqli_stmt_bind_param($stmt, "sss", $name, $id, $category);
     }
     mysqli_stmt_execute($stmt);
@@ -441,23 +443,7 @@ function getShippingMethodDataAdmin($conn, $id)
     return $sMethodArr;
 }
 
-function deleteSMethod($conn, $sMethodID)
-{
-    $sql = "UPDATE shipping_method SET active = 0 WHERE id=?";
-    $stmt = mysqli_stmt_init($conn);
 
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../shippingmethod_admin.php?error=stmtfailed");
-        exit();
-    }
-    mysqli_stmt_prepare($stmt, $sql);
-    mysqli_stmt_bind_param($stmt, "s", $sMethodID);
-
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-    header("location: ../shippingmethod_admin.php");
-
-}
 
 function getCategoryNameViaID($conn, $categoryID)
 {

@@ -2,7 +2,7 @@
 include_once 'dbh_include.php';
 include_once 'product_include.php';
 include_once 'functions_include.php';
-
+global $conn;
 
     if (isset($_GET["delete"])) {
         $sql = "DELETE FROM shopping_cart WHERE user_id = ? AND product_id = ? ";

@@ -1,4 +1,5 @@
 <?php
+global $conn;
 if (isset($_GET['edit'])) {
     $AddressID = $_GET['edit'];
 

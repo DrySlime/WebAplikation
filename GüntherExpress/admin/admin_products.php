@@ -101,7 +101,7 @@ $allProducts = getProductData($conn, null, null, null);
                                 for ($i = 0; $i < count($productArr); $i++) {
                                     ?>
                                     <tr id="table_row_<?php echo $productArr[$i]["id"] ?>">
-                                        <td><img src="<?php echo $productArr[$i]["product_image"] ?>"></td>
+                                        <td><img src="<?php echo $productArr[$i]["product_image"] ?>" alt=""></td>
                                         <td class="disabled_<?php echo $productArr[$i]["active"] ?>"><?php echo $productArr[$i]["id"] ?></td>
                                         <td class="disabled_<?php echo $productArr[$i]["active"] ?>"><?php echo $productArr[$i]["product_name"] ?></td>
                                         <td class="disabled_<?php echo $productArr[$i]["active"] ?>"><?php echo getCategoryNameViaID($conn, $productArr[$i]["product_category_id"]) ?></td>
@@ -121,7 +121,7 @@ $allProducts = getProductData($conn, null, null, null);
                         <h4>Artikel Hinzufügen</h4>
                         <div class="admin_data_side_spacer">
                             <form id="addProducts" action="includes/productManager_inc.php" method="post">
-                                <label for="category">Kategorie:</label><select required id="createcategory" name="createcategory">
+                                <label for="createcategory">Kategorie:</label><select required id="createcategory" name="createcategory">
                                     <option disabled selected hidden value="">Kategorie Wählen</option>
                                     <?php
                                     for ($i = 0; $i < count($categories); $i++) {
