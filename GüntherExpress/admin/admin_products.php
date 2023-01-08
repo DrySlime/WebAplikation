@@ -73,6 +73,7 @@ $allProducts = getProductData($conn, null, null, null);
                     </div>
                     <div class="admin_data_table">
                         <?php
+                        echo  $name, $id, $category;
                         $productArr = getProductData($conn, $name, $id, $category);
                         ?>
                         <table>

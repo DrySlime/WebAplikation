@@ -378,10 +378,11 @@ function getProductData($conn, $name, $id, $category)
 {
     $productArr = null;
     $data = false;
+
     if ($name == null && $id == null && $category == null) {
         $sql = "SELECT * FROM product ";
     } else {
-        $sql = "SELECT * FROM product WHERE upper(product_name) LIKE upper(?)OR id = ? OR product_category_id = ?";
+        $sql = "SELECT * FROM product WHERE upper(product_name) = upper(?) OR id = ? OR product_category_id = ?";
         $data = true;
 
     }
@@ -391,7 +392,7 @@ function getProductData($conn, $name, $id, $category)
         exit();
     }
     if ($data) {
-        $name ="%".$name."%";
+        $name ='%'.$name.'%';
         mysqli_stmt_bind_param($stmt, "sss", $name, $id, $category);
     }
     mysqli_stmt_execute($stmt);
