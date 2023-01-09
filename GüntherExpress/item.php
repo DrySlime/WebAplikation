@@ -76,7 +76,7 @@ $stars = getAvrgRating($conn, $product[0]["id"]);
                     <p><?php echo $product[0]["description"] ?></p>
                 </div>
                 <div class="item_data_price">
-                    <h4><?php echo $product[0]["price"] ?>€</h4>
+                    <h4><?php echo $product[0]["price"] ?> €</h4>
                 </div>
                 <div class="item_data_settings">
                     <div class="item_amount_settings">

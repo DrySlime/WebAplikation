@@ -4,7 +4,6 @@ function getAvrgRating($conn, $productID)
 {
     #this returns the average rating of the product
     #returns a double value between 1-5 which represents the rating from the $productID
-    $rating = 0;
     $sql = "SELECT id FROM order_line WHERE product_item_id =?;";
     $stmt = mysqli_stmt_init($conn);
 
@@ -24,6 +23,7 @@ function getAvrgRating($conn, $productID)
         $orderLine = null;
     }
     mysqli_stmt_close($stmt);
+    $rating = 0;
     if ($orderLine != null) {
         for ($i = 0; $i < count($orderLine); $i++) {
             $sql = "SELECT rating_value FROM user_review WHERE ordered_product_id =?;";
@@ -40,14 +40,15 @@ function getAvrgRating($conn, $productID)
 
             if ($row = mysqli_fetch_assoc($resultData)) {
                 $ratingArr[] = $row["rating_value"];
-            } else {
-                $ratingArr[] = 0;
             }
         }
         foreach ($ratingArr as $singleRating) {
             $rating += $singleRating;
         }
+
         $rating = $rating / count($ratingArr);
+
+        mysqli_stmt_close($stmt);
     }
     return $rating;
 }
@@ -93,8 +94,6 @@ function getNewestProducts($conn, $amount)
             $productArr[] = $product;
             unset($product);
         }
-
-
     }
     return $productArr;
 }
@@ -128,7 +127,6 @@ function getBestRatedProducts($conn, $amount)
         unset($product);
     }
 
-
     uasort($productArr, fn($a, $b) => $a['AvgPrice'] <=> $b['AvgPrice']);
     $productArr = array_reverse($productArr);
 
@@ -139,8 +137,6 @@ function getBestRatedProducts($conn, $amount)
     for ($i = 0; $i < $amount; $i++) {
         $finalArr[] = $productArr[$i]["id"];
     }
-
-
     return $finalArr;
 }
 

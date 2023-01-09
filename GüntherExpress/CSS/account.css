@@ -874,15 +874,17 @@ body {
 }
 
 .single_order_product_image {
-    width: 30%;
+    width: 265px;
     height: auto;
+    padding-right: 5vmin;
     display: flex;
     justify-content: center;
     align-content: center;
     align-items: center;
 }
 
-.single_order_product_image img {
+.single_order_product_image img,
+.single_order_product_image a{
     max-width: 265px;
     max-height: 200px;
     width: 265px;
