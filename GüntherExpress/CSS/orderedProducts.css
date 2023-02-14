@@ -1,0 +1,22 @@
+table, th, td {
+    border: 1px solid;
+    border-collapse: collapse;
+    background-color: #fcc4c4;
+    left: 10px;
+}
+th,td{
+    padding: 15px;
+    text-align: center;
+}
+th{
+    background-color: #277f9d;
+
+}
+td{
+
+}
+body {
+    line-height: 1.5;
+    background-color: #f9d4dc;
+
+}

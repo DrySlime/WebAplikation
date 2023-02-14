@@ -1,12 +1,12 @@
 <?php
 
-if(isset($_POST["submit"])){
-
+if(isset($_POST["register_button"])){
+    global $conn;
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $passwordRepeat = $_POST['repeat_password'];
-    $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
+    $passwordRepeat = $_POST['passwordrepeat'];
+    $firstname = $_POST['name'];
+    $lastname = $_POST['surname'];
     $username = $_POST['username'];
     
 
@@ -39,6 +39,6 @@ if(isset($_POST["submit"])){
 
 
 }else{
-    header("location: ../signup.php");
+    header("location: ../login.php");
     exit(  );
 }
